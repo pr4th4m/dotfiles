@@ -167,7 +167,7 @@ filetype plugin indent on
 syntax on
 " >>>>>>>> Configuration for Vundle END <<<<<<<<<
 
-" configuration for neo complete
+" configuration for neocomplete
 let g:neocomplete#enable_at_startup = 1
 let g:neocomplete#enable_smart_case = 1
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
@@ -208,7 +208,7 @@ let g:syntastic_python_flake8_args='--ignore=E501,W0401,E702,E126,E128'
 " let g:EasyMotion_leader_key = '<Leader>'
 
 " Settings for gundo
-nnoremap <F11> :GundoToggle<CR>
+nnoremap <Leader>h :GundoToggle<CR>
 
 
 " Config for solarized theme
