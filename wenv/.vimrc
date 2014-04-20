@@ -118,8 +118,8 @@ Bundle 'kien/ctrlp.vim'
 " Vim Solarized theme
 Bundle "altercation/vim-colors-solarized"
 
-" YouCompleteMe autocomplete plugin
-Bundle "Valloric/YouCompleteMe"
+" neocomplete autocomplete plugin
+Bundle "Shougo/neocomplete.vim"
 
 " For syntax checking
 Bundle "scrooloose/syntastic"
@@ -167,31 +167,32 @@ filetype plugin indent on
 syntax on
 " >>>>>>>> Configuration for Vundle END <<<<<<<<<
 
+" configuration for neo complete
+let g:neocomplete#enable_at_startup = 1
+let g:neocomplete#enable_smart_case = 1
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+
 " config for tagbar
 nmap <Leader>b :TagbarToggle<CR>
 let g:tagbar_autofocus = 1
 
 " NERDTree configuration
 let NERDTreeIgnore = ['\.pyc$']
-" noremap <silent> <F2> :NERDTreeToggle <CR>
 noremap <Leader>f :NERDTreeToggle <CR>
 
 " Replace ack with ag 
 " let g:ackprg = 'ag --nogroup --nocolor --column'
 
 " Settings for CtrlP
-" let g:ctrlp_map = '<c-f>'
 let g:ctrlp_map = '<Leader>o'
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_working_path_mode = 'a'
-" noremap <silent> <F3> :CtrlPBuffer <CR>
 noremap <Leader>e :CtrlPBuffer <CR>
-" noremap <silent> <F10> :CtrlPMRU <CR>
 noremap <Leader>u :CtrlPMRU <CR>
 nnore <C-W>s :<C-U>sp \| :CtrlPBuffer <CR>
 
 " Settings for Jedi-vim
-let g:jedi#completions_enabled = 0 " off this as we are using YCM
+let g:jedi#completions_enabled = 0 " off this as we are using neocomplete
 let g:jedi#use_tabs_not_buffers = 0
 let g:jedi#auto_vim_configuration = 0
 let g:jedi#popup_on_dot = 0
