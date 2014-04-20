@@ -1,3 +1,4 @@
+# To install - git clone git://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh 
 # Path to your oh-my-zsh configuration.
 ZSH=$HOME/.oh-my-zsh
 
@@ -45,11 +46,11 @@ plugins=(vi-mode pip)
 
 source $ZSH/oh-my-zsh.sh
 
-# Customize to your needs...
-export PATH=$PATH:/usr/local/heroku/bin:/usr/lib/lightdm/lightdm:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games
-
 # OMZ search plugin
 source $ZSH/plugins/history-substring-search/history-substring-search.zsh
+
+# Customize to your needs...
+export PATH=$PATH:/usr/local/heroku/bin:/usr/lib/lightdm/lightdm:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games
 
 
 ##### My Configuration ####
