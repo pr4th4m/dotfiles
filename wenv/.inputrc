@@ -1,0 +1,7 @@
+
+
+# for vim key bindings
+# this is mainly used for ipython
+set editing-mode vi
+C-L: clear-screen
+C-l: clear-screen
