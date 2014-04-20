@@ -1,0 +1,6 @@
+
+
+/* ignore dir's used by vimrc */
+undodir/
+backup/
+swp/
