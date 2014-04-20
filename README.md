@@ -1,10 +1,11 @@
 ## Auto deploy configuration files on new machine
 
-### To are we configuring:
+### What are we configuring:
 * vim
 * guake
 * zsh and (oh-my-zsh)
 * tmux 
+* conky
 
 ### Tweak:
 * For directory color fix.
