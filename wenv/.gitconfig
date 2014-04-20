@@ -1,0 +1,12 @@
+[user]
+	email = pratz0909@gmail.com
+	name = pratz
+[merge]
+	tool = vimdiff
+	conflictstyle = diff3
+[mergetool]
+	prompt = false
+[diff]
+	tool = vimdiff
+[difftool]
+	prompt = false
