@@ -118,14 +118,11 @@ Bundle 'kien/ctrlp.vim'
 " Vim Solarized theme
 Bundle "altercation/vim-colors-solarized"
 
-" neocomplete autocomplete plugin
-Bundle "Shougo/neocomplete.vim"
+" YCM autocomplete plugin
+Bundle "Valloric/YouCompleteMe"
 
 " For syntax checking
 Bundle "scrooloose/syntastic"
-
-" Jedi vim for gotodefination etc.
-Bundle "davidhalter/jedi-vim"
 
 " Airline for fancy vim
 Bundle 'bling/vim-airline.git'
@@ -154,9 +151,6 @@ Bundle 'sjl/gundo.vim'
 " YankRing for vim
 Bundle 'vim-scripts/YankRing.vim'
 
-" Highlight indent
-Bundle 'nathanaelkane/vim-indent-guides'
-
 " to get matching surround
 Bundle 'majutsushi/tagbar'
 
@@ -167,10 +161,6 @@ filetype plugin indent on
 syntax on
 " >>>>>>>> Configuration for Vundle END <<<<<<<<<
 
-" configuration for neocomplete
-let g:neocomplete#enable_at_startup = 1
-let g:neocomplete#enable_smart_case = 1
-inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 
 " config for tagbar
 nmap <Leader>b :TagbarToggle<CR>
@@ -180,9 +170,6 @@ let g:tagbar_autofocus = 1
 let NERDTreeIgnore = ['\.pyc$']
 noremap <Leader>f :NERDTreeToggle <CR>
 
-" Replace ack with ag 
-" let g:ackprg = 'ag --nogroup --nocolor --column'
-
 " Settings for CtrlP
 let g:ctrlp_map = '<Leader>o'
 let g:ctrlp_cmd = 'CtrlP'
@@ -191,32 +178,22 @@ noremap <Leader>e :CtrlPBuffer <CR>
 noremap <Leader>u :CtrlPMRU <CR>
 nnore <C-W>s :<C-U>sp \| :CtrlPBuffer <CR>
 
-" Settings for Jedi-vim
-let g:jedi#completions_enabled = 0 " off this as we are using neocomplete
-let g:jedi#use_tabs_not_buffers = 0
-let g:jedi#auto_vim_configuration = 0
-let g:jedi#popup_on_dot = 0
-let g:jedi#popup_select_first = 0
-autocmd FileType python setlocal completeopt-=preview
+" Settings for youcompleteme
+let g:ycm_autoclose_preview_window_after_completion=1
+nnoremap <Leader>d :YcmCompleter GoToDefinitionElseDeclaration<CR>
+autocmd FileType python setlocal completeopt-=preview  " avoid sratchpad to display
 
 " Syntastic configuration
-" let g:syntastic_auto_loc_list=1
 let g:syntastic_python_checkers=["flake8"]
 let g:syntastic_python_flake8_args='--ignore=E501,W0401,E702,E126,E128'
-
-" Settings for easy motion plugin
-" let g:EasyMotion_leader_key = '<Leader>'
 
 " Settings for gundo
 nnoremap <Leader>h :GundoToggle<CR>
 
-
 " Config for solarized theme
-" let g:solarized_termcolors=256
 syntax enable
 set background=dark
 colorscheme solarized
-
 
 " Settings for vim-airline
 set laststatus=2
@@ -226,10 +203,3 @@ let g:airline_right_sep = ''
 let g:airline_right_alt_sep = ''
 let g:airline_detect_whitespace=0
 let g:airline_theme="base16"
-
-" Settings for vim indentation
-let g:indent_guides_auto_colors = 0
-let g:indent_guides_start_level = 2
-let g:indent_guides_guide_size = 1
-autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  ctermbg=235
-autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=237
