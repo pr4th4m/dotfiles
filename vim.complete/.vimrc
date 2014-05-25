@@ -116,13 +116,13 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'kien/ctrlp.vim'
 
 " Vim Solarized theme
-Plugin "altercation/vim-colors-solarized"
+Plugin 'altercation/vim-colors-solarized'
 
 " YCM autocomplete plugin
-Plugin "Valloric/YouCompleteMe"
+Plugin 'Valloric/YouCompleteMe'
 
 " For syntax checking
-Plugin "scrooloose/syntastic"
+Plugin 'scrooloose/syntastic'
 
 " Airline for fancy vim
 Plugin 'bling/vim-airline.git'
