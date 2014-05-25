@@ -102,65 +102,65 @@ inoremap # X#
 " >>>>>>>> Configuration for Vundle START <<<<<<<<<
 filetype off
 
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
 
 " Let Vundle manage Vundle
 " required! 
-Bundle 'gmarik/vundle'
+Plugin 'gmarik/Vundle.vim'
 
 " NerdTree for file exploring
-Bundle 'scrooloose/nerdtree'
+Plugin 'scrooloose/nerdtree'
 
 " CtrlP for searching files, buffer and MRU 
-Bundle 'kien/ctrlp.vim'
+Plugin 'kien/ctrlp.vim'
 
 " Vim Solarized theme
-Bundle "altercation/vim-colors-solarized"
+Plugin "altercation/vim-colors-solarized"
 
 " YCM autocomplete plugin
-Bundle "Valloric/YouCompleteMe"
+Plugin "Valloric/YouCompleteMe"
 
 " For syntax checking
-Bundle "scrooloose/syntastic"
+Plugin "scrooloose/syntastic"
 
 " Airline for fancy vim
-Bundle 'bling/vim-airline.git'
+Plugin 'bling/vim-airline.git'
 
 " Matchit to match tags
-Bundle 'tsaleh/vim-matchit'
+Plugin 'tsaleh/vim-matchit'
 
 " Tcomment for fast commenting and uncommenting of code
-Bundle 'tomtom/tcomment_vim'
+Plugin 'tomtom/tcomment_vim'
 
 " Ack for searching in project
-Bundle 'mileszs/ack.vim'
+Plugin 'mileszs/ack.vim'
 
 " To diplay content in tabular format
-Bundle 'godlygeek/tabular'
+Plugin 'godlygeek/tabular'
 
 " For haskell indentation
-Bundle 'travitch/hasksyn'
+Plugin 'travitch/hasksyn'
 
 " To highlight search result
-Bundle 'ivyl/vim-bling'
+Plugin 'ivyl/vim-bling'
 
 " To highlight search result
-Bundle 'sjl/gundo.vim'
+Plugin 'sjl/gundo.vim'
 
 " YankRing for vim
-Bundle 'vim-scripts/YankRing.vim'
+Plugin 'vim-scripts/YankRing.vim'
 
 " to get matching surround
-Bundle 'majutsushi/tagbar'
+Plugin 'majutsushi/tagbar'
 
 " vim jinja2 syntax
-Bundle 'Glench/Vim-Jinja2-Syntax'
+Plugin 'Glench/Vim-Jinja2-Syntax'
 
-filetype plugin indent on
+call vundle#end()            " required
+filetype plugin indent on    " required
 syntax on
 " >>>>>>>> Configuration for Vundle END <<<<<<<<<
-
 
 " config for tagbar
 nmap <Leader>b :TagbarToggle<CR>
