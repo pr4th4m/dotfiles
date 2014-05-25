@@ -31,9 +31,24 @@
 * Installation on ubuntu -
 `sudo apt-get install stow`
 
-### How to delopy:
+### How to deploy:
 * Move to the directory where you cloned this repo - 
 `cd ~/dotfiles`
-* Delpoy - `stow -v wenv`
-* To remove - `stow -vD wenv`
-* To re-stow - `stow -vR wenv`
+* Delpoy - `stow -v <package_name>`
+* To remove - `stow -vD <package_name>`
+* To re-stow - `stow -vR <package_name>`
+
+### Available packages:
+* vim.complete (with all plugins)
+* vim.mini (with minimum plugins)
+* git
+* tmux
+* zsh
+* xterm
+* conky
+
+### Tips:
+* To install every thing at once use following command
+    ```
+    stow -v vim.mini git tmux zsh xterm conky
+    ```
