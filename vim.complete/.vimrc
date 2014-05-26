@@ -127,9 +127,6 @@ Plugin 'scrooloose/syntastic'
 " Airline for fancy vim
 Plugin 'bling/vim-airline.git'
 
-" Matchit to match tags
-Plugin 'tsaleh/vim-matchit'
-
 " Tcomment for fast commenting and uncommenting of code
 Plugin 'tomtom/tcomment_vim'
 
@@ -138,9 +135,6 @@ Plugin 'mileszs/ack.vim'
 
 " To diplay content in tabular format
 Plugin 'godlygeek/tabular'
-
-" For haskell indentation
-Plugin 'travitch/hasksyn'
 
 " To highlight search result
 Plugin 'ivyl/vim-bling'
@@ -153,9 +147,6 @@ Plugin 'vim-scripts/YankRing.vim'
 
 " to get matching surround
 Plugin 'majutsushi/tagbar'
-
-" vim jinja2 syntax
-Plugin 'Glench/Vim-Jinja2-Syntax'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
