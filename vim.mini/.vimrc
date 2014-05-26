@@ -130,9 +130,6 @@ Plugin 'scrooloose/syntastic'
 " Airline for fancy vim
 Plugin 'bling/vim-airline.git'
 
-" Matchit to match tags
-Plugin 'tsaleh/vim-matchit'
-
 " Tcomment for fast commenting and uncommenting of code
 Plugin 'tomtom/tcomment_vim'
 
