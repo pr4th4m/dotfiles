@@ -148,6 +148,12 @@ Plugin 'vim-scripts/YankRing.vim'
 " to get matching surround
 Plugin 'majutsushi/tagbar'
 
+" javascript indentation support
+Plugin 'pangloss/vim-javascript'
+
+" to match tags
+Plugin 'vim-scripts/matchit.zip'
+
 call vundle#end()            " required
 filetype plugin indent on    " required
 syntax on
@@ -175,7 +181,7 @@ nnoremap <Leader>d :YcmCompleter GoToDefinitionElseDeclaration<CR>
 autocmd FileType python setlocal completeopt-=preview  " avoid sratchpad to display
 
 " Syntastic configuration
-let g:syntastic_python_checkers=["flake8"]
+let g:syntastic_python_checkers=["pyflakes"]
 let g:syntastic_python_flake8_args='--ignore=E501,W0401,E702,E126,E128'
 
 " Settings for gundo
