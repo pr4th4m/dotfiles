@@ -148,6 +148,12 @@ Plugin 'vim-scripts/YankRing.vim'
 " to get matching surround
 Plugin 'majutsushi/tagbar'
 
+" to match tags
+Plugin 'vim-scripts/matchit.zip'
+
+" julia support for vim
+Plugin 'JuliaLang/julia-vim'
+
 call vundle#end() 
 filetype plugin indent on
 syntax on
