@@ -165,6 +165,7 @@ syntax on
 " config for tagbar
 nmap <Leader>b :TagbarToggle<CR>
 let g:tagbar_autofocus = 1
+let g:tagbar_left = 1
 
 " NERDTree configuration
 let NERDTreeIgnore = ['\.pyc$']
