@@ -154,6 +154,9 @@ Plugin 'pangloss/vim-javascript'
 " to match tags
 Plugin 'vim-scripts/matchit.zip'
 
+" julia support for vim
+Plugin 'JuliaLang/julia-vim'
+
 call vundle#end()            " required
 filetype plugin indent on    " required
 syntax on
