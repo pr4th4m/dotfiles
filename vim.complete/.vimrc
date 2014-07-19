@@ -58,7 +58,8 @@ nnoremap <Leader>w :wa<CR>
 nnoremap <Leader>m :<c-u>exe -v:count+1 . 'm.'<cr>
 nnoremap <Leader>y :<c-u>exe -v:count+1 . 't.'<cr>
 
-" Toggle spell checking on and off with `,s`
+set spell
+" Toggle spell checking on and off with `<Leader>s`
 nmap <silent> <Leader>s :set spell!<CR>
 " Set region to British English
 set spelllang=en_gb
