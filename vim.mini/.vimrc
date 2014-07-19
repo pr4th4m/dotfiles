@@ -61,6 +61,7 @@ nnoremap <Leader>w :wa<CR>
 " nnoremap ) :tabnext<CR>
 " nnoremap ( :tabprevious<CR>
 
+set spell
 " Toggle spell checking on and off with `,s`
 nmap <silent> <Leader>s :set spell!<CR>
 " Set region to British English
