@@ -155,6 +155,9 @@ Plugin 'pangloss/vim-javascript'
 " to match tags
 Plugin 'vim-scripts/matchit.zip'
 
+" fugitive for git integration
+Plugin 'tpope/vim-fugitive'
+
 " julia support for vim
 Plugin 'JuliaLang/julia-vim'
 
@@ -205,3 +208,4 @@ let g:airline_right_sep = ''
 let g:airline_right_alt_sep = ''
 let g:airline_detect_whitespace=0
 let g:airline_theme="base16"
+let g:airline#extensions#tabline#enabled = 1
