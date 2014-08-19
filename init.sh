@@ -7,6 +7,7 @@ sudo apt-get install -y tmux
 sudo apt-get install -y stow
 sudo apt-get install -y git
 sudo apt-get install -y xclip
+sudo apt-get install -y ack-grep
 
 # Servers
 sudo apt-get install -y openssh-server
