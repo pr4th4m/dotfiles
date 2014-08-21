@@ -75,9 +75,9 @@ alias c='clear'
 ### Path for virtual env wrapper
 # NOTE: Config for virtual python env wrapper
 # install virtual env wrapper and uncomment the following
-# export WORKON_HOME="$HOME/.virtualenvs"
-# export VIRTUALENVWRAPPER_PYTHON="/usr/bin/python2.7"
-# source /usr/local/bin/virtualenvwrapper.sh
+export WORKON_HOME="$HOME/.virtualenvs"
+export VIRTUALENVWRAPPER_PYTHON="/usr/bin/python2.7"
+source /usr/local/bin/virtualenvwrapper.sh
 
 # fix for 'ls' in solarized 
 eval `dircolors ~/.dircolors`
@@ -88,3 +88,8 @@ eval `dircolors ~/.dircolors`
 # fzf_history() { zle -I; eval $(history | fzf +s | sed 's/ *[0-9]* *//') ; }; zle -N fzf_history; bindkey '^H' fzf_history
 # fzf_killps() { zle -I; ps -ef | sed 1d | fzf -m | awk '{print $2}' | xargs kill -${1:-9} ; }; zle -N fzf_killps; bindkey '^Q' fzf_killps
 # fzf_cd() { zle -I; DIR=$(find ${1:-*} -path '*/\.*' -prune -o -type d -print 2> /dev/null | fzf) && cd "$DIR" ; }; zle -N fzf_cd; bindkey '^F' fzf_cd
+
+
+# define cache dir for pip
+# pip will save all the packages here
+export PIP_DOWNLOAD_CACHE=$HOME/.cache/.pip_cache
