@@ -8,6 +8,7 @@ sudo apt-get install -y stow
 sudo apt-get install -y git
 sudo apt-get install -y xclip
 sudo apt-get install -y ack-grep
+sudo apt-get install -y ctags
 
 # Servers
 sudo apt-get install -y openssh-server
