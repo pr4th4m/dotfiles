@@ -167,7 +167,7 @@ syntax on
 " >>>>>>>> Configuration for Vundle END <<<<<<<<<
 
 " config for tagbar
-nmap <Leader>b :TagbarToggle<CR>
+nmap <Leader>t :TagbarToggle<CR>
 let g:tagbar_autofocus = 1
 let g:tagbar_left = 1
 
