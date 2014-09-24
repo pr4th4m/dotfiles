@@ -120,7 +120,7 @@ Plugin 'kien/ctrlp.vim'
 Plugin 'altercation/vim-colors-solarized'
 
 " YCM autocomplete plugin
-Plugin 'Valloric/YouCompleteMe'
+" Plugin 'Valloric/YouCompleteMe'
 
 " For syntax checking
 Plugin 'scrooloose/syntastic'
@@ -158,8 +158,17 @@ Plugin 'vim-scripts/matchit.zip'
 " fugitive for git integration
 Plugin 'tpope/vim-fugitive'
 
+" for markdown support 
+Plugin 'plasticboy/vim-markdown'
+
 " julia support for vim
 Plugin 'JuliaLang/julia-vim'
+
+" jedi for python completion                                                                                                                                          
+Plugin 'davidhalter/jedi-vim'                                                                                                                                         
+                                                                                                                                                                      
+" Neo complete                                                                                                                                                        
+Plugin 'Shougo/neocomplete.vim'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -170,6 +179,9 @@ syntax on
 nmap <Leader>t :TagbarToggle<CR>
 let g:tagbar_autofocus = 1
 let g:tagbar_left = 1
+
+" Config for vim-markdown
+let g:vim_markdown_folding_disabled=1  " disable fold
 
 " NERDTree configuration
 let NERDTreeIgnore = ['\.pyc$']
@@ -182,10 +194,23 @@ let g:ctrlp_working_path_mode = 'a'
 noremap <Leader>e :CtrlPBuffer <CR>
 noremap <Leader>u :CtrlPMRU <CR>
 nnore <C-W>s :<C-U>sp \| :CtrlPBuffer <CR>
+nnore <C-W>v :<C-U>vsp \| :CtrlPBuffer <CR>
+
+" Settings for Jedi                                                                                                                                                   
+let g:jedi#use_tabs_not_buffers = 0                                                                                                                                   
+let g:jedi#popup_on_dot = 0                                                                                                                                           
+let g:jedi#popup_select_first = 0                                                                                                                                     
+let g:jedi#completions_command = "<C-k>"                                                                                                                              
+let g:jedi#show_call_signatures = "0"                                                                                                                                 
+                                                                                                                                                                      
+" Settings for Neocomplete                                                                                                                                            
+let g:neocomplete#enable_at_startup = 1                                                                                                                               
+let g:neocomplete#enable_smart_case = 1
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 
 " Settings for youcompleteme
-let g:ycm_autoclose_preview_window_after_completion=1
-nnoremap <Leader>d :YcmCompleter GoToDefinitionElseDeclaration<CR>
+" let g:ycm_autoclose_preview_window_after_completion=1
+" nnoremap <Leader>d :YcmCompleter GoToDefinitionElseDeclaration<CR>
 autocmd FileType python setlocal completeopt-=preview  " avoid sratchpad to display
 
 " Syntastic configuration
@@ -208,3 +233,13 @@ let g:airline_right_sep = ''
 let g:airline_right_alt_sep = ''
 let g:airline_detect_whitespace=0
 let g:airline_theme="base16"
+
+
+" Trailing Spaces Highlight and Detection for Line/Tabs.                                                                                                              
+highlight ExtraWhitespace ctermbg=red guibg=red                                                                                                                       
+match ExtraWhitespace /\s\+$/                                                                                                                                         
+autocmd BufWinEnter * match ExtraWhitespace /\s\+$/                                                                                                                   
+autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/                                                                                                            
+autocmd InsertLeave * match ExtraWhitespace /\s\+$/                                                                                                                   
+autocmd BufWinLeave * call clearmatches()                                                                                                                             
+autocmd Syntax * syn match ExtraWhitespace /\s\+$\| \+\ze\t/   
