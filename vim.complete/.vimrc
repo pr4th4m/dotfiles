@@ -94,7 +94,7 @@ set foldmethod=indent   "fold based on indent
 set foldnestmax=10      "deepest fold is 10 levels
 set nofoldenable        "dont fold by default
 set foldlevel=1         "this is just what i use
-  
+
 " this is done because when writing a comment in python code the cursur goes
 " to column 0
 inoremap # X#
@@ -107,13 +107,13 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 " Let Vundle manage Vundle
-" required! 
+" required!
 Plugin 'gmarik/Vundle.vim'
 
 " NerdTree for file exploring
 Plugin 'scrooloose/nerdtree'
 
-" CtrlP for searching files, buffer and MRU 
+" CtrlP for searching files, buffer and MRU
 Plugin 'kien/ctrlp.vim'
 
 " Vim Solarized theme
@@ -158,16 +158,16 @@ Plugin 'vim-scripts/matchit.zip'
 " fugitive for git integration
 Plugin 'tpope/vim-fugitive'
 
-" for markdown support 
+" for markdown support
 Plugin 'plasticboy/vim-markdown'
 
 " julia support for vim
 Plugin 'JuliaLang/julia-vim'
 
-" jedi for python completion                                                                                                                                          
-Plugin 'davidhalter/jedi-vim'                                                                                                                                         
-                                                                                                                                                                      
-" Neo complete                                                                                                                                                        
+" jedi for python completion
+Plugin 'davidhalter/jedi-vim'
+
+" Neo complete
 Plugin 'Shougo/neocomplete.vim'
 
 call vundle#end()            " required
@@ -196,15 +196,15 @@ noremap <Leader>u :CtrlPMRU <CR>
 nnore <C-W>s :<C-U>sp \| :CtrlPBuffer <CR>
 nnore <C-W>v :<C-U>vsp \| :CtrlPBuffer <CR>
 
-" Settings for Jedi                                                                                                                                                   
-let g:jedi#use_tabs_not_buffers = 0                                                                                                                                   
-let g:jedi#popup_on_dot = 0                                                                                                                                           
-let g:jedi#popup_select_first = 0                                                                                                                                     
-let g:jedi#completions_command = "<C-k>"                                                                                                                              
-let g:jedi#show_call_signatures = "0"                                                                                                                                 
-                                                                                                                                                                      
-" Settings for Neocomplete                                                                                                                                            
-let g:neocomplete#enable_at_startup = 1                                                                                                                               
+" Settings for Jedi
+let g:jedi#use_tabs_not_buffers = 0
+let g:jedi#popup_on_dot = 0
+let g:jedi#popup_select_first = 0
+let g:jedi#completions_command = "<C-k>"
+let g:jedi#show_call_signatures = "0"
+
+" Settings for Neocomplete
+let g:neocomplete#enable_at_startup = 1
 let g:neocomplete#enable_smart_case = 1
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 
@@ -235,11 +235,11 @@ let g:airline_detect_whitespace=0
 let g:airline_theme="base16"
 
 
-" Trailing Spaces Highlight and Detection for Line/Tabs.                                                                                                              
-highlight ExtraWhitespace ctermbg=red guibg=red                                                                                                                       
-match ExtraWhitespace /\s\+$/                                                                                                                                         
-autocmd BufWinEnter * match ExtraWhitespace /\s\+$/                                                                                                                   
-autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/                                                                                                            
-autocmd InsertLeave * match ExtraWhitespace /\s\+$/                                                                                                                   
-autocmd BufWinLeave * call clearmatches()                                                                                                                             
-autocmd Syntax * syn match ExtraWhitespace /\s\+$\| \+\ze\t/   
+" Trailing Spaces Highlight and Detection for Line/Tabs.
+highlight ExtraWhitespace ctermbg=red guibg=red
+match ExtraWhitespace /\s\+$/
+autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
+autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+autocmd InsertLeave * match ExtraWhitespace /\s\+$/
+autocmd BufWinLeave * call clearmatches()
+autocmd Syntax * syn match ExtraWhitespace /\s\+$\| \+\ze\t/
