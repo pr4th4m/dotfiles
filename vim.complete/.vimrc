@@ -161,8 +161,11 @@ Plugin 'tpope/vim-fugitive'
 " for markdown support
 Plugin 'plasticboy/vim-markdown'
 
-" julia support for vim
+" julia syntax support for vim
 Plugin 'JuliaLang/julia-vim'
+
+" rust syntax support for vim
+Plugin 'wting/rust.vim'
 
 " jedi for python completion
 Plugin 'davidhalter/jedi-vim'
