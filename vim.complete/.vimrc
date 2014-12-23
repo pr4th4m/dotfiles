@@ -205,6 +205,7 @@ let g:jedi#popup_on_dot = 0
 let g:jedi#popup_select_first = 0
 let g:jedi#completions_command = "<C-k>"
 let g:jedi#show_call_signatures = "0"
+let g:jedi#completions_enabled=0
 
 " Settings for Neocomplete
 let g:neocomplete#enable_at_startup = 1
