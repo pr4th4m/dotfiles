@@ -15,6 +15,15 @@ set ruler
 set nowrap
 set vb " turn off beep sound
 set relativenumber
+" Split to right and below by default
+set splitright
+set splitbelow
+
+" Navigate between split windows quickly
+nnoremap <c-j> <c-w><c-j>
+nnoremap <c-k> <c-w><c-k>
+nnoremap <c-l> <c-w><c-l>
+nnoremap <c-h> <c-w><c-h>
 
 " For command mode auto complete
 set wildmenu
@@ -55,8 +64,8 @@ let mapleader = "\<Space>"
 nnoremap <Leader>w :wa<CR>
 
 " for relative copy/cut paste
-nnoremap <Leader>m :<c-u>exe -v:count+1 . 'm.'<cr>
-nnoremap <Leader>y :<c-u>exe -v:count+1 . 't.'<cr>
+" nnoremap <Leader>m :<c-u>exe -v:count+1 . 'm.'<cr>
+" nnoremap <Leader>y :<c-u>exe -v:count+1 . 't.'<cr>
 
 set spell
 " Toggle spell checking on and off with `<Leader>s`
@@ -144,7 +153,7 @@ Plugin 'ivyl/vim-bling'
 Plugin 'sjl/gundo.vim'
 
 " YankRing for vim
-Plugin 'vim-scripts/YankRing.vim'
+" Plugin 'vim-scripts/YankRing.vim'
 
 " to get matching surround
 Plugin 'majutsushi/tagbar'
@@ -173,6 +182,9 @@ Plugin 'davidhalter/jedi-vim'
 " Neo complete
 Plugin 'Shougo/neocomplete.vim'
 
+" GoldenView for split window resize
+Plugin 'zhaocai/GoldenView.Vim'
+
 call vundle#end()            " required
 filetype plugin indent on    " required
 syntax on
@@ -183,8 +195,17 @@ nmap <Leader>t :TagbarToggle<CR>
 let g:tagbar_autofocus = 1
 let g:tagbar_left = 1
 
+" Ack config
+noremap <Leader>a :Ack <cword><cr>
+
 " Config for vim-markdown
 let g:vim_markdown_folding_disabled=1  " disable fold
+
+" Config for GoldenView
+let g:goldenview__enable_default_mapping = 0
+" nmap <silent> <Leader>c <Plug>GoldenViewSplit \| :CtrlPBuffer <CR>
+" nmap <silent> <Leader>v <Plug>GoldenViewSwitchToggle
+nmap <silent> <Leader>v <Plug>GoldenViewSwitchMain
 
 " NERDTree configuration
 let NERDTreeIgnore = ['\.pyc$']
@@ -237,7 +258,6 @@ let g:airline_right_sep = ''
 let g:airline_right_alt_sep = ''
 let g:airline_detect_whitespace=0
 let g:airline_theme="base16"
-
 
 " Trailing Spaces Highlight and Detection for Line/Tabs.
 highlight ExtraWhitespace ctermbg=red guibg=red
