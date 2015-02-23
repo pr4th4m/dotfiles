@@ -108,84 +108,72 @@ set foldlevel=1         "this is just what i use
 " to column 0
 inoremap # X#
 
-" Vundle : Package Manger for vim
-" >>>>>>>> Configuration for Vundle START <<<<<<<<<
-filetype off
-
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-
-" Let Vundle manage Vundle
-" required!
-Plugin 'gmarik/Vundle.vim'
-
-" NerdTree for file exploring
-Plugin 'scrooloose/nerdtree'
+" Package Manger for vim
+" >>>>>>>> Configuration START <<<<<<<<<
+call plug#begin('~/.vim/plugged')
 
 " CtrlP for searching files, buffer and MRU
-Plugin 'kien/ctrlp.vim'
+Plug 'kien/ctrlp.vim'
+
+" NerdTree for file exploring
+Plug 'scrooloose/nerdtree', {'on': 'NERDTreeToggle'}
 
 " Vim Solarized theme
-Plugin 'altercation/vim-colors-solarized'
-
-" YCM autocomplete plugin
-" Plugin 'Valloric/YouCompleteMe'
+Plug 'altercation/vim-colors-solarized'
 
 " For syntax checking
-Plugin 'scrooloose/syntastic'
+Plug 'scrooloose/syntastic'
 
 " Airline for fancy vim
-Plugin 'bling/vim-airline.git'
+Plug 'bling/vim-airline'
 
 " Tcomment for fast commenting and uncommenting of code
-Plugin 'tomtom/tcomment_vim'
+Plug 'tomtom/tcomment_vim'
 
 " Ack for searching in project
-Plugin 'mileszs/ack.vim'
+Plug 'mileszs/ack.vim'
 
 " To diplay content in tabular format
-Plugin 'godlygeek/tabular'
+Plug 'godlygeek/tabular'
 
 " To highlight search result
-Plugin 'ivyl/vim-bling'
+Plug 'ivyl/vim-bling'
 
 " To highlight search result
-Plugin 'sjl/gundo.vim'
-
-" YankRing for vim
-" Plugin 'vim-scripts/YankRing.vim'
+Plug 'sjl/gundo.vim', {'on': 'GundoToggle'}
 
 " to get matching surround
-Plugin 'majutsushi/tagbar'
-
-" javascript indentation support
-Plugin 'pangloss/vim-javascript'
+Plug 'majutsushi/tagbar'
 
 " to match tags
-Plugin 'vim-scripts/matchit.zip'
+Plug 'vim-scripts/matchit.zip'
 
 " fugitive for git integration
-Plugin 'tpope/vim-fugitive'
+Plug 'tpope/vim-fugitive'
 
 " for markdown support
-Plugin 'plasticboy/vim-markdown'
-
-" julia syntax support for vim
-Plugin 'JuliaLang/julia-vim'
-
-" rust syntax support for vim
-Plugin 'wting/rust.vim'
+Plug 'plasticboy/vim-markdown'
 
 " jedi for python completion
-Plugin 'davidhalter/jedi-vim'
+Plug 'davidhalter/jedi-vim'
 
 " Neo complete
-Plugin 'Shougo/neocomplete.vim'
+Plug 'Shougo/neocomplete.vim', {'frozen': 1}
 
 " GoldenView for split window resize
-Plugin 'zhaocai/GoldenView.Vim'
+Plug 'zhaocai/GoldenView.Vim'
 
-call vundle#end()            " required
+" #### Syntax Plugins ####
+" javascript indentation support
+Plug 'pangloss/vim-javascript'
+
+" julia syntax support for vim
+Plug 'JuliaLang/julia-vim'
+
+" rust syntax support for vim
+Plug 'wting/rust.vim'
+
+call plug#end()
 filetype plugin indent on    " required
 syntax on
 " >>>>>>>> Configuration for Vundle END <<<<<<<<<
@@ -203,9 +191,6 @@ let g:vim_markdown_folding_disabled=1  " disable fold
 
 " Config for GoldenView
 let g:goldenview__enable_default_mapping = 0
-" nmap <silent> <Leader>c <Plug>GoldenViewSplit \| :CtrlPBuffer <CR>
-" nmap <silent> <Leader>v <Plug>GoldenViewSwitchToggle
-nmap <silent> <Leader>v <Plug>GoldenViewSwitchMain
 
 " NERDTree configuration
 let NERDTreeIgnore = ['\.pyc$']
