@@ -158,7 +158,7 @@ Plug 'plasticboy/vim-markdown'
 Plug 'davidhalter/jedi-vim'
 
 " Neo complete
-Plug 'Shougo/neocomplete.vim', {'frozen': 1}
+Plug 'Shougo/neocomplete.vim'
 
 " GoldenView for split window resize
 Plug 'zhaocai/GoldenView.Vim'
