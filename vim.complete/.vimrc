@@ -115,6 +115,9 @@ call plug#begin('~/.vim/plugged')
 " CtrlP for searching files, buffer and MRU
 Plug 'kien/ctrlp.vim'
 
+" CtrlP matcher plugin
+Plug 'FelikZ/ctrlp-py-matcher'
+
 " NerdTree for file exploring
 Plug 'scrooloose/nerdtree', {'on': 'NERDTreeToggle'}
 
@@ -130,8 +133,8 @@ Plug 'bling/vim-airline'
 " Tcomment for fast commenting and uncommenting of code
 Plug 'tomtom/tcomment_vim'
 
-" Ack for searching in project
-Plug 'mileszs/ack.vim'
+" Ag for searching in project
+Plug 'rking/ag.vim'
 
 " To diplay content in tabular format
 Plug 'godlygeek/tabular'
@@ -167,6 +170,9 @@ Plug 'zhaocai/GoldenView.Vim'
 " javascript indentation support
 Plug 'pangloss/vim-javascript'
 
+" React jsx syntax support
+Plug 'mxw/vim-jsx'
+
 " julia syntax support for vim
 Plug 'JuliaLang/julia-vim'
 
@@ -183,8 +189,8 @@ nmap <Leader>t :TagbarToggle<CR>
 let g:tagbar_autofocus = 1
 let g:tagbar_left = 1
 
-" Ack config
-noremap <Leader>a :Ack <cword><cr>
+" Ag config
+noremap <Leader>a :Ag <cword><cr>
 
 " Config for vim-markdown
 let g:vim_markdown_folding_disabled=1  " disable fold
@@ -200,6 +206,18 @@ noremap <Leader>f :NERDTreeToggle <CR>
 let g:ctrlp_map = '<Leader>o'
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_working_path_mode = 'a'
+let g:ctrlp_user_command = [
+            \'.git/',
+            \'git ls-files --cached --others  --exclude-standard %s',
+            \'ag %s -i --nocolor --nogroup --hidden
+                  \ --ignore .git
+                  \ --ignore .svn
+                  \ --ignore .hg
+                  \ --ignore .DS_Store
+                  \ --ignore "**/*.pyc"
+                  \ -g ""'
+            \]
+let g:ctrlp_match_func = {'match': 'pymatcher#PyMatch'}
 noremap <Leader>e :CtrlPBuffer <CR>
 noremap <Leader>u :CtrlPMRU <CR>
 nnore <C-W>s :<C-U>sp \| :CtrlPBuffer <CR>
