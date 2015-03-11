@@ -260,6 +260,8 @@ let g:airline_left_alt_sep = ''
 let g:airline_right_sep = ''
 let g:airline_right_alt_sep = ''
 let g:airline#extensions#whitespace#enabled = 0
+let g:airline#extensions#branch#displayed_head_limit = 6
+let g:airline#extensions#branch#format = 1
 let g:airline_theme="base16"
 
 " Trailing Spaces Highlight and Detection for Line/Tabs.
