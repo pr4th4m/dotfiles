@@ -119,7 +119,7 @@ Plug 'kien/ctrlp.vim'
 Plug 'FelikZ/ctrlp-py-matcher'
 
 " NerdTree for file exploring
-Plug 'scrooloose/nerdtree', {'on': 'NERDTreeToggle'}
+" Plug 'scrooloose/nerdtree', {'on': 'NERDTreeToggle'}
 
 " Vim Solarized theme
 Plug 'altercation/vim-colors-solarized'
@@ -202,8 +202,8 @@ let g:vim_markdown_folding_disabled=1  " disable fold
 let g:goldenview__enable_default_mapping = 0
 
 " NERDTree configuration
-let NERDTreeIgnore = ['\.pyc$']
-noremap <Leader>f :NERDTreeToggle <CR>
+" let NERDTreeIgnore = ['\.pyc$']
+" noremap <Leader>f :NERDTreeToggle <CR>
 
 " Settings for CtrlP
 let g:ctrlp_map = '<Leader>o'
