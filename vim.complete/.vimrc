@@ -180,7 +180,7 @@ Plug 'JuliaLang/julia-vim'
 Plug 'wting/rust.vim'
 
 " Alternative file manager
-" Plug 'tpope/vim-vinegar'
+Plug 'tpope/vim-vinegar'
 
 call plug#end()
 filetype plugin indent on    " required
