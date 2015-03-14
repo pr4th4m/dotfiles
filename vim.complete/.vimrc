@@ -29,7 +29,6 @@ nnoremap <c-h> <c-w><c-h>
 set wildmenu
 set wildmode=longest:full,list:full
 
-
 " Undo tree persistent state settings
 set undodir=~/.vim/undodir
 set undofile
@@ -72,6 +71,9 @@ set spell
 nmap <silent> <Leader>s :set spell!<CR>
 " Set region to British English
 set spelllang=en_gb
+
+" Make netrw display line number
+let g:netrw_bufsettings = 'noma nomod nu nobl nowrap ro'
 
 " Cycle through buffers
 nnoremap } :bnext<CR>
