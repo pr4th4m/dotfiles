@@ -179,6 +179,9 @@ Plug 'JuliaLang/julia-vim'
 " rust syntax support for vim
 Plug 'wting/rust.vim'
 
+" Alternative file manager
+" Plug 'tpope/vim-vinegar'
+
 call plug#end()
 filetype plugin indent on    " required
 syntax on
@@ -260,7 +263,7 @@ let g:airline_left_alt_sep = ''
 let g:airline_right_sep = ''
 let g:airline_right_alt_sep = ''
 let g:airline#extensions#whitespace#enabled = 0
-let g:airline#extensions#branch#displayed_head_limit = 6
+let g:airline#extensions#branch#displayed_head_limit = 10
 let g:airline#extensions#branch#format = 1
 let g:airline_theme="base16"
 
