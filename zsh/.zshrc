@@ -13,6 +13,9 @@ else
     export TERM=xterm-256color
 fi
 
+# make vim as default editor
+export EDITOR=vim
+
 # hand full aliases
 alias c='clear'
 
