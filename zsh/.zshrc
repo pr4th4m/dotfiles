@@ -10,6 +10,7 @@ fi
 setopt prompt_subst
 . ~/git-prompt.sh
 export RPROMPT=$'$(__git_ps1 "%s")'
+export PROMPT='%F{green}%n%f@%F{green}%m%f%b:%F{yellow}%~ %b$%B%F{grey}%f%b '
 export GIT_PS1_SHOWDIRTYSTATE=1
 
 # for 256 color support
