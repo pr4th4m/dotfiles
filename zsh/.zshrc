@@ -6,6 +6,12 @@ fi
 
 ##### My Configuration ####
 
+# git status on right prompt
+setopt prompt_subst
+. ~/git-prompt.sh
+export RPROMPT=$'$(__git_ps1 "%s")'
+export GIT_PS1_SHOWDIRTYSTATE=1
+
 # for 256 color support
 if [ -n "$TMUX" ]; then
     export TERM=screen-256color
@@ -46,3 +52,4 @@ fe() { local file; file=$(fzf --query="$1" --select-1 --exit-0); [ -n "$file" ] 
 
 # RiverMeadow vpn pass
 export RM_VPN_PASS='m3adowm@n!'
+
