@@ -208,7 +208,7 @@ let g:goldenview__enable_default_mapping = 0
 " noremap <Leader>f :NERDTreeToggle <CR>
 
 " Settings for CtrlP
-let g:ctrlp_map = '<Leader>o'
+let g:ctrlp_map = '<Leader>f'
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_working_path_mode = 'a'
 let g:ctrlp_user_command = [
