@@ -179,7 +179,7 @@ Plug 'mxw/vim-jsx'
 Plug 'JuliaLang/julia-vim'
 
 " rust syntax support for vim
-Plug 'wting/rust.vim'
+Plug 'rust-lang/rust.vim'
 
 " Alternative file manager
 Plug 'tpope/vim-vinegar'
