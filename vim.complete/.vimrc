@@ -136,7 +136,7 @@ Plug 'bling/vim-airline'
 Plug 'tomtom/tcomment_vim'
 
 " Ag for searching in project
-Plug 'rking/ag.vim'
+Plug 'gabesoft/vim-ags'
 
 " To diplay content in tabular format
 Plug 'godlygeek/tabular'
@@ -195,7 +195,7 @@ let g:tagbar_autofocus = 1
 let g:tagbar_left = 1
 
 " Ag config
-noremap <Leader>a :Ag <cword><cr>
+noremap <Leader>a :Ags <cword><cr>
 
 " Config for vim-markdown
 let g:vim_markdown_folding_disabled=1  " disable fold
