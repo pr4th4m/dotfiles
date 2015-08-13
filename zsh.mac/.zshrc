@@ -10,7 +10,8 @@ fi
 setopt prompt_subst
 . ~/git-prompt.sh
 export RPROMPT=$'%F{blue}$(__git_ps1 "%s")'
-export PROMPT='%F{green}%n%f@%F{green}%m%f%b:%F{yellow}%~ %b$%B%F{grey}%f%b '
+# export PROMPT='%F{green}%n%f@%F{green}%m%f%b:%F{yellow}%~ %b$%B%F{grey}%f%b '
+export PROMPT=':%F{yellow}%~ %b$%B%F{grey}%f%b '
 export GIT_PS1_SHOWDIRTYSTATE=1
 
 # for 256 color support
@@ -27,11 +28,11 @@ export KEYTIMEOUT=1
 # make vim as default editor
 export EDITOR=vim
 
-# hand full aliases
-alias c='clear'
-
 # NOTE: Add new python path
 # as per you requirments.
 # Just a sample of how to do it
 # PYTHONPATH="/home/pratz/Repos:$PYTHONPATH"
 # export PYTHONPATH
+
+# Home brew installation path
+export PATH="/usr/local/bin:$PATH"
