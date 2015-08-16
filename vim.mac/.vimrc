@@ -19,6 +19,9 @@ set relativenumber
 set splitright
 set splitbelow
 
+" Font for macvim
+set guifont=Source\ Code\ Pro\ Light:h15
+
 " Navigate between split windows quickly
 nnoremap <c-j> <c-w><c-j>
 nnoremap <c-k> <c-w><c-k>
