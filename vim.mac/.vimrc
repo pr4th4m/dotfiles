@@ -19,6 +19,9 @@ set relativenumber
 set splitright
 set splitbelow
 
+" Disable scratch pad
+set completeopt-=preview
+
 " Font for macvim
 set guifont=Source\ Code\ Pro\ Light:h15
 
@@ -55,6 +58,7 @@ set directory=~/.vim/swp//
 " paste. At the bottom you should see ``-- INSERT (paste) --``.
 set pastetoggle=<F4>
 set clipboard=unnamed
+set mouse=a
 
 " Rebind <Leader> key
 " I like to have it here becuase it is easier to reach than the default and
@@ -148,7 +152,7 @@ Plug 'godlygeek/tabular'
 Plug 'ivyl/vim-bling'
 
 " To highlight search result
-Plug 'sjl/gundo.vim', {'on': 'GundoToggle'}
+" Plug 'sjl/gundo.vim', {'on': 'GundoToggle'}
 
 " to get matching surround
 Plug 'majutsushi/tagbar'
@@ -159,11 +163,11 @@ Plug 'vim-scripts/matchit.zip'
 " fugitive for git integration
 Plug 'tpope/vim-fugitive'
 
-" for markdown support
-Plug 'plasticboy/vim-markdown'
+" Golang support for vim
+Plug 'fatih/vim-go', { 'for': 'go' }
 
 " jedi for python completion
-Plug 'davidhalter/jedi-vim'
+Plug 'davidhalter/jedi-vim', { 'for': ['py', 'python'] }
 
 " Neo complete
 Plug 'Shougo/neocomplete.vim'
@@ -171,21 +175,24 @@ Plug 'Shougo/neocomplete.vim'
 " GoldenView for split window resize
 Plug 'zhaocai/GoldenView.Vim'
 
-" #### Syntax Plugins ####
-" javascript indentation support
-Plug 'pangloss/vim-javascript'
-
-" React jsx syntax support
-Plug 'mxw/vim-jsx'
-
-" julia syntax support for vim
-Plug 'JuliaLang/julia-vim'
-
-" rust syntax support for vim
-Plug 'rust-lang/rust.vim'
-
 " Alternative file manager
 Plug 'tpope/vim-vinegar'
+
+" #### Syntax Plugins ####
+" for markdown support
+Plug 'plasticboy/vim-markdown', { 'for': ['md', 'markdown'] }
+
+" javascript indentation support
+" Plug 'pangloss/vim-javascript'
+
+" React jsx syntax support
+" Plug 'mxw/vim-jsx'
+
+" julia syntax support for vim
+" Plug 'JuliaLang/julia-vim'
+
+" rust syntax support for vim
+" Plug 'rust-lang/rust.vim'
 
 call plug#end()
 filetype plugin indent on    " required
@@ -238,6 +245,10 @@ let g:jedi#popup_select_first = 0
 let g:jedi#completions_command = "<C-k>"
 let g:jedi#show_call_signatures = "0"
 let g:jedi#completions_enabled=0
+
+" Settings for golang
+noremap <Leader>d :GoDef <CR>
+let g:go_fmt_autosave = 0
 
 " Settings for Neocomplete
 let g:neocomplete#enable_at_startup = 1
