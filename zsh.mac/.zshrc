@@ -34,5 +34,15 @@ export EDITOR=vim
 # PYTHONPATH="/home/pratz/Repos:$PYTHONPATH"
 # export PYTHONPATH
 
+# set virtualenvwrapper path
+export WORKON_HOME=$HOME/.virtualenvs
+source /usr/local/bin/virtualenvwrapper.sh
+
 # Home brew installation path
 export PATH="/usr/local/bin:$PATH"
+
+# point docker client to docker-machine.
+# eval "$(docker-machine env default)"
+
+export GOPATH=$HOME/golang
+export PATH=$PATH:$GOPATH/bin
