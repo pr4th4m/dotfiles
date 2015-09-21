@@ -36,10 +36,10 @@ set wildmenu
 set wildmode=longest:full,list:full
 
 " Undo tree persistent state settings
-set undodir=~/.vim/undodir
-set undofile
-set undolevels=1000 "maximum number of changes that can be undone
-set undoreload=10000 "maximum number lines to save for undo on a buffer reload
+" set undodir=~/.vim/undodir
+" set undofile
+" set undolevels=1000 "maximum number of changes that can be undone
+" set undoreload=10000 "maximum number lines to save for undo on a buffer reload
 
 "Search settings
 set ignorecase

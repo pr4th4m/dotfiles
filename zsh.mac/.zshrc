@@ -1,18 +1,19 @@
+###### zsh goodies #####
+
 # Source Prezto.
 if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 fi
 
-
-##### My Configuration ####
-
 # git status on right prompt
 setopt prompt_subst
-. ~/git-prompt.sh
+source ~/git-prompt.sh
 export RPROMPT=$'%F{blue}$(__git_ps1 "%s")'
-# export PROMPT='%F{green}%n%f@%F{green}%m%f%b:%F{yellow}%~ %b$%B%F{grey}%f%b '
 export PROMPT='%F{yellow}%~ %b$%B%F{grey}%f%b '
 export GIT_PS1_SHOWDIRTYSTATE=1
+
+
+##### vim goodies ####
 
 # for 256 color support
 if [ -n "$TMUX" ]; then
@@ -27,6 +28,7 @@ export KEYTIMEOUT=1
 
 # make vim as default editor
 export EDITOR=vim
+
 
 # NOTE: Add new python path
 # as per you requirments.
