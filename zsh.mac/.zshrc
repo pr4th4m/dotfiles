@@ -11,7 +11,7 @@ setopt prompt_subst
 . ~/git-prompt.sh
 export RPROMPT=$'%F{blue}$(__git_ps1 "%s")'
 # export PROMPT='%F{green}%n%f@%F{green}%m%f%b:%F{yellow}%~ %b$%B%F{grey}%f%b '
-export PROMPT=':%F{yellow}%~ %b$%B%F{grey}%f%b '
+export PROMPT='%F{yellow}%~ %b$%B%F{grey}%f%b '
 export GIT_PS1_SHOWDIRTYSTATE=1
 
 # for 256 color support
@@ -45,4 +45,5 @@ export PATH="/usr/local/bin:$PATH"
 # eval "$(docker-machine env default)"
 
 export GOPATH=$HOME/golang
+export GOBIN=$GOPATH/bin
 export PATH=$PATH:$GOPATH/bin

@@ -238,14 +238,6 @@ noremap <Leader>u :CtrlPMRU <CR>
 nnore <C-W>s :<C-U>sp \| :CtrlPBuffer <CR>
 nnore <C-W>v :<C-U>vsp \| :CtrlPBuffer <CR>
 
-" Settings for Jedi
-let g:jedi#use_tabs_not_buffers = 0
-let g:jedi#popup_on_dot = 0
-let g:jedi#popup_select_first = 0
-let g:jedi#completions_command = "<C-k>"
-let g:jedi#show_call_signatures = "0"
-let g:jedi#completions_enabled=0
-
 " Settings for golang
 noremap <Leader>d :GoDef <CR>
 let g:go_fmt_autosave = 0
@@ -255,6 +247,14 @@ let g:neocomplete#enable_at_startup = 1
 let g:neocomplete#enable_smart_case = 1
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 autocmd FileType python setlocal completeopt-=preview  " avoid sratchpad to display
+
+" Settings for Jedi
+let g:jedi#use_tabs_not_buffers = 0
+let g:jedi#popup_on_dot = 0
+let g:jedi#popup_select_first = 0
+let g:jedi#completions_command = "<C-k>"
+let g:jedi#show_call_signatures = "0"
+let g:jedi#completions_enabled=0
 
 " Syntastic configuration
 let g:syntastic_python_checkers=["pyflakes"]
