@@ -182,6 +182,9 @@ Plug 'tpope/vim-vinegar'
 " for markdown support
 Plug 'plasticboy/vim-markdown', { 'for': ['md', 'markdown'] }
 
+" for yaml support
+Plug 'chase/vim-ansible-yaml', { 'for': ['yml', 'yaml'] }
+
 " javascript indentation support
 " Plug 'pangloss/vim-javascript'
 
