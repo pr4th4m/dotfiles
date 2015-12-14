@@ -19,6 +19,8 @@ set relativenumber
 set splitright
 set splitbelow
 
+" Disable scratch pad
+set completeopt-=preview
 " Navigate between split windows quickly
 nnoremap <c-j> <c-w><c-j>
 nnoremap <c-k> <c-w><c-k>
@@ -30,10 +32,10 @@ set wildmenu
 set wildmode=longest:full,list:full
 
 " Undo tree persistent state settings
-set undodir=~/.vim/undodir
-set undofile
-set undolevels=1000 "maximum number of changes that can be undone
-set undoreload=10000 "maximum number lines to save for undo on a buffer reload
+" set undodir=~/.vim/undodir
+" set undofile
+" set undolevels=1000 "maximum number of changes that can be undone
+" set undoreload=10000 "maximum number lines to save for undo on a buffer reload
 
 "Search settings
 set ignorecase
@@ -52,6 +54,7 @@ set directory=~/.vim/swp//
 " paste. At the bottom you should see ``-- INSERT (paste) --``.
 set pastetoggle=<F4>
 set clipboard=unnamed
+set mouse=a
 
 " Rebind <Leader> key
 " I like to have it here becuase it is easier to reach than the default and
@@ -111,7 +114,7 @@ set foldlevel=1         "this is just what i use
 inoremap # X#
 
 " Package Manger for vim
-" >>>>>>>> Configuration START <<<<<<<<<
+" >>>>>>>> Plugin defination start <<<<<<<<<
 call plug#begin('~/.vim/plugged')
 
 " CtrlP for searching files, buffer and MRU
@@ -145,7 +148,7 @@ Plug 'godlygeek/tabular'
 Plug 'ivyl/vim-bling'
 
 " To highlight search result
-Plug 'sjl/gundo.vim', {'on': 'GundoToggle'}
+" Plug 'sjl/gundo.vim', {'on': 'GundoToggle'}
 
 " to get matching surround
 Plug 'majutsushi/tagbar'
@@ -156,11 +159,11 @@ Plug 'vim-scripts/matchit.zip'
 " fugitive for git integration
 Plug 'tpope/vim-fugitive'
 
-" for markdown support
-Plug 'plasticboy/vim-markdown'
+" Golang support for vim
+Plug 'fatih/vim-go', { 'for': 'go' }
 
 " jedi for python completion
-Plug 'davidhalter/jedi-vim'
+Plug 'davidhalter/jedi-vim', { 'for': ['py', 'python'] }
 
 " Neo complete
 Plug 'Shougo/neocomplete.vim'
@@ -168,26 +171,34 @@ Plug 'Shougo/neocomplete.vim'
 " GoldenView for split window resize
 Plug 'zhaocai/GoldenView.Vim'
 
-" #### Syntax Plugins ####
-" javascript indentation support
-Plug 'pangloss/vim-javascript'
-
-" React jsx syntax support
-Plug 'mxw/vim-jsx'
-
-" julia syntax support for vim
-Plug 'JuliaLang/julia-vim'
-
-" rust syntax support for vim
-Plug 'rust-lang/rust.vim'
-
 " Alternative file manager
 Plug 'tpope/vim-vinegar'
+
+" #### Syntax Plugins ####
+
+" support markdown syntax
+Plug 'plasticboy/vim-markdown', { 'for': ['md', 'markdown'] }
+
+" support yaml syntax
+Plug 'chase/vim-ansible-yaml', { 'for': ['yml', 'yaml'] }
+
+" javascript indentation support
+" Plug 'pangloss/vim-javascript'
+
+" React jsx syntax support
+" Plug 'mxw/vim-jsx'
+
+" julia syntax support for vim
+" Plug 'JuliaLang/julia-vim'
+
+" rust syntax support for vim
+" Plug 'rust-lang/rust.vim'
+
 
 call plug#end()
 filetype plugin indent on    " required
 syntax on
-" >>>>>>>> Configuration for Vundle END <<<<<<<<<
+" >>>>>>>> Plugin configuration end <<<<<<<<<
 
 " config for tagbar
 nmap <Leader>t :TagbarToggle<CR>
@@ -228,6 +239,16 @@ noremap <Leader>u :CtrlPMRU <CR>
 nnore <C-W>s :<C-U>sp \| :CtrlPBuffer <CR>
 nnore <C-W>v :<C-U>vsp \| :CtrlPBuffer <CR>
 
+" Settings for golang
+noremap <Leader>d :GoDef <CR>
+let g:go_fmt_autosave = 0
+
+" Settings for Neocomplete
+let g:neocomplete#enable_at_startup = 1
+let g:neocomplete#enable_smart_case = 1
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+autocmd FileType python setlocal completeopt-=preview  " avoid sratchpad to display
+
 " Settings for Jedi
 let g:jedi#use_tabs_not_buffers = 0
 let g:jedi#popup_on_dot = 0
@@ -236,22 +257,12 @@ let g:jedi#completions_command = "<C-k>"
 let g:jedi#show_call_signatures = "0"
 let g:jedi#completions_enabled=0
 
-" Settings for Neocomplete
-let g:neocomplete#enable_at_startup = 1
-let g:neocomplete#enable_smart_case = 1
-inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-
-" Settings for youcompleteme
-" let g:ycm_autoclose_preview_window_after_completion=1
-" nnoremap <Leader>d :YcmCompleter GoToDefinitionElseDeclaration<CR>
-autocmd FileType python setlocal completeopt-=preview  " avoid sratchpad to display
-
 " Syntastic configuration
 let g:syntastic_python_checkers=["pyflakes"]
 let g:syntastic_python_flake8_args='--ignore=E501,W0401,E702,E126,E128'
 
 " Settings for gundo
-nnoremap <Leader>h :GundoToggle<CR>
+" nnoremap <Leader>h :GundoToggle<CR>
 
 " Config for solarized theme
 syntax enable
