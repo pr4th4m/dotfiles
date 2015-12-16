@@ -19,6 +19,10 @@ set relativenumber
 set splitright
 set splitbelow
 
+" will buffer screens
+" instead of updating
+set lazyredraw
+
 " Disable scratch pad
 set completeopt-=preview
 " Navigate between split windows quickly
@@ -54,7 +58,7 @@ set directory=~/.vim/swp//
 " paste. At the bottom you should see ``-- INSERT (paste) --``.
 set pastetoggle=<F4>
 set clipboard=unnamed
-set mouse=a
+" set mouse=a
 
 " Rebind <Leader> key
 " I like to have it here becuase it is easier to reach than the default and
@@ -174,13 +178,16 @@ Plug 'zhaocai/GoldenView.Vim'
 " Alternative file manager
 Plug 'tpope/vim-vinegar'
 
+" fuzzy search
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+
 " #### Syntax Plugins ####
 
 " support markdown syntax
 Plug 'plasticboy/vim-markdown', { 'for': ['md', 'markdown'] }
 
 " support yaml syntax
-Plug 'chase/vim-ansible-yaml', { 'for': ['yml', 'yaml'] }
+Plug 'chase/vim-ansible-yaml'
 
 " javascript indentation support
 " Plug 'pangloss/vim-javascript'
@@ -219,7 +226,7 @@ let g:goldenview__enable_default_mapping = 0
 " noremap <Leader>f :NERDTreeToggle <CR>
 
 " Settings for CtrlP
-let g:ctrlp_map = '<Leader>f'
+" let g:ctrlp_map = '<Leader>f'
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_working_path_mode = 'a'
 let g:ctrlp_user_command = [
@@ -239,9 +246,13 @@ noremap <Leader>u :CtrlPMRU <CR>
 nnore <C-W>s :<C-U>sp \| :CtrlPBuffer <CR>
 nnore <C-W>v :<C-U>vsp \| :CtrlPBuffer <CR>
 
+" FZF config
+noremap <Leader>f :FZF <cr>
+
 " Settings for golang
 noremap <Leader>d :GoDef <CR>
-let g:go_fmt_autosave = 0
+noremap <Leader>i :GoInstall <CR>
+" let g:go_fmt_autosave = 0
 
 " Settings for Neocomplete
 let g:neocomplete#enable_at_startup = 1
