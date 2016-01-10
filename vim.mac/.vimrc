@@ -178,6 +178,9 @@ Plug 'zhaocai/GoldenView.Vim'
 " Alternative file manager
 Plug 'tpope/vim-vinegar'
 
+" fuzzy search
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+
 " #### Syntax Plugins ####
 " for markdown support
 Plug 'plasticboy/vim-markdown', { 'for': ['md', 'markdown'] }
@@ -221,7 +224,7 @@ let g:goldenview__enable_default_mapping = 0
 " noremap <Leader>f :NERDTreeToggle <CR>
 
 " Settings for CtrlP
-let g:ctrlp_map = '<Leader>f'
+" let g:ctrlp_map = '<Leader>f'
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_working_path_mode = 'a'
 let g:ctrlp_user_command = [
@@ -240,6 +243,9 @@ noremap <Leader>e :CtrlPBuffer <CR>
 noremap <Leader>u :CtrlPMRU <CR>
 nnore <C-W>s :<C-U>sp \| :CtrlPBuffer <CR>
 nnore <C-W>v :<C-U>vsp \| :CtrlPBuffer <CR>
+
+" FZF config
+noremap <Leader>f :FZF <cr>
 
 " Settings for golang
 noremap <Leader>d :GoDef <CR>
