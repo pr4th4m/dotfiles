@@ -45,6 +45,7 @@ source /usr/local/bin/virtualenvwrapper.sh
 export PATH="/usr/local/bin:$PATH"
 
 # Golang path
+export GOROOT=/usr/local/go
 export GOPATH=$HOME/golang
 export GOBIN=$GOPATH/bin
 export PATH=$PATH:$GOPATH/bin
