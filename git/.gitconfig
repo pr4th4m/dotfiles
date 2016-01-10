@@ -1,5 +1,5 @@
 [merge]
-	tool = vimdiff
+	tool = fugitive
 	conflictstyle = diff3
 [mergetool]
 	prompt = false
@@ -9,3 +9,5 @@
 	prompt = false
 [core]
 	editor = vim
+[mergetool "fugitive"]
+	cmd = vim -f -c \"Gvdiff\" \"$MERGED\"
