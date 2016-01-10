@@ -22,6 +22,10 @@ bindkey -M vicmd 'j' history-substring-search-down
 
 ######## Configuration ############
 
+# vi key bindings
+bindkey -v
+export KEYTIMEOUT=1
+
 # for 256 color support
 if [ -n "$TMUX" ]; then
     export TERM=screen-256color
