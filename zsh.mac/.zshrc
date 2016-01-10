@@ -1,8 +1,8 @@
-###### zsh goodies #####
+######## Tools ############
 
-# Source Prezto.
-if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
-  source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
+# Source zim
+if [[ -s ${ZDOTDIR:-${HOME}}/.zim/init.zsh ]]; then
+  source ${ZDOTDIR:-${HOME}}/.zim/init.zsh
 fi
 
 # git status on right prompt
@@ -12,8 +12,15 @@ export RPROMPT=$'%F{blue}$(__git_ps1 "%s")'
 export PROMPT='%F{yellow}%~ %b$%B%F{grey}%f%b '
 export GIT_PS1_SHOWDIRTYSTATE=1
 
+# history-substring bind k and j for VI mode
+bindkey -M vicmd 'k' history-substring-search-up
+bindkey -M vicmd 'j' history-substring-search-down
 
-##### vim goodies ####
+# Fuzzy finder
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+
+######## Configuration ############
 
 # for 256 color support
 if [ -n "$TMUX" ]; then
@@ -22,19 +29,9 @@ else
     export TERM=xterm-256color
 fi
 
-# vi key bindings
-bindkey -v
-export KEYTIMEOUT=1
-
 # make vim as default editor
 export EDITOR=vim
-
-
-# NOTE: Add new python path
-# as per you requirments.
-# Just a sample of how to do it
-# PYTHONPATH="/home/pratz/Repos:$PYTHONPATH"
-# export PYTHONPATH
+export VISUAL=vim
 
 # set virtualenvwrapper path
 export WORKON_HOME=$HOME/.virtualenvs
@@ -43,9 +40,7 @@ source /usr/local/bin/virtualenvwrapper.sh
 # Home brew installation path
 export PATH="/usr/local/bin:$PATH"
 
-# point docker client to docker-machine.
-# eval "$(docker-machine env default)"
-
+# Golang path
 export GOPATH=$HOME/golang
 export GOBIN=$GOPATH/bin
 export PATH=$PATH:$GOPATH/bin
