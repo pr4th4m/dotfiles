@@ -48,4 +48,4 @@ export PATH="/usr/local/bin:$PATH"
 export GOROOT=/usr/local/go
 export GOPATH=$HOME/golang
 export GOBIN=$GOPATH/bin
-export PATH=$PATH:$GOPATH/bin
+export PATH=$PATH:$GOPATH/bin:$GOROOT/bin
