@@ -57,7 +57,10 @@ set directory=~/.vim/swp//
 " When you want to paste large blocks of code into vim, press F4 before you
 " paste. At the bottom you should see ``-- INSERT (paste) --``.
 set pastetoggle=<F4>
-set clipboard=unnamed
+" set clipboard=unnamed
+
+" Fix vim slow startup
+set clipboard=exclude:.*
 " set mouse=a
 
 " Rebind <Leader> key
