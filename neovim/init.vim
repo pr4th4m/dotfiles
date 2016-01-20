@@ -77,6 +77,10 @@ set foldnestmax=10      "deepest fold is 10 levels
 set nofoldenable        "dont fold by default
 set foldlevel=1         "this is just what i use
 
+" this is done because when writing a comment in python code the cursur goes
+" to column 0
+inoremap # X#
+
 " terminal escape
 tnoremap <Leader><Esc> <C-\><C-n>
 
