@@ -40,8 +40,12 @@ export EDITOR=vim
 export WORKON_HOME=$HOME/.virtualenvs
 source /usr/local/bin/virtualenvwrapper.sh
 
-# Golang path
+# Install:
+#   wget https://storage.googleapis.com/golang/go1.5.linux-amd64.tar.gz
+#   sudo tar -C /usr/local -xzf go1.5.linux-amd64.tar.gz
+# Remove
+#   sudo rm -rf /usr/local/go
 export GOROOT=/usr/local/go
-export GOPATH=$HOME/golang
+export GOPATH=$HOME/goworkspace
 export GOBIN=$GOPATH/bin
 export PATH=$PATH:$GOPATH/bin:$GOROOT/bin

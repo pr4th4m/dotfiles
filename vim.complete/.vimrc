@@ -57,10 +57,10 @@ set directory=~/.vim/swp//
 " When you want to paste large blocks of code into vim, press F4 before you
 " paste. At the bottom you should see ``-- INSERT (paste) --``.
 set pastetoggle=<F4>
-" set clipboard=unnamed
+set clipboard=unnamed
 
 " Fix vim slow startup
-set clipboard=exclude:.*
+" set clipboard=exclude:.*
 " set mouse=a
 
 " Rebind <Leader> key
@@ -253,8 +253,9 @@ nnore <C-W>v :<C-U>vsp \| :CtrlPBuffer <CR>
 noremap <Leader>f :FZF <cr>
 
 " Settings for golang
-noremap <Leader>d :GoDef <CR>
-noremap <Leader>i :GoInstall <CR>
+au FileType go nmap <Leader>d <Plug>(go-def)
+au FileType go nmap <Leader>i <Plug>(go-install)
+au FileType go nmap <Leader>k <Plug>(go-doc-vertical)
 " let g:go_fmt_autosave = 0
 
 " Settings for Neocomplete
