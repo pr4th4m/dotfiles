@@ -19,6 +19,10 @@ set relativenumber
 set splitright
 set splitbelow
 
+" will buffer screens
+" instead of updating
+set lazyredraw
+
 " Disable scratch pad
 set completeopt-=preview
 
@@ -113,7 +117,7 @@ set foldnestmax=10      "deepest fold is 10 levels
 set nofoldenable        "dont fold by default
 set foldlevel=1         "this is just what i use
 
-" this is done because when writing a comment in python code the cursur goes
+" this is done because when writing a comment in python code the cursor goes
 " to column 0
 inoremap # X#
 
@@ -126,9 +130,6 @@ Plug 'kien/ctrlp.vim'
 
 " CtrlP matcher plugin
 Plug 'FelikZ/ctrlp-py-matcher'
-
-" NerdTree for file exploring
-" Plug 'scrooloose/nerdtree', {'on': 'NERDTreeToggle'}
 
 " Vim Solarized theme
 Plug 'altercation/vim-colors-solarized'
@@ -150,9 +151,6 @@ Plug 'godlygeek/tabular'
 
 " To highlight search result
 Plug 'ivyl/vim-bling'
-
-" To highlight search result
-" Plug 'sjl/gundo.vim', {'on': 'GundoToggle'}
 
 " to get matching surround
 Plug 'majutsushi/tagbar'
@@ -188,22 +186,10 @@ Plug 'plasticboy/vim-markdown', { 'for': ['md', 'markdown'] }
 " for yaml support
 Plug 'chase/vim-ansible-yaml', { 'for': ['yml', 'yaml'] }
 
-" javascript indentation support
-" Plug 'pangloss/vim-javascript'
-
-" React jsx syntax support
-" Plug 'mxw/vim-jsx'
-
-" julia syntax support for vim
-" Plug 'JuliaLang/julia-vim'
-
-" rust syntax support for vim
-" Plug 'rust-lang/rust.vim'
-
 call plug#end()
 filetype plugin indent on    " required
 syntax on
-" >>>>>>>> Configuration for Vundle END <<<<<<<<<
+" >>>>>>>> Configuration END <<<<<<<<<
 
 " config for tagbar
 nmap <Leader>t :TagbarToggle<CR>
@@ -218,10 +204,6 @@ let g:vim_markdown_folding_disabled=1  " disable fold
 
 " Config for GoldenView
 let g:goldenview__enable_default_mapping = 0
-
-" NERDTree configuration
-" let NERDTreeIgnore = ['\.pyc$']
-" noremap <Leader>f :NERDTreeToggle <CR>
 
 " Settings for CtrlP
 " let g:ctrlp_map = '<Leader>f'
@@ -248,8 +230,10 @@ nnore <C-W>v :<C-U>vsp \| :CtrlPBuffer <CR>
 noremap <Leader>f :FZF <cr>
 
 " Settings for golang
-noremap <Leader>d :GoDef <CR>
-let g:go_fmt_autosave = 0
+au FileType go nmap <Leader>d <Plug>(go-def)
+au FileType go nmap <Leader>i <Plug>(go-install)
+au FileType go nmap <Leader>k <Plug>(go-doc-vertical)
+" let g:go_fmt_autosave = 0
 
 " Settings for Neocomplete
 let g:neocomplete#enable_at_startup = 1
@@ -268,9 +252,6 @@ let g:jedi#completions_enabled=0
 " Syntastic configuration
 let g:syntastic_python_checkers=["pyflakes"]
 let g:syntastic_python_flake8_args='--ignore=E501,W0401,E702,E126,E128'
-
-" Settings for gundo
-nnoremap <Leader>h :GundoToggle<CR>
 
 " Config for solarized theme
 syntax enable
