@@ -190,7 +190,7 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'plasticboy/vim-markdown', { 'for': ['md', 'markdown'] }
 
 " support yaml syntax
-Plug 'chase/vim-ansible-yaml'
+Plug 'chase/vim-ansible-yaml', { 'for': ['yml', 'yaml'] }
 
 " javascript indentation support
 " Plug 'pangloss/vim-javascript'
