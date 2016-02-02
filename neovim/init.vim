@@ -133,6 +133,7 @@ Plug 'davidhalter/jedi-vim', { 'for': ['py', 'python'] }
 
 " Deoplete
 Plug 'Shougo/deoplete.nvim'
+Plug 'zchee/deoplete-go'
 
 " GoldenRatio for split window resize
 Plug 'roman/golden-ratio'
@@ -200,6 +201,7 @@ au FileType go nmap <Leader>r <Plug>(go-run-vertical)
 
 " Settings for Deoplete
 let g:deoplete#enable_at_startup = 1
+let g:deoplete#sources#go = 'vim-go'
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 autocmd FileType python setlocal completeopt-=preview  " avoid sratchpad to display
 
