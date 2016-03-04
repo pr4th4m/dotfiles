@@ -34,7 +34,7 @@ else
 fi
 
 # make vim as default editor
-export EDITOR=vim
+export EDITOR=nvim
 
 # set virtualenvwrapper path
 export WORKON_HOME=$HOME/.virtualenvs

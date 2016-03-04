@@ -8,6 +8,6 @@
 [difftool]
 	prompt = false
 [core]
-	editor = vim
+	editor = nvim
 [mergetool "fugitive"]
-	cmd = vim -f -c \"Gvdiff\" \"$MERGED\"
+	cmd = nvim -f -c \"Gvdiff\" \"$MERGED\"
