@@ -101,7 +101,7 @@ Plug 'FelikZ/ctrlp-py-matcher'
 Plug 'altercation/vim-colors-solarized'
 
 " For syntax checking
-Plug 'scrooloose/syntastic'
+Plug 'benekastah/neomake'
 
 " Airline for fancy vim
 Plug 'vim-airline/vim-airline'
@@ -148,6 +148,9 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 
 " support markdown syntax
 Plug 'plasticboy/vim-markdown', { 'for': ['md', 'markdown'] }
+
+" support yaml syntax
+Plug 'chase/vim-ansible-yaml', { 'for': ['yml', 'yaml'] }
 
 call plug#end()
 filetype plugin indent on    " required
@@ -213,9 +216,8 @@ let g:jedi#completions_command = "<C-k>"
 let g:jedi#show_call_signatures = "0"
 let g:jedi#completions_enabled=0
 
-" Syntastic configuration
-let g:syntastic_python_checkers=["pyflakes"]
-let g:syntastic_python_flake8_args='--ignore=E501,W0401,E702,E126,E128'
+" Neomake configuration
+autocmd! BufWritePost * Neomake
 
 " Config for solarized theme
 syntax enable
@@ -231,7 +233,6 @@ let g:airline_right_alt_sep = ''
 let g:airline#extensions#whitespace#enabled = 0
 let g:airline#extensions#branch#displayed_head_limit = 10
 let g:airline#extensions#branch#format = 1
-" let g:airline_theme="base16"
 
 " Trailing Spaces Highlight and Detection for Line/Tabs.
 highlight ExtraWhitespace ctermbg=red guibg=red
