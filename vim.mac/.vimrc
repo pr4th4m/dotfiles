@@ -138,7 +138,8 @@ Plug 'altercation/vim-colors-solarized'
 Plug 'scrooloose/syntastic'
 
 " Airline for fancy vim
-Plug 'bling/vim-airline'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 
 " Tcomment for fast commenting and uncommenting of code
 Plug 'tomtom/tcomment_vim'
@@ -267,7 +268,7 @@ let g:airline_right_alt_sep = ''
 let g:airline#extensions#whitespace#enabled = 0
 let g:airline#extensions#branch#displayed_head_limit = 10
 let g:airline#extensions#branch#format = 1
-let g:airline_theme="base16"
+" let g:airline_theme="base16"
 
 " Trailing Spaces Highlight and Detection for Line/Tabs.
 highlight ExtraWhitespace ctermbg=red guibg=red
