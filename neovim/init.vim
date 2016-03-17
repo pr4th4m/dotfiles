@@ -95,7 +95,7 @@ call plug#begin('~/.config/nvim/plugged')
 Plug 'kien/ctrlp.vim'
 
 " CtrlP matcher plugin
-Plug 'FelikZ/ctrlp-py-matcher'
+" Plug 'FelikZ/ctrlp-py-matcher'
 
 " Vim Solarized theme
 Plug 'altercation/vim-colors-solarized'
@@ -114,7 +114,7 @@ Plug 'tomtom/tcomment_vim'
 Plug 'gabesoft/vim-ags'
 
 " To highlight search result
-Plug 'ivyl/vim-bling'
+" Plug 'ivyl/vim-bling'
 
 " To get properties of a class
 Plug 'majutsushi/tagbar'
@@ -130,10 +130,11 @@ Plug 'fatih/vim-go', { 'for': 'go' }
 
 " jedi for python completion
 Plug 'davidhalter/jedi-vim', { 'for': ['py', 'python'] }
+Plug 'zchee/deoplete-jedi', { 'for': ['py', 'python'] }
 
 " Deoplete
 Plug 'Shougo/deoplete.nvim'
-Plug 'zchee/deoplete-go'
+Plug 'zchee/deoplete-go', { 'for': ['go'] }
 
 " GoldenRatio for split window resize
 Plug 'roman/golden-ratio'
@@ -205,6 +206,7 @@ au FileType go nmap <Leader>r <Plug>(go-run-vertical)
 " Settings for Deoplete
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#sources#go = 'vim-go'
+let g:deoplete#sources#python = 'jedi-vim'
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 autocmd FileType python setlocal completeopt-=preview  " avoid sratchpad to display
 
