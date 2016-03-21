@@ -95,7 +95,7 @@ call plug#begin('~/.config/nvim/plugged')
 Plug 'kien/ctrlp.vim'
 
 " CtrlP matcher plugin
-" Plug 'FelikZ/ctrlp-py-matcher'
+Plug 'FelikZ/ctrlp-py-matcher'
 
 " Vim Solarized theme
 Plug 'altercation/vim-colors-solarized'
