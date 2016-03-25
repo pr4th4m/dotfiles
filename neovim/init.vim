@@ -11,6 +11,7 @@ set confirm
 set ruler
 set nowrap
 set vb " turn off beep sound
+set number
 set relativenumber
 set clipboard=unnamed
 
@@ -51,7 +52,7 @@ set pastetoggle=<F4>
 let mapleader = "\<Space>"
 
 " Toggle spell checking on and off with `<Leader>s`
-set spell
+" set spell
 nmap <silent> <Leader>s :set spell!<CR>
 
 " Make netrw display line number
