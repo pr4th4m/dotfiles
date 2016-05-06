@@ -1,0 +1,20 @@
+#!/bin/sh
+# Reference : https://thefullsnack.com/creating-virtual-dev-environment-with-xhyve-fe501005fc6c#.9k6nfuon4
+
+# KERNEL="vmlinuz"
+# INITRD="initrd.gz"
+# CMDLINE="earlyprintk=serial console=ttyS0 acpi=off root=/dev/vda5 ro"
+
+KERNEL="boot/vmlinuz-4.4.0-21-generic"
+INITRD="boot/initrd.img-4.4.0-21-generic"
+CMDLINE="earlyprintk=serial console=ttyS0 acpi=off root=/dev/vda1 ro"
+
+UUID="-U a9d43cda-5bda-4285-9411-62b1c0667375"
+MEM="-m 5G"
+NET="-s 2:0,virtio-net"
+IMG_CD="-s 3,ahci-cd,ubuntu-16.04.iso"
+IMG_HDD="-s 30,virtio-blk,hdd.img"
+PCI_DEV="-s 0:0,hostbridge -s 31,lpc"
+LPC_DEV="-l com1,stdio"
+ACPI="-A"
+xhyve $ACPI $MEM $PCI_DEV $LPC_DEV $NET $IMG_CD $IMG_HDD $UUID -f kexec,$KERNEL,$INITRD,"$CMDLINE"
