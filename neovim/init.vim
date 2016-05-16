@@ -141,7 +141,8 @@ Plug 'zchee/deoplete-go', { 'for': ['go'] }
 Plug 'roman/golden-ratio'
 
 " Alternative file manager
-Plug 'tpope/vim-vinegar'
+" Plug 'tpope/vim-vinegar'
+Plug 'justinmk/vim-dirvish'
 
 " fuzzy search
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
