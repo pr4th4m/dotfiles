@@ -114,9 +114,6 @@ Plug 'tomtom/tcomment_vim'
 " Ag for searching in project
 Plug 'gabesoft/vim-ags'
 
-" To highlight search result
-" Plug 'ivyl/vim-bling'
-
 " To get properties of a class
 Plug 'majutsushi/tagbar'
 
@@ -141,8 +138,7 @@ Plug 'zchee/deoplete-go', { 'for': ['go'] }
 Plug 'roman/golden-ratio'
 
 " Alternative file manager
-" Plug 'tpope/vim-vinegar'
-Plug 'justinmk/vim-dirvish'
+Plug 'tpope/vim-vinegar'
 
 " fuzzy search
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -207,6 +203,7 @@ au FileType go nmap <Leader>r <Plug>(go-run-vertical)
 
 " Settings for Deoplete
 let g:deoplete#enable_at_startup = 1
+let g:deoplete#enable_smart_case = 1
 let g:deoplete#sources#go = 'vim-go'
 let g:deoplete#sources#python = 'jedi-vim'
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
