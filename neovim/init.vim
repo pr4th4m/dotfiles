@@ -143,6 +143,9 @@ Plug 'tpope/vim-vinegar'
 " fuzzy search
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 
+" align text
+Plug 'junegunn/vim-easy-align'
+
 " #### Syntax Plugins ####
 
 " support markdown syntax
@@ -203,7 +206,7 @@ au FileType go nmap <Leader>r <Plug>(go-run-vertical)
 
 " Settings for Deoplete
 let g:deoplete#enable_at_startup = 1
-let g:deoplete#enable_smart_case = 1
+let g:deoplete#enable_ignore_case = 1
 let g:deoplete#sources#go = 'vim-go'
 let g:deoplete#sources#python = 'jedi-vim'
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
