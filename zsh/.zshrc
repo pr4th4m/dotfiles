@@ -19,6 +19,8 @@ bindkey -M vicmd 'j' history-substring-search-down
 
 
 ######## Configuration ############
+# directory color fix
+eval `dircolors ~/.dircolors`
 
 # vi key bindings
 bindkey -v

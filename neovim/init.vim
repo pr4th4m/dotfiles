@@ -148,6 +148,9 @@ Plug 'junegunn/vim-easy-align'
 
 " #### Syntax Plugins ####
 
+" support react/jsx
+Plug 'mxw/vim-jsx', { 'for': ['js'] }
+
 " support markdown syntax
 Plug 'plasticboy/vim-markdown', { 'for': ['md', 'markdown'] }
 
