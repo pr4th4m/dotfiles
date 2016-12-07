@@ -14,6 +14,7 @@ set vb " turn off beep sound
 set number
 set relativenumber
 set clipboard=unnamed
+set inccommand=split
 
 " Split to right and below by default
 set splitright
