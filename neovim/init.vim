@@ -105,9 +105,8 @@ Plug 'altercation/vim-colors-solarized'
 " For syntax checking
 Plug 'benekastah/neomake'
 
-" Airline for fancy vim
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+" Lightline for vim status bar
+Plug 'itchyny/lightline.vim'
 
 " Tcomment for fast commenting and uncommenting of code
 Plug 'tomtom/tcomment_vim'
@@ -232,15 +231,10 @@ syntax enable
 set background=dark
 colorscheme solarized
 
-" Settings for vim-airline
-set laststatus=2
-let g:airline_left_sep = ''
-let g:airline_left_alt_sep = ''
-let g:airline_right_sep = ''
-let g:airline_right_alt_sep = ''
-let g:airline#extensions#whitespace#enabled = 0
-let g:airline#extensions#branch#displayed_head_limit = 10
-let g:airline#extensions#branch#format = 1
+" Settings for vim-lightline
+let g:lightline = {
+            \ 'colorscheme': 'solarized',
+            \ }
 
 " Trailing Spaces Highlight and Detection for Line/Tabs.
 highlight ExtraWhitespace ctermbg=red guibg=red
