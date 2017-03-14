@@ -104,6 +104,7 @@ Plug 'altercation/vim-colors-solarized'
 
 " For syntax checking
 Plug 'benekastah/neomake'
+" Plug 'w0rp/ale'
 
 " Lightline for vim status bar
 Plug 'itchyny/lightline.vim'
@@ -149,7 +150,10 @@ Plug 'junegunn/vim-easy-align'
 " #### Syntax Plugins ####
 
 " support react/jsx
-Plug 'mxw/vim-jsx', { 'for': ['js'] }
+" Plug 'mxw/vim-jsx', { 'for': ['js'] }
+
+" typescript
+Plug 'leafgarland/typescript-vim'
 
 " support markdown syntax
 Plug 'plasticboy/vim-markdown', { 'for': ['md', 'markdown'] }
@@ -215,6 +219,9 @@ let g:deoplete#sources#python = 'jedi-vim'
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 autocmd FileType python setlocal completeopt-=preview  " avoid sratchpad to display
 
+" Settings for vim-go
+let g:go_def_mode = 'godef'
+
 " Settings for Jedi
 let g:jedi#use_tabs_not_buffers = 0
 let g:jedi#popup_on_dot = 0
@@ -225,6 +232,10 @@ let g:jedi#completions_enabled=0
 
 " Neomake configuration
 autocmd! BufWritePost * Neomake
+
+" let g:ale_lint_on_enter = 0
+" let g:ale_lint_on_save = 1
+" let g:ale_lint_on_text_changed = 0
 
 " Config for solarized theme
 syntax enable
