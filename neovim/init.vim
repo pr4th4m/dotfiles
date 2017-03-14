@@ -16,6 +16,7 @@ set relativenumber
 set clipboard=unnamed
 set inccommand=split
 
+
 " Split to right and below by default
 set splitright
 set splitbelow
@@ -99,8 +100,13 @@ Plug 'kien/ctrlp.vim'
 " CtrlP matcher plugin
 Plug 'FelikZ/ctrlp-py-matcher'
 
+" Assumption : if TERM not 256 color then its GUI
 " Vim Solarized theme
-Plug 'altercation/vim-colors-solarized'
+if $TERM == "screen-256color"
+    Plug 'altercation/vim-colors-solarized'
+else
+    Plug 'frankier/neovim-colors-solarized-truecolor-only'
+endif
 
 " For syntax checking
 Plug 'benekastah/neomake'
@@ -236,6 +242,11 @@ autocmd! BufWritePost * Neomake
 " let g:ale_lint_on_enter = 0
 " let g:ale_lint_on_save = 1
 " let g:ale_lint_on_text_changed = 0
+
+" Assumption : if TERM not 256 color then its GUI
+if !$TERM == "screen-256color"
+    set termguicolors
+endif
 
 " Config for solarized theme
 syntax enable
