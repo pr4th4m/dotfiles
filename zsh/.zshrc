@@ -1,7 +1,17 @@
-# Source zim
-if [[ -s ${ZDOTDIR:-${HOME}}/.zim/init.zsh ]]; then
-  source ${ZDOTDIR:-${HOME}}/.zim/init.zsh
-fi
+#### zPlug - zsh plugin manager ####
+source ~/.zplug/init.zsh
+
+# Command completions
+zplug "zsh-users/zsh-completions"
+
+# Syntax highlighting for commands
+zplug "zsh-users/zsh-syntax-highlighting"
+
+# Quickly search history
+zplug "zsh-users/zsh-history-substring-search", defer:2
+
+zplug load
+#### zPlug ####
 
 # git status on right prompt
 setopt prompt_subst
@@ -17,14 +27,16 @@ bindkey -M vicmd 'j' history-substring-search-down
 # Fuzzy finder
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-
 ######## Configuration ############
 # directory color fix
-eval `dircolors ~/.dircolors`
+# eval `dircolors ~/.dircolors`
+alias ls='ls -G --color'
+alias ll='ls -lh'
 
 # vi key bindings
 bindkey -v
 export KEYTIMEOUT=1
+zstyle ':completion:*' matcher-list 'm:{[:lower:]}={[:upper:]}'
 
 # for 256 color support
 if [ -n "$TMUX" ]; then
