@@ -29,14 +29,27 @@ bindkey -M vicmd 'j' history-substring-search-down
 
 ######## Configuration ############
 # directory color fix
-# eval `dircolors ~/.dircolors`
-alias ls='ls -G --color'
-alias ll='ls -lh'
+eval `dircolors ~/.dircolors`
 
 # vi key bindings
 bindkey -v
 export KEYTIMEOUT=1
+
+# history
+export HISTFILE="$HOME/.zsh_history"
+export HISTSIZE=10000000
+export SAVEHIST=10000000
+setopt INC_APPEND_HISTORY
+setopt SHARE_HISTORY
+setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_SAVE_NO_DUPS
+
+# case in-sensitive completion
 zstyle ':completion:*' matcher-list 'm:{[:lower:]}={[:upper:]}'
+
+# useful alias
+alias ls='ls -G --color'
+alias ll='ls -lh'
 
 # for 256 color support
 if [ -n "$TMUX" ]; then
