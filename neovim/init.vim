@@ -105,6 +105,7 @@ Plug 'FelikZ/ctrlp-py-matcher'
 if $TERM == "screen-256color"
     Plug 'altercation/vim-colors-solarized'
 else
+    Plug 'altercation/vim-colors-solarized'
     Plug 'frankier/neovim-colors-solarized-truecolor-only'
 endif
 
@@ -145,7 +146,8 @@ Plug 'zchee/deoplete-go', { 'for': ['go'] }
 Plug 'roman/golden-ratio'
 
 " Alternative file manager
-Plug 'tpope/vim-vinegar'
+" Plug 'tpope/vim-vinegar'
+Plug 'justinmk/vim-dirvish'
 
 " fuzzy search
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -237,7 +239,9 @@ let g:jedi#show_call_signatures = "0"
 let g:jedi#completions_enabled=0
 
 " Neomake configuration
+let g:neomake_python_flake8_maker = {'args': ['--ignore=E128,E501,E124,E123,E126,E402,E702']}
 autocmd! BufWritePost * Neomake
+
 
 " let g:ale_lint_on_enter = 0
 " let g:ale_lint_on_save = 1
