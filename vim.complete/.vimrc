@@ -140,8 +140,7 @@ Plug 'altercation/vim-colors-solarized'
 Plug 'scrooloose/syntastic'
 
 " Airline for fancy vim
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+Plug 'itchyny/lightline.vim'
 
 " Tcomment for fast commenting and uncommenting of code
 Plug 'tomtom/tcomment_vim'
@@ -154,9 +153,6 @@ Plug 'godlygeek/tabular'
 
 " To highlight search result
 Plug 'ivyl/vim-bling'
-
-" To highlight search result
-" Plug 'sjl/gundo.vim', {'on': 'GundoToggle'}
 
 " to get matching surround
 Plug 'majutsushi/tagbar'
@@ -180,7 +176,7 @@ Plug 'Shougo/neocomplete.vim'
 Plug 'zhaocai/GoldenView.Vim'
 
 " Alternative file manager
-Plug 'tpope/vim-vinegar'
+Plug 'justinmk/vim-dirvish'
 
 " fuzzy search
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -192,18 +188,6 @@ Plug 'plasticboy/vim-markdown', { 'for': ['md', 'markdown'] }
 
 " support yaml syntax
 Plug 'chase/vim-ansible-yaml', { 'for': ['yml', 'yaml'] }
-
-" javascript indentation support
-" Plug 'pangloss/vim-javascript'
-
-" React jsx syntax support
-" Plug 'mxw/vim-jsx'
-
-" julia syntax support for vim
-" Plug 'JuliaLang/julia-vim'
-
-" rust syntax support for vim
-" Plug 'rust-lang/rust.vim'
 
 
 call plug#end()
@@ -284,6 +268,11 @@ let g:syntastic_python_flake8_args='--ignore=E501,W0401,E702,E126,E128'
 syntax enable
 set background=dark
 colorscheme solarized
+
+" Settings for vim-lightline
+let g:lightline = {
+            \ 'colorscheme': 'solarized',
+            \ }
 
 " Settings for vim-airline
 set laststatus=2
