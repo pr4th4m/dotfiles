@@ -138,8 +138,7 @@ Plug 'altercation/vim-colors-solarized'
 Plug 'scrooloose/syntastic'
 
 " Airline for fancy vim
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+Plug 'itchyny/lightline.vim'
 
 " Tcomment for fast commenting and uncommenting of code
 Plug 'tomtom/tcomment_vim'
@@ -175,7 +174,8 @@ Plug 'Shougo/neocomplete.vim'
 Plug 'zhaocai/GoldenView.Vim'
 
 " Alternative file manager
-Plug 'tpope/vim-vinegar'
+" Plug 'tpope/vim-vinegar'
+Plug 'justinmk/vim-dirvish'
 
 " fuzzy search
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -258,6 +258,11 @@ let g:syntastic_python_flake8_args='--ignore=E501,W0401,E702,E126,E128'
 syntax enable
 set background=dark
 colorscheme solarized
+
+" Settings for vim-lightline
+let g:lightline = {
+            \ 'colorscheme': 'solarized',
+            \ }
 
 " Settings for vim-airline
 set laststatus=2
