@@ -55,7 +55,8 @@ let mapleader = "\<Space>"
 
 " Toggle spell checking on and off with `<Leader>s`
 " set spell
-nmap <silent> <Leader>s :set spell!<CR>
+" nmap <silent> <Leader>s :set spell!<CR>
+nmap <silent> <F5> :set spell!<CR>
 
 " Make netrw display line number
 let g:netrw_bufsettings = 'noma nomod nu nobl nowrap ro'
@@ -94,12 +95,6 @@ nnoremap <Leader>o :below 10vsp term://$SHELL<cr>i
 " >>>>>>>> Plugin defination start <<<<<<<<<
 call plug#begin('~/.config/nvim/plugged')
 
-" CtrlP for searching files, buffer and MRU
-Plug 'kien/ctrlp.vim'
-
-" CtrlP matcher plugin
-Plug 'FelikZ/ctrlp-py-matcher'
-
 " Assumption : if TERM not 256 color then its GUI
 " Vim Solarized theme
 if $TERM == "screen-256color"
@@ -111,7 +106,6 @@ endif
 
 " For syntax checking
 Plug 'benekastah/neomake'
-" Plug 'w0rp/ale'
 
 " Lightline for vim status bar
 Plug 'itchyny/lightline.vim'
@@ -151,6 +145,7 @@ Plug 'justinmk/vim-dirvish'
 
 " fuzzy search
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
 
 " align text
 Plug 'junegunn/vim-easy-align'
@@ -162,6 +157,7 @@ Plug 'junegunn/vim-easy-align'
 
 " typescript
 Plug 'leafgarland/typescript-vim'
+Plug 'mhartington/nvim-typescript'
 
 " support markdown syntax
 Plug 'plasticboy/vim-markdown', { 'for': ['md', 'markdown'] }
@@ -178,7 +174,7 @@ syntax on
 map B Oimport ipdb; ipdb.set_trace()  # BREAKPOINT<C-c>
 
 " config for tagbar
-nmap <Leader>t :TagbarToggle<CR>
+" nmap <Leader>t :TagbarToggle<CR>
 let g:tagbar_autofocus = 1
 let g:tagbar_left = 1
 
@@ -188,36 +184,13 @@ noremap <Leader>a :Ags <cword><cr>
 " Config for vim-markdown
 let g:vim_markdown_folding_disabled=1  " disable fold
 
-" Settings for CtrlP
-" let g:ctrlp_map = '<Leader>f'
-let g:ctrlp_cmd = 'CtrlP'
-let g:ctrlp_working_path_mode = 'a'
-let g:ctrlp_user_command = [
-            \'.git/',
-            \'git ls-files --cached --others  --exclude-standard %s',
-            \'ag %s -i --nocolor --nogroup --hidden
-                  \ --ignore .git
-                  \ --ignore .svn
-                  \ --ignore .hg
-                  \ --ignore .DS_Store
-                  \ --ignore "**/*.pyc"
-                  \ -g ""'
-            \]
-let g:ctrlp_match_func = {'match': 'pymatcher#PyMatch'}
-noremap <Leader>e :CtrlPBuffer <CR>
-noremap <Leader>u :CtrlPMRU <CR>
-nnore <C-W>s :<C-U>sp \| :CtrlPBuffer <CR>
-nnore <C-W>v :<C-U>vsp \| :CtrlPBuffer <CR>
-
 " FZF config
-noremap <Leader>f :FZF <cr>
-
-" Settings for golang
-au FileType go nmap <Leader>d <Plug>(go-def)
-au FileType go nmap <Leader>i <Plug>(go-install)
-au FileType go nmap <Leader>k <Plug>(go-doc-vertical)
-au FileType go nmap <Leader>r <Plug>(go-run-vertical)
-" let g:go_fmt_autosave = 0
+noremap <Leader>f :Files <cr>
+noremap <Leader>e :Buffers <cr>
+noremap <Leader>r :History <cr>
+noremap <Leader>t :Tags<CR>
+nnore <C-W>s :<C-U>sp \| :Buffers <CR>
+nnore <C-W>v :<C-U>vsp \| :Buffers <CR>
 
 " Settings for Deoplete
 let g:deoplete#enable_at_startup = 1
@@ -229,6 +202,11 @@ autocmd FileType python setlocal completeopt-=preview  " avoid sratchpad to disp
 
 " Settings for vim-go
 let g:go_def_mode = 'godef'
+au FileType go nmap <Leader>d <Plug>(go-def)
+au FileType go nmap <Leader>i <Plug>(go-install)
+au FileType go nmap <Leader>k <Plug>(go-doc-vertical)
+au FileType go nmap <Leader>r <Plug>(go-run-vertical)
+" let g:go_fmt_autosave = 0
 
 " Settings for Jedi
 let g:jedi#use_tabs_not_buffers = 0
@@ -241,11 +219,6 @@ let g:jedi#completions_enabled=0
 " Neomake configuration
 let g:neomake_python_flake8_maker = {'args': ['--ignore=E128,E501,E124,E123,E126,E402,E702']}
 autocmd! BufWritePost * Neomake
-
-
-" let g:ale_lint_on_enter = 0
-" let g:ale_lint_on_save = 1
-" let g:ale_lint_on_text_changed = 0
 
 " Assumption : if TERM not 256 color then its GUI
 if !$TERM == "screen-256color"
