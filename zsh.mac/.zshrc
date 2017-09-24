@@ -68,13 +68,17 @@ export VISUAL=nvim
 # Home brew installation path
 export PATH="/usr/local/bin:$PATH"
 
+# Set python path for user workspace
+# NOTE: pip install <package> --user
+export PATH="$HOME/Library/Python/2.7/bin:$PATH"
+
 # set virtualenvwrapper path
 export WORKON_HOME=$HOME/.virtualenvs
 # TODO: virtualenvwrapper makes zsh very slow
-# source /usr/local/bin/virtualenvwrapper.sh
+# source $HOME/Library/Python/2.7/bin/virtualenvwrapper.sh
 
 # Golang path
 export GOROOT=/usr/local/go
-export GOPATH=$HOME/golang
+export GOPATH=$HOME/goworkspace
 export GOBIN=$GOPATH/bin
 export PATH=$PATH:$GOPATH/bin:$GOROOT/bin
