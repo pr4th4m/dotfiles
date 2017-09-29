@@ -15,6 +15,7 @@ set number
 set relativenumber
 set clipboard=unnamed
 set inccommand=split
+set guicursor=""
 
 
 " Split to right and below by default
@@ -188,7 +189,8 @@ let g:vim_markdown_folding_disabled=1  " disable fold
 noremap <Leader>f :Files <cr>
 noremap <Leader>e :Buffers <cr>
 noremap <Leader>r :History <cr>
-noremap <Leader>t :Tags<CR>
+" noremap <Leader>t :Tags<CR>
+noremap <Leader>t :TagbarToggle<CR>
 nnore <C-W>s :<C-U>sp \| :Buffers <CR>
 nnore <C-W>v :<C-U>vsp \| :Buffers <CR>
 
@@ -218,6 +220,7 @@ let g:jedi#completions_enabled=0
 
 " Neomake configuration
 let g:neomake_python_flake8_maker = {'args': ['--ignore=E128,E501,E124,E123,E126,E402,E702']}
+let g:neomake_go_gometalinter_args = ['--disable-all']
 autocmd! BufWritePost * Neomake
 
 " Assumption : if TERM not 256 color then its GUI
