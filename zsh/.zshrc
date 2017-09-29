@@ -1,6 +1,9 @@
 #### zPlug - zsh plugin manager ####
 source ~/.zplug/init.zsh
 
+# Self update zplug
+zplug 'zplug/zplug', hook-build:'zplug --self-manage'
+
 # Command completions
 zplug "zsh-users/zsh-completions"
 
@@ -37,8 +40,8 @@ export KEYTIMEOUT=1
 
 # history
 export HISTFILE="$HOME/.zsh_history"
-export HISTSIZE=10000000
-export SAVEHIST=10000000
+export HISTSIZE=1000000
+export SAVEHIST=1000000
 setopt INC_APPEND_HISTORY
 setopt SHARE_HISTORY
 setopt HIST_IGNORE_ALL_DUPS
@@ -61,9 +64,12 @@ fi
 # make vim as default editor
 export EDITOR=nvim
 
+#### Required paths #####
+
 # set virtualenvwrapper path
 export WORKON_HOME=$HOME/.virtualenvs
-source /usr/local/bin/virtualenvwrapper.sh
+# TODO: Figure out why virtualenvwrapper makes zsh very slow
+# source /usr/local/bin/virtualenvwrapper.sh
 
 # Install:
 #   wget https://storage.googleapis.com/golang/go1.5.linux-amd64.tar.gz

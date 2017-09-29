@@ -1,6 +1,9 @@
 #### zPlug - zsh plugin manager ####
 source ~/.zplug/init.zsh
 
+# Self update zplug
+zplug 'zplug/zplug', hook-build:'zplug --self-manage'
+
 # Command completions
 zplug "zsh-users/zsh-completions"
 
