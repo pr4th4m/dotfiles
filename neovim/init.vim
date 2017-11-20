@@ -98,7 +98,7 @@ call plug#begin('~/.config/nvim/plugged')
 
 " Assumption : if TERM not 256 color then its GUI
 " Vim Solarized theme
-if $TERM == "screen-256color"
+if $TERM == "tmux-256color"
     Plug 'altercation/vim-colors-solarized'
 else
     Plug 'altercation/vim-colors-solarized'
@@ -106,7 +106,8 @@ else
 endif
 
 " For syntax checking
-Plug 'benekastah/neomake'
+" Plug 'benekastah/neomake'
+Plug 'w0rp/ale'
 
 " Lightline for vim status bar
 Plug 'itchyny/lightline.vim'
@@ -115,7 +116,8 @@ Plug 'itchyny/lightline.vim'
 Plug 'tomtom/tcomment_vim'
 
 " Ag for searching in project
-Plug 'gabesoft/vim-ags'
+" Plug 'gabesoft/vim-ags'
+Plug 'jremmen/vim-ripgrep'
 
 " To get properties of a class
 Plug 'majutsushi/tagbar'
@@ -142,7 +144,8 @@ Plug 'roman/golden-ratio'
 
 " Alternative file manager
 " Plug 'tpope/vim-vinegar'
-Plug 'justinmk/vim-dirvish'
+" Plug 'justinmk/vim-dirvish'
+Plug 'cocopon/vaffle.vim'
 
 " fuzzy search
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -180,10 +183,16 @@ let g:tagbar_autofocus = 1
 let g:tagbar_left = 1
 
 " Ag config
-noremap <Leader>a :Ags <cword><cr>
+" noremap <Leader>a :Ags <cword><cr>
+noremap <Leader>a :Rg <cword><cr>
 
 " Config for vim-markdown
 let g:vim_markdown_folding_disabled=1  " disable fold
+
+" Settings for Vaffle
+" Open Vaffle with dash
+nnoremap - :execute 'Vaffle ' . ((strlen(bufname('')) == 0) ? '.' : '%:h') <CR>
+let g:vaffle_force_delete = 1 " delete directory with files
 
 " FZF config
 noremap <Leader>f :Files <cr>
@@ -205,9 +214,9 @@ autocmd FileType python setlocal completeopt-=preview  " avoid sratchpad to disp
 " Settings for vim-go
 let g:go_def_mode = 'godef'
 au FileType go nmap <Leader>d <Plug>(go-def)
-au FileType go nmap <Leader>i <Plug>(go-install)
+" au FileType go nmap <Leader>i <Plug>(go-install)
 au FileType go nmap <Leader>k <Plug>(go-doc-vertical)
-au FileType go nmap <Leader>r <Plug>(go-run-vertical)
+" au FileType go nmap <Leader>r <Plug>(go-run-vertical)
 " let g:go_fmt_autosave = 0
 
 " Settings for Jedi
@@ -219,12 +228,20 @@ let g:jedi#show_call_signatures = "0"
 let g:jedi#completions_enabled=0
 
 " Neomake configuration
-let g:neomake_python_flake8_maker = {'args': ['--ignore=E128,E501,E124,E123,E126,E402,E702']}
-let g:neomake_go_gometalinter_args = ['--disable-all']
-autocmd! BufWritePost * Neomake
+" let g:neomake_python_flake8_maker = {'args': ['--ignore=E128,E501,E124,E123,E126,E402,E702']}
+" let g:neomake_go_gometalinter_args = ['--disable-all']
+" autocmd! BufWritePost * Neomake
+
+let g:ale_lint_on_text_changed = 'never'
+let g:ale_lint_on_enter = 0
+let g:ale_linters = {'go': ['gofmt', 'go vet', 'golint', 'go build'], 'python': ['flake8']}
+let g:ale_python_flake8_options = '--ignore=E128,E501,E124,E123,E126,E402,E702'
+" Use quickfix instead of locationlist
+let g:ale_set_loclist = 0
+let g:ale_set_quickfix = 1
 
 " Assumption : if TERM not 256 color then its GUI
-if !$TERM == "screen-256color"
+if !$TERM == "tmux-256color"
     set termguicolors
 endif
 

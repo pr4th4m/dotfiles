@@ -56,7 +56,7 @@ alias ll='ls -lh'
 
 # for 256 color support
 if [ -n "$TMUX" ]; then
-    export TERM=screen-256color
+    export TERM=tmux-256color
 else
     export TERM=xterm-256color
 fi
@@ -64,7 +64,14 @@ fi
 # make vim as default editor
 export EDITOR=nvim
 
+# Let fzf use rg
+export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow --glob "!.git/*"'
+
 #### Required paths #####
+
+# Set python path for user installation
+# When installed with `pip install <package> --user`
+export PATH="$HOME/.local/bin:$PATH"
 
 # set virtualenvwrapper path
 export WORKON_HOME=$HOME/.virtualenvs
