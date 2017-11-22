@@ -145,7 +145,9 @@ Plug 'roman/golden-ratio'
 " Alternative file manager
 " Plug 'tpope/vim-vinegar'
 " Plug 'justinmk/vim-dirvish'
-Plug 'cocopon/vaffle.vim'
+" Plug 'cocopon/vaffle.vim'
+Plug 'francoiscabrol/ranger.vim'
+Plug 'rbgrouleff/bclose.vim'
 
 " fuzzy search
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -191,8 +193,10 @@ let g:vim_markdown_folding_disabled=1  " disable fold
 
 " Settings for Vaffle
 " Open Vaffle with dash
-nnoremap - :execute 'Vaffle ' . ((strlen(bufname('')) == 0) ? '.' : '%:h') <CR>
-let g:vaffle_force_delete = 1 " delete directory with files
+" nnoremap - :execute 'Vaffle ' . ((strlen(bufname('')) == 0) ? '.' : '%:h') <CR>
+" let g:vaffle_force_delete = 1 " delete directory with files
+let g:ranger_map_keys = 0
+nnoremap - :Ranger<CR>
 
 " FZF config
 noremap <Leader>f :Files <cr>
