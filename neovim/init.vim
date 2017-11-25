@@ -17,7 +17,6 @@ set clipboard=unnamed
 set inccommand=split
 set guicursor=""
 
-
 " Split to right and below by default
 set splitright
 set splitbelow
@@ -27,6 +26,9 @@ set lazyredraw
 
 " Disable scratch pad
 set completeopt-=preview
+
+" To make nvim faster, not exactly sure though.
+set noshowcmd noruler
 
 " Navigate between split windows quickly
 nnoremap <c-j> <c-w><c-j>
