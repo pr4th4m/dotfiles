@@ -27,7 +27,7 @@ set lazyredraw
 set completeopt-=preview
 
 " Font for macvim
-set guifont=Source\ Code\ Pro\ Light:h15
+set guifont=Source\ Code\ Pro\ Light:h16
 
 " Navigate between split windows quickly
 nnoremap <c-j> <c-w><c-j>

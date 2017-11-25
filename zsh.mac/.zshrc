@@ -71,6 +71,9 @@ export VISUAL=nvim
 # Home brew installation path
 export PATH="/usr/local/bin:$PATH"
 
+# Rust package manager
+export PATH="$HOME/.cargo/bin:$PATH"
+
 # Set python path for user workspace
 # NOTE: pip install <package> --user
 export PATH="$HOME/Library/Python/2.7/bin:$PATH"
