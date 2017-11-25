@@ -100,7 +100,7 @@ call plug#begin('~/.config/nvim/plugged')
 
 " Assumption : if TERM not 256 color then its GUI
 " Vim Solarized theme
-if $TERM == "tmux-256color"
+if $TERM == "screen-256color"
     Plug 'altercation/vim-colors-solarized'
 else
     Plug 'altercation/vim-colors-solarized'
@@ -247,7 +247,7 @@ let g:ale_set_loclist = 0
 let g:ale_set_quickfix = 1
 
 " Assumption : if TERM not 256 color then its GUI
-if !$TERM == "tmux-256color"
+if !$TERM == "screen-256color"
     set termguicolors
 endif
 
