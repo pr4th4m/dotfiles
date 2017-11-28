@@ -56,7 +56,7 @@ alias ll='ls -lh'
 
 # for 256 color support
 if [ -n "$TMUX" ]; then
-    export TERM=tmux-256color
+    export TERM=screen-256color
 else
     export TERM=xterm-256color
 fi
