@@ -52,7 +52,6 @@ zstyle ':completion:*' matcher-list 'm:{[:lower:]}={[:upper:]}'
 # useful alias
 alias ls='ls -G'
 alias ll='ls -lh'
-alias nvim='reattach-to-user-namespace -l nvim' # fix tmux/osx copy issue
 
 # for 256 color support
 if [ -n "$TMUX" ]; then
@@ -77,6 +76,7 @@ export PATH="$HOME/.cargo/bin:$PATH"
 # Set python path for user workspace
 # NOTE: pip install <package> --user
 export PATH="$HOME/Library/Python/2.7/bin:$PATH"
+export PATH="$HOME/Library/Python/3.5/bin:$PATH"
 
 # set virtualenvwrapper path
 export WORKON_HOME=$HOME/.virtualenvs

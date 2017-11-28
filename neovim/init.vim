@@ -98,17 +98,11 @@ nnoremap <Leader>o :below 10vsp term://$SHELL<cr>i
 " >>>>>>>> Plugin defination start <<<<<<<<<
 call plug#begin('~/.config/nvim/plugged')
 
-" Assumption : if TERM not 256 color then its GUI
-" Vim Solarized theme
-if $TERM == "screen-256color"
-    Plug 'altercation/vim-colors-solarized'
-else
-    Plug 'altercation/vim-colors-solarized'
-    Plug 'frankier/neovim-colors-solarized-truecolor-only'
-endif
+" One dark colorscheme
+Plug 'joshdick/onedark.vim'
+Plug 'sheerun/vim-polyglot'
 
 " For syntax checking
-" Plug 'benekastah/neomake'
 Plug 'w0rp/ale'
 
 " Lightline for vim status bar
@@ -118,7 +112,6 @@ Plug 'itchyny/lightline.vim'
 Plug 'tomtom/tcomment_vim'
 
 " Ag for searching in project
-" Plug 'gabesoft/vim-ags'
 Plug 'jremmen/vim-ripgrep'
 
 " To get properties of a class
@@ -145,9 +138,6 @@ Plug 'zchee/deoplete-go', { 'for': ['go'] }
 Plug 'roman/golden-ratio'
 
 " Alternative file manager
-" Plug 'tpope/vim-vinegar'
-" Plug 'justinmk/vim-dirvish'
-" Plug 'cocopon/vaffle.vim'
 Plug 'francoiscabrol/ranger.vim'
 Plug 'rbgrouleff/bclose.vim'
 
@@ -159,19 +149,9 @@ Plug 'junegunn/fzf.vim'
 Plug 'junegunn/vim-easy-align'
 
 " #### Syntax Plugins ####
-
-" support react/jsx
-" Plug 'mxw/vim-jsx', { 'for': ['js'] }
-
 " typescript
 Plug 'leafgarland/typescript-vim'
 Plug 'mhartington/nvim-typescript'
-
-" support markdown syntax
-Plug 'plasticboy/vim-markdown', { 'for': ['md', 'markdown'] }
-
-" support yaml syntax
-Plug 'chase/vim-ansible-yaml', { 'for': ['yml', 'yaml'] }
 
 call plug#end()
 filetype plugin indent on    " required
@@ -182,16 +162,13 @@ syntax on
 map B Oimport ipdb; ipdb.set_trace()  # BREAKPOINT<C-c>
 
 " config for tagbar
-" nmap <Leader>t :TagbarToggle<CR>
+nmap <Leader>t :TagbarToggle<CR>
 let g:tagbar_autofocus = 1
 let g:tagbar_left = 1
 
 " Ag config
 " noremap <Leader>a :Ags <cword><cr>
 noremap <Leader>a :Rg <cword><cr>
-
-" Config for vim-markdown
-let g:vim_markdown_folding_disabled=1  " disable fold
 
 " Settings for Vaffle
 " Open Vaffle with dash
@@ -205,7 +182,6 @@ noremap <Leader>f :Files <cr>
 noremap <Leader>e :Buffers <cr>
 noremap <Leader>r :History <cr>
 " noremap <Leader>t :Tags<CR>
-noremap <Leader>t :TagbarToggle<CR>
 nnore <C-W>s :<C-U>sp \| :Buffers <CR>
 nnore <C-W>v :<C-U>vsp \| :Buffers <CR>
 
@@ -220,8 +196,8 @@ autocmd FileType python setlocal completeopt-=preview  " avoid sratchpad to disp
 " Settings for vim-go
 let g:go_def_mode = 'godef'
 au FileType go nmap <Leader>d <Plug>(go-def)
-" au FileType go nmap <Leader>i <Plug>(go-install)
 au FileType go nmap <Leader>k <Plug>(go-doc-vertical)
+" au FileType go nmap <Leader>i <Plug>(go-install)
 " au FileType go nmap <Leader>r <Plug>(go-run-vertical)
 " let g:go_fmt_autosave = 0
 
@@ -233,11 +209,7 @@ let g:jedi#completions_command = "<C-k>"
 let g:jedi#show_call_signatures = "0"
 let g:jedi#completions_enabled=0
 
-" Neomake configuration
-" let g:neomake_python_flake8_maker = {'args': ['--ignore=E128,E501,E124,E123,E126,E402,E702']}
-" let g:neomake_go_gometalinter_args = ['--disable-all']
-" autocmd! BufWritePost * Neomake
-
+" Ale settings
 let g:ale_lint_on_text_changed = 'never'
 let g:ale_lint_on_enter = 0
 let g:ale_linters = {'go': ['gofmt', 'go vet', 'golint', 'go build'], 'python': ['flake8']}
@@ -246,19 +218,30 @@ let g:ale_python_flake8_options = '--ignore=E128,E501,E124,E123,E126,E402,E702'
 let g:ale_set_loclist = 0
 let g:ale_set_quickfix = 1
 
-" Assumption : if TERM not 256 color then its GUI
-if !$TERM == "screen-256color"
-    set termguicolors
+"Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
+"If you're using tmux version 2.2 or later, you can remove the outermost $TMUX check and use tmux's 24-bit color support
+"(see < http://sunaku.github.io/tmux-24bit-color.html#usage > for more information.)
+if (has("nvim"))
+  "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
+  let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+endif
+"For Neovim > 0.1.5 and Vim > patch 7.4.1799 < https://github.com/vim/vim/commit/61be73bb0f965a895bfb064ea3e55476ac175162 >
+"Based on Vim patch 7.4.1770 (`guicolors` option) < https://github.com/vim/vim/commit/8a633e3427b47286869aa4b96f2bfc1fe65b25cd >
+" < https://github.com/neovim/neovim/wiki/Following-HEAD#20160511 >
+if (has("termguicolors"))
+  set termguicolors
 endif
 
 " Config for solarized theme
+let g:onedark_termcolors=256
+let g:onedark_terminal_italics=1
 syntax enable
 set background=dark
-colorscheme solarized
+colorscheme onedark
 
 " Settings for vim-lightline
 let g:lightline = {
-            \ 'colorscheme': 'solarized',
+            \ 'colorscheme': 'onedark',
             \ }
 
 " Trailing Spaces Highlight and Detection for Line/Tabs.
