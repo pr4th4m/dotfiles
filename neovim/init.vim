@@ -128,11 +128,12 @@ Plug 'fatih/vim-go', { 'for': 'go' }
 
 " jedi for python completion
 Plug 'davidhalter/jedi-vim', { 'for': ['py', 'python'] }
-Plug 'zchee/deoplete-jedi', { 'for': ['py', 'python'] }
+" Plug 'zchee/deoplete-jedi', { 'for': ['py', 'python'] }
 
 " Deoplete
-Plug 'Shougo/deoplete.nvim'
-Plug 'zchee/deoplete-go', { 'for': ['go'] }
+" Plug 'Shougo/deoplete.nvim'
+" Plug 'zchee/deoplete-go', { 'for': ['go'] }
+Plug 'roxma/nvim-completion-manager'
 
 " GoldenRatio for split window resize
 Plug 'roman/golden-ratio'
@@ -159,7 +160,7 @@ syntax on
 " >>>>>>>> Plugin configuration end <<<<<<<<<
 
 " Insert break point for python
-map B Oimport ipdb; ipdb.set_trace()  # BREAKPOINT<C-c>
+map T Oimport ipdb; ipdb.set_trace()  # BREAKPOINT<C-c>
 
 " config for tagbar
 nmap <Leader>t :TagbarToggle<CR>
@@ -186,10 +187,10 @@ nnore <C-W>s :<C-U>sp \| :Buffers <CR>
 nnore <C-W>v :<C-U>vsp \| :Buffers <CR>
 
 " Settings for Deoplete
-let g:deoplete#enable_at_startup = 1
-let g:deoplete#enable_ignore_case = 1
-let g:deoplete#sources#go = 'vim-go'
-let g:deoplete#sources#python = 'jedi-vim'
+" let g:deoplete#enable_at_startup = 1
+" let g:deoplete#enable_ignore_case = 1
+" let g:deoplete#sources#go = 'vim-go'
+" let g:deoplete#sources#python = 'jedi-vim'
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 autocmd FileType python setlocal completeopt-=preview  " avoid sratchpad to display
 
