@@ -32,7 +32,6 @@ bindkey -M vicmd 'j' history-substring-search-down
 
 
 ######## Configuration ############
-
 # vi key bindings
 bindkey -v
 export KEYTIMEOUT=1
@@ -64,6 +63,11 @@ fi
 export EDITOR=nvim
 export VISUAL=nvim
 
+# Let fzf use rg
+# export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow --glob "!.git/*"'
+# export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
+export FZF_DEFAULT_COMMAND='fd --type f'
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
 ##### Required paths ######
 

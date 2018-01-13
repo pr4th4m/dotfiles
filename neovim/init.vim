@@ -241,8 +241,18 @@ set background=dark
 colorscheme onedark
 
 " Settings for vim-lightline
+" let g:lightline = {
+"             \ 'colorscheme': 'onedark',
+"             \ }
 let g:lightline = {
             \ 'colorscheme': 'onedark',
+            \ 'active': {
+            \   'left': [ [ 'mode', 'paste' ],
+            \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
+            \ },
+            \ 'component_function': {
+            \   'gitbranch': 'fugitive#head'
+            \ },
             \ }
 
 " Trailing Spaces Highlight and Detection for Line/Tabs.
