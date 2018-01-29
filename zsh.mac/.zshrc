@@ -38,8 +38,8 @@ export KEYTIMEOUT=1
 
 # history
 export HISTFILE="$HOME/.zsh_history"
-export HISTSIZE=100000
-export SAVEHIST=100000
+export HISTSIZE=1000000
+export SAVEHIST=1000000
 setopt INC_APPEND_HISTORY
 setopt SHARE_HISTORY
 setopt HIST_IGNORE_ALL_DUPS
@@ -80,7 +80,7 @@ export PATH="$HOME/.cargo/bin:$PATH"
 # Set python path for user workspace
 # NOTE: pip install <package> --user
 export PATH="$HOME/Library/Python/2.7/bin:$PATH"
-export PATH="$HOME/Library/Python/3.5/bin:$PATH"
+export PATH="$HOME/Library/Python/3.6/bin:$PATH"
 
 # set virtualenvwrapper path
 export WORKON_HOME=$HOME/.virtualenvs
