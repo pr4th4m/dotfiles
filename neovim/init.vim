@@ -17,6 +17,9 @@ set clipboard=unnamed
 set inccommand=split
 set guicursor=""
 
+" Set vertical split as default
+set diffopt+=vertical
+
 " Split to right and below by default
 set splitright
 set splitbelow
@@ -127,12 +130,12 @@ Plug 'tpope/vim-fugitive'
 Plug 'fatih/vim-go', { 'for': 'go' }
 
 " jedi for python completion
-Plug 'davidhalter/jedi-vim', { 'for': ['py', 'python'] }
+" Plug 'davidhalter/jedi-vim', { 'for': ['py', 'python'] }
 " Plug 'zchee/deoplete-jedi', { 'for': ['py', 'python'] }
 
 " Deoplete
 " Plug 'Shougo/deoplete.nvim'
-" Plug 'zchee/deoplete-go', { 'for': ['go'] }
+" Plug 'zchee/deoplete-go', { 'do': 'make', 'for': ['go'] }
 Plug 'roxma/nvim-completion-manager'
 
 " GoldenRatio for split window resize
@@ -151,8 +154,8 @@ Plug 'junegunn/vim-easy-align'
 
 " #### Syntax Plugins ####
 " typescript
-Plug 'leafgarland/typescript-vim'
-Plug 'mhartington/nvim-typescript'
+" Plug 'leafgarland/typescript-vim'
+" Plug 'mhartington/nvim-typescript'
 
 call plug#end()
 filetype plugin indent on    " required
@@ -189,6 +192,7 @@ nnore <C-W>v :<C-U>vsp \| :Buffers <CR>
 " Settings for Deoplete
 " let g:deoplete#enable_at_startup = 1
 " let g:deoplete#enable_ignore_case = 1
+" let g:deoplete#enable_smart_case = 1
 " let g:deoplete#sources#go = 'vim-go'
 " let g:deoplete#sources#python = 'jedi-vim'
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
