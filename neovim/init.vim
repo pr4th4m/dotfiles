@@ -38,6 +38,10 @@ nnoremap <c-j> <c-w><c-j>
 nnoremap <c-k> <c-w><c-k>
 nnoremap <c-l> <c-w><c-l>
 nnoremap <c-h> <c-w><c-h>
+" nnoremap <c-j> <c-d>
+" nnoremap <c-k> <c-u>
+" nnoremap <c-l> <c-w>w
+" nnoremap <c-h> <c-w>W
 
 " For command mode auto complete
 set wildmenu
@@ -47,6 +51,9 @@ set wildmode=longest:full,list:full
 set ignorecase
 set smartcase
 set incsearch
+
+" change insert mode key
+inoremap jj <Esc>`^
 
 " Better copy & paste
 " When you want to paste large blocks of code into vim, press F4 before you
@@ -71,6 +78,13 @@ let g:netrw_bufsettings = 'noma nomod nu nobl nowrap ro'
 nnoremap } :bnext<CR>
 nnoremap { :bprevious<CR>
 nnoremap _ :bdelete<CR>
+" nnoremap <c-]> :bnext<CR>
+" nnoremap <c-[> :bprevious<CR>
+" nnoremap <c-d> :bdelete<CR>
+
+" New window and close windows
+nnoremap <Leader>s <c-w>v
+nnoremap <Leader>q <c-w><c-q>
 
 " easier moving of code blocks
 " Try to go into visual mode (v), then select several lines of code here and
@@ -125,18 +139,27 @@ Plug 'vim-scripts/matchit.zip'
 
 " fugitive for git integration
 Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-unimpaired'
 
 " Golang support for vim
 Plug 'fatih/vim-go', { 'for': 'go' }
 
 " jedi for python completion
-" Plug 'davidhalter/jedi-vim', { 'for': ['py', 'python'] }
-" Plug 'zchee/deoplete-jedi', { 'for': ['py', 'python'] }
+Plug 'davidhalter/jedi-vim', { 'for': ['py', 'python'] }
 
-" Deoplete
-" Plug 'Shougo/deoplete.nvim'
-" Plug 'zchee/deoplete-go', { 'do': 'make', 'for': ['go'] }
-Plug 'roxma/nvim-completion-manager'
+" Neo complete manager
+Plug 'ncm2/ncm2'
+Plug 'roxma/nvim-yarp'
+Plug 'ncm2/ncm2-bufword'
+Plug 'ncm2/ncm2-tmux'
+Plug 'ncm2/ncm2-tagprefix'
+Plug 'jsfaint/gen_tags.vim'
+Plug 'wellle/tmux-complete.vim'
+Plug 'ncm2/ncm2-path'
+Plug 'ncm2/ncm2-jedi'
+Plug 'ncm2/ncm2-go'
+" Plug 'ncm2/ncm2-tern',  {'do': 'npm install'}
+" Plug 'ncm2/ncm2-cssomni'
 
 " GoldenRatio for split window resize
 Plug 'roman/golden-ratio'
@@ -157,6 +180,9 @@ Plug 'junegunn/vim-easy-align'
 " Plug 'leafgarland/typescript-vim'
 " Plug 'mhartington/nvim-typescript'
 
+" Vuejs
+" Plug 'posva/vim-vue'
+
 call plug#end()
 filetype plugin indent on    " required
 syntax on
@@ -164,6 +190,16 @@ syntax on
 
 " Insert break point for python
 map T Oimport ipdb; ipdb.set_trace()  # BREAKPOINT<C-c>
+
+nmap <Leader>w :wa<CR>
+
+" Ncm2 settings
+" enable ncm2 for all buffer
+autocmd BufEnter * call ncm2#enable_for_buffer()
+" autocmd InsertEnter * call ncm2#enable_for_buffer()
+
+" note that must keep noinsert in completeopt, the others is optional
+set completeopt=noinsert,menuone,noselect
 
 " config for tagbar
 nmap <Leader>t :TagbarToggle<CR>
@@ -188,6 +224,7 @@ noremap <Leader>r :History <cr>
 " noremap <Leader>t :Tags<CR>
 nnore <C-W>s :<C-U>sp \| :Buffers <CR>
 nnore <C-W>v :<C-U>vsp \| :Buffers <CR>
+nnore <Leader>s :<C-U>vsp \| :Buffers <CR>
 
 " Settings for Deoplete
 " let g:deoplete#enable_at_startup = 1
@@ -201,7 +238,9 @@ autocmd FileType python setlocal completeopt-=preview  " avoid sratchpad to disp
 " Settings for vim-go
 let g:go_def_mode = 'godef'
 au FileType go nmap <Leader>d <Plug>(go-def)
-au FileType go nmap <Leader>k <Plug>(go-doc-vertical)
+au FileType go nmap <Leader>c <Plug>(go-coverage-toggle)
+au FileType go nmap <Leader>h <Plug>(go-iferr)
+au FileType go nmap <Leader>g <Plug>(go-doc-vertical)
 " au FileType go nmap <Leader>i <Plug>(go-install)
 " au FileType go nmap <Leader>r <Plug>(go-run-vertical)
 " let g:go_fmt_autosave = 0
@@ -210,6 +249,7 @@ au FileType go nmap <Leader>k <Plug>(go-doc-vertical)
 let g:jedi#use_tabs_not_buffers = 0
 let g:jedi#popup_on_dot = 0
 let g:jedi#popup_select_first = 0
+let g:jedi#goto_command = "<leader>k"
 let g:jedi#completions_command = "<C-k>"
 let g:jedi#show_call_signatures = "0"
 let g:jedi#completions_enabled=0
@@ -217,11 +257,29 @@ let g:jedi#completions_enabled=0
 " Ale settings
 let g:ale_lint_on_text_changed = 'never'
 let g:ale_lint_on_enter = 0
-let g:ale_linters = {'go': ['gofmt', 'go vet', 'golint', 'go build'], 'python': ['flake8']}
+let g:ale_fix_on_save = 1
+let g:ale_linters = {
+            \ 'go': ['gofmt', 'go vet', 'golint', 'go build'],
+            \ 'python': ['flake8'],
+            \ 'javascript': ['flow'],
+            \ 'json': ['prettier', 'jq'],
+            \ 'markdown': ['prettier'],
+            \ }
 let g:ale_python_flake8_options = '--ignore=E128,E501,E124,E123,E126,E402,E702'
+
+let g:ale_fixers = {
+            \ 'go': ['remove_trailing_lines', 'trim_whitespace', 'goimports'],
+            \ 'python': ['remove_trailing_lines', 'trim_whitespace', 'yapf'],
+            \ 'javascript': ['remove_trailing_lines', 'trim_whitespace', 'prettier'],
+            \ 'json': ['remove_trailing_lines', 'trim_whitespace', 'prettier', 'jq'],
+            \ 'markdown': ['remove_trailing_lines', 'trim_whitespace', 'prettier'],
+            \ }
+
 " Use quickfix instead of locationlist
 let g:ale_set_loclist = 0
 let g:ale_set_quickfix = 1
+
+" let g:cm_smart_enable=1
 
 "Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
 "If you're using tmux version 2.2 or later, you can remove the outermost $TMUX check and use tmux's 24-bit color support
@@ -245,14 +303,11 @@ set background=dark
 colorscheme onedark
 
 " Settings for vim-lightline
-" let g:lightline = {
-"             \ 'colorscheme': 'onedark',
-"             \ }
 let g:lightline = {
             \ 'colorscheme': 'onedark',
             \ 'active': {
             \   'left': [ [ 'mode', 'paste' ],
-            \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
+            \             [ 'relativepath', 'readonly', 'gitbranch', 'modified' ] ]
             \ },
             \ 'component_function': {
             \   'gitbranch': 'fugitive#head'

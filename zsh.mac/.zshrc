@@ -20,7 +20,7 @@ zplug load
 setopt prompt_subst
 source ~/git-prompt.sh
 export RPROMPT=$'%F{blue}$(__git_ps1 "%s")'
-export PROMPT='%F{yellow}%~ %b$%B%F{grey}%f%b '
+export PROMPT='%F{green}%~ %b$%B%F{grey}%f%b '
 export GIT_PS1_SHOWDIRTYSTATE=1
 
 # history-substring bind k and j for VI mode
@@ -29,12 +29,18 @@ bindkey -M vicmd 'j' history-substring-search-down
 
 # Fuzzy finder
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+. $HOME/z.sh
 
+# Set locale
+export LC_ALL=en_US.UTF-8
+export LC_CTYPE=en_US.UTF-8
+export LANG=en_US.UTF-8
 
 ######## Configuration ############
 # vi key bindings
 bindkey -v
-export KEYTIMEOUT=1
+export KEYTIMEOUT=20
+bindkey -M viins 'jj' vi-cmd-mode
 
 # history
 export HISTFILE="$HOME/.zsh_history"
@@ -81,6 +87,7 @@ export PATH="$HOME/.cargo/bin:$PATH"
 # NOTE: pip install <package> --user
 export PATH="$HOME/Library/Python/2.7/bin:$PATH"
 export PATH="$HOME/Library/Python/3.6/bin:$PATH"
+export PATH="$HOME/Library/Python/3.7/bin:$PATH"
 
 # set virtualenvwrapper path
 export WORKON_HOME=$HOME/.virtualenvs
