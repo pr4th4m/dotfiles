@@ -117,7 +117,7 @@ call plug#begin('~/.config/nvim/plugged')
 
 " One dark colorscheme
 Plug 'joshdick/onedark.vim'
-Plug 'sheerun/vim-polyglot'
+" Plug 'sheerun/vim-polyglot'
 
 " For syntax checking
 Plug 'w0rp/ale'
@@ -152,8 +152,6 @@ Plug 'ncm2/ncm2'
 Plug 'roxma/nvim-yarp'
 Plug 'ncm2/ncm2-bufword'
 Plug 'ncm2/ncm2-tmux'
-Plug 'ncm2/ncm2-tagprefix'
-Plug 'jsfaint/gen_tags.vim'
 Plug 'wellle/tmux-complete.vim'
 Plug 'ncm2/ncm2-path'
 Plug 'ncm2/ncm2-jedi'
@@ -196,10 +194,12 @@ nmap <Leader>w :wa<CR>
 " Ncm2 settings
 " enable ncm2 for all buffer
 autocmd BufEnter * call ncm2#enable_for_buffer()
-" autocmd InsertEnter * call ncm2#enable_for_buffer()
 
 " note that must keep noinsert in completeopt, the others is optional
 set completeopt=noinsert,menuone,noselect
+" au User Ncm2PopupOpen set completeopt=noinsert,menuone,noselect
+" au User Ncm2PopupClose set completeopt=menuone
+" set omnifunc=go#complete#Complete
 
 " config for tagbar
 nmap <Leader>t :TagbarToggle<CR>
@@ -244,6 +244,7 @@ au FileType go nmap <Leader>g <Plug>(go-doc-vertical)
 " au FileType go nmap <Leader>i <Plug>(go-install)
 " au FileType go nmap <Leader>r <Plug>(go-run-vertical)
 " let g:go_fmt_autosave = 0
+" g:go_gocode_propose_source=1
 
 " Settings for Jedi
 let g:jedi#use_tabs_not_buffers = 0

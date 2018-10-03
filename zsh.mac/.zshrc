@@ -13,6 +13,9 @@ zplug "zsh-users/zsh-syntax-highlighting"
 # Quickly search history
 zplug "zsh-users/zsh-history-substring-search", defer:1
 
+# Docker completion
+zplug "felixr/docker-zsh-completion", defer:1
+
 zplug load
 #### zPlug ####
 
@@ -79,6 +82,7 @@ export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
 # Home brew installation path
 export PATH="/usr/local/bin:$PATH"
+export PATH="/usr/local/opt/curl/bin:$PATH"
 
 # Rust package manager
 export PATH="$HOME/.cargo/bin:$PATH"

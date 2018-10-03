@@ -1,0 +1,11 @@
+{
+  "proxies" : {
+    "default" : {
+      "httpsProxy" : "http://host.docker.internal:3128",
+      "ftpProxy" : "http://host.docker.internal:3128",
+      "httpProxy" : "http://host.docker.internal:3128",
+      "noProxy" : "http://host.docker.internal:3128"
+    }
+  }
+}
+
