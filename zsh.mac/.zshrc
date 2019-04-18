@@ -7,6 +7,11 @@ zplug 'zplug/zplug', hook-build:'zplug --self-manage'
 # Command completions
 zplug "zsh-users/zsh-completions"
 
+# Zsh theme
+zplug mafredri/zsh-async, from:github
+zplug sindresorhus/pure, use:pure.zsh, from:github, as:theme
+# zplug romkatv/powerlevel10k, use:powerlevel10k.zsh-theme
+
 # Syntax highlighting for commands
 zplug "zsh-users/zsh-syntax-highlighting"
 
@@ -19,12 +24,17 @@ zplug "felixr/docker-zsh-completion", defer:1
 zplug load
 #### zPlug ####
 
+# source ~/.purepower
+# Setting for sindresorhus/pure
+PURE_PROMPT_SYMBOL='>'
+PURE_PROMPT_VICMD_SYMBOL='<'
+
 # git status on right prompt
-setopt prompt_subst
-source ~/git-prompt.sh
-export RPROMPT=$'%F{blue}$(__git_ps1 "%s")'
-export PROMPT='%F{green}%~ %b$%B%F{grey}%f%b '
-export GIT_PS1_SHOWDIRTYSTATE=1
+# setopt prompt_subst
+# source ~/git-prompt.sh
+# export RPROMPT=$'%F{blue}$(__git_ps1 "%s")'
+# export PROMPT='%F{green}%~ %b$%B%F{grey}%f%b '
+# export GIT_PS1_SHOWDIRTYSTATE=1
 
 # history-substring bind k and j for VI mode
 bindkey -M vicmd 'k' history-substring-search-up
@@ -60,6 +70,9 @@ zstyle ':completion:*' matcher-list 'm:{[:lower:]}={[:upper:]}'
 # useful alias
 alias ls='ls -G'
 alias ll='ls -lh'
+# alias ls='lsd'
+# alias ll='ls -lh'
+# alias lt='ls --tree'
 
 # for 256 color support
 if [ -n "$TMUX" ]; then

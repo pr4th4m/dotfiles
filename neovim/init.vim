@@ -120,7 +120,7 @@ Plug 'joshdick/onedark.vim'
 " Plug 'sheerun/vim-polyglot'
 
 " For syntax checking
-Plug 'w0rp/ale'
+" Plug 'w0rp/ale'
 
 " Lightline for vim status bar
 Plug 'itchyny/lightline.vim'
@@ -139,25 +139,29 @@ Plug 'vim-scripts/matchit.zip'
 
 " fugitive for git integration
 Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-unimpaired'
+" Plug 'tpope/vim-unimpaired'
+Plug 'MobiusHorizons/fugitive-stash.vim'
 
 " Golang support for vim
-Plug 'fatih/vim-go', { 'for': 'go' }
+" Plug 'fatih/vim-go', { 'for': 'go' }
 
 " jedi for python completion
-Plug 'davidhalter/jedi-vim', { 'for': ['py', 'python'] }
+" Plug 'davidhalter/jedi-vim', { 'for': ['py', 'python'] }
 
 " Neo complete manager
-Plug 'ncm2/ncm2'
-Plug 'roxma/nvim-yarp'
-Plug 'ncm2/ncm2-bufword'
-Plug 'ncm2/ncm2-tmux'
-Plug 'wellle/tmux-complete.vim'
-Plug 'ncm2/ncm2-path'
-Plug 'ncm2/ncm2-jedi'
-Plug 'ncm2/ncm2-go'
+" Plug 'ncm2/ncm2'
+" Plug 'roxma/nvim-yarp'
+" Plug 'ncm2/ncm2-bufword'
+" Plug 'fgrsnau/ncm-otherbuf'
+" Plug 'ncm2/ncm2-tmux'
+" Plug 'wellle/tmux-complete.vim'
+" Plug 'ncm2/ncm2-path'
+" Plug 'ncm2/ncm2-jedi'
+" Plug 'ncm2/ncm2-go'
 " Plug 'ncm2/ncm2-tern',  {'do': 'npm install'}
 " Plug 'ncm2/ncm2-cssomni'
+Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
+Plug 'wellle/tmux-complete.vim'
 
 " GoldenRatio for split window resize
 Plug 'roman/golden-ratio'
@@ -165,6 +169,7 @@ Plug 'roman/golden-ratio'
 " Alternative file manager
 Plug 'francoiscabrol/ranger.vim'
 Plug 'rbgrouleff/bclose.vim'
+" Plug 'mcchrish/nnn.vim'
 
 " fuzzy search
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -193,10 +198,10 @@ nmap <Leader>w :wa<CR>
 
 " Ncm2 settings
 " enable ncm2 for all buffer
-autocmd BufEnter * call ncm2#enable_for_buffer()
+" autocmd BufEnter * call ncm2#enable_for_buffer()
 
 " note that must keep noinsert in completeopt, the others is optional
-set completeopt=noinsert,menuone,noselect
+" set completeopt=noinsert,menuone,noselect
 " au User Ncm2PopupOpen set completeopt=noinsert,menuone,noselect
 " au User Ncm2PopupClose set completeopt=menuone
 " set omnifunc=go#complete#Complete
@@ -216,6 +221,8 @@ noremap <Leader>a :Rg <cword><cr>
 " let g:vaffle_force_delete = 1 " delete directory with files
 let g:ranger_map_keys = 0
 nnoremap - :Ranger<CR>
+" let g:nnn#layout = 'vnew'
+" nnoremap - :NnnPicker<CR>
 
 " FZF config
 noremap <Leader>f :Files <cr>
@@ -235,52 +242,67 @@ nnore <Leader>s :<C-U>vsp \| :Buffers <CR>
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 autocmd FileType python setlocal completeopt-=preview  " avoid sratchpad to display
 
-" Settings for vim-go
-let g:go_def_mode = 'godef'
-au FileType go nmap <Leader>d <Plug>(go-def)
-au FileType go nmap <Leader>c <Plug>(go-coverage-toggle)
-au FileType go nmap <Leader>h <Plug>(go-iferr)
-au FileType go nmap <Leader>g <Plug>(go-doc-vertical)
-" au FileType go nmap <Leader>i <Plug>(go-install)
-" au FileType go nmap <Leader>r <Plug>(go-run-vertical)
-" let g:go_fmt_autosave = 0
-" g:go_gocode_propose_source=1
+" " Settings for vim-go
+" let g:go_def_mode = 'godef'
+" au FileType go nmap <Leader>d <Plug>(go-def)
+" au FileType go nmap <Leader>c <Plug>(go-coverage-toggle)
+" au FileType go nmap <Leader>h <Plug>(go-iferr)
+" au FileType go nmap <Leader>g <Plug>(go-doc-vertical)
+" " au FileType go nmap <Leader>i <Plug>(go-install)
+" " au FileType go nmap <Leader>r <Plug>(go-run-vertical)
+" " let g:go_fmt_autosave = 0
+" " g:go_gocode_propose_source=1
 
-" Settings for Jedi
-let g:jedi#use_tabs_not_buffers = 0
-let g:jedi#popup_on_dot = 0
-let g:jedi#popup_select_first = 0
-let g:jedi#goto_command = "<leader>k"
-let g:jedi#completions_command = "<C-k>"
-let g:jedi#show_call_signatures = "0"
-let g:jedi#completions_enabled=0
+" " Settings for Jedi
+" let g:jedi#use_tabs_not_buffers = 0
+" let g:jedi#popup_on_dot = 0
+" let g:jedi#popup_select_first = 0
+" let g:jedi#goto_command = "<leader>k"
+" let g:jedi#completions_command = "<C-k>"
+" let g:jedi#show_call_signatures = "0"
+" let g:jedi#completions_enabled=0
 
 " Ale settings
-let g:ale_lint_on_text_changed = 'never'
-let g:ale_lint_on_enter = 0
-let g:ale_fix_on_save = 1
-let g:ale_linters = {
-            \ 'go': ['gofmt', 'go vet', 'golint', 'go build'],
-            \ 'python': ['flake8'],
-            \ 'javascript': ['flow'],
-            \ 'json': ['prettier', 'jq'],
-            \ 'markdown': ['prettier'],
-            \ }
-let g:ale_python_flake8_options = '--ignore=E128,E501,E124,E123,E126,E402,E702'
+" let g:ale_lint_on_text_changed = 'never'
+" let g:ale_lint_on_enter = 0
+" let g:ale_fix_on_save = 1
+" let g:ale_linters = {
+"             \ 'go': ['gofmt', 'go vet', 'golint', 'go build'],
+"             \ 'python': ['flake8'],
+"             \ 'javascript': ['flow'],
+"             \ 'json': ['prettier', 'jq'],
+"             \ 'markdown': ['prettier'],
+"             \ }
+" let g:ale_python_flake8_options = '--ignore=E128,E501,E124,E123,E126,E402,E702'
+"
+" let g:ale_fixers = {
+"             \ 'go': ['remove_trailing_lines', 'trim_whitespace', 'goimports'],
+"             \ 'python': ['remove_trailing_lines', 'trim_whitespace', 'yapf'],
+"             \ 'javascript': ['remove_trailing_lines', 'trim_whitespace', 'prettier'],
+"             \ 'json': ['remove_trailing_lines', 'trim_whitespace', 'prettier', 'jq'],
+"             \ 'markdown': ['remove_trailing_lines', 'trim_whitespace', 'prettier'],
+"             \ }
 
-let g:ale_fixers = {
-            \ 'go': ['remove_trailing_lines', 'trim_whitespace', 'goimports'],
-            \ 'python': ['remove_trailing_lines', 'trim_whitespace', 'yapf'],
-            \ 'javascript': ['remove_trailing_lines', 'trim_whitespace', 'prettier'],
-            \ 'json': ['remove_trailing_lines', 'trim_whitespace', 'prettier', 'jq'],
-            \ 'markdown': ['remove_trailing_lines', 'trim_whitespace', 'prettier'],
-            \ }
-
-" Use quickfix instead of locationlist
-let g:ale_set_loclist = 0
-let g:ale_set_quickfix = 1
+" " Use quickfix instead of locationlist
+" let g:ale_set_loclist = 0
+" let g:ale_set_quickfix = 1
 
 " let g:cm_smart_enable=1
+" set cmdheight=3
+
+" let g:coc_enable_locationlist = 1
+" Use `[c` and `]c` for navigate diagnostics
+nmap <silent> [c <Plug>(coc-diagnostic-prev)
+nmap <silent> ]c <Plug>(coc-diagnostic-next)
+
+" Remap keys for gotos
+nmap <silent> <Leader>d <Plug>(coc-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+nmap rn <Plug>(coc-rename)
+
+" fugitive gbrowse to open stash urls
+let g:fugitive_stash_domains = ['https://git02.ae.sda.corp.telstra.com']
 
 "Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
 "If you're using tmux version 2.2 or later, you can remove the outermost $TMUX check and use tmux's 24-bit color support
