@@ -160,7 +160,8 @@ Plug 'MobiusHorizons/fugitive-stash.vim'
 " Plug 'ncm2/ncm2-go'
 " Plug 'ncm2/ncm2-tern',  {'do': 'npm install'}
 " Plug 'ncm2/ncm2-cssomni'
-Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
+" Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
+Plug 'neoclide/coc.nvim', {'tag': '*', 'do': './install.sh'}
 Plug 'wellle/tmux-complete.vim'
 
 " GoldenRatio for split window resize

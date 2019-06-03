@@ -53,8 +53,17 @@ window:
   #     - buttonless: Title bar, transparent background, but no title bar buttons
   decorations: full
 
-  # When true, alacritty starts maximized.
-  start_maximized: false
+  # Startup Mode (changes require restart)
+  #
+  # Values for `startup_mode`:
+  #   - Windowed
+  #   - Maximized
+  #   - Fullscreen
+  #
+  # Values for `startup_mode` (macOS only):
+  #   - SimpleFullscreen
+  # startup_mode: Windowed
+  startup_mode: SimpleFullscreen
 
 scrolling:
   # Maximum number of lines in the scrollback buffer.
@@ -112,7 +121,7 @@ font:
     family: Fira code
 
     # The `style` can be specified to pick a specific face.
-    style: Regular
+    style: Light
 
   # Italic font face
   italic:
@@ -126,7 +135,6 @@ font:
     style: Italic
 
   # Point size
-  # size: 16.9
   size: 16.0
 
   # Offset is the extra space around each character. `offset.y` can be thought of
@@ -165,7 +173,7 @@ render_timer: false
 persistent_logging: false
 
 # If `true`, bold text is drawn using the bright color variants.
-draw_bold_text_with_bright_colors: true
+draw_bold_text_with_bright_colors: false
 
 # Colors (One Dark)
 colors:
@@ -445,6 +453,8 @@ alt_send_esc: true
 #   - ResetFontSize
 #   - ScrollPageUp
 #   - ScrollPageDown
+#   - ScrollLineUp
+#   - ScrollLineDown
 #   - ScrollToTop
 #   - ScrollToBottom
 #   - ClearHistory
@@ -452,7 +462,11 @@ alt_send_esc: true
 #   - Quit
 #   - ClearLogNotice
 #   - SpawnNewInstance
+#   - ToggleFullscreen
 #   - None
+#
+# Values for `action` (macOS only):
+#   - ToggleSimpleFullscreen: Enters fullscreen without occupying another space
 #
 # Values for `command`:
 #   The `command` field must be a map containing a `program` string and
@@ -489,6 +503,7 @@ key_bindings:
   - { key: H, mods: Command, action: Hide }
   - { key: Q, mods: Command, action: Quit }
   - { key: W, mods: Command, action: Quit }
+  - { key: F, mods: Control|Command, action: ToggleSimpleFullscreen }
 
   - { key: Paste, action: Paste }
   - { key: Copy, action: Copy }
