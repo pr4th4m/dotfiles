@@ -109,7 +109,7 @@ inoremap # X#
 tnoremap <Leader><Esc> <C-\><C-n>
 
 " terminal window below
-nnoremap <Leader>o :below 10vsp term://$SHELL<cr>i
+" nnoremap <Leader>o :below 10vsp term://$SHELL<cr>i
 
 " Package Manger for vim
 " >>>>>>>> Plugin defination start <<<<<<<<<
@@ -161,14 +161,15 @@ Plug 'MobiusHorizons/fugitive-stash.vim'
 " Plug 'ncm2/ncm2-tern',  {'do': 'npm install'}
 " Plug 'ncm2/ncm2-cssomni'
 " Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
-Plug 'neoclide/coc.nvim', {'tag': '*', 'do': './install.sh'}
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'wellle/tmux-complete.vim'
 
 " GoldenRatio for split window resize
 Plug 'roman/golden-ratio'
 
 " Alternative file manager
-Plug 'francoiscabrol/ranger.vim'
+" Plug 'francoiscabrol/ranger.vim'
+Plug 'ptzz/lf.vim'
 Plug 'rbgrouleff/bclose.vim'
 " Plug 'mcchrish/nnn.vim'
 
@@ -193,7 +194,7 @@ syntax on
 " >>>>>>>> Plugin configuration end <<<<<<<<<
 
 " Insert break point for python
-map T Oimport ipdb; ipdb.set_trace()  # BREAKPOINT<C-c>
+" map T Oimport ipdb; ipdb.set_trace()  # BREAKPOINT<C-c>
 
 nmap <Leader>w :wa<CR>
 
@@ -220,8 +221,12 @@ noremap <Leader>a :Rg <cword><cr>
 " Open Vaffle with dash
 " nnoremap - :execute 'Vaffle ' . ((strlen(bufname('')) == 0) ? '.' : '%:h') <CR>
 " let g:vaffle_force_delete = 1 " delete directory with files
-let g:ranger_map_keys = 0
-nnoremap - :Ranger<CR>
+
+" let g:ranger_map_keys = 0
+" nnoremap - :Ranger<CR>
+let g:lf_map_keys = 0
+map - :Lf<CR>
+
 " let g:nnn#layout = 'vnew'
 " nnoremap - :NnnPicker<CR>
 
@@ -295,15 +300,17 @@ autocmd FileType python setlocal completeopt-=preview  " avoid sratchpad to disp
 " Use `[c` and `]c` for navigate diagnostics
 nmap <silent> [c <Plug>(coc-diagnostic-prev)
 nmap <silent> ]c <Plug>(coc-diagnostic-next)
+" nnoremap <silent> <space>y  :<C-u>CocList -A --normal yank<cr>
 
 " Remap keys for gotos
 nmap <silent> <Leader>d <Plug>(coc-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 nmap rn <Plug>(coc-rename)
+autocmd BufWritePre *.go :call CocAction('runCommand', 'editor.action.organizeImport')
 
 " fugitive gbrowse to open stash urls
-let g:fugitive_stash_domains = ['https://git02.ae.sda.corp.telstra.com']
+let g:fugitive_stash_domains = ['https://stash.optusnet.com.au']
 
 "Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
 "If you're using tmux version 2.2 or later, you can remove the outermost $TMUX check and use tmux's 24-bit color support

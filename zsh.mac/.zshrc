@@ -8,12 +8,13 @@ zplug 'zplug/zplug', hook-build:'zplug --self-manage'
 zplug "zsh-users/zsh-completions"
 
 # Zsh theme
-zplug mafredri/zsh-async, from:github
-zplug sindresorhus/pure, use:pure.zsh, from:github, as:theme
-# zplug romkatv/powerlevel10k, use:powerlevel10k.zsh-theme
+# zplug mafredri/zsh-async, from:github
+# zplug sindresorhus/pure, use:pure.zsh, from:github, as:theme
+zplug romkatv/powerlevel10k, use:powerlevel10k.zsh-theme
 
 # Syntax highlighting for commands
-zplug "zsh-users/zsh-syntax-highlighting"
+# zplug "zsh-users/zsh-syntax-highlighting"
+zplug "zdharma/fast-syntax-highlighting"
 
 # Quickly search history
 zplug "zsh-users/zsh-history-substring-search", defer:1
@@ -24,10 +25,11 @@ zplug "felixr/docker-zsh-completion", defer:1
 zplug load
 #### zPlug ####
 
-# source ~/.purepower
+source ~/pure10k.zsh
 # Setting for sindresorhus/pure
-PURE_PROMPT_SYMBOL='>'
-PURE_PROMPT_VICMD_SYMBOL='<'
+# source ~/.purepower
+# PURE_PROMPT_SYMBOL='>'
+# PURE_PROMPT_VICMD_SYMBOL='<'
 
 # git status on right prompt
 # setopt prompt_subst
@@ -116,3 +118,4 @@ export GOROOT=/usr/local/go
 export GOPATH=$HOME/goworkspace
 export GOBIN=$GOPATH/bin
 export PATH=$PATH:$GOPATH/bin:$GOROOT/bin
+export PATH="/usr/local/opt/mysql-client/bin:$PATH"

@@ -1,0 +1,19 @@
+{
+  "coc.preferences.formatOnSaveFiletypes": ["go", "css", "markdown", "python", "yaml"],
+  "diagnostic.virtualText":true,
+  "python.linting.enabled": true,
+  "python.linting.pylintEnabled": false,
+  "python.linting.flake8Enabled": true,
+  "python.linting.flake8Args": ["--ignore=E501,W503"],
+  "python.linting.flake8Path": "/Users/pratz/Library/Python/3.7/bin/flake8",
+  "python.formatting.provider": "black",
+  "python.formatting.blackPath": "/Users/pratz/Library/Python/3.7/bin/black",
+  "python.jediEnabled": true,
+  "languageserver": {
+    "golang": {
+      "command": "gopls",
+      "rootPatterns": ["go.mod", ".vim/", ".git/", ".hg/"],
+      "filetypes": ["go"]
+    }
+  }
+}
