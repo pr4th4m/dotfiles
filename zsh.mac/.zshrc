@@ -70,11 +70,10 @@ setopt HIST_SAVE_NO_DUPS
 zstyle ':completion:*' matcher-list 'm:{[:lower:]}={[:upper:]}'
 
 # useful alias
-alias ls='ls -G'
-alias ll='ls -lh'
-# alias ls='lsd'
+alias ls='gls --color --group-directories-first'
+alias ll='gls -lh --color --group-directories-first'
+# alias ls='ls -G'
 # alias ll='ls -lh'
-# alias lt='ls --tree'
 
 # for 256 color support
 if [ -n "$TMUX" ]; then
