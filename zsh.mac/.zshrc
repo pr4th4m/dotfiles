@@ -10,7 +10,7 @@ zplug "zsh-users/zsh-completions"
 # Zsh theme
 # zplug mafredri/zsh-async, from:github
 # zplug sindresorhus/pure, use:pure.zsh, from:github, as:theme
-zplug romkatv/powerlevel10k, use:powerlevel10k.zsh-theme
+zplug "romkatv/powerlevel10k", use:powerlevel10k.zsh-theme
 
 # Syntax highlighting for commands
 # zplug "zsh-users/zsh-syntax-highlighting"
@@ -25,7 +25,9 @@ zplug "felixr/docker-zsh-completion", defer:1
 zplug load
 #### zPlug ####
 
-source ~/pure10k.zsh
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
 # Setting for sindresorhus/pure
 # source ~/.purepower
 # PURE_PROMPT_SYMBOL='>'
