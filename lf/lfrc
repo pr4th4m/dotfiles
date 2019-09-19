@@ -1,0 +1,17 @@
+set relativenumber
+# set hidden
+
+# rename file
+# cmd rename %[ -e $1 ] && printf "file exists" || mv $f $1
+map r rename
+
+# touch file and create directory
+cmd touch %touch $1 && lf -remote "send $id load" && lf -remote "send $id select $1"
+cmd mkdir %mkdir -p $1 && lf -remote "send $id load" && lf -remote "send $id select $1"
+
+# open file in neovim
+cmd open $nvim $fx
+map <enter> open
+
+# delete files with D key
+map D delete
