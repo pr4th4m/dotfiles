@@ -10,7 +10,7 @@ zplug "zsh-users/zsh-completions"
 # Zsh theme
 # zplug mafredri/zsh-async, from:github
 # zplug sindresorhus/pure, use:pure.zsh, from:github, as:theme
-zplug "romkatv/powerlevel10k", use:powerlevel10k.zsh-theme
+# zplug "romkatv/powerlevel10k", use:powerlevel10k.zsh-theme
 
 # Syntax highlighting for commands
 # zplug "zsh-users/zsh-syntax-highlighting"
@@ -25,9 +25,9 @@ zplug "felixr/docker-zsh-completion", defer:1
 zplug load
 #### zPlug ####
 
-
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
+# [[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
+
 # Setting for sindresorhus/pure
 # source ~/.purepower
 # PURE_PROMPT_SYMBOL='>'
@@ -46,7 +46,7 @@ bindkey -M vicmd 'j' history-substring-search-down
 
 # Fuzzy finder
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-. $HOME/z.sh
+# . $HOME/z.sh
 
 # Set locale
 export LC_ALL=en_US.UTF-8
@@ -106,10 +106,10 @@ export PATH="$HOME/.cargo/bin:$PATH"
 # Set python path for user workspace
 # NOTE: pip install <package> --user
 export PATH="$HOME/Library/Python/2.7/bin:$PATH"
-export PATH="$HOME/Library/Python/3.6/bin:$PATH"
 export PATH="$HOME/Library/Python/3.7/bin:$PATH"
 
 # set virtualenvwrapper path
+export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python3
 export WORKON_HOME=$HOME/.virtualenvs
 # TODO: virtualenvwrapper makes zsh very slow
 # source $HOME/Library/Python/2.7/bin/virtualenvwrapper.sh
@@ -119,4 +119,8 @@ export GOROOT=/usr/local/go
 export GOPATH=$HOME/goworkspace
 export GOBIN=$GOPATH/bin
 export PATH=$PATH:$GOPATH/bin:$GOROOT/bin
+
 export PATH="/usr/local/opt/mysql-client/bin:$PATH"
+
+# starship shell theme
+eval "$(starship init zsh)"
