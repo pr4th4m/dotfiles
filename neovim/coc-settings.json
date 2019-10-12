@@ -5,11 +5,11 @@
   "python.linting.pylintEnabled": false,
   "python.linting.flake8Enabled": true,
   "python.linting.flake8Args": ["--ignore=E501,W503"],
-  "python.linting.flake8Path": "/Users/pratham/Library/Python/3.7/bin/flake8",
+  "python.linting.flake8Path": "/Users/prathamesh/Library/Python/3.7/bin/flake8",
   "python.formatting.provider": "black",
-  "python.formatting.blackPath": "/Users/pratham/Library/Python/3.7/bin/black",
+  "python.formatting.blackPath": "/Users/prathamesh/Library/Python/3.7/bin/black",
   "python.jediEnabled": true,
-  "python.jediPath": "/Users/pratham/Library/Python/3.7/lib/python/site-packages",
+  "python.jediPath": "/Users/prathamesh/Library/Python/3.7/lib/python/site-packages",
   "python.jediMemoryLimit": -1,
   "languageserver": {
     "golang": {
