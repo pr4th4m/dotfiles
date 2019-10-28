@@ -245,7 +245,9 @@ nnore <Leader>s :<C-U>vsp \| :Buffers <CR>
 " let g:deoplete#enable_smart_case = 1
 " let g:deoplete#sources#go = 'vim-go'
 " let g:deoplete#sources#python = 'jedi-vim'
-inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 autocmd FileType python setlocal completeopt-=preview  " avoid sratchpad to display
 
 " " Settings for vim-go
