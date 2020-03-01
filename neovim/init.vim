@@ -11,7 +11,6 @@ set confirm
 set ruler
 set nowrap
 set vb " turn off beep sound
-set number
 set relativenumber
 set clipboard=unnamed
 set inccommand=split
@@ -72,7 +71,7 @@ let mapleader = "\<Space>"
 nmap <silent> <F5> :set spell!<CR>
 
 " Make netrw display line number
-let g:netrw_bufsettings = 'noma nomod nu nobl nowrap ro'
+" let g:netrw_bufsettings = 'noma nomod nu nobl nowrap ro'
 
 " Cycle through buffers
 nnoremap } :bnext<CR>
@@ -140,7 +139,8 @@ Plug 'vim-scripts/matchit.zip'
 " fugitive for git integration
 Plug 'tpope/vim-fugitive'
 " Plug 'tpope/vim-unimpaired'
-Plug 'MobiusHorizons/fugitive-stash.vim'
+" Plug 'MobiusHorizons/fugitive-stash.vim'
+Plug 'tpope/vim-rhubarb'
 
 " Golang support for vim
 " Plug 'fatih/vim-go', { 'for': 'go' }
@@ -148,21 +148,19 @@ Plug 'MobiusHorizons/fugitive-stash.vim'
 " jedi for python completion
 " Plug 'davidhalter/jedi-vim', { 'for': ['py', 'python'] }
 
-" Neo complete manager
-" Plug 'ncm2/ncm2'
-" Plug 'roxma/nvim-yarp'
-" Plug 'ncm2/ncm2-bufword'
-" Plug 'fgrsnau/ncm-otherbuf'
-" Plug 'ncm2/ncm2-tmux'
-" Plug 'wellle/tmux-complete.vim'
-" Plug 'ncm2/ncm2-path'
-" Plug 'ncm2/ncm2-jedi'
-" Plug 'ncm2/ncm2-go'
-" Plug 'ncm2/ncm2-tern',  {'do': 'npm install'}
-" Plug 'ncm2/ncm2-cssomni'
-" Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
+" Neovim Coc
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'wellle/tmux-complete.vim'
+
+" Coc extensions
+Plug 'neoclide/coc-lists', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-yaml', {'do': 'yarn install --frozen-lockfile'}
+Plug 'fannheyward/coc-markdownlint', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-prettier', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-python', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-rls', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-java', {'do': 'yarn install --frozen-lockfile'}
 
 " GoldenRatio for split window resize
 Plug 'roman/golden-ratio'
@@ -179,6 +177,8 @@ Plug 'junegunn/fzf.vim'
 
 " align text
 Plug 'junegunn/vim-easy-align'
+
+Plug 'ntpeters/vim-better-whitespace'
 
 " #### Syntax Plugins ####
 " typescript
@@ -311,16 +311,31 @@ nmap <silent> gr <Plug>(coc-references)
 nmap rn <Plug>(coc-rename)
 autocmd BufWritePre *.go :call CocAction('runCommand', 'editor.action.organizeImport')
 
+" format file with prettier
+command! -nargs=0 Prettier :CocCommand prettier.formatFile
+
+" Highlight and strip whitespace
+let g:better_whitespace_enabled=1
+let g:strip_whitespace_on_save=1
+let g:strip_whitelines_at_eof=1
+" let g:strip_only_modified_lines=1
+
+" Open fzf in floating window
+let g:fzf_layout = { 'window': { 'width': 0.6, 'height': 0.6} }
+
 " fugitive gbrowse to open stash urls
-let g:fugitive_stash_domains = ['https://stash.optusnet.com.au']
+" let g:fugitive_stash_domains = ['https://github.source.internal.cba']
+
+" fugitive gbrowse to open github urls
+let g:github_enterprise_urls = ['https://github.source.internal.cba']
 
 "Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
 "If you're using tmux version 2.2 or later, you can remove the outermost $TMUX check and use tmux's 24-bit color support
 "(see < http://sunaku.github.io/tmux-24bit-color.html#usage > for more information.)
-if (has("nvim"))
-  "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
-  let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-endif
+" if (has("nvim"))
+"   "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
+"   let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+" endif
 "For Neovim > 0.1.5 and Vim > patch 7.4.1799 < https://github.com/vim/vim/commit/61be73bb0f965a895bfb064ea3e55476ac175162 >
 "Based on Vim patch 7.4.1770 (`guicolors` option) < https://github.com/vim/vim/commit/8a633e3427b47286869aa4b96f2bfc1fe65b25cd >
 " < https://github.com/neovim/neovim/wiki/Following-HEAD#20160511 >
@@ -347,11 +362,26 @@ let g:lightline = {
             \ },
             \ }
 
-" Trailing Spaces Highlight and Detection for Line/Tabs.
-highlight ExtraWhitespace ctermbg=red guibg=red
-match ExtraWhitespace /\s\+$/
-autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
-autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
-autocmd InsertLeave * match ExtraWhitespace /\s\+$/
-autocmd BufWinLeave * call clearmatches()
-autocmd Syntax * syn match ExtraWhitespace /\s\+$\| \+\ze\t/
+" Disable number/relativenumber for neovim terminal
+au TermOpen * setlocal nonumber norelativenumber
+
+" " Using floating windows of Neovim to start fzf
+" if has('nvim')
+"   let $FZF_DEFAULT_OPTS .= '--layout=reverse --color bg:#3e4452'
+"
+"   function! FloatingFZF()
+"     let width = float2nr(&columns * 0.6)
+"     let height = float2nr(&lines * 0.6)
+"     let opts = { 'relative': 'editor',
+"                \ 'row': (&lines - height) / 2,
+"                \ 'col': (&columns - width) / 2,
+"                \ 'width': width,
+"                \ 'height': height }
+"
+"     let win = nvim_open_win(nvim_create_buf(v:false, v:true), v:true, opts)
+"     call setwinvar(win, '&winhighlight', 'NormalFloat:Normal')
+"   endfunction
+"
+"   let g:fzf_layout = { 'window': 'call FloatingFZF()' }
+" endif
+" " Using floating windows of Neovim end

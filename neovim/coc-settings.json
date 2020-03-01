@@ -1,22 +1,35 @@
 {
-  "coc.preferences.formatOnSaveFiletypes": ["go", "css", "markdown", "python", "yaml"],
+  "coc.preferences.formatOnSaveFiletypes": ["go", "css", "markdown", "python", "yaml", "yml", "json", "md", "js", "javascript", "rs"],
   "diagnostic.virtualText":true,
   "python.linting.enabled": true,
   "python.linting.pylintEnabled": false,
   "python.linting.flake8Enabled": true,
   "python.linting.flake8Args": ["--ignore=E501,W503"],
-  "python.linting.flake8Path": "/Users/prathamesh/Library/Python/3.7/bin/flake8",
+  "python.linting.flake8Path": "/Users/nevagipr/Library/Python/3.7/bin/flake8",
   "python.formatting.provider": "black",
-  "python.formatting.blackPath": "/Users/prathamesh/Library/Python/3.7/bin/black",
+  "python.formatting.blackPath": "/Users/nevagipr/Library/Python/3.7/bin/black",
   "python.jediEnabled": true,
-  "python.jediPath": "/Users/prathamesh/Library/Python/3.7/lib/python/site-packages",
+  "python.jediPath": "/Users/nevagipr/Library/Python/3.7/lib/python/site-packages",
   "python.jediMemoryLimit": -1,
   "suggest.enablePreselect": false,
+  "markdownlint.config": {
+      "MD013": false
+  },
   "languageserver": {
     "golang": {
       "command": "gopls",
-      "rootPatterns": ["go.mod", ".vim/", ".git/", ".hg/"],
+      "args": ["serve", "-debug", "0.0.0.0:8484", "-rpc.trace"],
+      "rootPatterns": ["go.mod"],
       "filetypes": ["go"]
+    },
+     "flow": {
+      "command": "flow",
+      "args": ["lsp"],
+      "filetypes": ["javascript", "javascriptreact"],
+      "initializationOptions": {},
+      "requireRootPattern": true,
+      "settings": {},
+      "rootPatterns": [".flowconfig"]
     }
   }
 }

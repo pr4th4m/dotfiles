@@ -1,3 +1,10 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 #### zPlug - zsh plugin manager ####
 export ZPLUG_HOME=/usr/local/opt/zplug
 source $ZPLUG_HOME/init.zsh
@@ -6,12 +13,13 @@ source $ZPLUG_HOME/init.zsh
 zplug 'zplug/zplug', hook-build:'zplug --self-manage'
 
 # Command completions
-zplug "zsh-users/zsh-completions"
+# zplug "zsh-users/zsh-completions"
 
 # Zsh theme
 # zplug mafredri/zsh-async, from:github
 # zplug sindresorhus/pure, use:pure.zsh, from:github, as:theme
 # zplug "romkatv/powerlevel10k", use:powerlevel10k.zsh-theme
+zplug "romkatv/powerlevel10k", as:theme, depth:1
 
 # Syntax highlighting for commands
 # zplug "zsh-users/zsh-syntax-highlighting"
@@ -21,10 +29,13 @@ zplug "zdharma/fast-syntax-highlighting"
 zplug "zsh-users/zsh-history-substring-search", defer:1
 
 # Docker completion
-zplug "felixr/docker-zsh-completion", defer:1
+# zplug "felixr/docker-zsh-completion", defer:1
 
 zplug load
 #### zPlug ####
+
+# starship shell theme
+# eval "$(starship init zsh)"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 # [[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
@@ -117,11 +128,11 @@ export WORKON_HOME=$HOME/.virtualenvs
 
 # Golang path
 export GOROOT=/usr/local/go
-export GOPATH=$HOME/goworkspace
+export GOPATH=$HOME/go
 export GOBIN=$GOPATH/bin
 export PATH=$PATH:$GOPATH/bin:$GOROOT/bin
 
 export PATH="/usr/local/opt/mysql-client/bin:$PATH"
 
-# starship shell theme
-eval "$(starship init zsh)"
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
