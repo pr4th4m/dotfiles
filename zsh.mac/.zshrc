@@ -13,7 +13,10 @@ source $ZPLUG_HOME/init.zsh
 zplug 'zplug/zplug', hook-build:'zplug --self-manage'
 
 # Command completions
-# zplug "zsh-users/zsh-completions"
+zplug "zsh-users/zsh-completions"
+
+# Auto suggest
+# zplug "zsh-users/zsh-autosuggestions"
 
 # Zsh theme
 # zplug mafredri/zsh-async, from:github
@@ -33,6 +36,9 @@ zplug "zsh-users/zsh-history-substring-search", defer:1
 
 zplug load
 #### zPlug ####
+
+# ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#949494"
+# bindkey '^ ' autosuggest-accept
 
 # starship shell theme
 # eval "$(starship init zsh)"
@@ -86,8 +92,7 @@ zstyle ':completion:*' matcher-list 'm:{[:lower:]}={[:upper:]}'
 # useful alias
 alias ls='gls --color --group-directories-first'
 alias ll='gls -lh --color --group-directories-first'
-# alias ls='ls -G'
-# alias ll='ls -lh'
+alias cat='bat -pp --theme base16'
 
 # for 256 color support
 if [ -n "$TMUX" ]; then
@@ -103,8 +108,10 @@ export VISUAL=nvim
 # Let fzf use rg
 # export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow --glob "!.git/*"'
 # export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
-export FZF_DEFAULT_COMMAND='fd --type f'
+export FZF_DEFAULT_COMMAND='fd --type f --exclude .git'
+export FZF_DEFAULT_OPTS='--layout=reverse'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_CTRL_T_OPTS="--height 90% --preview 'bat --theme base16 --style numbers --color always {} | head -500'"
 
 ##### Required paths ######
 

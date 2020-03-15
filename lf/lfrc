@@ -1,6 +1,9 @@
 set relativenumber
 # set hidden
 
+# change previewer
+set previewer ~/.config/lf/preview.sh
+
 # rename file
 # cmd rename %[ -e $1 ] && printf "file exists" || mv $f $1
 map r rename

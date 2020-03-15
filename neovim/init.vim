@@ -153,17 +153,18 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'wellle/tmux-complete.vim'
 
 " Coc extensions
-Plug 'neoclide/coc-lists', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-yaml', {'do': 'yarn install --frozen-lockfile'}
-Plug 'fannheyward/coc-markdownlint', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-prettier', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-python', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-rls', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-java', {'do': 'yarn install --frozen-lockfile'}
+" Plug 'neoclide/coc-lists', {'do': 'yarn install --frozen-lockfile'}
+" Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'}
+" Plug 'neoclide/coc-yaml', {'do': 'yarn install --frozen-lockfile'}
+" Plug 'fannheyward/coc-markdownlint', {'do': 'yarn install --frozen-lockfile'}
+" Plug 'neoclide/coc-prettier', {'do': 'yarn install --frozen-lockfile'}
+" Plug 'neoclide/coc-python', {'do': 'yarn install --frozen-lockfile'}
+" Plug 'neoclide/coc-rls', {'do': 'yarn install --frozen-lockfile'}
+" Plug 'neoclide/coc-java', {'do': 'yarn install --frozen-lockfile'}
 
 " GoldenRatio for split window resize
-Plug 'roman/golden-ratio'
+" Plug 'roman/golden-ratio'
+Plug 'dm1try/golden_size'
 
 " Alternative file manager
 " Plug 'francoiscabrol/ranger.vim'
@@ -198,16 +199,6 @@ syntax on
 
 nmap <Leader>w :wa<CR>
 
-" Ncm2 settings
-" enable ncm2 for all buffer
-" autocmd BufEnter * call ncm2#enable_for_buffer()
-
-" note that must keep noinsert in completeopt, the others is optional
-" set completeopt=noinsert,menuone,noselect
-" au User Ncm2PopupOpen set completeopt=noinsert,menuone,noselect
-" au User Ncm2PopupClose set completeopt=menuone
-" set omnifunc=go#complete#Complete
-
 " config for tagbar
 nmap <Leader>t :TagbarToggle<CR>
 let g:tagbar_autofocus = 1
@@ -216,11 +207,6 @@ let g:tagbar_left = 1
 " Ag config
 " noremap <Leader>a :Ags <cword><cr>
 noremap <Leader>a :Rg <cword><cr>
-
-" Settings for Vaffle
-" Open Vaffle with dash
-" nnoremap - :execute 'Vaffle ' . ((strlen(bufname('')) == 0) ? '.' : '%:h') <CR>
-" let g:vaffle_force_delete = 1 " delete directory with files
 
 " let g:ranger_map_keys = 0
 " nnoremap - :Ranger<CR>
@@ -239,65 +225,17 @@ nnore <C-W>s :<C-U>sp \| :Buffers <CR>
 nnore <C-W>v :<C-U>vsp \| :Buffers <CR>
 nnore <Leader>s :<C-U>vsp \| :Buffers <CR>
 
-" Settings for Deoplete
-" let g:deoplete#enable_at_startup = 1
-" let g:deoplete#enable_ignore_case = 1
-" let g:deoplete#enable_smart_case = 1
-" let g:deoplete#sources#go = 'vim-go'
-" let g:deoplete#sources#python = 'jedi-vim'
+" Open fzf in floating window
+let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.8} }
+let g:fzf_preview_window = 'right:50%'
+let $BAT_THEME = 'base16'
+
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 autocmd FileType python setlocal completeopt-=preview  " avoid sratchpad to display
 
-" " Settings for vim-go
-" let g:go_def_mode = 'godef'
-" au FileType go nmap <Leader>d <Plug>(go-def)
-" au FileType go nmap <Leader>c <Plug>(go-coverage-toggle)
-" au FileType go nmap <Leader>h <Plug>(go-iferr)
-" au FileType go nmap <Leader>g <Plug>(go-doc-vertical)
-" " au FileType go nmap <Leader>i <Plug>(go-install)
-" " au FileType go nmap <Leader>r <Plug>(go-run-vertical)
-" " let g:go_fmt_autosave = 0
-" " g:go_gocode_propose_source=1
-
-" " Settings for Jedi
-" let g:jedi#use_tabs_not_buffers = 0
-" let g:jedi#popup_on_dot = 0
-" let g:jedi#popup_select_first = 0
-" let g:jedi#goto_command = "<leader>k"
-" let g:jedi#completions_command = "<C-k>"
-" let g:jedi#show_call_signatures = "0"
-" let g:jedi#completions_enabled=0
-
-" Ale settings
-" let g:ale_lint_on_text_changed = 'never'
-" let g:ale_lint_on_enter = 0
-" let g:ale_fix_on_save = 1
-" let g:ale_linters = {
-"             \ 'go': ['gofmt', 'go vet', 'golint', 'go build'],
-"             \ 'python': ['flake8'],
-"             \ 'javascript': ['flow'],
-"             \ 'json': ['prettier', 'jq'],
-"             \ 'markdown': ['prettier'],
-"             \ }
-" let g:ale_python_flake8_options = '--ignore=E128,E501,E124,E123,E126,E402,E702'
-"
-" let g:ale_fixers = {
-"             \ 'go': ['remove_trailing_lines', 'trim_whitespace', 'goimports'],
-"             \ 'python': ['remove_trailing_lines', 'trim_whitespace', 'yapf'],
-"             \ 'javascript': ['remove_trailing_lines', 'trim_whitespace', 'prettier'],
-"             \ 'json': ['remove_trailing_lines', 'trim_whitespace', 'prettier', 'jq'],
-"             \ 'markdown': ['remove_trailing_lines', 'trim_whitespace', 'prettier'],
-"             \ }
-
-" " Use quickfix instead of locationlist
-" let g:ale_set_loclist = 0
-" let g:ale_set_quickfix = 1
-
-" let g:cm_smart_enable=1
-" set cmdheight=3
-
+" nvim coc settings
 " let g:coc_enable_locationlist = 1
 " Use `[c` and `]c` for navigate diagnostics
 nmap <silent> [c <Plug>(coc-diagnostic-prev)
@@ -320,8 +258,6 @@ let g:strip_whitespace_on_save=1
 let g:strip_whitelines_at_eof=1
 " let g:strip_only_modified_lines=1
 
-" Open fzf in floating window
-let g:fzf_layout = { 'window': { 'width': 0.6, 'height': 0.6} }
 
 " fugitive gbrowse to open stash urls
 " let g:fugitive_stash_domains = ['https://github.source.internal.cba']
@@ -364,24 +300,3 @@ let g:lightline = {
 
 " Disable number/relativenumber for neovim terminal
 au TermOpen * setlocal nonumber norelativenumber
-
-" " Using floating windows of Neovim to start fzf
-" if has('nvim')
-"   let $FZF_DEFAULT_OPTS .= '--layout=reverse --color bg:#3e4452'
-"
-"   function! FloatingFZF()
-"     let width = float2nr(&columns * 0.6)
-"     let height = float2nr(&lines * 0.6)
-"     let opts = { 'relative': 'editor',
-"                \ 'row': (&lines - height) / 2,
-"                \ 'col': (&columns - width) / 2,
-"                \ 'width': width,
-"                \ 'height': height }
-"
-"     let win = nvim_open_win(nvim_create_buf(v:false, v:true), v:true, opts)
-"     call setwinvar(win, '&winhighlight', 'NormalFloat:Normal')
-"   endfunction
-"
-"   let g:fzf_layout = { 'window': 'call FloatingFZF()' }
-" endif
-" " Using floating windows of Neovim end
