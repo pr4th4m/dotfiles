@@ -1,6 +1,22 @@
 {
-  "coc.preferences.formatOnSaveFiletypes": ["go", "css", "markdown", "python", "yaml", "yml", "json", "md", "js", "javascript", "rs"],
-  "diagnostic.virtualText":true,
+  "rest-client.showHeaders": false,
+  "rest-client.proxy": "http://127.0.0.1:3128",
+  "coc.preferences.formatOnSaveFiletypes": [
+    "go",
+    "css",
+    "markdown",
+    "python",
+    "java",
+    "yaml",
+    "yml",
+    "json",
+    "md",
+    "typescript",
+    "javascript",
+    "rs"
+  ],
+  "coc.preferences.rootPatterns": [".git", ".env", "package.json"],
+  "diagnostic.virtualText": true,
   "python.linting.enabled": true,
   "python.linting.pylintEnabled": false,
   "python.linting.flake8Enabled": true,
@@ -12,9 +28,10 @@
   "python.jediPath": "/Users/nevagipr/Library/Python/3.7/lib/python/site-packages",
   "python.jediMemoryLimit": -1,
   "suggest.enablePreselect": false,
+  "project.rootPatterns": [".env", "go.mod", "package.json", "pom.xml", ".git"],
   "markdownlint.config": {
-      "MD013": false,
-      "MD041": false
+    "MD013": false,
+    "MD041": false
   },
   "languageserver": {
     "golang": {
@@ -22,15 +39,6 @@
       "args": ["serve", "-debug", "0.0.0.0:8484", "-rpc.trace"],
       "rootPatterns": ["go.mod"],
       "filetypes": ["go"]
-    },
-     "flow": {
-      "command": "flow",
-      "args": ["lsp"],
-      "filetypes": ["javascript", "javascriptreact"],
-      "initializationOptions": {},
-      "requireRootPattern": true,
-      "settings": {},
-      "rootPatterns": [".flowconfig"]
     }
   }
 }

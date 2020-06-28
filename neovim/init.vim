@@ -12,9 +12,11 @@ set ruler
 set nowrap
 set vb " turn off beep sound
 set relativenumber
-set clipboard=unnamed
+" set clipboard=unnamed
+set clipboard=unnamedplus
 set inccommand=split
 set guicursor=""
+set showtabline=0
 
 " Set vertical split as default
 set diffopt+=vertical
@@ -25,6 +27,7 @@ set splitbelow
 
 " will buffer screens instead of updating
 set lazyredraw
+set ttyfast
 
 " Disable scratch pad
 set completeopt-=preview
@@ -77,13 +80,33 @@ nmap <silent> <F5> :set spell!<CR>
 nnoremap } :bnext<CR>
 nnoremap { :bprevious<CR>
 nnoremap _ :bdelete<CR>
-" nnoremap <c-]> :bnext<CR>
-" nnoremap <c-[> :bprevious<CR>
-" nnoremap <c-d> :bdelete<CR>
+" nnoremap <c-]> :tabnext<CR>
+" nnoremap <c-[> :tabprevious<CR>
+" nnoremap <c-n> :tabnext<CR>
+nnoremap <Leader>j :tab split<CR>
+
+nnoremap <Leader>1 1gt
+nnoremap <Leader>2 2gt
+nnoremap <Leader>3 3gt
+nnoremap <Leader>4 4gt
+nnoremap <Leader>5 5gt
+nnoremap <Leader>6 6gt
+nnoremap <Leader>7 7gt
+nnoremap <Leader>8 8gt
+nnoremap <Leader>9 9gt
+nnoremap <Leader>h gT
+nnoremap <Leader>l gt
+
+" Go to last active tab
+au TabLeave * let g:lasttab = tabpagenr()
+nnoremap <silent> <Leader><Leader> :exe "tabn ".g:lasttab<cr>
+vnoremap <silent> <Leader><Leader> :exe "tabn ".g:lasttab<cr>
 
 " New window and close windows
 nnoremap <Leader>s <c-w>v
-nnoremap <Leader>q <c-w><c-q>
+nnoremap <Leader>v <c-w>s
+" nnoremap <Leader>q <c-w><c-q>
+nnoremap <Leader>k <c-w><c-q>
 
 " easier moving of code blocks
 " Try to go into visual mode (v), then select several lines of code here and
@@ -105,17 +128,35 @@ set foldlevel=1         "this is just what i use
 inoremap # X#
 
 " terminal escape
-tnoremap <Leader><Esc> <C-\><C-n>
+" tnoremap <Leader>jj <C-\><C-n>
+" tnoremap <ESC> <C-\><C-n>
+tnoremap <C-Space> <C-\><C-n>
+tnoremap <C-h> <C-\><C-N><C-w>h<cr>i
+tnoremap <C-j> <C-\><C-N><C-w>j<cr>i
+tnoremap <C-k> <C-\><C-N><C-w>k<cr>i
+tnoremap <C-l> <C-\><C-N><C-w>l<cr>i
+inoremap <C-h> <C-\><C-N><C-w>h<cr>i
+inoremap <C-j> <C-\><C-N><C-w>j<cr>i
+inoremap <C-k> <C-\><C-N><C-w>k<cr>i
+inoremap <C-l> <C-\><C-N><C-w>l<cr>i
+
+" nnoremap <C-h> <C-w>h
+" nnoremap <C-j> <C-w>j
+" nnoremap <C-k> <C-w>k
+" nnoremap <C-l> <C-w>l
 
 " terminal window below
 " nnoremap <Leader>o :below 10vsp term://$SHELL<cr>i
+" nnoremap <Leader>o :vsp term://$SHELL<cr>i
+" nnoremap <Leader>o :sp term://zsh<cr>i
 
 " Package Manger for vim
 " >>>>>>>> Plugin defination start <<<<<<<<<
 call plug#begin('~/.config/nvim/plugged')
 
 " One dark colorscheme
-Plug 'joshdick/onedark.vim'
+" Plug 'joshdick/onedark.vim'
+Plug 'arcticicestudio/nord-vim'
 " Plug 'sheerun/vim-polyglot'
 
 " For syntax checking
@@ -131,7 +172,7 @@ Plug 'tomtom/tcomment_vim'
 Plug 'jremmen/vim-ripgrep'
 
 " To get properties of a class
-Plug 'majutsushi/tagbar'
+" Plug 'majutsushi/tagbar'
 
 " to match tags
 Plug 'vim-scripts/matchit.zip'
@@ -150,7 +191,7 @@ Plug 'tpope/vim-rhubarb'
 
 " Neovim Coc
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'wellle/tmux-complete.vim'
+" Plug 'wellle/tmux-complete.vim'
 
 " Coc extensions
 " Plug 'neoclide/coc-lists', {'do': 'yarn install --frozen-lockfile'}
@@ -163,13 +204,12 @@ Plug 'wellle/tmux-complete.vim'
 " Plug 'neoclide/coc-java', {'do': 'yarn install --frozen-lockfile'}
 
 " GoldenRatio for split window resize
-" Plug 'roman/golden-ratio'
 Plug 'dm1try/golden_size'
 
 " Alternative file manager
 " Plug 'francoiscabrol/ranger.vim'
-Plug 'ptzz/lf.vim'
 Plug 'rbgrouleff/bclose.vim'
+Plug 'ptzz/lf.vim'
 " Plug 'mcchrish/nnn.vim'
 
 " fuzzy search
@@ -180,6 +220,9 @@ Plug 'junegunn/fzf.vim'
 Plug 'junegunn/vim-easy-align'
 
 Plug 'ntpeters/vim-better-whitespace'
+
+Plug 'kassio/neoterm'
+" Plug 'airblade/vim-rooter'
 
 " #### Syntax Plugins ####
 " typescript
@@ -200,35 +243,80 @@ syntax on
 nmap <Leader>w :wa<CR>
 
 " config for tagbar
-nmap <Leader>t :TagbarToggle<CR>
-let g:tagbar_autofocus = 1
-let g:tagbar_left = 1
+" nmap <Leader>t :TagbarToggle<CR>
+" let g:tagbar_autofocus = 1
+" let g:tagbar_left = 1
 
-" Ag config
-" noremap <Leader>a :Ags <cword><cr>
+" Rg config
+" function! RipgrepFzf(query, fullscreen)
+"   let command_fmt = 'rg --column --line-number --no-heading --color=always --smart-case %s || true'
+"   let initial_command = printf(command_fmt, shellescape(a:query))
+"   let reload_command = printf(command_fmt, '{q}')
+"   let spec = {'options': ['--phony', '--query', a:query, '--bind', 'change:reload:'.reload_command]}
+"   call fzf#vim#grep(initial_command, 1, fzf#vim#with_preview(spec), a:fullscreen)
+" endfunction
+" command! -nargs=* -bang RG call RipgrepFzf(<q-args>, <bang>0)
+"
+" noremap <Leader>a :RG <C-R><C-W><CR>
+" xnoremap <silent> <Leader>a y:RG <C-R>"<CR>
 noremap <Leader>a :Rg <cword><cr>
 
 " let g:ranger_map_keys = 0
+" let g:ranger_command_override = 'ranger --cmd=tab_close'
 " nnoremap - :Ranger<CR>
+
+" Vim rooter settings
+" let g:rooter_change_directory_for_non_project_files = 'current'
+" let g:rooter_patterns = ['pom.xml', 'package.json', 'go.mod', 'README.md', '.git/']
+
 let g:lf_map_keys = 0
 map - :Lf<CR>
 
-" let g:nnn#layout = 'vnew'
-" nnoremap - :NnnPicker<CR>
+" " Disable default mappings
+" let g:nnn#set_default_mappings = 0
+" nnoremap - :NnnPicker '%:p:h'<CR>
+" let g:nnn#layout = { 'window': { 'width': 0.9, 'height': 0.6, 'highlight': 'Debug' } }
+" " let g:nnn#layout = 'vnew'
+" " nnoremap - :NnnPicker<CR>
+
 
 " FZF config
 noremap <Leader>f :Files <cr>
-noremap <Leader>e :Buffers <cr>
+" noremap <Leader>e :Buffers <cr>
+noremap <Leader>s :Buffers <cr>
 noremap <Leader>r :History <cr>
 " noremap <Leader>t :Tags<CR>
 nnore <C-W>s :<C-U>sp \| :Buffers <CR>
 nnore <C-W>v :<C-U>vsp \| :Buffers <CR>
-nnore <Leader>s :<C-U>vsp \| :Buffers <CR>
+" nnore <Leader>s :<C-U>vsp \| :Buffers <CR>
+" nnore <Leader>v :<C-U>sp \| :Buffers <CR>
+
+function! WinMove(key)
+    let t:curwin = winnr()
+    exec "wincmd ".a:key
+    if (t:curwin == winnr())
+        if (match(a:key,'[jk]'))
+            " wincmd v
+            exec "normal \<C-W>\v"
+        else
+            " wincmd s
+            exec "normal \<C-W>\s"
+        endif
+        " exec "wincmd ".a:key
+    endif
+endfunction
+
+nnoremap <silent> <C-h> :call WinMove('h')<CR>
+nnoremap <silent> <C-j> :call WinMove('j')<CR>
+nnoremap <silent> <C-k> :call WinMove('k')<CR>
+nnoremap <silent> <C-l> :call WinMove('l')<CR>
 
 " Open fzf in floating window
-let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.8} }
-let g:fzf_preview_window = 'right:50%'
-let $BAT_THEME = 'base16'
+let g:fzf_layout = { 'window': { 'width': 0.6, 'height': 0.7} }
+let g:fzf_preview_window = ''
+" let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.8} }
+" let g:fzf_preview_window = 'right:60%'
+" let $BAT_THEME = 'Nord'
 
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
@@ -251,6 +339,7 @@ autocmd BufWritePre *.go :call CocAction('runCommand', 'editor.action.organizeIm
 
 " format file with prettier
 command! -nargs=0 Prettier :CocCommand prettier.formatFile
+noremap <Leader>0 :CocCommand rest-client.request <cr>
 
 " Highlight and strip whitespace
 let g:better_whitespace_enabled=1
@@ -258,12 +347,25 @@ let g:strip_whitespace_on_save=1
 let g:strip_whitelines_at_eof=1
 " let g:strip_only_modified_lines=1
 
+noremap <Leader>t :tab Tnew <cr>i
+noremap <Leader>i :1Ttoggle <cr>
+" noremap <Leader>o :vert botright 2Ttoggle <cr>
+noremap <Leader>o :vert rightbelow 2Ttoggle <cr>
+let g:neoterm_shell='zsh'
+" let g:neoterm_automap_keys='<Leader>n'
+let g:neoterm_automap_keys='rr'
+let g:neoterm_default_mod='botright'
+" let g:neoterm_size=12
+let g:neoterm_fixedsize='1'
+let g:neoterm_autoscroll='1'
+" let g:neoterm_autoinsert=1
+let g:neoterm_autojump=1
 
 " fugitive gbrowse to open stash urls
 " let g:fugitive_stash_domains = ['https://github.source.internal.cba']
-
 " fugitive gbrowse to open github urls
 let g:github_enterprise_urls = ['https://github.source.internal.cba']
+
 
 "Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
 "If you're using tmux version 2.2 or later, you can remove the outermost $TMUX check and use tmux's 24-bit color support
@@ -280,23 +382,43 @@ if (has("termguicolors"))
 endif
 
 " Config for solarized theme
-let g:onedark_termcolors=256
-let g:onedark_terminal_italics=1
+" let g:onedark_termcolors=256
+" let g:onedark_terminal_italics=1
+let g:nord_italic=1
+let g:nord_italic_comments=1
 syntax enable
 set background=dark
-colorscheme onedark
+colorscheme nord
 
 " Settings for vim-lightline
+" \   'left': [[], ['mode', 'paste', 'lineinfo', 'relativepath', 'readonly', 'gitbranch', 'modified']],
+" \   'right': [[], ['clock', 'percent' ], ['fileformat', 'fileencoding', 'filetype']],
 let g:lightline = {
-            \ 'colorscheme': 'onedark',
+            \ 'colorscheme': 'nord',
             \ 'active': {
-            \   'left': [ [ 'mode', 'paste' ],
-            \             [ 'relativepath', 'readonly', 'gitbranch', 'modified' ] ]
+            \   'left': [['statuslinetabs', 'line'], ['relativepath', 'readonly', 'modified']],
+            \   'right': [['mode'], ['paste'], ['gitbranch']],
+            \ },
+            \ 'inactive': {
+            \   'left': [[], ['line', 'relativepath', 'readonly', 'modified']],
+            \   'right': [[], [], []],
+            \ },
+            \ 'component_expand': {
+            \   'statuslinetabs': 'LightlineStatuslineTabs',
             \ },
             \ 'component_function': {
             \   'gitbranch': 'fugitive#head'
             \ },
+            \  'component': {
+            \    'clock': '%{strftime("%a %d %b %I:%M%p")}'
+            \  },
             \ }
+
+function! LightlineStatuslineTabs() abort
+  return join(map(range(1, tabpagenr('$')),
+        \ '(v:val == tabpagenr() ? "*" : "") . (v:val)'), " ")
+endfunction
+" \ '(v:val == tabpagenr() ? "*" : "") . lightline#tab#filename(v:val)'), " ")
 
 " Disable number/relativenumber for neovim terminal
 au TermOpen * setlocal nonumber norelativenumber

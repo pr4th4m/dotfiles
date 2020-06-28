@@ -15,30 +15,20 @@ zplug 'zplug/zplug', hook-build:'zplug --self-manage'
 # Command completions
 zplug "zsh-users/zsh-completions"
 
-# Auto suggest
-# zplug "zsh-users/zsh-autosuggestions"
-
 # Zsh theme
-# zplug mafredri/zsh-async, from:github
-# zplug sindresorhus/pure, use:pure.zsh, from:github, as:theme
-# zplug "romkatv/powerlevel10k", use:powerlevel10k.zsh-theme
 zplug "romkatv/powerlevel10k", as:theme, depth:1
 
 # Syntax highlighting for commands
-# zplug "zsh-users/zsh-syntax-highlighting"
 zplug "zdharma/fast-syntax-highlighting"
 
 # Quickly search history
 zplug "zsh-users/zsh-history-substring-search", defer:1
 
 # Docker completion
-# zplug "felixr/docker-zsh-completion", defer:1
+zplug "felixr/docker-zsh-completion", defer:1
 
 zplug load
 #### zPlug ####
-
-# ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#949494"
-# bindkey '^ ' autosuggest-accept
 
 # starship shell theme
 # eval "$(starship init zsh)"
@@ -46,25 +36,12 @@ zplug load
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 # [[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
 
-# Setting for sindresorhus/pure
-# source ~/.purepower
-# PURE_PROMPT_SYMBOL='>'
-# PURE_PROMPT_VICMD_SYMBOL='<'
-
-# git status on right prompt
-# setopt prompt_subst
-# source ~/git-prompt.sh
-# export RPROMPT=$'%F{blue}$(__git_ps1 "%s")'
-# export PROMPT='%F{green}%~ %b$%B%F{grey}%f%b '
-# export GIT_PS1_SHOWDIRTYSTATE=1
-
-# history-substring bind k and j for VI mode
-bindkey -M vicmd 'k' history-substring-search-up
-bindkey -M vicmd 'j' history-substring-search-down
+# # history-substring bind k and j for VI mode
+# bindkey -M vicmd 'k' history-substring-search-up
+# bindkey -M vicmd 'j' history-substring-search-down
 
 # Fuzzy finder
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-# . $HOME/z.sh
+# [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # Set locale
 export LC_ALL=en_US.UTF-8
@@ -93,6 +70,7 @@ zstyle ':completion:*' matcher-list 'm:{[:lower:]}={[:upper:]}'
 alias ls='gls --color --group-directories-first'
 alias ll='gls -lh --color --group-directories-first'
 alias cat='bat -pp --theme base16'
+alias c='clear'
 
 # for 256 color support
 if [ -n "$TMUX" ]; then
@@ -108,10 +86,10 @@ export VISUAL=nvim
 # Let fzf use rg
 # export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow --glob "!.git/*"'
 # export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
-export FZF_DEFAULT_COMMAND='fd --type f --exclude .git'
+export FZF_DEFAULT_COMMAND="fd --type f --exclude .git --exclude node_modules"
 export FZF_DEFAULT_OPTS='--layout=reverse'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-export FZF_CTRL_T_OPTS="--height 90% --preview 'bat --theme base16 --style numbers --color always {} | head -500'"
+export FZF_CTRL_T_OPTS="--height 90% --preview 'bat --theme Nord --plain --pager never --color always {} | head -500'"
 
 ##### Required paths ######
 
@@ -143,3 +121,9 @@ export PATH="/usr/local/opt/mysql-client/bin:$PATH"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+# eval "$(starship init zsh)"
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# history-substring bind k and j for VI mode
+bindkey -M vicmd 'k' history-substring-search-up
+bindkey -M vicmd 'j' history-substring-search-down
