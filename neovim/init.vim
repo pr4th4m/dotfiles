@@ -85,22 +85,25 @@ nnoremap _ :bdelete<CR>
 " nnoremap <c-n> :tabnext<CR>
 nnoremap <Leader>j :tab split<CR>
 
-nnoremap <Leader>1 1gt
-nnoremap <Leader>2 2gt
-nnoremap <Leader>3 3gt
-nnoremap <Leader>4 4gt
-nnoremap <Leader>5 5gt
-nnoremap <Leader>6 6gt
-nnoremap <Leader>7 7gt
-nnoremap <Leader>8 8gt
-nnoremap <Leader>9 9gt
-nnoremap <Leader>h gT
-nnoremap <Leader>l gt
+nnoremap <C-Space>1 1gt
+nnoremap <C-Space>2 2gt
+nnoremap <C-Space>3 3gt
+nnoremap <C-Space>4 4gt
+nnoremap <C-Space>5 5gt
+nnoremap <C-Space>6 6gt
+nnoremap <C-Space>7 7gt
+nnoremap <C-Space>8 8gt
+nnoremap <C-Space>9 9gt
+nnoremap <C-Space>h gT
+nnoremap <C-Space>l gt
 
 " Go to last active tab
 au TabLeave * let g:lasttab = tabpagenr()
-nnoremap <silent> <Leader><Leader> :exe "tabn ".g:lasttab<cr>
-vnoremap <silent> <Leader><Leader> :exe "tabn ".g:lasttab<cr>
+nnoremap <silent> <C-Space><Leader> :exe "tabn ".g:lasttab<cr>
+vnoremap <silent> <C-Space><Leader> :exe "tabn ".g:lasttab<cr>
+
+" If terminal buffer start in insert mode
+autocmd BufEnter * if &buftype == 'terminal' | :startinsert | endif
 
 " New window and close windows
 nnoremap <Leader>s <c-w>v
@@ -127,14 +130,26 @@ set foldlevel=1         "this is just what i use
 " to column 0
 inoremap # X#
 
+" Move to tab from terminal insert mode
+function! MoveToTab()
+    let code = getchar()
+    if (code == 32)
+        exec "tabn ".g:lasttab
+    else
+        let char_code = nr2char(code)
+        exec "normal " . char_code . "gt"
+    endif
+endfunction
+
 " terminal escape
 " tnoremap <Leader>jj <C-\><C-n>
-" tnoremap <ESC> <C-\><C-n>
-tnoremap <C-Space> <C-\><C-n>
-tnoremap <C-h> <C-\><C-N><C-w>h<cr>i
-tnoremap <C-j> <C-\><C-N><C-w>j<cr>i
-tnoremap <C-k> <C-\><C-N><C-w>k<cr>i
-tnoremap <C-l> <C-\><C-N><C-w>l<cr>i
+tnoremap <ESC> <C-\><C-n>
+" tnoremap <C-Space> <C-\><C-n>:exe "tabn ".g:lasttab<cr>
+tnoremap <C-Space> <C-\><C-n>:call MoveToTab()<cr>
+tnoremap <C-h> <C-\><C-N><C-w>h
+tnoremap <C-j> <C-\><C-N><C-w>j
+tnoremap <C-k> <C-\><C-N><C-w>k
+tnoremap <C-l> <C-\><C-N><C-w>l
 inoremap <C-h> <C-\><C-N><C-w>h<cr>i
 inoremap <C-j> <C-\><C-N><C-w>j<cr>i
 inoremap <C-k> <C-\><C-N><C-w>k<cr>i
@@ -223,6 +238,9 @@ Plug 'ntpeters/vim-better-whitespace'
 
 Plug 'kassio/neoterm'
 " Plug 'airblade/vim-rooter'
+
+" Auto pairs
+Plug 'jiangmiao/auto-pairs'
 
 " #### Syntax Plugins ####
 " typescript
@@ -348,6 +366,7 @@ let g:strip_whitelines_at_eof=1
 " let g:strip_only_modified_lines=1
 
 noremap <Leader>t :tab Tnew <cr>i
+" noremap <Leader>t :tab Tnew <cr>
 noremap <Leader>i :1Ttoggle <cr>
 " noremap <Leader>o :vert botright 2Ttoggle <cr>
 noremap <Leader>o :vert rightbelow 2Ttoggle <cr>
