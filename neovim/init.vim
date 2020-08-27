@@ -99,8 +99,10 @@ nnoremap <C-Space>l gt
 
 " Go to last active tab
 au TabLeave * let g:lasttab = tabpagenr()
-nnoremap <silent> <C-Space><Leader> :exe "tabn ".g:lasttab<cr>
-vnoremap <silent> <C-Space><Leader> :exe "tabn ".g:lasttab<cr>
+" nnoremap <silent> <C-Space><Leader> :exe "tabn ".g:lasttab<cr>
+" vnoremap <silent> <C-Space><Leader> :exe "tabn ".g:lasttab<cr>
+nnoremap <silent> <C-Space> :call MoveToTab()<cr>
+vnoremap <silent> <C-Space> :call MoveToTab()<cr>
 
 " If terminal buffer start in insert mode
 autocmd BufEnter * if &buftype == 'terminal' | :startinsert | endif
@@ -133,7 +135,7 @@ inoremap # X#
 " Move to tab from terminal insert mode
 function! MoveToTab()
     let code = getchar()
-    if (code == 32)
+    if (char2nr(code) == 128 || code == 32)
         exec "tabn ".g:lasttab
     else
         let char_code = nr2char(code)
@@ -367,9 +369,9 @@ let g:strip_whitelines_at_eof=1
 
 noremap <Leader>t :tab Tnew <cr>i
 " noremap <Leader>t :tab Tnew <cr>
-noremap <Leader>i :1Ttoggle <cr>
+noremap <Leader>i :1Ttoggle <cr>i
 " noremap <Leader>o :vert botright 2Ttoggle <cr>
-noremap <Leader>o :vert rightbelow 2Ttoggle <cr>
+noremap <Leader>o :vert rightbelow 2Ttoggle <cr>i
 let g:neoterm_shell='zsh'
 " let g:neoterm_automap_keys='<Leader>n'
 let g:neoterm_automap_keys='rr'
