@@ -1,6 +1,7 @@
 {
   "rest-client.showHeaders": false,
   "rest-client.proxy": "http://127.0.0.1:3128",
+  "project.rootPatterns": [".env", "go.mod", "package.json", "pom.xml", ".git"],
   "coc.preferences.formatOnSaveFiletypes": [
     "go",
     "css",
@@ -17,18 +18,11 @@
   ],
   "coc.preferences.rootPatterns": [".git", ".env", "package.json"],
   "diagnostic.virtualText": true,
-  "python.linting.enabled": true,
-  "python.linting.pylintEnabled": false,
-  "python.linting.flake8Enabled": true,
-  "python.linting.flake8Args": ["--ignore=E501,W503"],
-  "python.linting.flake8Path": "/Users/nevagipr/Library/Python/3.7/bin/flake8",
-  "python.formatting.provider": "black",
-  "python.formatting.blackPath": "/Users/nevagipr/Library/Python/3.7/bin/black",
-  "python.jediEnabled": true,
-  "python.jediPath": "/Users/nevagipr/Library/Python/3.7/lib/python/site-packages",
-  "python.jediMemoryLimit": -1,
   "suggest.enablePreselect": false,
-  "project.rootPatterns": [".env", "go.mod", "package.json", "pom.xml", ".git"],
+  "eslint.enable": true,
+  "eslint.run": "onSave",
+  "eslint.autoFixOnSave": true,
+  "python.pythonPath": "/usr/local/bin/python3",
   "markdownlint.config": {
     "MD013": false,
     "MD041": false

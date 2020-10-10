@@ -101,11 +101,13 @@ nnoremap <C-Space>l gt
 au TabLeave * let g:lasttab = tabpagenr()
 " nnoremap <silent> <C-Space><Leader> :exe "tabn ".g:lasttab<cr>
 " vnoremap <silent> <C-Space><Leader> :exe "tabn ".g:lasttab<cr>
-nnoremap <silent> <C-Space> :call MoveToTab()<cr>
-vnoremap <silent> <C-Space> :call MoveToTab()<cr>
+nnoremap <silent> <C-Space> :call Move2Tab()<cr>
+vnoremap <silent> <C-Space> :call Move2Tab()<cr>
 
 " If terminal buffer start in insert mode
-autocmd BufEnter * if &buftype == 'terminal' | :startinsert | endif
+let g:isInsert=1
+autocmd BufEnter * if &buftype == 'terminal' && g:isInsert == 1 | :startinsert | endif
+autocmd TermEnter * :let g:isInsert=1
 
 " New window and close windows
 nnoremap <Leader>s <c-w>v
@@ -133,7 +135,8 @@ set foldlevel=1         "this is just what i use
 inoremap # X#
 
 " Move to tab from terminal insert mode
-function! MoveToTab()
+function! Move2Tab()
+    echo g:isInsert
     let code = getchar()
     if (char2nr(code) == 128 || code == 32)
         exec "tabn ".g:lasttab
@@ -145,9 +148,9 @@ endfunction
 
 " terminal escape
 " tnoremap <Leader>jj <C-\><C-n>
-tnoremap <ESC> <C-\><C-n>
+tnoremap <ESC> <C-\><C-n>:let g:isInsert=0<cr>
 " tnoremap <C-Space> <C-\><C-n>:exe "tabn ".g:lasttab<cr>
-tnoremap <C-Space> <C-\><C-n>:call MoveToTab()<cr>
+tnoremap <C-Space> <C-\><C-n>:call Move2Tab()<cr>
 tnoremap <C-h> <C-\><C-N><C-w>h
 tnoremap <C-j> <C-\><C-N><C-w>j
 tnoremap <C-k> <C-\><C-N><C-w>k
@@ -367,11 +370,11 @@ let g:strip_whitespace_on_save=1
 let g:strip_whitelines_at_eof=1
 " let g:strip_only_modified_lines=1
 
-noremap <Leader>t :tab Tnew <cr>i
+noremap <Leader>t :tab Tnew <cr>
 " noremap <Leader>t :tab Tnew <cr>
-noremap <Leader>i :1Ttoggle <cr>i
+noremap <Leader>i :1Ttoggle <cr>
 " noremap <Leader>o :vert botright 2Ttoggle <cr>
-noremap <Leader>o :vert rightbelow 2Ttoggle <cr>i
+noremap <Leader>o :vert rightbelow 2Ttoggle <cr>
 let g:neoterm_shell='zsh'
 " let g:neoterm_automap_keys='<Leader>n'
 let g:neoterm_automap_keys='rr'
