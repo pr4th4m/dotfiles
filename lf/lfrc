@@ -16,6 +16,7 @@ cmd mkdir %mkdir -p $1 && lf -remote "send $id load" && lf -remote "send $id sel
 # open file in neovim
 cmd open $nvim $fx
 map <enter> open
+map <esc> quit
 
 # delete files with D key
 map D delete

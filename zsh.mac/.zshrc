@@ -12,11 +12,11 @@ source $ZPLUG_HOME/init.zsh
 # Self update zplug
 zplug 'zplug/zplug', hook-build:'zplug --self-manage'
 
+# Zsh theme
+zplug "romkatv/powerlevel10k", as:theme
+
 # Command completions
 zplug "zsh-users/zsh-completions"
-
-# Zsh theme
-zplug "romkatv/powerlevel10k", as:theme, depth:1
 
 # Syntax highlighting for commands
 zplug "zdharma/fast-syntax-highlighting"
@@ -29,6 +29,7 @@ zplug "felixr/docker-zsh-completion", defer:1
 
 zplug load
 #### zPlug ####
+
 
 # starship shell theme
 # eval "$(starship init zsh)"
@@ -71,6 +72,7 @@ alias ls='gls --color --group-directories-first'
 alias ll='gls -lh --color --group-directories-first'
 alias cat='bat -pp --theme base16'
 alias c='clear'
+alias cs='cht.sh'
 
 # for 256 color support
 if [ -n "$TMUX" ]; then
@@ -87,7 +89,7 @@ export VISUAL=nvim
 # export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow --glob "!.git/*"'
 # export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
 export FZF_DEFAULT_COMMAND="fd --type f --exclude .git --exclude node_modules"
-export FZF_DEFAULT_OPTS='--layout=reverse'
+export FZF_DEFAULT_OPTS='--layout=reverse --border'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_CTRL_T_OPTS="--height 90% --preview 'bat --theme Nord --plain --pager never --color always {} | head -500'"
 
@@ -96,6 +98,7 @@ export FZF_CTRL_T_OPTS="--height 90% --preview 'bat --theme Nord --plain --pager
 # Home brew installation path
 export PATH="/usr/local/bin:$PATH"
 export PATH="/usr/local/opt/curl/bin:$PATH"
+export PATH="/usr/local/opt/openssl@1.1/bin:$PATH"
 
 # Rust package manager
 export PATH="$HOME/.cargo/bin:$PATH"
@@ -103,7 +106,7 @@ export PATH="$HOME/.cargo/bin:$PATH"
 # Set python path for user workspace
 # NOTE: pip install <package> --user
 export PATH="$HOME/Library/Python/2.7/bin:$PATH"
-export PATH="$HOME/Library/Python/3.7/bin:$PATH"
+export PATH="$HOME/Library/Python/3.9/bin:$PATH"
 
 # set virtualenvwrapper path
 export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python3

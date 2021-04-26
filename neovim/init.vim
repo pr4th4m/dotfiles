@@ -15,8 +15,13 @@ set relativenumber
 " set clipboard=unnamed
 set clipboard=unnamedplus
 set inccommand=split
-set guicursor=""
 set showtabline=0
+
+" GUI settings
+if has('gui_running')
+  set guicursor=""
+  set guifont=JetBrains\ Mono\ Thin:h16
+endif
 
 " Set vertical split as default
 set diffopt+=vertical
@@ -35,6 +40,9 @@ set completeopt-=preview
 " To make nvim faster, not exactly sure though.
 set noshowcmd noruler
 
+" Use s instead of <C-w> to handle windows
+nnoremap s <C-w>
+
 " Navigate between split windows quickly
 nnoremap <c-j> <c-w><c-j>
 nnoremap <c-k> <c-w><c-k>
@@ -44,6 +52,9 @@ nnoremap <c-h> <c-w><c-h>
 " nnoremap <c-k> <c-u>
 " nnoremap <c-l> <c-w>w
 " nnoremap <c-h> <c-w>W
+
+" goto previous window
+nnoremap ss <c-w>p
 
 " For command mode auto complete
 set wildmenu
@@ -77,9 +88,9 @@ nmap <silent> <F5> :set spell!<CR>
 " let g:netrw_bufsettings = 'noma nomod nu nobl nowrap ro'
 
 " Cycle through buffers
-nnoremap } :bnext<CR>
-nnoremap { :bprevious<CR>
-nnoremap _ :bdelete<CR>
+" nnoremap } :bnext<CR>
+" nnoremap { :bprevious<CR>
+" nnoremap _ :bdelete<CR>
 " nnoremap <c-]> :tabnext<CR>
 " nnoremap <c-[> :tabprevious<CR>
 " nnoremap <c-n> :tabnext<CR>
@@ -148,7 +159,8 @@ endfunction
 
 " terminal escape
 " tnoremap <Leader>jj <C-\><C-n>
-tnoremap <ESC> <C-\><C-n>:let g:isInsert=0<cr>
+" tnoremap <ESC> <C-\><C-n>:let g:isInsert=0<cr>
+tnoremap <C-o> <C-\><C-n>:let g:isInsert=0<cr>
 " tnoremap <C-Space> <C-\><C-n>:exe "tabn ".g:lasttab<cr>
 tnoremap <C-Space> <C-\><C-n>:call Move2Tab()<cr>
 tnoremap <C-h> <C-\><C-N><C-w>h
@@ -228,8 +240,9 @@ Plug 'dm1try/golden_size'
 
 " Alternative file manager
 " Plug 'francoiscabrol/ranger.vim'
-Plug 'rbgrouleff/bclose.vim'
 Plug 'ptzz/lf.vim'
+Plug 'moll/vim-bbye'
+Plug 'voldikss/vim-floaterm'
 " Plug 'mcchrish/nnn.vim'
 
 " fuzzy search
@@ -245,7 +258,11 @@ Plug 'kassio/neoterm'
 " Plug 'airblade/vim-rooter'
 
 " Auto pairs
-Plug 'jiangmiao/auto-pairs'
+" Plug 'jiangmiao/auto-pairs'
+Plug 'machakann/vim-sandwich'
+
+" Preview markdown with glow
+Plug 'npxbr/glow.nvim'
 
 " #### Syntax Plugins ####
 " typescript
@@ -292,16 +309,12 @@ noremap <Leader>a :Rg <cword><cr>
 " let g:rooter_change_directory_for_non_project_files = 'current'
 " let g:rooter_patterns = ['pom.xml', 'package.json', 'go.mod', 'README.md', '.git/']
 
-let g:lf_map_keys = 0
-map - :Lf<CR>
-
 " " Disable default mappings
 " let g:nnn#set_default_mappings = 0
 " nnoremap - :NnnPicker '%:p:h'<CR>
 " let g:nnn#layout = { 'window': { 'width': 0.9, 'height': 0.6, 'highlight': 'Debug' } }
 " " let g:nnn#layout = 'vnew'
 " " nnoremap - :NnnPicker<CR>
-
 
 " FZF config
 noremap <Leader>f :Files <cr>
@@ -334,9 +347,14 @@ nnoremap <silent> <C-j> :call WinMove('j')<CR>
 nnoremap <silent> <C-k> :call WinMove('k')<CR>
 nnoremap <silent> <C-l> :call WinMove('l')<CR>
 
+nnoremap <silent> sh :call WinMove('h')<CR>
+nnoremap <silent> sj :call WinMove('j')<CR>
+nnoremap <silent> sk :call WinMove('k')<CR>
+nnoremap <silent> sl :call WinMove('l')<CR>
+
 " Open fzf in floating window
-let g:fzf_layout = { 'window': { 'width': 0.6, 'height': 0.7} }
-let g:fzf_preview_window = ''
+let g:fzf_layout = { 'window': { 'width': 0.6, 'height': 0.7 } }
+let g:fzf_preview_window = []
 " let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.8} }
 " let g:fzf_preview_window = 'right:60%'
 " let $BAT_THEME = 'Nord'
@@ -348,17 +366,58 @@ autocmd FileType python setlocal completeopt-=preview  " avoid sratchpad to disp
 
 " nvim coc settings
 " let g:coc_enable_locationlist = 1
-" Use `[c` and `]c` for navigate diagnostics
-nmap <silent> [c <Plug>(coc-diagnostic-prev)
-nmap <silent> ]c <Plug>(coc-diagnostic-next)
-" nnoremap <silent> <space>y  :<C-u>CocList -A --normal yank<cr>
+" Use `[g` and `]g` to navigate diagnostics
+" Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
+" nmap <silent> [g <Plug>(coc-diagnostic-prev)
+" nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
-" Remap keys for gotos
-nmap <silent> <Leader>d <Plug>(coc-definition)
+" GoTo code navigation.
+nmap <silent> <leader>d <Plug>(coc-definition)
+" nmap <silent> <leader>d :call CocAction('jumpDefinition', 'vsplit')<cr>
+nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
-nmap rn <Plug>(coc-rename)
+
+" Highlight the symbol and its references when holding the cursor.
+" autocmd CursorHold * silent call CocActionAsync('highlight')
+
+" Symbol renaming.
+nmap <leader>n <Plug>(coc-rename)
+
+" Remap keys for applying codeAction to the current buffer.
+nmap <leader>c <Plug>(coc-codeaction)
+
+" Apply AutoFix to problem on the current line.
+" nmap <leader>qf <Plug>(coc-fix-current)
+
+" Toggle code lens
+" nmap <leader>l :call coc#config('codeLens', {'enable': v:true})<cr>
+" nmap <leader>L :call coc#config('codeLens', {'enable': v:false})<cr>
+
+" Use K to show documentation in preview window.
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  elseif (coc#rpc#ready())
+    call CocActionAsync('doHover')
+  else
+    execute '!' . &keywordprg . " " . expand('<cword>')
+  endif
+endfunction
+
+" Add `:Format` command to format current buffer.
+" command! -nargs=0 Format :call CocAction('format')
+
+" Add `:Fold` command to fold current buffer.
+" command! -nargs=? Fold :call CocAction('fold', <f-args>)
+
+" Add `:OR` command for organize imports of the current buffer.
+command! -nargs=0 OR :call CocAction('runCommand', 'editor.action.organizeImport')
 autocmd BufWritePre *.go :call CocAction('runCommand', 'editor.action.organizeImport')
+autocmd BufWritePre *.java :call CocAction('runCommand', 'editor.action.organizeImport')
+" autocmd BufWritePre *.ts :call OR
+" autocmd BufWritePre *.py :call CocAction('runCommand', 'editor.action.organizeImport')
 
 " format file with prettier
 command! -nargs=0 Prettier :CocCommand prettier.formatFile
@@ -371,13 +430,12 @@ let g:strip_whitelines_at_eof=1
 " let g:strip_only_modified_lines=1
 
 noremap <Leader>t :tab Tnew <cr>
-" noremap <Leader>t :tab Tnew <cr>
-noremap <Leader>i :1Ttoggle <cr>
+" noremap <Leader>a :1Ttoggle <cr>
+" noremap <Leader>i :vert rightbelow 2Ttoggle <cr>
 " noremap <Leader>o :vert botright 2Ttoggle <cr>
-noremap <Leader>o :vert rightbelow 2Ttoggle <cr>
 let g:neoterm_shell='zsh'
-" let g:neoterm_automap_keys='<Leader>n'
-let g:neoterm_automap_keys='rr'
+" let g:neoterm_automap_keys='<Leader>r'
+" let g:neoterm_automap_keys='rr'
 let g:neoterm_default_mod='botright'
 " let g:neoterm_size=12
 let g:neoterm_fixedsize='1'
@@ -385,11 +443,14 @@ let g:neoterm_autoscroll='1'
 " let g:neoterm_autoinsert=1
 let g:neoterm_autojump=1
 
+
 " fugitive gbrowse to open stash urls
 " let g:fugitive_stash_domains = ['https://github.source.internal.cba']
 " fugitive gbrowse to open github urls
 let g:github_enterprise_urls = ['https://github.source.internal.cba']
 
+" open scratch file
+nnoremap <Leader>e :vsplit ~/OneDrive - Commonwealth Bank/notes/scratch.md<CR>
 
 "Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
 "If you're using tmux version 2.2 or later, you can remove the outermost $TMUX check and use tmux's 24-bit color support
@@ -405,14 +466,51 @@ if (has("termguicolors"))
   set termguicolors
 endif
 
+
 " Config for solarized theme
 " let g:onedark_termcolors=256
 " let g:onedark_terminal_italics=1
 let g:nord_italic=1
 let g:nord_italic_comments=1
-syntax enable
+let g:nord_cursor_line_number_background = 1
+let g:nord_uniform_diff_background = 1
 set background=dark
+syntax enable
 colorscheme nord
+
+" Floaterm settings
+let g:lf_map_keys = 0
+map - :Lf<CR>
+" map - :FloatermNew lf<CR>
+let g:floaterm_width=0.95
+let g:floaterm_height=0.95
+let g:floaterm_borderchars='─│─│┌┐┘└'
+let g:floaterm_keymap_new    = '<C-Space>n'
+let g:floaterm_keymap_prev   = '<C-Space>h'
+let g:floaterm_keymap_next   = '<C-Space>l'
+" let g:floaterm_keymap_toggle = '<C-Space>j'
+function! ToggleFloaterm()
+  let g:floaterm_autoinsert = v:true
+  if (g:isInsert == 0)
+      let g:floaterm_autoinsert = v:false
+  endif
+  exec "FloatermToggle <CR>"
+endfunction
+nnoremap <silent> <C-Space>j :call ToggleFloaterm()<CR>
+tnoremap <silent> <C-Space>j <C-\><C-n>:call ToggleFloaterm()<CR>
+hi FloatermBorder guibg=#2e3440 guifg=#97b084
+
+" Map command and send to terminal
+" through Floaterm
+let g:runCmd="pwd"
+function! Send2Term()
+  let g:isInsert=0
+  echo g:runCmd
+  exec "FloatermSend " . g:runCmd
+endfunction
+nnoremap <silent> <C-Space>i :call Send2Term()<CR>
+tnoremap <silent> <C-Space>i <C-\><C-n>:call Send2Term()<CR>
+command! -nargs=1 Cmap let g:runCmd=<f-args>
 
 " Settings for vim-lightline
 " \   'left': [[], ['mode', 'paste', 'lineinfo', 'relativepath', 'readonly', 'gitbranch', 'modified']],
@@ -446,3 +544,4 @@ endfunction
 
 " Disable number/relativenumber for neovim terminal
 au TermOpen * setlocal nonumber norelativenumber
+

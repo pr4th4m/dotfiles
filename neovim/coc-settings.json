@@ -9,7 +9,6 @@
     "python",
     "java",
     "yaml",
-    "yml",
     "json",
     "md",
     "typescript",
@@ -23,6 +22,8 @@
   "eslint.run": "onSave",
   "eslint.autoFixOnSave": true,
   "python.pythonPath": "/usr/local/bin/python3",
+  "java.referencesCodeLens.enabled": true,
+  "java.implementationsCodeLens.enabled": true,
   "markdownlint.config": {
     "MD013": false,
     "MD041": false
