@@ -107,6 +107,12 @@ nnoremap <C-Space>8 8gt
 nnoremap <C-Space>9 9gt
 nnoremap <C-Space>h gT
 nnoremap <C-Space>l gt
+tnoremap <C-Space>h <C-\><C-n>gT
+tnoremap <C-Space>l <C-\><C-n>gt
+
+" Semi colon as colon
+nnoremap ; :
+vnoremap ; :
 
 " Go to last active tab
 au TabLeave * let g:lasttab = tabpagenr()
@@ -167,10 +173,10 @@ tnoremap <C-h> <C-\><C-N><C-w>h
 tnoremap <C-j> <C-\><C-N><C-w>j
 tnoremap <C-k> <C-\><C-N><C-w>k
 tnoremap <C-l> <C-\><C-N><C-w>l
-inoremap <C-h> <C-\><C-N><C-w>h<cr>i
-inoremap <C-j> <C-\><C-N><C-w>j<cr>i
-inoremap <C-k> <C-\><C-N><C-w>k<cr>i
-inoremap <C-l> <C-\><C-N><C-w>l<cr>i
+" inoremap <C-h> <C-\><C-N><C-w>h<cr>i
+" inoremap <C-j> <C-\><C-N><C-w>j<cr>i
+" inoremap <C-k> <C-\><C-N><C-w>k<cr>i
+" inoremap <C-l> <C-\><C-N><C-w>l<cr>i
 
 " nnoremap <C-h> <C-w>h
 " nnoremap <C-j> <C-w>j
@@ -225,15 +231,18 @@ Plug 'tpope/vim-rhubarb'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " Plug 'wellle/tmux-complete.vim'
 
-" Coc extensions
+" " Coc extensions
 " Plug 'neoclide/coc-lists', {'do': 'yarn install --frozen-lockfile'}
 " Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'}
 " Plug 'neoclide/coc-yaml', {'do': 'yarn install --frozen-lockfile'}
-" Plug 'fannheyward/coc-markdownlint', {'do': 'yarn install --frozen-lockfile'}
 " Plug 'neoclide/coc-prettier', {'do': 'yarn install --frozen-lockfile'}
-" Plug 'neoclide/coc-python', {'do': 'yarn install --frozen-lockfile'}
-" Plug 'neoclide/coc-rls', {'do': 'yarn install --frozen-lockfile'}
 " Plug 'neoclide/coc-java', {'do': 'yarn install --frozen-lockfile'}
+" Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
+" Plug 'neoclide/coc-eslint', {'do': 'yarn install --frozen-lockfile'}
+" Plug 'fannheyward/coc-markdownlint', {'do': 'yarn install --frozen-lockfile'}
+" Plug 'fannheyward/coc-pyright', {'do': 'yarn install --frozen-lockfile'}
+" Plug 'iamcco/coc-project', {'do': 'yarn install --frozen-lockfile'}
+" Plug 'pr4th4m/coc-restclient', {'do': 'yarn install --frozen-lockfile'}
 
 " GoldenRatio for split window resize
 Plug 'dm1try/golden_size'
@@ -261,8 +270,9 @@ Plug 'kassio/neoterm'
 " Plug 'jiangmiao/auto-pairs'
 Plug 'machakann/vim-sandwich'
 
+
 " Preview markdown with glow
-Plug 'npxbr/glow.nvim'
+" Plug 'npxbr/glow.nvim'
 
 " #### Syntax Plugins ####
 " typescript
@@ -299,7 +309,7 @@ nmap <Leader>w :wa<CR>
 "
 " noremap <Leader>a :RG <C-R><C-W><CR>
 " xnoremap <silent> <Leader>a y:RG <C-R>"<CR>
-noremap <Leader>a :Rg <cword><cr>
+noremap <Leader>h :Rg <cword><cr>
 
 " let g:ranger_map_keys = 0
 " let g:ranger_command_override = 'ranger --cmd=tab_close'
@@ -321,11 +331,22 @@ noremap <Leader>f :Files <cr>
 " noremap <Leader>e :Buffers <cr>
 noremap <Leader>s :Buffers <cr>
 noremap <Leader>r :History <cr>
+noremap <Leader>a :Commands <cr>
 " noremap <Leader>t :Tags<CR>
 nnore <C-W>s :<C-U>sp \| :Buffers <CR>
 nnore <C-W>v :<C-U>vsp \| :Buffers <CR>
 " nnore <Leader>s :<C-U>vsp \| :Buffers <CR>
 " nnore <Leader>v :<C-U>sp \| :Buffers <CR>
+
+" Open fzf in floating window
+let g:fzf_layout = { 'window': { 'width': 0.7, 'height': 0.8, 'yoffset': 0 } }
+let g:fzf_preview_window = []
+" let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.8} }
+" let g:fzf_preview_window = 'right:60%'
+" let $BAT_THEME = 'Nord'
+" let g:fzf_colors = {
+"             \ 'bg': ['bg', '#2e3440'],
+"             \ }
 
 function! WinMove(key)
     let t:curwin = winnr()
@@ -351,13 +372,6 @@ nnoremap <silent> sh :call WinMove('h')<CR>
 nnoremap <silent> sj :call WinMove('j')<CR>
 nnoremap <silent> sk :call WinMove('k')<CR>
 nnoremap <silent> sl :call WinMove('l')<CR>
-
-" Open fzf in floating window
-let g:fzf_layout = { 'window': { 'width': 0.6, 'height': 0.7 } }
-let g:fzf_preview_window = []
-" let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.8} }
-" let g:fzf_preview_window = 'right:60%'
-" let $BAT_THEME = 'Nord'
 
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
@@ -429,29 +443,6 @@ let g:strip_whitespace_on_save=1
 let g:strip_whitelines_at_eof=1
 " let g:strip_only_modified_lines=1
 
-noremap <Leader>t :tab Tnew <cr>
-" noremap <Leader>a :1Ttoggle <cr>
-" noremap <Leader>i :vert rightbelow 2Ttoggle <cr>
-" noremap <Leader>o :vert botright 2Ttoggle <cr>
-let g:neoterm_shell='zsh'
-" let g:neoterm_automap_keys='<Leader>r'
-" let g:neoterm_automap_keys='rr'
-let g:neoterm_default_mod='botright'
-" let g:neoterm_size=12
-let g:neoterm_fixedsize='1'
-let g:neoterm_autoscroll='1'
-" let g:neoterm_autoinsert=1
-let g:neoterm_autojump=1
-
-
-" fugitive gbrowse to open stash urls
-" let g:fugitive_stash_domains = ['https://github.source.internal.cba']
-" fugitive gbrowse to open github urls
-let g:github_enterprise_urls = ['https://github.source.internal.cba']
-
-" open scratch file
-nnoremap <Leader>e :vsplit ~/OneDrive - Commonwealth Bank/notes/scratch.md<CR>
-
 "Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
 "If you're using tmux version 2.2 or later, you can remove the outermost $TMUX check and use tmux's 24-bit color support
 "(see < http://sunaku.github.io/tmux-24bit-color.html#usage > for more information.)
@@ -482,35 +473,60 @@ colorscheme nord
 let g:lf_map_keys = 0
 map - :Lf<CR>
 " map - :FloatermNew lf<CR>
-let g:floaterm_width=0.95
-let g:floaterm_height=0.95
+let g:floaterm_width=0.7
+let g:floaterm_height=0.8
+" let g:floaterm_width=0.95
+" let g:floaterm_height=0.95
+let g:floaterm_position='top'
 let g:floaterm_borderchars='─│─│┌┐┘└'
-let g:floaterm_keymap_new    = '<C-Space>n'
-let g:floaterm_keymap_prev   = '<C-Space>h'
-let g:floaterm_keymap_next   = '<C-Space>l'
-" let g:floaterm_keymap_toggle = '<C-Space>j'
-function! ToggleFloaterm()
-  let g:floaterm_autoinsert = v:true
-  if (g:isInsert == 0)
-      let g:floaterm_autoinsert = v:false
-  endif
-  exec "FloatermToggle <CR>"
-endfunction
-nnoremap <silent> <C-Space>j :call ToggleFloaterm()<CR>
-tnoremap <silent> <C-Space>j <C-\><C-n>:call ToggleFloaterm()<CR>
+" let g:floaterm_keymap_new    = '<C-Space>n'
+" let g:floaterm_keymap_prev   = '<C-Space>h'
+" let g:floaterm_keymap_next   = '<C-Space>l'
+" " let g:floaterm_keymap_toggle = '<C-Space>j'
+" function! ToggleFloaterm()
+"   if (g:isInsert == 0)
+"     let g:floaterm_autoinsert = v:false
+"   else
+"     let g:floaterm_autoinsert = v:true
+"   endif
+"   exec "FloatermToggle"
+" endfunction
+" nnoremap <silent> <C-Space>j :call ToggleFloaterm()<CR>
+" tnoremap <silent> <C-Space>j <C-\><C-n>:call ToggleFloaterm()<CR>
+" nnoremap <silent> <C-Space>j :FloatermToggle<CR>
+" tnoremap <silent> <C-Space>j <C-\><C-n>:FloatermToggle<CR>
 hi FloatermBorder guibg=#2e3440 guifg=#97b084
 
-" Map command and send to terminal
-" through Floaterm
-let g:runCmd="pwd"
-function! Send2Term()
-  let g:isInsert=0
-  echo g:runCmd
-  exec "FloatermSend " . g:runCmd
-endfunction
-nnoremap <silent> <C-Space>i :call Send2Term()<CR>
-tnoremap <silent> <C-Space>i <C-\><C-n>:call Send2Term()<CR>
-command! -nargs=1 Cmap let g:runCmd=<f-args>
+" " Map command and send to terminal
+" " through Floaterm
+" let g:runCmd="pwd"
+" function! Send2Term()
+"   let g:isInsert=0
+"   echo g:runCmd
+"   exec "FloatermSend " . g:runCmd
+" endfunction
+" nnoremap <silent> <C-Space>i :call Send2Term()<CR>
+" tnoremap <silent> <C-Space>i <C-\><C-n>:call Send2Term()<CR>
+" command! -nargs=1 Cmap let g:runCmd=<f-args>
+
+" Neoterm settings
+noremap <Leader>t :tab Tnew <cr>
+noremap <silent> <C-Space>j :1Ttoggle resize=36<CR>
+tnoremap <silent> <C-Space>j <C-\><C-n>:1Ttoggle resize=36<CR>
+noremap <silent> <C-Space>k :vert botright 2Ttoggle resize=140<CR>
+tnoremap <silent> <C-Space>k <C-\><C-n>:vert botright 2Ttoggle resize=140<CR>
+" Tmap <cmd>
+nnoremap <silent> <C-Space>i :call neoterm#map_do()<cr>
+tnoremap <silent> <C-Space>i <C-\><C-n>:call neoterm#map_do()<cr>
+let g:neoterm_shell='zsh'
+" let g:neoterm_automap_keys='<C-Space>i'
+" let g:neoterm_automap_keys='rr'
+let g:neoterm_default_mod='botright'
+" let g:neoterm_size=12
+let g:neoterm_fixedsize='1'
+let g:neoterm_autoscroll='1'
+" let g:neoterm_autoinsert=1
+let g:neoterm_autojump=1
 
 " Settings for vim-lightline
 " \   'left': [[], ['mode', 'paste', 'lineinfo', 'relativepath', 'readonly', 'gitbranch', 'modified']],
@@ -545,3 +561,12 @@ endfunction
 " Disable number/relativenumber for neovim terminal
 au TermOpen * setlocal nonumber norelativenumber
 
+" open scratch file
+" nnoremap <Leader>e :vsplit ~/OneDrive - Commonwealth Bank/notes/scratch.md<CR>
+nnoremap <Leader>e :Files /Users/nevagipr/OneDrive\ -\ Commonwealth\ Bank/notes<cr>
+
+noremap <Leader>g :Git<cr>
+" fugitive gbrowse to open stash urls
+" let g:fugitive_stash_domains = ['https://github.source.internal.cba']
+" fugitive gbrowse to open github urls
+let g:github_enterprise_urls = ['https://github.source.internal.cba']

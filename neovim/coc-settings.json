@@ -22,6 +22,8 @@
   "eslint.run": "onSave",
   "eslint.autoFixOnSave": true,
   "python.pythonPath": "/usr/local/bin/python3",
+  "python.formatting.provider": "black",
+  "python.analysis.diagnosticMode": "workspace",
   "java.referencesCodeLens.enabled": true,
   "java.implementationsCodeLens.enabled": true,
   "markdownlint.config": {
