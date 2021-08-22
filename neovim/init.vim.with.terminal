@@ -96,19 +96,19 @@ nmap <silent> <F5> :set spell!<CR>
 " nnoremap <c-n> :tabnext<CR>
 nnoremap <Leader>j :tab split<CR>
 
-nnoremap <Leader>1 1gt
-nnoremap <Leader>2 2gt
-nnoremap <Leader>3 3gt
-nnoremap <Leader>4 4gt
-nnoremap <Leader>5 5gt
-nnoremap <Leader>6 6gt
-nnoremap <Leader>7 7gt
-nnoremap <Leader>8 8gt
-nnoremap <Leader>9 9gt
-" nnoremap <Leader>h gT
-" nnoremap <Leader>l gt
-" tnoremap <Leader>h <C-\><C-n>gT
-" tnoremap <Leader>l <C-\><C-n>gt
+nnoremap <C-Space>1 1gt
+nnoremap <C-Space>2 2gt
+nnoremap <C-Space>3 3gt
+nnoremap <C-Space>4 4gt
+nnoremap <C-Space>5 5gt
+nnoremap <C-Space>6 6gt
+nnoremap <C-Space>7 7gt
+nnoremap <C-Space>8 8gt
+nnoremap <C-Space>9 9gt
+nnoremap <C-Space>h gT
+nnoremap <C-Space>l gt
+tnoremap <C-Space>h <C-\><C-n>gT
+tnoremap <C-Space>l <C-\><C-n>gt
 
 " Semi colon as colon
 nnoremap ; :
@@ -132,21 +132,21 @@ inoremap ) )<c-g>u
 inoremap [ [<c-g>u
 inoremap ] ]<c-g>u
 
-" Relative number jump with i/o
+" Relative number jump
 nnoremap <expr> k (v:count > 3 ? "m'" . v:count : "") . 'k'
 nnoremap <expr> j (v:count > 3 ? "m'" . v:count : "") . 'j'
 
-" " Go to last active tab
+" Go to last active tab
 au TabLeave * let g:lasttab = tabpagenr()
-nnoremap <silent> <Leader>i :exe "tabn ".g:lasttab<cr>
-vnoremap <silent> <Leader>i :exe "tabn ".g:lasttab<cr>
-" nnoremap <silent> <C-Space> :call Move2Tab()<cr>
-" vnoremap <silent> <C-Space> :call Move2Tab()<cr>
+" nnoremap <silent> <C-Space><Leader> :exe "tabn ".g:lasttab<cr>
+" vnoremap <silent> <C-Space><Leader> :exe "tabn ".g:lasttab<cr>
+nnoremap <silent> <C-Space> :call Move2Tab()<cr>
+vnoremap <silent> <C-Space> :call Move2Tab()<cr>
 
 " If terminal buffer start in insert mode
-" let g:isInsert=1
-" autocmd BufEnter * if &buftype == 'terminal' && g:isInsert == 1 | :startinsert | endif
-" autocmd TermEnter * :let g:isInsert=1
+let g:isInsert=1
+autocmd BufEnter * if &buftype == 'terminal' && g:isInsert == 1 | :startinsert | endif
+autocmd TermEnter * :let g:isInsert=1
 
 " New window and close windows
 nnoremap <Leader>s <c-w>v
@@ -171,34 +171,34 @@ set foldlevel=1         "this is just what i use
 
 " this is done because when writing a comment in python code the cursur goes
 " to column 0
-" inoremap # X#
+inoremap # X#
 
-" " Move to tab from terminal insert mode
-" function! Move2Tab()
-"     echo g:isInsert
-"     let code = getchar()
-"     if (char2nr(code) == 128 || code == 32)
-"         exec "tabn ".g:lasttab
-"     else
-"         let char_code = nr2char(code)
-"         exec "normal " . char_code . "gt"
-"     endif
-" endfunction
+" Move to tab from terminal insert mode
+function! Move2Tab()
+    echo g:isInsert
+    let code = getchar()
+    if (char2nr(code) == 128 || code == 32)
+        exec "tabn ".g:lasttab
+    else
+        let char_code = nr2char(code)
+        exec "normal " . char_code . "gt"
+    endif
+endfunction
 
-" " terminal escape
-" " tnoremap <Leader>jj <C-\><C-n>
-" " tnoremap <ESC> <C-\><C-n>:let g:isInsert=0<cr>
-" tnoremap <C-o> <C-\><C-n>:let g:isInsert=0<cr>
-" " tnoremap <C-Space> <C-\><C-n>:exe "tabn ".g:lasttab<cr>
-" tnoremap <C-Space> <C-\><C-n>:call Move2Tab()<cr>
-" tnoremap <C-h> <C-\><C-N><C-w>h
-" tnoremap <C-j> <C-\><C-N><C-w>j
-" tnoremap <C-k> <C-\><C-N><C-w>k
-" tnoremap <C-l> <C-\><C-N><C-w>l
-" " inoremap <C-h> <C-\><C-N><C-w>h<cr>i
-" " inoremap <C-j> <C-\><C-N><C-w>j<cr>i
-" " inoremap <C-k> <C-\><C-N><C-w>k<cr>i
-" " inoremap <C-l> <C-\><C-N><C-w>l<cr>i
+" terminal escape
+" tnoremap <Leader>jj <C-\><C-n>
+" tnoremap <ESC> <C-\><C-n>:let g:isInsert=0<cr>
+tnoremap <C-o> <C-\><C-n>:let g:isInsert=0<cr>
+" tnoremap <C-Space> <C-\><C-n>:exe "tabn ".g:lasttab<cr>
+tnoremap <C-Space> <C-\><C-n>:call Move2Tab()<cr>
+tnoremap <C-h> <C-\><C-N><C-w>h
+tnoremap <C-j> <C-\><C-N><C-w>j
+tnoremap <C-k> <C-\><C-N><C-w>k
+tnoremap <C-l> <C-\><C-N><C-w>l
+" inoremap <C-h> <C-\><C-N><C-w>h<cr>i
+" inoremap <C-j> <C-\><C-N><C-w>j<cr>i
+" inoremap <C-k> <C-\><C-N><C-w>k<cr>i
+" inoremap <C-l> <C-\><C-N><C-w>l<cr>i
 
 " nnoremap <C-h> <C-w>h
 " nnoremap <C-j> <C-w>j
@@ -257,19 +257,16 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " " Coc extensions
 " Plug 'neoclide/coc-lists', {'do': 'yarn install --frozen-lockfile'}
-" Plug 'iamcco/coc-project', {'do': 'yarn install --frozen-lockfile'}
-" Plug 'pr4th4m/coc-restclient', {'do': 'yarn install --frozen-lockfile'}
-" Plug 'neoclide/coc-eslint', {'do': 'yarn install --frozen-lockfile'}
-" Plug 'iamcco/coc-diagnostic', {'do': 'yarn install --frozen-lockfile'}
-" Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
-" Plug 'fannheyward/coc-pyright', {'do': 'yarn install --frozen-lockfile'}
 " Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'}
-" Plug 'neoclide/coc-java', {'do': 'yarn install --frozen-lockfile'}
-"
 " Plug 'neoclide/coc-yaml', {'do': 'yarn install --frozen-lockfile'}
 " Plug 'neoclide/coc-prettier', {'do': 'yarn install --frozen-lockfile'}
+" Plug 'neoclide/coc-java', {'do': 'yarn install --frozen-lockfile'}
+" Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
+" Plug 'neoclide/coc-eslint', {'do': 'yarn install --frozen-lockfile'}
 " Plug 'fannheyward/coc-markdownlint', {'do': 'yarn install --frozen-lockfile'}
-
+" Plug 'fannheyward/coc-pyright', {'do': 'yarn install --frozen-lockfile'}
+" Plug 'iamcco/coc-project', {'do': 'yarn install --frozen-lockfile'}
+" Plug 'pr4th4m/coc-restclient', {'do': 'yarn install --frozen-lockfile'}
 
 " GoldenRatio for split window resize
 Plug 'dm1try/golden_size'
@@ -291,12 +288,13 @@ Plug 'junegunn/vim-easy-align'
 
 Plug 'ntpeters/vim-better-whitespace'
 
-" Plug 'kassio/neoterm'
+Plug 'kassio/neoterm'
 " Plug 'airblade/vim-rooter'
 
 " Auto pairs
 " Plug 'jiangmiao/auto-pairs'
 Plug 'machakann/vim-sandwich'
+
 
 " Preview markdown with glow
 " Plug 'npxbr/glow.nvim'
@@ -395,10 +393,10 @@ nnoremap <silent> <C-j> :call WinMove('j')<CR>
 nnoremap <silent> <C-k> :call WinMove('k')<CR>
 nnoremap <silent> <C-l> :call WinMove('l')<CR>
 
-" nnoremap <silent> sh :call WinMove('h')<CR>
-" nnoremap <silent> sj :call WinMove('j')<CR>
-" nnoremap <silent> sk :call WinMove('k')<CR>
-" nnoremap <silent> sl :call WinMove('l')<CR>
+nnoremap <silent> sh :call WinMove('h')<CR>
+nnoremap <silent> sj :call WinMove('j')<CR>
+nnoremap <silent> sk :call WinMove('k')<CR>
+nnoremap <silent> sl :call WinMove('l')<CR>
 
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
@@ -556,27 +554,27 @@ let g:lf#layout = { 'window': { 'width': 0.7, 'height': 0.9, 'highlight': 'Debug
 " tnoremap <silent> <C-Space>i <C-\><C-n>:call Send2Term()<CR>
 " command! -nargs=1 Cmap let g:runCmd=<f-args>
 
-" " Neoterm settings
-" noremap <Leader>t :tab Tnew <cr>
-" " noremap <silent> <C-Space>j :topleft 1Ttoggle resize=36<CR>
-" " tnoremap <silent> <C-Space>j <C-\><C-n>:topleft 1Ttoggle resize=36<CR>
-" noremap <silent> <C-Space>j :1Ttoggle resize=42<CR>
-" tnoremap <silent> <C-Space>j <C-\><C-n>:1Ttoggle resize=42<CR>
-" noremap <silent> <C-Space>k :vert botright 2Ttoggle resize=140<CR>
-" tnoremap <silent> <C-Space>k <C-\><C-n>:vert botright 2Ttoggle resize=140<CR>
-" " Tmap <cmd>
-" nnoremap <silent> <C-Space>i :call neoterm#map_do()<cr>
-" tnoremap <silent> <C-Space>i <C-\><C-n>:call neoterm#map_do()<cr>
-" let g:neoterm_shell='zsh'
-" " let g:neoterm_automap_keys='<C-Space>i'
-" " let g:neoterm_automap_keys='rr'
-" let g:neoterm_automap_keys='<Space>i'
-" let g:neoterm_default_mod='botright'
-" " let g:neoterm_size=12
-" let g:neoterm_fixedsize='1'
-" let g:neoterm_autoscroll='1'
-" " let g:neoterm_autoinsert=1
-" let g:neoterm_autojump=1
+" Neoterm settings
+noremap <Leader>t :tab Tnew <cr>
+" noremap <silent> <C-Space>j :topleft 1Ttoggle resize=36<CR>
+" tnoremap <silent> <C-Space>j <C-\><C-n>:topleft 1Ttoggle resize=36<CR>
+noremap <silent> <C-Space>j :1Ttoggle resize=42<CR>
+tnoremap <silent> <C-Space>j <C-\><C-n>:1Ttoggle resize=42<CR>
+noremap <silent> <C-Space>k :vert botright 2Ttoggle resize=140<CR>
+tnoremap <silent> <C-Space>k <C-\><C-n>:vert botright 2Ttoggle resize=140<CR>
+" Tmap <cmd>
+nnoremap <silent> <C-Space>i :call neoterm#map_do()<cr>
+tnoremap <silent> <C-Space>i <C-\><C-n>:call neoterm#map_do()<cr>
+let g:neoterm_shell='zsh'
+" let g:neoterm_automap_keys='<C-Space>i'
+" let g:neoterm_automap_keys='rr'
+let g:neoterm_automap_keys='<Space>i'
+let g:neoterm_default_mod='botright'
+" let g:neoterm_size=12
+let g:neoterm_fixedsize='1'
+let g:neoterm_autoscroll='1'
+" let g:neoterm_autoinsert=1
+let g:neoterm_autojump=1
 
 " Settings for vim-lightline
 " \   'left': [[], ['mode', 'paste', 'lineinfo', 'relativepath', 'readonly', 'gitbranch', 'modified']],

@@ -5,30 +5,30 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-#### zPlug - zsh plugin manager ####
-export ZPLUG_HOME=/usr/local/opt/zplug
-source $ZPLUG_HOME/init.zsh
-
-# Self update zplug
-zplug 'zplug/zplug', hook-build:'zplug --self-manage'
-
-# Zsh theme
-zplug "romkatv/powerlevel10k", as:theme
-
-# Command completions
-zplug "zsh-users/zsh-completions"
-
-# Syntax highlighting for commands
-zplug "zdharma/fast-syntax-highlighting"
-
-# Quickly search history
-zplug "zsh-users/zsh-history-substring-search", defer:1
-
-# Docker completion
-zplug "felixr/docker-zsh-completion", defer:1
-
-zplug load
-#### zPlug ####
+# #### zPlug - zsh plugin manager ####
+# export ZPLUG_HOME=/usr/local/opt/zplug
+# source $ZPLUG_HOME/init.zsh
+#
+# # Self update zplug
+# zplug 'zplug/zplug', hook-build:'zplug --self-manage'
+#
+# # Zsh theme
+# zplug "romkatv/powerlevel10k", as:theme
+#
+# # Command completions
+# zplug "zsh-users/zsh-completions"
+#
+# # Syntax highlighting for commands
+# zplug "zdharma/fast-syntax-highlighting"
+#
+# # Quickly search history
+# zplug "zsh-users/zsh-history-substring-search", defer:1
+#
+# # Docker completion
+# zplug "felixr/docker-zsh-completion", defer:1
+#
+# zplug load
+# #### zPlug ####
 
 
 # starship shell theme
@@ -73,6 +73,10 @@ alias ll='gls -lh --color --group-directories-first'
 alias cat='bat -pp --theme base16'
 alias c='clear'
 alias cs='cht.sh'
+function cmap() {
+    local cmd=$@
+    tmux set-environment CMAP $cmd
+}
 
 # for 256 color support
 if [ -n "$TMUX" ]; then
@@ -130,3 +134,35 @@ export PATH="/usr/local/opt/mysql-client/bin:$PATH"
 # history-substring bind k and j for VI mode
 bindkey -M vicmd 'k' history-substring-search-up
 bindkey -M vicmd 'j' history-substring-search-down
+
+# history search highlighting color
+export HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND='bg=#d33682,fg=white,bold'
+export HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_NOT_FOUND='bg=#dc322f,fg=white,bold'
+
+### Anz settings
+
+# Alpaca proxy
+export http_proxy=http://localhost:3128
+export https_proxy=http://localhost:3128
+export HTTP_PROXY=http://localhost:3128
+export HTTPS_PROXY=http://localhost:3128
+# export no_proxy="*.local, 169.254/16, 10.*, 150.*, *.global.anz.com, *.service.anz, *.service.dev, *.apps.anz, *.dev.anz,*.globaltest.anz.com, *.service.test, *.internal, *.googleapis.com"
+# export NO_PROXY="*.local, 169.254/16, 10.*, 150.*, *.global.anz.com, *.service.anz, *.service.dev, *.apps.anz, *.dev.anz,*.globaltest.anz.com, *.service.test, *.internal, *.googleapis.com"
+export no_proxy="*.local, 169.254/16, 10.*, 150.*, *.global.anz.com, *.service.anz, *.service.dev, *.apps.anz, *.dev.anz,*.globaltest.anz.com, *.service.test, *.internal"
+export NO_PROXY="*.local, 169.254/16, 10.*, 150.*, *.global.anz.com, *.service.anz, *.service.dev, *.apps.anz, *.dev.anz,*.globaltest.anz.com, *.service.test, *.internal"
+
+# Anz GCP
+source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
+source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
+export CLOUDSDK_PROXY_TYPE=http
+export CLOUDSDK_PROXY_PORT=3128
+export CLOUDSDK_PROXY_ADDRESS=localhost
+# Use python2 and not python3
+export CLOUDSDK_PYTHON=/usr/bin/python2.7
+
+# Load completion
+fpath=(~/.zsh/completion $fpath)
+autoload -Uz compinit && compinit -i
+
+# Load sheldon
+eval "$(sheldon source)"

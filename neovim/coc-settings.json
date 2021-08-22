@@ -1,18 +1,18 @@
 {
   "rest-client.showHeaders": false,
   "rest-client.proxy": "http://127.0.0.1:3128",
-  "project.rootPatterns": [".env", "go.mod", "package.json", "pom.xml", ".git"],
+  "project.rootPatterns": [".git"],
   "coc.preferences.formatOnSaveFiletypes": [
     "go",
     "css",
     "markdown",
+    "md",
     "python",
     "java",
-    "yaml",
     "json",
-    "md",
     "typescript",
     "javascript",
+    "yaml",
     "rs"
   ],
   "coc.preferences.rootPatterns": [".git", ".env", "package.json"],
@@ -27,8 +27,8 @@
   "java.referencesCodeLens.enabled": true,
   "java.implementationsCodeLens.enabled": true,
   "markdownlint.config": {
-    "MD013": false,
-    "MD041": false
+    "MD013": true,
+    "MD041": true
   },
   "languageserver": {
     "golang": {
@@ -37,5 +37,17 @@
       "rootPatterns": ["go.mod"],
       "filetypes": ["go"]
     }
+  },
+  "diagnostic-languageserver.filetypes": {
+    "markdown": "markdownlint",
+    "sh": "shellcheck",
+    "yaml": "yamllint",
+    "go": "golangci-lint"
+  },
+  "diagnostic-languageserver.formatFiletypes": {
+    "yaml": "prettier",
+    "json": "prettier",
+    "markdown": "prettier",
+    "go": "gofmt"
   }
 }
