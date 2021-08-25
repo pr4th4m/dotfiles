@@ -138,8 +138,8 @@ nnoremap <expr> j (v:count > 3 ? "m'" . v:count : "") . 'j'
 
 " " Go to last active tab
 au TabLeave * let g:lasttab = tabpagenr()
-nnoremap <silent> <Leader>i :exe "tabn ".g:lasttab<cr>
-vnoremap <silent> <Leader>i :exe "tabn ".g:lasttab<cr>
+nnoremap <silent> <Leader><Leader> :exe "tabn ".g:lasttab<cr>
+vnoremap <silent> <Leader><Leader> :exe "tabn ".g:lasttab<cr>
 " nnoremap <silent> <C-Space> :call Move2Tab()<cr>
 " vnoremap <silent> <C-Space> :call Move2Tab()<cr>
 
@@ -279,8 +279,9 @@ Plug 'dm1try/golden_size'
 " Plug 'ptzz/lf.vim'
 " Plug 'moll/vim-bbye'
 " Plug 'voldikss/vim-floaterm'
-Plug 'mroavi/lf.vim'
+" Plug 'mroavi/lf.vim'
 " Plug 'mcchrish/nnn.vim'
+Plug 'kyazdani42/nvim-tree.lua'
 
 " fuzzy search
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -500,20 +501,84 @@ colorscheme tokyonight
 set background=dark
 syntax enable
 
-" lf settings
-let g:lf#set_default_mappings = 0
-" Start lf in the current file's directory
-nnoremap - :LfPicker %:p:h<CR>
-let g:lf#action = {
-      \ '<c-t>': 'tab split',
-      \ '<c-x>': 'split',
-      \ '<c-v>': 'vsplit' }
-" Opens the lf window in a split
-" let g:lf#layout = 'new' " or vnew, tabnew etc.
-" Or pass a dictionary with window size
-" let g:lf#layout = { 'up': '~10%' } " or right, up, down
-" Floating window (neovim latest and vim with patch 8.2.191)
-let g:lf#layout = { 'window': { 'width': 0.7, 'height': 0.9, 'highlight': 'Debug' } }
+" " lf settings
+" let g:lf#set_default_mappings = 0
+" " Start lf in the current file's directory
+" nnoremap - :LfPicker %:p:h<CR>
+" let g:lf#action = {
+"       \ '<c-t>': 'tab split',
+"       \ '<c-x>': 'split',
+"       \ '<c-v>': 'vsplit' }
+" " Opens the lf window in a split
+" " let g:lf#layout = 'new' " or vnew, tabnew etc.
+" " Or pass a dictionary with window size
+" " let g:lf#layout = { 'up': '~10%' } " or right, up, down
+" " Floating window (neovim latest and vim with patch 8.2.191)
+" let g:lf#layout = { 'window': { 'width': 0.7, 'height': 0.9, 'highlight': 'Debug' } }
+
+" Nvim tree config
+nnoremap - :NvimTreeToggle<CR>
+let g:nvim_tree_disable_default_keybindings = 1
+let g:nvim_tree_disable_window_picker = 1
+let g:nvim_tree_ignore = ['.git', 'node_modules']
+let g:nvim_tree_width = 35
+let g:nvim_tree_quit_on_open = 1
+let g:nvim_tree_hide_dotfiles = 1
+let g:nvim_tree_indent_markers = 1
+let g:nvim_tree_show_icons = {
+    \ 'git': 1,
+    \ 'folders': 0,
+    \ 'files': 0,
+    \ 'folder_arrows': 0,
+    \ }
+lua <<EOF
+    require('nvim-tree.view').View.winopts.relativenumber = true
+    require('nvim-tree.view').View.winopts.signcolumn = 'no'
+    local tree_cb = require'nvim-tree.config'.nvim_tree_callback
+    vim.g.nvim_tree_bindings = {
+      { key = "h",                            cb = tree_cb("close_node") },
+      { key = {"l", "<CR>"},                  cb = tree_cb("edit") },
+      { key = "..",                           cb = tree_cb("dir_up") },
+      { key = "<C-v>",                        cb = tree_cb("vsplit") },
+      { key = "<C-x>",                        cb = tree_cb("split") },
+      { key = "<C-t>",                        cb = tree_cb("tabnew") },
+      { key = "o",                            cb = tree_cb("preview") },
+      { key = "P",                            cb = tree_cb("parent_node") },
+      { key = "I",                            cb = tree_cb("toggle_ignored") },
+      { key = "H",                            cb = tree_cb("toggle_dotfiles") },
+      { key = "R",                            cb = tree_cb("refresh") },
+      { key = "a",                            cb = tree_cb("create") },
+      { key = "d",                            cb = tree_cb("remove") },
+      { key = "r",                            cb = tree_cb("rename") },
+      { key = "<C-r>",                        cb = tree_cb("full_rename") },
+      { key = "x",                            cb = tree_cb("cut") },
+      { key = "y",                            cb = tree_cb("copy") },
+      { key = "c",                            cb = tree_cb("copy_name") },
+      { key = "Y",                            cb = tree_cb("copy_path") },
+      { key = "p",                            cb = tree_cb("paste") },
+      { key = "g?",                           cb = tree_cb("toggle_help") },
+    }
+EOF
+
+" Ignore golden ratio for certain buffers
+lua << EOF
+local function ignore_by_buftype(types)
+  local buftype = vim.api.nvim_buf_get_option(0, 'buftype')
+  for _, type in pairs(types) do
+    if type == buftype then
+      return 1
+    end
+  end
+end
+
+local golden_size = require("golden_size")
+-- set the callbacks, preserve the defaults
+golden_size.set_ignore_callbacks({
+  { ignore_by_buftype, {'nofile'} },
+  { golden_size.ignore_float_windows }, -- default one, ignore float windows
+  { golden_size.ignore_by_window_flag }, -- default one, ignore windows with w:ignore_gold_size=1
+})
+EOF
 
 
 " Floaterm settings
@@ -616,7 +681,3 @@ au TermOpen * setlocal nonumber norelativenumber
 nnoremap <Leader>e :Files /Users/nevagip/notes<cr>
 
 noremap <Leader>g :Git<cr>
-" fugitive gbrowse to open stash urls
-" let g:fugitive_stash_domains = ['https://github.source.internal.cba']
-" fugitive gbrowse to open github urls
-let g:github_enterprise_urls = ['https://github.service.anz']

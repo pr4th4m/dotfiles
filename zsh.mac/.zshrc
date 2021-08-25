@@ -73,7 +73,7 @@ alias ll='gls -lh --color --group-directories-first'
 alias cat='bat -pp --theme base16'
 alias c='clear'
 alias cs='cht.sh'
-function cmap() {
+function m() {
     local cmd=$@
     tmux set-environment CMAP $cmd
 }
@@ -138,27 +138,6 @@ bindkey -M vicmd 'j' history-substring-search-down
 # history search highlighting color
 export HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND='bg=#d33682,fg=white,bold'
 export HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_NOT_FOUND='bg=#dc322f,fg=white,bold'
-
-### Anz settings
-
-# Alpaca proxy
-export http_proxy=http://localhost:3128
-export https_proxy=http://localhost:3128
-export HTTP_PROXY=http://localhost:3128
-export HTTPS_PROXY=http://localhost:3128
-# export no_proxy="*.local, 169.254/16, 10.*, 150.*, *.global.anz.com, *.service.anz, *.service.dev, *.apps.anz, *.dev.anz,*.globaltest.anz.com, *.service.test, *.internal, *.googleapis.com"
-# export NO_PROXY="*.local, 169.254/16, 10.*, 150.*, *.global.anz.com, *.service.anz, *.service.dev, *.apps.anz, *.dev.anz,*.globaltest.anz.com, *.service.test, *.internal, *.googleapis.com"
-export no_proxy="*.local, 169.254/16, 10.*, 150.*, *.global.anz.com, *.service.anz, *.service.dev, *.apps.anz, *.dev.anz,*.globaltest.anz.com, *.service.test, *.internal"
-export NO_PROXY="*.local, 169.254/16, 10.*, 150.*, *.global.anz.com, *.service.anz, *.service.dev, *.apps.anz, *.dev.anz,*.globaltest.anz.com, *.service.test, *.internal"
-
-# Anz GCP
-source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
-source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
-export CLOUDSDK_PROXY_TYPE=http
-export CLOUDSDK_PROXY_PORT=3128
-export CLOUDSDK_PROXY_ADDRESS=localhost
-# Use python2 and not python3
-export CLOUDSDK_PYTHON=/usr/bin/python2.7
 
 # Load completion
 fpath=(~/.zsh/completion $fpath)

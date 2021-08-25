@@ -615,6 +615,6 @@ nnoremap <Leader>e :Files /Users/nevagip/notes<cr>
 
 noremap <Leader>g :Git<cr>
 " fugitive gbrowse to open stash urls
-" let g:fugitive_stash_domains = ['https://github.source.internal.cba']
+" let g:fugitive_stash_domains = ['']
 " fugitive gbrowse to open github urls
-let g:github_enterprise_urls = ['https://github.service.anz']
+let g:github_enterprise_urls = ['']
