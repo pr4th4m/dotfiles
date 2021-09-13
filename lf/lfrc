@@ -10,13 +10,20 @@ set previewer ~/.config/lf/preview.sh
 map r rename
 
 # touch file and create directory
-cmd touch %touch $1 && lf -remote "send $id load" && lf -remote "send $id select $1"
-cmd mkdir %mkdir -p $1 && lf -remote "send $id load" && lf -remote "send $id select $1"
+# cmd touch %touch $1 && lf -remote "send $id load" && lf -remote "send $id select $1"
+# cmd mkdir %mkdir -p $1 && lf -remote "send $id load" && lf -remote "send $id select $1"
+
+cmd touch %touch "$@"
+map t push :touch<space>
+
+cmd mkdir %mkdir "$@"
+map m push :mkdir<space>
 
 # open file in neovim
 cmd open $nvim $fx
 map <enter> open
 map <esc> quit
+map <c-c> quit
 
 # delete files with D key
 map D delete

@@ -82,7 +82,7 @@ let mapleader = "\<Space>"
 " Toggle spell checking on and off with `<Leader>s`
 " set spell
 " nmap <silent> <Leader>s :set spell!<CR>
-nmap <silent> <F5> :set spell!<CR>
+nmap <silent> <C-s> :set spell!<CR>
 
 " Make netrw display line number
 " let g:netrw_bufsettings = 'noma nomod nu nobl nowrap ro'
@@ -225,7 +225,8 @@ Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
 " Plug 'w0rp/ale'
 
 " Lightline for vim status bar
-Plug 'itchyny/lightline.vim'
+" Plug 'itchyny/lightline.vim'
+Plug 'hoob3rt/lualine.nvim'
 
 " Tcomment for fast commenting and uncommenting of code
 Plug 'tomtom/tcomment_vim'
@@ -252,7 +253,7 @@ Plug 'tpope/vim-rhubarb'
 " Plug 'davidhalter/jedi-vim', { 'for': ['py', 'python'] }
 
 " Neovim Coc
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " Plug 'wellle/tmux-complete.vim'
 
 " " Coc extensions
@@ -279,13 +280,20 @@ Plug 'dm1try/golden_size'
 " Plug 'ptzz/lf.vim'
 " Plug 'moll/vim-bbye'
 " Plug 'voldikss/vim-floaterm'
-" Plug 'mroavi/lf.vim'
+Plug 'mroavi/lf.vim'
 " Plug 'mcchrish/nnn.vim'
-Plug 'kyazdani42/nvim-tree.lua'
+" Plug 'kyazdani42/nvim-tree.lua'
 
 " fuzzy search
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
+" Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+" Plug 'junegunn/fzf.vim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
+Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
+Plug 'ahmedkhalf/project.nvim'
+
+" Tagbar
+Plug 'liuchengxu/vista.vim'
 
 " align text
 Plug 'junegunn/vim-easy-align'
@@ -298,6 +306,15 @@ Plug 'ntpeters/vim-better-whitespace'
 " Auto pairs
 " Plug 'jiangmiao/auto-pairs'
 Plug 'machakann/vim-sandwich'
+
+" Tree sitter
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+
+Plug 'neovim/nvim-lspconfig'
+Plug 'hrsh7th/nvim-cmp'
+Plug 'hrsh7th/cmp-buffer'
+Plug 'hrsh7th/cmp-path'
+Plug 'hrsh7th/cmp-nvim-lsp'
 
 " Preview markdown with glow
 " Plug 'npxbr/glow.nvim'
@@ -324,6 +341,8 @@ nmap <Leader>w :wa<CR>
 " nmap <Leader>t :TagbarToggle<CR>
 " let g:tagbar_autofocus = 1
 " let g:tagbar_left = 1
+nmap <Leader>t :Vista!!<CR>
+let g:vista#renderer#enable_icon = 0
 
 " Rg config
 " function! RipgrepFzf(query, fullscreen)
@@ -354,47 +373,46 @@ noremap <Leader>h :Rg <cword><cr>
 " " let g:nnn#layout = 'vnew'
 " " nnoremap - :NnnPicker<CR>
 
-" FZF config
-noremap <Leader>f :Files <cr>
-" noremap <Leader>e :Buffers <cr>
-noremap <Leader>s :Buffers <cr>
-noremap <Leader>r :History <cr>
-noremap <Leader>a :Commands <cr>
-" noremap <Leader>t :Tags<CR>
-nnore <C-W>s :<C-U>sp \| :Buffers <CR>
-nnore <C-W>v :<C-U>vsp \| :Buffers <CR>
-" nnore <Leader>s :<C-U>vsp \| :Buffers <CR>
-" nnore <Leader>v :<C-U>sp \| :Buffers <CR>
+" " FZF config
+" noremap <Leader>f :Files <cr>
+" " noremap <Leader>e :Buffers <cr>
+" noremap <Leader>s :Buffers <cr>
+" noremap <Leader>r :History <cr>
+" noremap <Leader>a :Commands <cr>
+" " noremap <Leader>t :Tags<CR>
+" nnore <C-W>s :<C-U>sp \| :Buffers <CR>
+" nnore <C-W>v :<C-U>vsp \| :Buffers <CR>
+" " nnore <Leader>s :<C-U>vsp \| :Buffers <CR>
+" " nnore <Leader>v :<C-U>sp \| :Buffers <CR>
+"
+" " Open fzf in floating window
+" let g:fzf_layout = { 'window': { 'width': 0.7, 'height': 0.9, 'yoffset': 0 } }
+" let g:fzf_preview_window = []
+" " let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.8} }
+" " let g:fzf_preview_window = 'right:60%'
+" " let $BAT_THEME = 'Nord'
+" " let g:fzf_colors = {
+" "             \ 'bg': ['bg', '#2e3440'],
+" "             \ }
 
-" Open fzf in floating window
-let g:fzf_layout = { 'window': { 'width': 0.7, 'height': 0.9, 'yoffset': 0 } }
-let g:fzf_preview_window = []
-" let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.8} }
-" let g:fzf_preview_window = 'right:60%'
-" let $BAT_THEME = 'Nord'
-" let g:fzf_colors = {
-"             \ 'bg': ['bg', '#2e3440'],
-"             \ }
-
-function! WinMove(key)
-    let t:curwin = winnr()
-    exec "wincmd ".a:key
-    if (t:curwin == winnr())
-        if (match(a:key,'[jk]'))
-            " wincmd v
-            exec "normal \<C-W>\v"
-        else
-            " wincmd s
-            exec "normal \<C-W>\s"
-        endif
-        " exec "wincmd ".a:key
-    endif
-endfunction
-
-nnoremap <silent> <C-h> :call WinMove('h')<CR>
-nnoremap <silent> <C-j> :call WinMove('j')<CR>
-nnoremap <silent> <C-k> :call WinMove('k')<CR>
-nnoremap <silent> <C-l> :call WinMove('l')<CR>
+" function! WinMove(key)
+"     let t:curwin = winnr()
+"     exec "wincmd ".a:key
+"     if (t:curwin == winnr())
+"         if (match(a:key,'[jk]'))
+"             " wincmd v
+"             exec "normal \<C-W>\v"
+"         else
+"             " wincmd s
+"             exec "normal \<C-W>\s"
+"         endif
+"         " exec "wincmd ".a:key
+"     endif
+" endfunction
+" nnoremap <silent> <C-h> :call WinMove('h')<CR>
+" nnoremap <silent> <C-j> :call WinMove('j')<CR>
+" nnoremap <silent> <C-k> :call WinMove('k')<CR>
+" nnoremap <silent> <C-l> :call WinMove('l')<CR>
 
 " nnoremap <silent> sh :call WinMove('h')<CR>
 " nnoremap <silent> sj :call WinMove('j')<CR>
@@ -406,64 +424,64 @@ inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 autocmd FileType python setlocal completeopt-=preview  " avoid sratchpad to display
 
-" nvim coc settings
-" let g:coc_enable_locationlist = 1
-" Use `[g` and `]g` to navigate diagnostics
-" Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
-" nmap <silent> [g <Plug>(coc-diagnostic-prev)
-" nmap <silent> ]g <Plug>(coc-diagnostic-next)
-
-" GoTo code navigation.
-nmap <silent> <leader>d <Plug>(coc-definition)
-" nmap <silent> <leader>d :call CocAction('jumpDefinition', 'vsplit')<cr>
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
-
-" Highlight the symbol and its references when holding the cursor.
-" autocmd CursorHold * silent call CocActionAsync('highlight')
-
-" Symbol renaming.
-nmap <leader>n <Plug>(coc-rename)
-
-" Remap keys for applying codeAction to the current buffer.
-nmap <leader>c <Plug>(coc-codeaction)
-
-" Apply AutoFix to problem on the current line.
-" nmap <leader>qf <Plug>(coc-fix-current)
-
-" Toggle code lens
-" nmap <leader>l :call coc#config('codeLens', {'enable': v:true})<cr>
-" nmap <leader>L :call coc#config('codeLens', {'enable': v:false})<cr>
-
-" Use K to show documentation in preview window.
-nnoremap <silent> K :call <SID>show_documentation()<CR>
-function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  elseif (coc#rpc#ready())
-    call CocActionAsync('doHover')
-  else
-    execute '!' . &keywordprg . " " . expand('<cword>')
-  endif
-endfunction
-
-" Add `:Format` command to format current buffer.
-" command! -nargs=0 Format :call CocAction('format')
-
-" Add `:Fold` command to fold current buffer.
-" command! -nargs=? Fold :call CocAction('fold', <f-args>)
-
-" Add `:OR` command for organize imports of the current buffer.
-command! -nargs=0 OR :call CocAction('runCommand', 'editor.action.organizeImport')
-autocmd BufWritePre *.go :silent call CocAction('runCommand', 'editor.action.organizeImport')
-autocmd BufWritePre *.java :call CocAction('runCommand', 'editor.action.organizeImport')
-" autocmd BufWritePre *.ts :call OR
-" autocmd BufWritePre *.py :call CocAction('runCommand', 'editor.action.organizeImport')
-
-" format file with prettier
-command! -nargs=0 Prettier :CocCommand prettier.formatFile
-noremap <Leader>0 :CocCommand rest-client.request <cr>
+" " nvim coc settings
+" " let g:coc_enable_locationlist = 1
+" " Use `[g` and `]g` to navigate diagnostics
+" " Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
+" " nmap <silent> [g <Plug>(coc-diagnostic-prev)
+" " nmap <silent> ]g <Plug>(coc-diagnostic-next)
+"
+" " GoTo code navigation.
+" nmap <silent> <leader>d <Plug>(coc-definition)
+" " nmap <silent> <leader>d :call CocAction('jumpDefinition', 'vsplit')<cr>
+" nmap <silent> gy <Plug>(coc-type-definition)
+" nmap <silent> gi <Plug>(coc-implementation)
+" nmap <silent> gr <Plug>(coc-references)
+"
+" " Highlight the symbol and its references when holding the cursor.
+" " autocmd CursorHold * silent call CocActionAsync('highlight')
+"
+" " Symbol renaming.
+" nmap <leader>n <Plug>(coc-rename)
+"
+" " Remap keys for applying codeAction to the current buffer.
+" nmap <leader>c <Plug>(coc-codeaction)
+"
+" " Apply AutoFix to problem on the current line.
+" " nmap <leader>qf <Plug>(coc-fix-current)
+"
+" " Toggle code lens
+" " nmap <leader>l :call coc#config('codeLens', {'enable': v:true})<cr>
+" " nmap <leader>L :call coc#config('codeLens', {'enable': v:false})<cr>
+"
+" " Use K to show documentation in preview window.
+" nnoremap <silent> K :call <SID>show_documentation()<CR>
+" function! s:show_documentation()
+"   if (index(['vim','help'], &filetype) >= 0)
+"     execute 'h '.expand('<cword>')
+"   elseif (coc#rpc#ready())
+"     call CocActionAsync('doHover')
+"   else
+"     execute '!' . &keywordprg . " " . expand('<cword>')
+"   endif
+" endfunction
+"
+" " Add `:Format` command to format current buffer.
+" " command! -nargs=0 Format :call CocAction('format')
+"
+" " Add `:Fold` command to fold current buffer.
+" " command! -nargs=? Fold :call CocAction('fold', <f-args>)
+"
+" " Add `:OR` command for organize imports of the current buffer.
+" command! -nargs=0 OR :call CocAction('runCommand', 'editor.action.organizeImport')
+" autocmd BufWritePre *.go :silent call CocAction('runCommand', 'editor.action.organizeImport')
+" autocmd BufWritePre *.java :call CocAction('runCommand', 'editor.action.organizeImport')
+" " autocmd BufWritePre *.ts :call OR
+" " autocmd BufWritePre *.py :call CocAction('runCommand', 'editor.action.organizeImport')
+"
+" " format file with prettier
+" command! -nargs=0 Prettier :CocCommand prettier.formatFile
+" noremap <Leader>0 :CocCommand rest-client.request <cr>
 
 " Highlight and strip whitespace
 let g:better_whitespace_enabled=1
@@ -485,7 +503,6 @@ if (has("termguicolors"))
   set termguicolors
 endif
 
-
 " Config for solarized theme
 " let g:onedark_termcolors=256
 " let g:onedark_terminal_italics=1
@@ -495,73 +512,95 @@ endif
 " let g:nord_cursor_line_number_background = 1
 " let g:nord_uniform_diff_background = 1
 " colorscheme nord
+
+" tokyonight config
+lua << EOF
+vim.g.tokyonight_colors = { bg_dark = "#30364d" }
+EOF
 colorscheme tokyonight
+
 " colorscheme dracula
 
 set background=dark
 syntax enable
 
-" " lf settings
-" let g:lf#set_default_mappings = 0
-" " Start lf in the current file's directory
-" nnoremap - :LfPicker %:p:h<CR>
-" let g:lf#action = {
-"       \ '<c-t>': 'tab split',
-"       \ '<c-x>': 'split',
-"       \ '<c-v>': 'vsplit' }
-" " Opens the lf window in a split
-" " let g:lf#layout = 'new' " or vnew, tabnew etc.
-" " Or pass a dictionary with window size
-" " let g:lf#layout = { 'up': '~10%' } " or right, up, down
-" " Floating window (neovim latest and vim with patch 8.2.191)
+" lf settings
+let g:lf#set_default_mappings = 0
+" Start lf in the current file's directory
+nnoremap - :LfPicker %:p:h<CR>
+let g:lf#action = {
+      \ '<c-t>': 'tab split',
+      \ '<c-o>': 'split',
+      \ '<c-i>': 'vsplit' }
+      " \ '<c-t>': 'tab split',
+      " \ '<c-x>': 'split',
+      " \ '<c-v>': 'vsplit' }
+" Opens the lf window in a split
+" let g:lf#layout = 'new' " or vnew, tabnew etc.
+" Or pass a dictionary with window size
+" let g:lf#layout = { 'up': '~10%' } " or right, up, down
+" Floating window (neovim latest and vim with patch 8.2.191)
 " let g:lf#layout = { 'window': { 'width': 0.7, 'height': 0.9, 'highlight': 'Debug' } }
+let g:lf#layout = { 'window': { 'width': 0.8, 'height': 0.9, 'highlight': 'Debug' } }
 
-" Nvim tree config
-nnoremap - :NvimTreeToggle<CR>
-let g:nvim_tree_disable_default_keybindings = 1
-let g:nvim_tree_disable_window_picker = 1
-let g:nvim_tree_ignore = ['.git', 'node_modules']
-let g:nvim_tree_width = 35
-let g:nvim_tree_quit_on_open = 1
-let g:nvim_tree_hide_dotfiles = 1
-let g:nvim_tree_indent_markers = 1
-let g:nvim_tree_show_icons = {
-    \ 'git': 1,
-    \ 'folders': 0,
-    \ 'files': 0,
-    \ 'folder_arrows': 0,
-    \ }
-lua <<EOF
-    require('nvim-tree.view').View.winopts.relativenumber = true
-    require('nvim-tree.view').View.winopts.signcolumn = 'no'
-    local tree_cb = require'nvim-tree.config'.nvim_tree_callback
-    vim.g.nvim_tree_bindings = {
-      { key = "h",                            cb = tree_cb("close_node") },
-      { key = {"l", "<CR>"},                  cb = tree_cb("edit") },
-      { key = "..",                           cb = tree_cb("dir_up") },
-      { key = "<C-v>",                        cb = tree_cb("vsplit") },
-      { key = "<C-x>",                        cb = tree_cb("split") },
-      { key = "<C-t>",                        cb = tree_cb("tabnew") },
-      { key = "o",                            cb = tree_cb("preview") },
-      { key = "P",                            cb = tree_cb("parent_node") },
-      { key = "I",                            cb = tree_cb("toggle_ignored") },
-      { key = "H",                            cb = tree_cb("toggle_dotfiles") },
-      { key = "R",                            cb = tree_cb("refresh") },
-      { key = "a",                            cb = tree_cb("create") },
-      { key = "d",                            cb = tree_cb("remove") },
-      { key = "r",                            cb = tree_cb("rename") },
-      { key = "<C-r>",                        cb = tree_cb("full_rename") },
-      { key = "x",                            cb = tree_cb("cut") },
-      { key = "y",                            cb = tree_cb("copy") },
-      { key = "c",                            cb = tree_cb("copy_name") },
-      { key = "Y",                            cb = tree_cb("copy_path") },
-      { key = "p",                            cb = tree_cb("paste") },
-      { key = "g?",                           cb = tree_cb("toggle_help") },
-    }
-EOF
+" " Nvim tree config
+" nnoremap - :NvimTreeToggle<CR>
+" let g:nvim_tree_disable_default_keybindings = 1
+" let g:nvim_tree_disable_window_picker = 1
+" let g:nvim_tree_ignore = ['.git', 'node_modules']
+" let g:nvim_tree_width = 35
+" let g:nvim_tree_quit_on_open = 1
+" let g:nvim_tree_hide_dotfiles = 1
+" let g:nvim_tree_indent_markers = 1
+" let g:nvim_tree_show_icons = {
+"     \ 'git': 1,
+"     \ 'folders': 0,
+"     \ 'files': 0,
+"     \ 'folder_arrows': 0,
+"     \ }
+" lua <<EOF
+"     require('nvim-tree.view').View.winopts.relativenumber = true
+"     require('nvim-tree.view').View.winopts.signcolumn = 'no'
+"     local tree_cb = require'nvim-tree.config'.nvim_tree_callback
+"     vim.g.nvim_tree_bindings = {
+"       { key = "h",                            cb = tree_cb("close_node") },
+"       { key = {"l", "<CR>"},                  cb = tree_cb("edit") },
+"       { key = "..",                           cb = tree_cb("dir_up") },
+"       { key = "<C-v>",                        cb = tree_cb("vsplit") },
+"       { key = "<C-x>",                        cb = tree_cb("split") },
+"       { key = "<C-t>",                        cb = tree_cb("tabnew") },
+"       { key = "o",                            cb = tree_cb("preview") },
+"       { key = "P",                            cb = tree_cb("parent_node") },
+"       { key = "I",                            cb = tree_cb("toggle_ignored") },
+"       { key = "H",                            cb = tree_cb("toggle_dotfiles") },
+"       { key = "R",                            cb = tree_cb("refresh") },
+"       { key = "a",                            cb = tree_cb("create") },
+"       { key = "d",                            cb = tree_cb("remove") },
+"       { key = "r",                            cb = tree_cb("rename") },
+"       { key = "<C-r>",                        cb = tree_cb("full_rename") },
+"       { key = "x",                            cb = tree_cb("cut") },
+"       { key = "y",                            cb = tree_cb("copy") },
+"       { key = "c",                            cb = tree_cb("copy_name") },
+"       { key = "Y",                            cb = tree_cb("copy_path") },
+"       { key = "p",                            cb = tree_cb("paste") },
+"       { key = "g?",                           cb = tree_cb("toggle_help") },
+"     }
+" EOF
 
 " Ignore golden ratio for certain buffers
 lua << EOF
+
+-- toggle golden size
+vim.api.nvim_set_var("golden_size_off", 0)
+-- :lua GoldenSizeToggle()
+function GoldenSizeToggle()
+  local current_value = vim.api.nvim_get_var("golden_size_off")
+  vim.api.nvim_set_var("golden_size_off", current_value == 1 and 0 or 1)
+end
+local function golden_size_ignore()
+  return vim.api.nvim_get_var("golden_size_off")
+end
+
 local function ignore_by_buftype(types)
   local buftype = vim.api.nvim_buf_get_option(0, 'buftype')
   for _, type in pairs(types) do
@@ -574,11 +613,37 @@ end
 local golden_size = require("golden_size")
 -- set the callbacks, preserve the defaults
 golden_size.set_ignore_callbacks({
+  { golden_size_ignore },
   { ignore_by_buftype, {'nofile'} },
   { golden_size.ignore_float_windows }, -- default one, ignore float windows
   { golden_size.ignore_by_window_flag }, -- default one, ignore windows with w:ignore_gold_size=1
 })
 EOF
+
+" Tree sitter config
+"
+lua <<EOF
+require'nvim-treesitter.configs'.setup {
+  ensure_installed = "maintained",
+  -- indent = {
+  --   enable = true
+  -- },
+  highlight = {
+    enable = true,
+  },
+  incremental_selection = {
+    enable = true,
+    keymaps = {
+      init_selection = "ss",
+      scope_incremental = "sc",
+      node_incremental = "sn",
+      node_decremental = "sm",
+    },
+  },
+}
+EOF
+" set foldmethod=expr
+" set foldexpr=nvim_treesitter#foldexpr()
 
 
 " Floaterm settings
@@ -643,29 +708,29 @@ EOF
 " " let g:neoterm_autoinsert=1
 " let g:neoterm_autojump=1
 
-" Settings for vim-lightline
-" \   'left': [[], ['mode', 'paste', 'lineinfo', 'relativepath', 'readonly', 'gitbranch', 'modified']],
-" \   'right': [[], ['clock', 'percent' ], ['fileformat', 'fileencoding', 'filetype']],
-let g:lightline = {
-            \ 'colorscheme': 'tokyonight',
-            \ 'active': {
-            \   'left': [['statuslinetabs', 'line'], ['relativepath', 'readonly', 'modified']],
-            \   'right': [['mode'], ['paste'], ['gitbranch']],
-            \ },
-            \ 'inactive': {
-            \   'left': [[], ['line', 'relativepath', 'readonly', 'modified']],
-            \   'right': [[], [], []],
-            \ },
-            \ 'component_expand': {
-            \   'statuslinetabs': 'LightlineStatuslineTabs',
-            \ },
-            \ 'component_function': {
-            \   'gitbranch': 'fugitive#head'
-            \ },
-            \  'component': {
-            \    'clock': '%{strftime("%a %d %b %I:%M%p")}'
-            \  },
-            \ }
+" " Settings for vim-lightline
+" " \   'left': [[], ['mode', 'paste', 'lineinfo', 'relativepath', 'readonly', 'gitbranch', 'modified']],
+" " \   'right': [[], ['clock', 'percent' ], ['fileformat', 'fileencoding', 'filetype']],
+" let g:lightline = {
+"             \ 'colorscheme': 'tokyonight',
+"             \ 'active': {
+"             \   'left': [['statuslinetabs', 'line'], ['relativepath', 'readonly', 'modified']],
+"             \   'right': [['mode'], ['paste'], ['gitbranch']],
+"             \ },
+"             \ 'inactive': {
+"             \   'left': [[], ['line', 'relativepath', 'readonly', 'modified']],
+"             \   'right': [[], [], []],
+"             \ },
+"             \ 'component_expand': {
+"             \   'statuslinetabs': 'LightlineStatuslineTabs',
+"             \ },
+"             \ 'component_function': {
+"             \   'gitbranch': 'fugitive#head'
+"             \ },
+"             \  'component': {
+"             \    'clock': '%{strftime("%a %d %b %I:%M%p")}'
+"             \  },
+"             \ }
 
 function! LightlineStatuslineTabs() abort
   return join(map(range(1, tabpagenr('$')),
@@ -674,10 +739,216 @@ endfunction
 " \ '(v:val == tabpagenr() ? "*" : "") . lightline#tab#filename(v:val)'), " ")
 
 " Disable number/relativenumber for neovim terminal
-au TermOpen * setlocal nonumber norelativenumber
+" au TermOpen * setlocal nonumber norelativenumber
+
+" lualine config
+lua << EOF
+require'lualine'.setup {
+  options = {
+    icons_enabled = false,
+    theme = 'tokyonight',
+    component_separators = {'|', '|'},
+    section_separators = {'', ''},
+  },
+  sections = {
+   lualine_a = {'LightlineStatuslineTabs', 'mode'},
+   lualine_b = {},
+   lualine_c = {
+     {
+       'filename',
+       path = 1,
+     },
+   },
+   lualine_y = {
+       'branch',
+       {"diagnostics", sources = {"nvim_lsp"}},
+     },
+  }
+}
+EOF
+
+" LSP config
+lua << EOF
+  local nvim_lsp = require('lspconfig')
+
+  -- Use an on_attach function to only map the following keys
+  -- after the language server attaches to the current buffer
+  local on_attach = function(client, bufnr)
+  local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+  local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
+
+  -- Enable completion triggered by <c-x><c-o>
+  buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+
+  -- Mappings.
+  local opts = { noremap=true, silent=true }
+
+  -- don't update diagnostics in insert mode
+  vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics,{ update_in_insert = false })
+
+  -- See `:help vim.lsp.*` for documentation on any of the below functions
+  -- buf_set_keymap('n', '<space>dd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
+  -- buf_set_keymap('n', '<space>de', '<cmd>vsp | lua vim.lsp.buf.definition()<CR>', opts)
+  -- buf_set_keymap('n', '<space>df', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+  buf_set_keymap('n', '<space>dc', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+  buf_set_keymap('n', '<space>dgi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+  buf_set_keymap('n', '<space>dgr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+  buf_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+  buf_set_keymap('n', 'S', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+  buf_set_keymap('n', '<space>dn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+  buf_set_keymap('n', '<space>da', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+  buf_set_keymap('n', '<space>l', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
+  buf_set_keymap('n', '<space>dl', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
+  buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
+  buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
+  buf_set_keymap('n', '<space>dt', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+  buf_set_keymap('n', '<space>dwa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
+  buf_set_keymap('n', '<space>dwr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
+  buf_set_keymap('n', '<space>dwl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
+end
+
+-- Use a loop to conveniently call 'setup' on multiple servers and
+-- map buffer local keybindings when the language server attaches
+-- local servers = {'gopls', 'bashls'}
+local servers = {'gopls', 'bashls', 'cmake', 'yamlls', 'tsserver'}
+for _, lsp in ipairs(servers) do
+  nvim_lsp[lsp].setup {
+    on_attach = on_attach,
+    flags = {
+      debounce_text_changes = 150,
+    }
+  }
+end
+EOF
+
+" Auto import for golang
+lua << EOF
+  function organizeImport(wait_ms)
+    local params = vim.lsp.util.make_range_params()
+    params.context = {only = {"source.organizeImports"}}
+    local result = vim.lsp.buf_request_sync(0, "textDocument/codeAction", params, wait_ms)
+    for _, res in pairs(result or {}) do
+      for _, r in pairs(res.result or {}) do
+        if r.edit then
+          vim.lsp.util.apply_workspace_edit(r.edit)
+        else
+          vim.lsp.buf.execute_command(r.command)
+        end
+      end
+    end
+  end
+  vim.api.nvim_command("au BufWritePre *.go lua organizeImport(100)")
+EOF
+
+" Auto format
+autocmd BufWritePre *.go lua vim.lsp.buf.formatting_sync(nil, 100)
+" autocmd BufWritePre *.go lua vim.lsp.buf.code_action({ source = { organizeImports = true } })
+
+" cmp auto complete
+lua <<EOF
+  -- Set completeopt to have a better completion experience
+  vim.o.completeopt = 'menuone,noselect'
+
+  local cmp = require('cmp')
+  cmp.setup {
+    -- You can set mappings if you want
+    mapping = {
+      ['<C-p>'] = cmp.mapping.select_prev_item(),
+      ['<Tab>'] = cmp.mapping.select_next_item(),
+      ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+      ['<C-f>'] = cmp.mapping.scroll_docs(4),
+      ['<C-Space>'] = cmp.mapping.complete(),
+      ['<C-e>'] = cmp.mapping.close(),
+      ['<CR>'] = cmp.mapping.confirm({
+        behavior = cmp.ConfirmBehavior.Insert,
+        select = true,
+      })
+    },
+
+    -- You should specify your *installed* sources.
+    sources = {
+      { name = 'nvim_lsp' },
+      { name = 'buffer' },
+      { name = 'path' },
+    },
+
+    preselect = cmp.PreselectMode.None,
+  }
+EOF
+
+" Telescope config
+lua << EOF
+local actions = require('telescope.actions')
+require('telescope').setup{
+     defaults = {
+       mappings = {
+         i = {
+           ["<esc>"] = actions.close,
+           ["<C-o>"] = actions.select_horizontal,
+           ["<C-i>"] = actions.select_vertical,
+           ["<C-t>"] = actions.select_tab,
+         },
+         n = {
+           ["<C-o>"] = actions.select_horizontal,
+           ["<C-i>"] = actions.select_vertical,
+           ["<C-t>"] = actions.select_tab,
+         }
+     },
+     -- path_display = {
+     --     shorten = 6,
+     -- },
+     sorting_strategy = "ascending",
+     dynamic_preview_title = true,
+     layout_config = {
+       prompt_position = "top",
+       preview_width = 0.5,
+     },
+  },
+  extensions = {
+    fzf = {
+      fuzzy = true,                    -- false will only do exact matching
+      override_generic_sorter = false, -- override the generic sorter
+      override_file_sorter = true,     -- override the file sorter
+      case_mode = "smart_case",        -- or "ignore_case" or "respect_case" -- the default case_mode is "smart_case"
+    }
+  }
+}
+
+-- Load extension
+require('telescope').load_extension('fzf')
+require('telescope').load_extension('projects')
+EOF
+nnoremap <leader>ff <cmd>Telescope find_files<cr>
+nnoremap <leader>s <cmd>Telescope buffers<cr>
+nnoremap <leader>fj <cmd>Telescope oldfiles<cr>
+nnoremap <leader>fk <cmd>Telescope grep_string<cr>
+nnoremap <leader>fh <cmd>Telescope live_grep<cr>
+nnoremap <leader>fm <cmd>Telescope marks<cr>
+nnoremap <leader>fc <cmd>Telescope commands<cr>
+nnoremap <leader>gb <cmd>Telescope git_branches<cr>
+nnoremap <leader>gh <cmd>Telescope git_stash<cr>
+nnoremap <leader>ft <cmd>Telescope builtin<cr>
+nnoremap <leader>fi <cmd>Telescope projects<cr>
+nnoremap <leader>fs <cmd>Telescope spell_suggest<cr>
+nnoremap <leader>dd <cmd>Telescope lsp_definitions<cr>
+nnoremap <leader>de :vsp \| Telescope lsp_definitions<cr>
+nnoremap <leader>df <cmd>Telescope lsp_type_definitions<cr>
+nnoremap <leader>dr <cmd>Telescope lsp_references<cr>
+nnoremap <leader>di <cmd>Telescope lsp_implementations<cr>
+nnoremap <leader>fl <cmd>Telescope lsp_document_diagnostics<cr>
+
+" Manage projects
+lua << EOF
+  require("project_nvim").setup {
+      patterns = { ".git" },
+      detection_methods = { "pattern" },
+  }
+EOF
 
 " open scratch file
 " nnoremap <Leader>e :vsplit ~/OneDrive - Commonwealth Bank/notes/scratch.md<CR>
-nnoremap <Leader>e :Files /Users/nevagip/notes<cr>
+nnoremap <Leader>fn :Telescope find_files cwd=/Users/nevagip/notes<cr>
 
-noremap <Leader>g :Git<cr>
+noremap <leader>gs :Git<cr>
+noremap <leader>gp :exe 'Git push -u origin ' . FugitiveHead()<cr>
+noremap <leader>gl :exe 'Git pull origin ' . FugitiveHead()<cr>
