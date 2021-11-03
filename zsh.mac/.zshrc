@@ -54,6 +54,8 @@ export LANG=en_US.UTF-8
 bindkey -v
 export KEYTIMEOUT=20
 bindkey -M viins 'jj' vi-cmd-mode
+# vi mode visual select text color
+zle_highlight=(region:'bg=#364A82,fg=#c0caf5')
 
 # history
 export HISTFILE="$HOME/.zsh_history"
@@ -71,11 +73,27 @@ zstyle ':completion:*' matcher-list 'm:{[:lower:]}={[:upper:]}'
 alias ls='gls --color --group-directories-first'
 alias ll='gls -lh --color --group-directories-first'
 alias cat='bat -pp --theme base16'
-alias c='clear'
+# alias c='clear'
 alias cs='cht.sh'
 function m() {
-    local cmd=$@
-    tmux set-environment CMAP $cmd
+    export CMAP=$@
+    # local cmd=$@
+    # tmux set-environment CMAP $cmd
+}
+
+# clear screen and keep scroll buffer
+# https://sw.kovidgoyal.net/kitty/conf/#shortcut-kitty.Reset-the-terminal
+scroll-and-clear-screen() {
+    printf '\n%.0s' {1..$LINES}
+    zle clear-screen
+}
+zle -N scroll-and-clear-screen
+bindkey '^l' scroll-and-clear-screen
+# unable to use above function from terminal directly
+# create new function which is used in kitty config with CMAP
+function csb() {
+    printf '\n%.0s' {1..$LINES}
+    clear
 }
 
 # for 256 color support
@@ -136,8 +154,8 @@ bindkey -M vicmd 'k' history-substring-search-up
 bindkey -M vicmd 'j' history-substring-search-down
 
 # history search highlighting color
-export HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND='bg=#d33682,fg=white,bold'
-export HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_NOT_FOUND='bg=#dc322f,fg=white,bold'
+export HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND='bg=#d33682,fg=#a5b0c5,bold'
+export HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_NOT_FOUND='bg=#dc322f,fg=#a5b0c5,bold'
 
 # Load completion
 fpath=(~/.zsh/completion $fpath)

@@ -1,13 +1,16 @@
-[merge]
-	tool = fugitive
-	conflictstyle = diff3
-[mergetool]
-	prompt = false
-[diff]
-	tool = vimdiff
-[difftool]
-	prompt = false
 [core]
 	editor = nvim
+
+[diff]
+    tool = nvimdiff
+[difftool]
+    prompt = false
+[difftool "nvimdiff"]
+    cmd = "nvim -d \"$LOCAL\" \"$REMOTE\""
+
+[merge]
+	tool = fugitive
+[mergetool]
+	prompt = false
 [mergetool "fugitive"]
-	cmd = nvim -f -c \"Gvdiff\" \"$MERGED\"
+    cmd = nvim -f -c \"Gdiffsplit!\" \"$MERGED\"

@@ -15,7 +15,7 @@ set relativenumber
 " set clipboard=unnamed
 set clipboard=unnamedplus
 set inccommand=split
-set showtabline=0
+" set showtabline=0
 
 " GUI settings
 if has('gui_running')
@@ -35,13 +35,16 @@ set lazyredraw
 set ttyfast
 
 " Disable scratch pad
-set completeopt-=preview
+" set completeopt-=preview
 
 " To make nvim faster, not exactly sure though.
 set noshowcmd noruler
 
-" Use s instead of <C-w> to handle windows
-nnoremap s <C-w>
+" " Use s instead of <C-w> to handle windows
+" nnoremap s <C-w>
+"
+" " goto previous window
+" nnoremap ss <c-w>p
 
 " Navigate between split windows quickly
 nnoremap <c-j> <c-w><c-j>
@@ -52,9 +55,6 @@ nnoremap <c-h> <c-w><c-h>
 " nnoremap <c-k> <c-u>
 " nnoremap <c-l> <c-w>w
 " nnoremap <c-h> <c-w>W
-
-" goto previous window
-nnoremap ss <c-w>p
 
 " For command mode auto complete
 set wildmenu
@@ -84,6 +84,10 @@ let mapleader = "\<Space>"
 " nmap <silent> <Leader>s :set spell!<CR>
 nmap <silent> <C-s> :set spell!<CR>
 
+" quickfix list
+nnoremap <silent> ]q :cnext<CR>
+nnoremap <silent> [q :cprevious<CR>
+
 " Make netrw display line number
 " let g:netrw_bufsettings = 'noma nomod nu nobl nowrap ro'
 
@@ -107,20 +111,31 @@ nnoremap <Leader>8 8gt
 nnoremap <Leader>9 9gt
 " nnoremap <Leader>h gT
 " nnoremap <Leader>l gt
+" nnoremap H gT
+" nnoremap L gt
 " tnoremap <Leader>h <C-\><C-n>gT
 " tnoremap <Leader>l <C-\><C-n>gt
 
 " Semi colon as colon
-nnoremap ; :
-vnoremap ; :
+" nnoremap ; :
+" vnoremap ; :
 
 " Copy till end of line
 nnoremap Y y$
+nnoremap D d$
+nnoremap C c$
+
+nnoremap H ^
+nnoremap L $
+vnoremap H ^
+vnoremap L $
+nnoremap <c-p> <c-^>
 
 " Keep search result centered
 nnoremap n nzzzv
 nnoremap N Nzzzv
 nnoremap J mzJ`z
+set scrolloff=5 " show last 5 lines
 
 " Undo break points
 inoremap , ,<c-g>u
@@ -132,16 +147,24 @@ inoremap ) )<c-g>u
 inoremap [ [<c-g>u
 inoremap ] ]<c-g>u
 
-" Relative number jump with i/o
+" Relative number jump with <c-i> / <c-o>
 nnoremap <expr> k (v:count > 3 ? "m'" . v:count : "") . 'k'
 nnoremap <expr> j (v:count > 3 ? "m'" . v:count : "") . 'j'
 
-" " Go to last active tab
+" Go to last active tab
 au TabLeave * let g:lasttab = tabpagenr()
+nnoremap <silent> <C-n> :exe "tabn ".g:lasttab<cr>
+vnoremap <silent> <C-n> :exe "tabn ".g:lasttab<cr>
 nnoremap <silent> <Leader><Leader> :exe "tabn ".g:lasttab<cr>
 vnoremap <silent> <Leader><Leader> :exe "tabn ".g:lasttab<cr>
 " nnoremap <silent> <C-Space> :call Move2Tab()<cr>
 " vnoremap <silent> <C-Space> :call Move2Tab()<cr>
+
+" goto mark
+nnoremap <silent> <Leader>aa :'A<cr>
+nnoremap <silent> <Leader>aj :'J<cr>
+nnoremap <silent> <Leader>ak :'K<cr>
+nnoremap <silent> <Leader>al :'L<cr>
 
 " If terminal buffer start in insert mode
 " let g:isInsert=1
@@ -149,8 +172,8 @@ vnoremap <silent> <Leader><Leader> :exe "tabn ".g:lasttab<cr>
 " autocmd TermEnter * :let g:isInsert=1
 
 " New window and close windows
-nnoremap <Leader>s <c-w>v
-nnoremap <Leader>v <c-w>s
+" nnoremap <Leader>c <c-w>v
+" nnoremap <Leader>v <c-w>s
 " nnoremap <Leader>q <c-w><c-q>
 nnoremap <Leader>k <c-w><c-q>
 
@@ -219,6 +242,7 @@ call plug#begin('~/.config/nvim/plugged')
 " Plug 'arcticicestudio/nord-vim'
 " Plug 'dracula/vim', { 'as': 'dracula', 'branch': 'master' }
 Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
+" Plug 'navarasu/onedark.nvim'
 " Plug 'sheerun/vim-polyglot'
 
 " For syntax checking
@@ -226,10 +250,12 @@ Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
 
 " Lightline for vim status bar
 " Plug 'itchyny/lightline.vim'
-Plug 'hoob3rt/lualine.nvim'
+Plug 'nvim-lualine/lualine.nvim'
+Plug 'crispgm/nvim-tabline'
 
 " Tcomment for fast commenting and uncommenting of code
-Plug 'tomtom/tcomment_vim'
+" Plug 'tomtom/tcomment_vim'
+Plug 'numToStr/Comment.nvim'
 
 " Ag for searching in project
 Plug 'jremmen/vim-ripgrep'
@@ -245,6 +271,9 @@ Plug 'tpope/vim-fugitive'
 " Plug 'tpope/vim-unimpaired'
 " Plug 'MobiusHorizons/fugitive-stash.vim'
 Plug 'tpope/vim-rhubarb'
+
+" Copilot
+" Plug 'github/copilot.vim'
 
 " Golang support for vim
 " Plug 'fatih/vim-go', { 'for': 'go' }
@@ -315,6 +344,11 @@ Plug 'hrsh7th/nvim-cmp'
 Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/cmp-path'
 Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'saadparwaiz1/cmp_luasnip'
+
+" Snippet
+Plug 'L3MON4D3/LuaSnip'
+Plug 'rafamadriz/friendly-snippets'
 
 " Preview markdown with glow
 " Plug 'npxbr/glow.nvim'
@@ -341,7 +375,7 @@ nmap <Leader>w :wa<CR>
 " nmap <Leader>t :TagbarToggle<CR>
 " let g:tagbar_autofocus = 1
 " let g:tagbar_left = 1
-nmap <Leader>t :Vista!!<CR>
+nmap <Leader>v :Vista!!<CR>
 let g:vista#renderer#enable_icon = 0
 
 " Rg config
@@ -356,7 +390,7 @@ let g:vista#renderer#enable_icon = 0
 "
 " noremap <Leader>a :RG <C-R><C-W><CR>
 " xnoremap <silent> <Leader>a y:RG <C-R>"<CR>
-noremap <Leader>h :Rg <cword><cr>
+" noremap <Leader>h :Rg <cword><cr>
 
 " let g:ranger_map_keys = 0
 " let g:ranger_command_override = 'ranger --cmd=tab_close'
@@ -419,10 +453,10 @@ noremap <Leader>h :Rg <cword><cr>
 " nnoremap <silent> sk :call WinMove('k')<CR>
 " nnoremap <silent> sl :call WinMove('l')<CR>
 
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-autocmd FileType python setlocal completeopt-=preview  " avoid sratchpad to display
+" inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+" inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+" inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+" autocmd FileType python setlocal completeopt-=preview  " avoid sratchpad to display
 
 " " nvim coc settings
 " " let g:coc_enable_locationlist = 1
@@ -515,9 +549,12 @@ endif
 
 " tokyonight config
 lua << EOF
-vim.g.tokyonight_colors = { bg_dark = "#30364d" }
+  -- vim.g.tokyonight_colors = { bg_dark = "#30364d" }
 EOF
 colorscheme tokyonight
+
+" let g:onedark_style = 'cool'
+" colorscheme onedark
 
 " colorscheme dracula
 
@@ -732,11 +769,11 @@ EOF
 "             \  },
 "             \ }
 
-function! LightlineStatuslineTabs() abort
-  return join(map(range(1, tabpagenr('$')),
-        \ '(v:val == tabpagenr() ? "*" : "") . (v:val)'), " ")
-endfunction
-" \ '(v:val == tabpagenr() ? "*" : "") . lightline#tab#filename(v:val)'), " ")
+" function! LightlineStatuslineTabs() abort
+"   return join(map(range(1, tabpagenr('$')),
+"         \ '(v:val == tabpagenr() ? "*" : "") . (v:val)'), " ")
+" endfunction
+" " \ '(v:val == tabpagenr() ? "*" : "") . lightline#tab#filename(v:val)'), " ")
 
 " Disable number/relativenumber for neovim terminal
 " au TermOpen * setlocal nonumber norelativenumber
@@ -751,8 +788,10 @@ require'lualine'.setup {
     section_separators = {'', ''},
   },
   sections = {
-   lualine_a = {'LightlineStatuslineTabs', 'mode'},
-   lualine_b = {},
+   lualine_a = {'mode'},
+   lualine_b = {
+       {"diagnostics", sources = {"nvim_lsp"}},
+   },
    lualine_c = {
      {
        'filename',
@@ -761,21 +800,45 @@ require'lualine'.setup {
    },
    lualine_y = {
        'branch',
-       {"diagnostics", sources = {"nvim_lsp"}},
      },
   }
 }
+EOF
+
+" tabline config
+lua << EOF
+  require('tabline').setup({})
+EOF
+
+" Comment config
+lua << EOF
+  require('Comment').setup()
 EOF
 
 " LSP config
 lua << EOF
   local nvim_lsp = require('lspconfig')
 
+  local border = {
+      {"╭", "FloatBorder"},
+      {"─", "FloatBorder"},
+      {"╮", "FloatBorder"},
+      {"│", "FloatBorder"},
+      {"╯", "FloatBorder"},
+      {"─", "FloatBorder"},
+      {"╰", "FloatBorder"},
+      {"│", "FloatBorder"},
+  }
+
   -- Use an on_attach function to only map the following keys
   -- after the language server attaches to the current buffer
   local on_attach = function(client, bufnr)
   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
   local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
+
+  -- Add border to signature
+  vim.lsp.handlers["textDocument/hover"] =  vim.lsp.with(vim.lsp.handlers.hover, {border = border})
+  vim.lsp.handlers["textDocument/signatureHelp"] =  vim.lsp.with(vim.lsp.handlers.signature_help, {border = border})
 
   -- Enable completion triggered by <c-x><c-o>
   buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
@@ -787,25 +850,28 @@ lua << EOF
   vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics,{ update_in_insert = false })
 
   -- See `:help vim.lsp.*` for documentation on any of the below functions
-  -- buf_set_keymap('n', '<space>dd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
-  -- buf_set_keymap('n', '<space>de', '<cmd>vsp | lua vim.lsp.buf.definition()<CR>', opts)
-  -- buf_set_keymap('n', '<space>df', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-  buf_set_keymap('n', '<space>dc', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-  buf_set_keymap('n', '<space>dgi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-  buf_set_keymap('n', '<space>dgr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+  buf_set_keymap('n', '<space>ld', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
+  buf_set_keymap('n', '<space>le', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+  buf_set_keymap('n', '<space>lc', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+  buf_set_keymap('n', '<space>li', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+  buf_set_keymap('n', '<space>lr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
   buf_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
   buf_set_keymap('n', 'S', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-  buf_set_keymap('n', '<space>dn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-  buf_set_keymap('n', '<space>da', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-  buf_set_keymap('n', '<space>l', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
-  buf_set_keymap('n', '<space>dl', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
+  buf_set_keymap('n', '<space>ln', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+  buf_set_keymap('n', '<space>la', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+  buf_set_keymap('n', 'U', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
+  buf_set_keymap('n', '<space>ll', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
   buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
   buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
-  buf_set_keymap('n', '<space>dt', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
-  buf_set_keymap('n', '<space>dwa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
-  buf_set_keymap('n', '<space>dwr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
-  buf_set_keymap('n', '<space>dwl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
+  buf_set_keymap('n', '<space>lf', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+  buf_set_keymap('n', '<space>lwa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
+  buf_set_keymap('n', '<space>lwr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
+  buf_set_keymap('n', '<space>lwl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
 end
+
+-- Add additional capabilities supported by nvim-cmp
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
@@ -814,6 +880,7 @@ local servers = {'gopls', 'bashls', 'cmake', 'yamlls', 'tsserver'}
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
     on_attach = on_attach,
+    capabilities = capabilities,
     flags = {
       debounce_text_changes = 150,
     }
@@ -849,54 +916,98 @@ lua <<EOF
   -- Set completeopt to have a better completion experience
   vim.o.completeopt = 'menuone,noselect'
 
-  local cmp = require('cmp')
+  local has_words_before = function()
+    local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+    return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+  end
+
+  -- luasnip setup
+  local luasnip = require("luasnip")
+  local cmp = require("cmp")
   cmp.setup {
+    snippet = {
+      expand = function(args)
+        require('luasnip').lsp_expand(args.body)
+      end,
+    },
     -- You can set mappings if you want
     mapping = {
       ['<C-p>'] = cmp.mapping.select_prev_item(),
-      ['<Tab>'] = cmp.mapping.select_next_item(),
-      ['<C-d>'] = cmp.mapping.scroll_docs(-4),
-      ['<C-f>'] = cmp.mapping.scroll_docs(4),
+      ['<C-n>'] = cmp.mapping.select_next_item(),
+      ['<C-u>'] = cmp.mapping.scroll_docs(-4),
+      ['<C-d>'] = cmp.mapping.scroll_docs(4),
       ['<C-Space>'] = cmp.mapping.complete(),
       ['<C-e>'] = cmp.mapping.close(),
-      ['<CR>'] = cmp.mapping.confirm({
-        behavior = cmp.ConfirmBehavior.Insert,
+      ['<CR>'] = cmp.mapping.confirm{
+        -- behavior = cmp.ConfirmBehavior.Insert,
+        behavior = cmp.ConfirmBehavior.Replace,
         select = true,
-      })
+      },
+      ["<Tab>"] = cmp.mapping(function(fallback)
+        -- if cmp.visible() then
+        --   cmp.select_next_item()
+        if luasnip.expand_or_jumpable() then
+          luasnip.expand_or_jump()
+        elseif has_words_before() then
+          cmp.complete()
+        else
+          fallback()
+        end
+      end, { "i", "s" }),
+
+      ["<S-Tab>"] = cmp.mapping(function(fallback)
+        -- if cmp.visible() then
+        --   cmp.select_prev_item()
+        if luasnip.jumpable(-1) then
+          luasnip.jump(-1)
+        else
+          fallback()
+        end
+      end, { "i", "s" }),
     },
 
     -- You should specify your *installed* sources.
     sources = {
       { name = 'nvim_lsp' },
       { name = 'buffer' },
+      { name = 'luasnip' },
       { name = 'path' },
     },
 
     preselect = cmp.PreselectMode.None,
+    documentation = {
+      border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+    },
   }
+
+  -- Load all snippets from friendly-snippets
+  -- require("luasnip/loaders/from_vscode").load()
+  require("luasnip/loaders/from_vscode").lazy_load()
 EOF
 
 " Telescope config
 lua << EOF
 local actions = require('telescope.actions')
 require('telescope').setup{
-     defaults = {
-       mappings = {
-         i = {
-           ["<esc>"] = actions.close,
-           ["<C-o>"] = actions.select_horizontal,
-           ["<C-i>"] = actions.select_vertical,
-           ["<C-t>"] = actions.select_tab,
-         },
-         n = {
-           ["<C-o>"] = actions.select_horizontal,
-           ["<C-i>"] = actions.select_vertical,
-           ["<C-t>"] = actions.select_tab,
-         }
+   defaults = {
+     mappings = {
+       i = {
+         ["<esc>"] = actions.close,
+         ["<C-o>"] = actions.select_horizontal,
+         ["<C-i>"] = actions.select_vertical,
+         ["<C-t>"] = actions.select_tab,
+       },
+       n = {
+         ["<C-c>"] = actions.close,
+         ["<C-o>"] = actions.select_horizontal,
+         ["<C-i>"] = actions.select_vertical,
+         ["<C-t>"] = actions.select_tab,
+       }
      },
-     -- path_display = {
-     --     shorten = 6,
-     -- },
+     path_display = {
+         -- shorten = 6,
+         truncate = 0,
+     },
      sorting_strategy = "ascending",
      dynamic_preview_title = true,
      layout_config = {
@@ -904,6 +1015,20 @@ require('telescope').setup{
        preview_width = 0.5,
      },
   },
+
+  pickers = {
+   buffers = {
+     sort_mru = true,
+     sort_lastused = true,
+     ignore_current_buffer = true,
+     previewer = false,
+     mappings = {
+        i = { ['<c-d>'] = 'delete_buffer' },
+        n = { ['<c-d>'] = 'delete_buffer' },
+      },
+   },
+  },
+
   extensions = {
     fzf = {
       fuzzy = true,                    -- false will only do exact matching
@@ -918,24 +1043,26 @@ require('telescope').setup{
 require('telescope').load_extension('fzf')
 require('telescope').load_extension('projects')
 EOF
-nnoremap <leader>ff <cmd>Telescope find_files<cr>
+nnoremap <leader>f <cmd>Telescope find_files<cr>
 nnoremap <leader>s <cmd>Telescope buffers<cr>
-nnoremap <leader>fj <cmd>Telescope oldfiles<cr>
-nnoremap <leader>fk <cmd>Telescope grep_string<cr>
-nnoremap <leader>fh <cmd>Telescope live_grep<cr>
-nnoremap <leader>fm <cmd>Telescope marks<cr>
-nnoremap <leader>fc <cmd>Telescope commands<cr>
+nnoremap <leader>o <cmd>Telescope oldfiles<cr>
+nnoremap <leader>hh <cmd>Telescope grep_string<cr>
+nnoremap <leader>hg <cmd>Telescope live_grep<cr>
+nnoremap <leader>m <cmd>Telescope marks<cr>
+nnoremap <leader>c <cmd>Telescope commands<cr>
 nnoremap <leader>gb <cmd>Telescope git_branches<cr>
 nnoremap <leader>gh <cmd>Telescope git_stash<cr>
-nnoremap <leader>ft <cmd>Telescope builtin<cr>
-nnoremap <leader>fi <cmd>Telescope projects<cr>
-nnoremap <leader>fs <cmd>Telescope spell_suggest<cr>
-nnoremap <leader>dd <cmd>Telescope lsp_definitions<cr>
-nnoremap <leader>de :vsp \| Telescope lsp_definitions<cr>
-nnoremap <leader>df <cmd>Telescope lsp_type_definitions<cr>
-nnoremap <leader>dr <cmd>Telescope lsp_references<cr>
-nnoremap <leader>di <cmd>Telescope lsp_implementations<cr>
-nnoremap <leader>fl <cmd>Telescope lsp_document_diagnostics<cr>
+nnoremap <leader>b <cmd>Telescope builtin<cr>
+nnoremap <leader>p <cmd>Telescope projects<cr>
+nnoremap <leader>y <cmd>Telescope spell_suggest<cr>
+nnoremap <leader>d <cmd>Telescope lsp_definitions<cr>
+nnoremap <leader>D :vsp \| Telescope lsp_definitions<cr>
+nnoremap <leader>e <cmd>Telescope lsp_type_definitions<cr>
+nnoremap <leader>E :vsp \| Telescope lsp_type_definitions<cr>
+nnoremap <leader>r <cmd>Telescope lsp_references<cr>
+nnoremap <leader>i <cmd>Telescope lsp_implementations<cr>
+nnoremap <leader>I :vsp \| Telescope lsp_implementations<cr>
+nnoremap <leader>u <cmd>Telescope lsp_workspace_diagnostics<cr>
 
 " Manage projects
 lua << EOF
@@ -947,8 +1074,8 @@ EOF
 
 " open scratch file
 " nnoremap <Leader>e :vsplit ~/OneDrive - Commonwealth Bank/notes/scratch.md<CR>
-nnoremap <Leader>fn :Telescope find_files cwd=/Users/nevagip/notes<cr>
+nnoremap <Leader>n :Telescope find_files cwd=/Users/nevagip/notes<cr>
 
 noremap <leader>gs :Git<cr>
-noremap <leader>gp :exe 'Git push -u origin ' . FugitiveHead()<cr>
+noremap <leader>gp :exe 'Git push origin ' . FugitiveHead()<cr>
 noremap <leader>gl :exe 'Git pull origin ' . FugitiveHead()<cr>
