@@ -28,7 +28,7 @@ github = "zsh-users/zsh-completions"
 apply = ["defer"]
 
 [plugins.fast-syntax-highlighting]
-github = "zdharma/fast-syntax-highlighting"
+github = "zdharma-continuum/fast-syntax-highlighting"
 apply = ["defer"]
 
 [plugins.zsh-history-substring-search]
