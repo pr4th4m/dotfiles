@@ -340,6 +340,7 @@ Plug 'machakann/vim-sandwich'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
 Plug 'neovim/nvim-lspconfig'
+Plug 'williamboman/nvim-lsp-installer'
 Plug 'hrsh7th/nvim-cmp'
 Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/cmp-path'
@@ -888,6 +889,22 @@ for _, lsp in ipairs(servers) do
 end
 EOF
 
+" LSP config installer settings
+lua << EOF
+  local lsp_installer = require("nvim-lsp-installer")
+  -- Register a handler that will be called for all installed servers.
+  -- Alternatively, you may also register handlers on specific server instances instead (see example below).
+  lsp_installer.on_server_ready(function(server)
+      local opts = {}
+      -- if server.name == "tsserver" then
+      --     opts.root_dir = function() ... end
+      -- end
+      -- This setup() function is exactly the same as lspconfig's setup function.
+      -- Refer to https://github.com/neovim/nvim-lspconfig/blob/master/ADVANCED_README.md
+      server:setup(opts)
+  end)
+EOF
+
 " Auto import for golang
 lua << EOF
   function organizeImport(wait_ms)
@@ -1074,7 +1091,7 @@ EOF
 
 " open scratch file
 " nnoremap <Leader>e :vsplit ~/OneDrive - Commonwealth Bank/notes/scratch.md<CR>
-nnoremap <Leader>n :Telescope find_files cwd=/Users/nevagip/notes<cr>
+nnoremap <Leader>n :Telescope find_files cwd=/Users/ghar/notes<cr>
 
 noremap <leader>gs :Git<cr>
 noremap <leader>gp :exe 'Git push origin ' . FugitiveHead()<cr>
