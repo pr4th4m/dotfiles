@@ -326,15 +326,15 @@ Plug 'liuchengxu/vista.vim'
 
 " align text
 Plug 'junegunn/vim-easy-align'
+
 Plug 'ntpeters/vim-better-whitespace'
-Plug 'phaazon/hop.nvim'
 
 " Plug 'kassio/neoterm'
 " Plug 'airblade/vim-rooter'
 
 " Auto pairs
 " Plug 'jiangmiao/auto-pairs'
-" Plug 'machakann/vim-sandwich'
+Plug 'machakann/vim-sandwich'
 
 " Tree sitter
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
@@ -672,10 +672,10 @@ require'nvim-treesitter.configs'.setup {
   incremental_selection = {
     enable = true,
     keymaps = {
-      init_selection = "gnn",
-      node_incremental = "grn",
-      scope_incremental = "grc",
-      node_decremental = "grm",
+      init_selection = "ss",
+      scope_incremental = "sc",
+      node_incremental = "sn",
+      node_decremental = "sm",
     },
   },
 }
@@ -857,7 +857,7 @@ lua << EOF
     buf_set_keymap('n', '<space>li', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
     buf_set_keymap('n', '<space>lr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
     buf_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
-    buf_set_keymap('n', 'M', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+    buf_set_keymap('n', 'S', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
     buf_set_keymap('n', '<space>ln', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
     buf_set_keymap('n', '<space>la', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
     buf_set_keymap('n', 'U', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
@@ -1008,63 +1008,62 @@ EOF
 
 " Telescope config
 lua << EOF
-  local actions = require('telescope.actions')
-  require('telescope').setup{
-     defaults = {
-       mappings = {
-         i = {
-           ["<esc>"] = actions.close,
-           ["<C-o>"] = actions.select_horizontal,
-           ["<C-i>"] = actions.select_vertical,
-           ["<C-t>"] = actions.select_tab,
-         },
-         n = {
-           ["<C-c>"] = actions.close,
-           ["<C-o>"] = actions.select_horizontal,
-           ["<C-i>"] = actions.select_vertical,
-           ["<C-t>"] = actions.select_tab,
-         }
+local actions = require('telescope.actions')
+require('telescope').setup{
+   defaults = {
+     mappings = {
+       i = {
+         ["<esc>"] = actions.close,
+         ["<C-o>"] = actions.select_horizontal,
+         ["<C-i>"] = actions.select_vertical,
+         ["<C-t>"] = actions.select_tab,
        },
-       path_display = {
-           -- shorten = 6,
-           truncate = 0,
-       },
-       sorting_strategy = "ascending",
-       dynamic_preview_title = true,
-       layout_config = {
-         prompt_position = "top",
-         preview_width = 0.5,
-       },
-    },
-
-    pickers = {
-     buffers = {
-       sort_mru = true,
-       sort_lastused = true,
-       ignore_current_buffer = true,
-       previewer = false,
-       mappings = {
-          i = { ['<c-d>'] = 'delete_buffer' },
-          n = { ['<c-d>'] = 'delete_buffer' },
-        },
+       n = {
+         ["<C-c>"] = actions.close,
+         ["<C-o>"] = actions.select_horizontal,
+         ["<C-i>"] = actions.select_vertical,
+         ["<C-t>"] = actions.select_tab,
+       }
      },
-    },
+     path_display = {
+         -- shorten = 6,
+         truncate = 0,
+     },
+     sorting_strategy = "ascending",
+     dynamic_preview_title = true,
+     layout_config = {
+       prompt_position = "top",
+       preview_width = 0.5,
+     },
+  },
 
-    extensions = {
-      fzf = {
-        fuzzy = true,                    -- false will only do exact matching
-        override_generic_sorter = false, -- override the generic sorter
-        override_file_sorter = true,     -- override the file sorter
-        case_mode = "smart_case",        -- or "ignore_case" or "respect_case" -- the default case_mode is "smart_case"
-      }
+  pickers = {
+   buffers = {
+     sort_mru = true,
+     sort_lastused = true,
+     ignore_current_buffer = true,
+     previewer = false,
+     mappings = {
+        i = { ['<c-d>'] = 'delete_buffer' },
+        n = { ['<c-d>'] = 'delete_buffer' },
+      },
+   },
+  },
+
+  extensions = {
+    fzf = {
+      fuzzy = true,                    -- false will only do exact matching
+      override_generic_sorter = false, -- override the generic sorter
+      override_file_sorter = true,     -- override the file sorter
+      case_mode = "smart_case",        -- or "ignore_case" or "respect_case" -- the default case_mode is "smart_case"
     }
   }
+}
 
-  -- Load extension
-  require('telescope').load_extension('fzf')
-  require('telescope').load_extension('projects')
+-- Load extension
+require('telescope').load_extension('fzf')
+require('telescope').load_extension('projects')
 EOF
-
 nnoremap <leader>f <cmd>Telescope find_files<cr>
 nnoremap <leader>s <cmd>Telescope buffers<cr>
 nnoremap <leader>o <cmd>Telescope oldfiles<cr>
@@ -1094,23 +1093,8 @@ lua << EOF
   }
 EOF
 
-" Hop settings
-lua << EOF
-  require("hop").setup {
-      keys = 'etovxqpdygfblzhckisuran',
-      term_seq_bias = 0.5,
-  }
-  -- place this in one of your configuration file(s)
-  vim.api.nvim_set_keymap('n', 'f', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true, inclusive_jump = false })<cr>", {})
-  vim.api.nvim_set_keymap('n', 'F', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true, inclusive_jump = false })<cr>", {})
-  vim.api.nvim_set_keymap('n', 't', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true })<cr>", {})
-  vim.api.nvim_set_keymap('n', 'T', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true })<cr>", {})
-EOF
-noremap s <cmd>HopWord<cr>
-noremap S <cmd>HopChar1<cr>
-
 " open scratch file
-nnoremap <Leader>n :Telescope find_files cwd=/Users/nevagip/notes<cr>
+nnoremap <Leader>n :Telescope find_files cwd=/Users/ghar/notes<cr>
 
 noremap <leader>gs :Git<cr>
 noremap <leader>gp :exe 'Git push origin ' . FugitiveHead()<cr>
