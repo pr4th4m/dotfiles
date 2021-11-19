@@ -990,7 +990,15 @@ lua <<EOF
     -- You should specify your *installed* sources.
     sources = {
       { name = 'nvim_lsp' },
-      { name = 'buffer' },
+      {
+         name = 'buffer',
+         opts = {
+            keyword_length = 2,
+            get_bufnrs = function()
+               return vim.api.nvim_list_bufs()
+            end
+         }
+      },
       { name = 'luasnip' },
       { name = 'path' },
     },
