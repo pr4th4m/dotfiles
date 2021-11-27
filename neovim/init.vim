@@ -125,10 +125,10 @@ nnoremap Y y$
 nnoremap D d$
 nnoremap C c$
 
-nnoremap H ^
-nnoremap L $
-vnoremap H ^
-vnoremap L $
+nnoremap gh ^
+nnoremap gl $
+vnoremap gh ^
+vnoremap gl $
 nnoremap <c-p> <c-^>
 
 " Keep search result centered
@@ -319,6 +319,7 @@ Plug 'mroavi/lf.vim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
+Plug 'nvim-telescope/telescope-rg.nvim'
 Plug 'ahmedkhalf/project.nvim'
 
 " Tagbar
@@ -992,7 +993,7 @@ lua <<EOF
       { name = 'nvim_lsp' },
       {
          name = 'buffer',
-         opts = {
+         option = {
             keyword_length = 2,
             get_bufnrs = function()
                return vim.api.nvim_list_bufs()
@@ -1077,7 +1078,8 @@ nnoremap <leader>f <cmd>Telescope find_files<cr>
 nnoremap <leader>s <cmd>Telescope buffers<cr>
 nnoremap <leader>o <cmd>Telescope oldfiles<cr>
 nnoremap <leader>hh <cmd>Telescope grep_string<cr>
-nnoremap <leader>hg <cmd>Telescope live_grep<cr>
+" nnoremap <leader>hg <cmd>Telescope live_grep<cr>
+nnoremap <leader>hg <cmd>lua require("telescope").extensions.live_grep_raw.live_grep_raw()<cr>
 nnoremap <leader>m <cmd>Telescope marks<cr>
 nnoremap <leader>c <cmd>Telescope commands<cr>
 nnoremap <leader>gb <cmd>Telescope git_branches<cr>
@@ -1113,6 +1115,14 @@ lua << EOF
   vim.api.nvim_set_keymap('n', 'F', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true, inclusive_jump = false })<cr>", {})
   vim.api.nvim_set_keymap('n', 't', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true })<cr>", {})
   vim.api.nvim_set_keymap('n', 'T', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true })<cr>", {})
+  vim.api.nvim_set_keymap('v', 'f', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true, inclusive_jump = false })<cr>", {})
+  vim.api.nvim_set_keymap('v', 'F', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true, inclusive_jump = false })<cr>", {})
+  vim.api.nvim_set_keymap('v', 't', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true })<cr>", {})
+  vim.api.nvim_set_keymap('v', 'T', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true })<cr>", {})
+
+  vim.api.nvim_command('highlight HopNextKey  guifg=#ff9900 gui=bold ')
+  vim.api.nvim_command('highlight HopNextKey1 guifg=#ff9900 gui=bold ')
+  vim.api.nvim_command('highlight HopNextKey2 guifg=#ff9900 gui=bold ')
 EOF
 noremap s <cmd>HopWord<cr>
 noremap S <cmd>HopChar1<cr>
