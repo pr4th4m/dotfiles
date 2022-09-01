@@ -328,7 +328,7 @@ Plug 'liuchengxu/vista.vim'
 " align text
 Plug 'junegunn/vim-easy-align'
 Plug 'ntpeters/vim-better-whitespace'
-Plug 'phaazon/hop.nvim'
+" Plug 'phaazon/hop.nvim'
 
 " Plug 'kassio/neoterm'
 " Plug 'airblade/vim-rooter'
@@ -569,11 +569,11 @@ let g:lf#set_default_mappings = 0
 nnoremap - :LfPicker %:p:h<CR>
 let g:lf#action = {
       \ '<c-t>': 'tab split',
-      \ '<c-o>': 'split',
-      \ '<c-i>': 'vsplit' }
+      \ '<c-x>': 'split',
+      \ '<c-v>': 'vsplit' }
       " \ '<c-t>': 'tab split',
-      " \ '<c-x>': 'split',
-      " \ '<c-v>': 'vsplit' }
+      " \ '<c-o>': 'split',
+      " \ '<c-i>': 'vsplit' }
 " Opens the lf window in a split
 " let g:lf#layout = 'new' " or vnew, tabnew etc.
 " Or pass a dictionary with window size
@@ -663,7 +663,12 @@ EOF
 "
 lua <<EOF
 require'nvim-treesitter.configs'.setup {
-  ensure_installed = "maintained",
+  ensure_installed = { "bash", "c", "cmake", "comment", "cpp",
+    "lua", "rust", "go", "godot_resource", "gomod", "gowork",
+    "graphql", "hcl", "help", "hjson", "html", "http",
+    "java", "javascript", "jsdoc", "json", "json5", "make", "markdown",
+    "python", "regex", "rego", "ruby", "scss", "toml", "typescript",
+    "vim", "yaml"},
   -- indent = {
   --   enable = true
   -- },
@@ -782,6 +787,17 @@ EOF
 
 " lualine config
 lua << EOF
+
+  local function get_root_project_name()
+    local project = require("project_nvim.project")
+    local root, method = project.get_project_root()
+    local dirs = {}
+    for d in root:gmatch('[^/%s]+') do
+      table.insert(dirs, d)
+    end
+    return dirs[#dirs]
+  end
+
 require'lualine'.setup {
   options = {
     icons_enabled = false,
@@ -792,7 +808,7 @@ require'lualine'.setup {
   sections = {
    lualine_a = {'mode'},
    lualine_b = {
-       {"diagnostics", sources = {"nvim_lsp"}},
+       {"diagnostics", sources = {"nvim_diagnostic"}},
    },
    lualine_c = {
      {
@@ -800,9 +816,8 @@ require'lualine'.setup {
        path = 1,
      },
    },
-   lualine_y = {
-       'branch',
-     },
+   lualine_x = { 'encoding', 'fileformat', 'filetype', get_root_project_name },
+   lualine_y = { 'branch' },
   }
 }
 EOF
@@ -929,11 +944,15 @@ lua << EOF
   vim.api.nvim_command("au BufWritePre *.go lua organizeImport(100)")
 EOF
 
-" Auto format
-autocmd BufWritePre *.go lua vim.lsp.buf.formatting_sync(nil, 100)
+" Organize imports
+" autocmd BufWritePre *.java lua vim.lsp.buf.code_action({ source = { organizeImports = true } })
 " autocmd BufWritePre *.go lua vim.lsp.buf.code_action({ source = { organizeImports = true } })
 
-" cmp auto complete
+" Auto format
+autocmd BufWritePre *.go lua vim.lsp.buf.formatting_sync(nil, 100)
+autocmd BufWritePre *.java lua vim.lsp.buf.formatting_sync(nil, 100)
+
+" nvim cmp auto complete
 lua <<EOF
   -- Set completeopt to have a better completion experience
   vim.o.completeopt = 'menuone,noselect'
@@ -1005,9 +1024,11 @@ lua <<EOF
     },
 
     preselect = cmp.PreselectMode.None,
-    documentation = {
-      border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
-    },
+    window = {
+        documentation = {
+          border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+        },
+    }
   }
 
   -- Load all snippets from friendly-snippets
@@ -1022,16 +1043,16 @@ lua << EOF
      defaults = {
        mappings = {
          i = {
-           ["<esc>"] = actions.close,
-           ["<C-o>"] = actions.select_horizontal,
-           ["<C-i>"] = actions.select_vertical,
-           ["<C-t>"] = actions.select_tab,
+           -- ["<esc>"] = actions.close,
+           -- ["<C-o>"] = actions.select_horizontal,
+           -- ["<C-i>"] = actions.select_vertical,
+           -- ["<C-t>"] = actions.select_tab,
          },
          n = {
            ["<C-c>"] = actions.close,
-           ["<C-o>"] = actions.select_horizontal,
-           ["<C-i>"] = actions.select_vertical,
-           ["<C-t>"] = actions.select_tab,
+           -- ["<C-o>"] = actions.select_horizontal,
+           -- ["<C-i>"] = actions.select_vertical,
+           -- ["<C-t>"] = actions.select_tab,
          }
        },
        path_display = {
@@ -1099,37 +1120,38 @@ nnoremap <leader>u <cmd>Telescope lsp_workspace_diagnostics<cr>
 " Manage projects
 lua << EOF
   require("project_nvim").setup {
-      patterns = { ".git" },
+      patterns = { ".git", "go.mod", "package.json", "pom.xml" },
       detection_methods = { "pattern" },
   }
 EOF
 
-" Hop settings
-lua << EOF
-  require("hop").setup {
-      keys = 'etovxqpdygfblzhckisuran',
-      term_seq_bias = 0.5,
-  }
-  -- place this in one of your configuration file(s)
-  vim.api.nvim_set_keymap('n', 'f', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true, inclusive_jump = false })<cr>", {})
-  vim.api.nvim_set_keymap('n', 'F', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true, inclusive_jump = false })<cr>", {})
-  vim.api.nvim_set_keymap('n', 't', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true })<cr>", {})
-  vim.api.nvim_set_keymap('n', 'T', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true })<cr>", {})
-  vim.api.nvim_set_keymap('v', 'f', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true, inclusive_jump = false })<cr>", {})
-  vim.api.nvim_set_keymap('v', 'F', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true, inclusive_jump = false })<cr>", {})
-  vim.api.nvim_set_keymap('v', 't', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true })<cr>", {})
-  vim.api.nvim_set_keymap('v', 'T', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true })<cr>", {})
-
-  vim.api.nvim_command('highlight HopNextKey  guifg=#ff9900 gui=bold ')
-  vim.api.nvim_command('highlight HopNextKey1 guifg=#ff9900 gui=bold ')
-  vim.api.nvim_command('highlight HopNextKey2 guifg=#ff9900 gui=bold ')
-EOF
-noremap s <cmd>HopWord<cr>
-noremap S <cmd>HopChar1<cr>
+" " Hop settings
+" lua << EOF
+"   require("hop").setup {
+"       keys = 'etovxqpdygfblzhckisuran',
+"       term_seq_bias = 0.5,
+"   }
+"   -- place this in one of your configuration file(s)
+"   vim.api.nvim_set_keymap('n', 'f', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true, inclusive_jump = false })<cr>", {})
+"   vim.api.nvim_set_keymap('n', 'F', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true, inclusive_jump = false })<cr>", {})
+"   vim.api.nvim_set_keymap('n', 't', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true })<cr>", {})
+"   vim.api.nvim_set_keymap('n', 'T', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true })<cr>", {})
+"   vim.api.nvim_set_keymap('v', 'f', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true, inclusive_jump = false })<cr>", {})
+"   vim.api.nvim_set_keymap('v', 'F', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true, inclusive_jump = false })<cr>", {})
+"   vim.api.nvim_set_keymap('v', 't', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true })<cr>", {})
+"   vim.api.nvim_set_keymap('v', 'T', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true })<cr>", {})
+"
+"   vim.api.nvim_command('highlight HopNextKey  guifg=#ff9900 gui=bold ')
+"   vim.api.nvim_command('highlight HopNextKey1 guifg=#ff9900 gui=bold ')
+"   vim.api.nvim_command('highlight HopNextKey2 guifg=#ff9900 gui=bold ')
+" EOF
+" noremap s <cmd>HopWord<cr>
+" noremap S <cmd>HopChar1<cr>
 
 " open scratch file
-nnoremap <Leader>n :Telescope find_files cwd=/Users/nevagip/notes<cr>
+nnoremap <Leader>n :Telescope find_files cwd=/Users/ghar/notes<cr>
 
 noremap <leader>gs :Git<cr>
 noremap <leader>gp :exe 'Git push origin ' . FugitiveHead()<cr>
 noremap <leader>gl :exe 'Git pull origin ' . FugitiveHead()<cr>
+let g:github_enterprise_urls = ['']
