@@ -323,7 +323,8 @@ Plug 'nvim-telescope/telescope-rg.nvim'
 Plug 'ahmedkhalf/project.nvim'
 
 " Tagbar
-Plug 'liuchengxu/vista.vim'
+" Plug 'liuchengxu/vista.vim'
+Plug 'simrat39/symbols-outline.nvim'
 
 " align text
 Plug 'junegunn/vim-easy-align'
@@ -378,8 +379,8 @@ nmap <Leader>w :wa<CR>
 " nmap <Leader>t :TagbarToggle<CR>
 " let g:tagbar_autofocus = 1
 " let g:tagbar_left = 1
-nmap <Leader>v :Vista!!<CR>
-let g:vista#renderer#enable_icon = 0
+" nmap <Leader>v :Vista!!<CR>
+" let g:vista#renderer#enable_icon = 0
 
 " Rg config
 " function! RipgrepFzf(query, fullscreen)
@@ -1097,11 +1098,12 @@ lua << EOF
 EOF
 
 nnoremap <leader>f <cmd>Telescope find_files<cr>
+nnoremap <leader>F <cmd>lua require('telescope.builtin').find_files( { cwd = vim.fn.expand('%:p:h') })<cr>
 nnoremap <leader>s <cmd>Telescope buffers<cr>
 nnoremap <leader>o <cmd>Telescope oldfiles<cr>
 nnoremap <leader>hh <cmd>Telescope grep_string<cr>
 " nnoremap <leader>hg <cmd>Telescope live_grep<cr>
-nnoremap <leader>hg <cmd>lua require("telescope").extensions.live_grep_raw.live_grep_raw()<cr>
+nnoremap <leader>hg <cmd>lua require("telescope").extensions.live_grep_args.live_grep_args()<cr>
 nnoremap <leader>m <cmd>Telescope marks<cr>
 nnoremap <leader>c <cmd>Telescope commands<cr>
 nnoremap <leader>gb <cmd>Telescope git_branches<cr>
@@ -1125,6 +1127,12 @@ lua << EOF
       detection_methods = { "pattern" },
   }
 EOF
+
+" Outline symbols-outline
+lua << EOF
+  require("symbols-outline").setup()
+EOF
+nmap <Leader>v :SymbolsOutline<CR>
 
 " " Hop settings
 " lua << EOF
