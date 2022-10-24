@@ -16,6 +16,7 @@ set relativenumber
 set clipboard=unnamedplus
 set inccommand=split
 " set showtabline=0
+set cmdheight=0
 
 " GUI settings
 if has('gui_running')
@@ -124,6 +125,7 @@ nnoremap <Leader>9 9gt
 nnoremap Y y$
 nnoremap D d$
 nnoremap C c$
+nnoremap P viwp
 
 nnoremap gh ^
 nnoremap gl $
@@ -353,6 +355,9 @@ Plug 'saadparwaiz1/cmp_luasnip'
 " Snippet
 Plug 'L3MON4D3/LuaSnip'
 Plug 'rafamadriz/friendly-snippets'
+
+" Which key
+Plug 'folke/which-key.nvim'
 
 " Preview markdown with glow
 " Plug 'npxbr/glow.nvim'
@@ -890,7 +895,7 @@ lua << EOF
 
   -- Add additional capabilities supported by nvim-cmp
   local capabilities = vim.lsp.protocol.make_client_capabilities()
-  capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
+  capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
   -- -- Use a loop to conveniently call 'setup' on multiple servers and
   -- -- map buffer local keybindings when the language server attaches
@@ -952,7 +957,7 @@ EOF
 
 " Auto format
 autocmd BufWritePre *.go lua vim.lsp.buf.formatting_sync(nil, 100)
-autocmd BufWritePre *.java lua vim.lsp.buf.formatting_sync(nil, 100)
+" autocmd BufWritePre *.java lua vim.lsp.buf.formatting_sync(nil, 100)
 
 " nvim cmp auto complete
 lua <<EOF
@@ -1133,6 +1138,12 @@ lua << EOF
   require("symbols-outline").setup()
 EOF
 nmap <Leader>v :SymbolsOutline<CR>
+
+" which key
+lua << EOF
+  require("which-key").setup {
+  }
+EOF
 
 " " Hop settings
 " lua << EOF
