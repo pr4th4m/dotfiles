@@ -35,6 +35,9 @@ local options = {
   scrolloff = 8,                           -- minimal number of screen lines to keep above and below the cursor
   sidescrolloff = 8,                       -- minimal number of screen columns either side of cursor if wrap is `false`
   guifont = "JetBrains\\ Mono\\ Thin:h16",               -- the font used in graphical neovim applications
+  spell = true,                            -- spell check based on treesitter
+  splitkeep=cursor,                        -- don't move cursor in split screen
+  laststatus=3                             -- global status line
 }
 
 vim.opt.shortmess:append "c"

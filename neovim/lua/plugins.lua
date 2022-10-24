@@ -50,9 +50,6 @@ return packer.startup(function(use)
   -- Text
   use { 'numToStr/Comment.nvim', branch = "master" }
 
-  -- Git
-  use { "tpope/vim-fugitive", branch = "master" }
-
   -- Window
   use { "kyazdani42/nvim-tree.lua", branch = "master" }
 
@@ -83,6 +80,13 @@ return packer.startup(function(use)
   use { "neovim/nvim-lspconfig", branch = "master" } -- enable LSP
   use { "williamboman/mason.nvim", branch = "main"} -- simple to use language server installer
   use { "williamboman/mason-lspconfig.nvim", branch = "main" }
+  use { "mfussenegger/nvim-jdtls", branch = "master" }
+
+  -- Utils
+  use { "lewis6991/impatient.nvim", branch = "main" }
+
+  -- Git
+  use { "tpope/vim-fugitive", branch = "master" }
 
 	-- Automatically set up your configuration after cloning packer.nvim
 	-- Put this at the end after all plugins

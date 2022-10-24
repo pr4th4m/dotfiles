@@ -30,6 +30,8 @@ keymap("n", "<C-Down>", ":resize -2<CR>", opts)
 keymap("n", "<C-Up>", ":resize +2<CR>", opts)
 keymap("n", "<C-Right>", ":vertical resize -2<CR>", opts)
 keymap("n", "<C-Left>", ":vertical resize +2<CR>", opts)
+keymap("n", "+", ":vertical resize -2<CR>", opts)
+keymap("n", "-", ":vertical resize +2<CR>", opts)
 
 -- Navigate buffers
 keymap("n", "<S-l>", ":bnext<CR>", opts)
@@ -126,7 +128,6 @@ keymap("n", "<leader>fm", "<cmd>Telescope marks<CR>", opts)
 -- keymap("n", "<leader>fc", "<cmd>Telescope commands<CR>", opts)
 keymap("n", "<leader>fb", "<cmd>Telescope builtin<CR>", opts)
 keymap("n", "<leader>fp", "<cmd>Telescope projects<CR>", opts)
-keymap("n", "<leader>fd", "<cmd>Telescope diagnostics<CR>", opts)
 
 -- Lsp
 keymap("n", "gd", "<cmd>Telescope lsp_definitions<CR>", opts)
@@ -135,6 +136,7 @@ keymap("n", "gr", "<cmd>Telescope lsp_references<CR>", opts)
 keymap("n", "gt", "<cmd>Telescope lsp_type_definitions<CR>", opts)
 keymap("n", "<leader>ls", "<cmd>Telescope lsp_document_symbols<CR>", opts)
 keymap("n", "<leader>lw", "<cmd>Telescope lsp_dynamic_workspace_symbols<CR>", opts)
+keymap("n", "<leader>ld", "<cmd>Telescope diagnostics<CR>", opts)
 
 -- Git
 keymap("n", "<leader>gs", ":Git<CR>", opts)
@@ -143,3 +145,6 @@ keymap("n", "<leader>gl", ":exe 'Git pull origin ' . FugitiveHead()<cr>", opts)
 keymap("n", "<leader>gb", "<cmd>Telescope git_branches<CR>", opts)
 keymap("n", "<leader>gh", "<cmd>Telescope git_stash<CR>", opts)
 keymap("n", "<leader>gc", "<cmd>Telescope git_commits<CR>", opts)
+
+-- File explorer
+keymap("n", "<leader>e", ":NvimTreeToggle<CR>", opts)
