@@ -3,8 +3,10 @@ local servers = {
   "dockerls",
   "gopls",
   "jsonls",
-  "zk",
   "yamlls",
+  "sumneko_lua",
+  "pyright",
+  "marksman",
 }
 
 local settings = {
