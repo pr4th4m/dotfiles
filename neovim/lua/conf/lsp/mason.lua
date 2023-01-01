@@ -1,12 +1,13 @@
 local servers = {
   "bashls",
+  "rust_analyzer",
   "dockerls",
   "gopls",
   "jsonls",
   "yamlls",
   "sumneko_lua",
   "pyright",
-  "marksman",
+  "marksman"
 }
 
 local settings = {

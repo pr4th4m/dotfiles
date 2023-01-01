@@ -24,7 +24,7 @@ project.setup({
 	detection_methods = { "pattern" },
 
 	---@usage patterns used to detect root dir, when **"pattern"** is in detection_methods
-  patterns = { ".git", "go.mod", "package.json", "pom.xml" },
+        patterns = { ".git", "go.mod", "package.json", "pom.xml", "Cargo.toml" },
 
 	---@ Show hidden files in telescope when searching for files in a project
 	show_hidden = false,
@@ -38,7 +38,7 @@ project.setup({
 
 	---@type string
 	---@usage path to store the project history for use in telescope
-  datapath = vim.fn.stdpath("data"),
+        datapath = vim.fn.stdpath("data"),
 })
 
 local tele_status_ok, telescope = pcall(require, "telescope")

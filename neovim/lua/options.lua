@@ -37,6 +37,7 @@ local options = {
   guifont = "JetBrains\\ Mono\\ Thin:h16",               -- the font used in graphical neovim applications
   spell = true,                            -- spell check based on treesitter
   splitkeep=cursor,                        -- don't move cursor in split screen
+  guicursor="",                            -- block cursor in insert mode
   laststatus=3                             -- global status line
 }
 

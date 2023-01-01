@@ -53,6 +53,10 @@ keymap("n", "gh", "^", opts)
 keymap("n", "gl", "$", opts)
 keymap("v", "gh", "^", opts)
 keymap("v", "gl", "$", opts)
+keymap("n", "<c-d>", "<c-d>zz", opts)
+keymap("n", "<c-u>", "<c-u>zz", opts)
+keymap("n", "n", "nzzzv", opts)
+keymap("n", "N", "Nzzzv", opts)
 
 -- Tab
 keymap("n", "<leader>j", ":tab split<CR>", opts)
@@ -128,6 +132,7 @@ keymap("n", "<leader>fm", "<cmd>Telescope marks<CR>", opts)
 -- keymap("n", "<leader>fc", "<cmd>Telescope commands<CR>", opts)
 keymap("n", "<leader>fi", "<cmd>Telescope builtin<CR>", opts)
 keymap("n", "<leader>fp", "<cmd>Telescope projects<CR>", opts)
+keymap("n", "<leader>fs", "<cmd>Telescope spell_suggest<CR>", opts)
 
 -- Lsp
 keymap("n", "<leader>d", "<cmd>Telescope lsp_definitions<CR>", opts)
@@ -166,3 +171,6 @@ keymap("n", "<leader>gc", "<cmd>Telescope git_commits<CR>", opts)
 
 -- File explorer
 keymap("n", "<leader>e", ":NvimTreeToggle<CR>", opts)
+
+-- Others
+keymap("n", "<leader>fn", ":Telescope find_files cwd=/Users/ghar/Desktop/scratch<CR>", opts)
