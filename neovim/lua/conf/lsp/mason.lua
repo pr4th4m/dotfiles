@@ -5,7 +5,7 @@ local servers = {
   "gopls",
   "jsonls",
   "yamlls",
-  "sumneko_lua",
+  "lua_ls",
   "pyright",
   "marksman"
 }
