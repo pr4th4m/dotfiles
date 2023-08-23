@@ -1,3 +1,5 @@
+-- https://github.com/LunarVim/Neovim-from-scratch
+
 -- standard
 require "options"
 require "keymaps"

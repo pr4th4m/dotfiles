@@ -4,14 +4,6 @@ if not status_ok then
   return
 end
 
-local config_status_ok, nvim_tree_config = pcall(require, "nvim-tree.config")
-if not config_status_ok then
-  print('Plugin nvim-tree config not loaded')
-  return
-end
-
-local tree_cb = nvim_tree_config.nvim_tree_callback
-
 local function on_attach(bufnr)
   local api = require('nvim-tree.api')
 
@@ -37,10 +29,11 @@ local function on_attach(bufnr)
   vim.keymap.set('n', '.',     api.node.run.cmd,                      opts('Run Command'))
   vim.keymap.set('n', '-',     api.tree.change_root_to_parent,        opts('Up'))
   vim.keymap.set('n', 'a',     api.fs.create,                         opts('Create'))
+  vim.keymap.set('n', 'bd',    api.marks.bulk.delete,                 opts('Delete Bookmarked'))
   vim.keymap.set('n', 'bmv',   api.marks.bulk.move,                   opts('Move Bookmarked'))
-  vim.keymap.set('n', 'B',     api.tree.toggle_no_buffer_filter,      opts('Toggle No Buffer'))
+  vim.keymap.set('n', 'B',     api.tree.toggle_no_buffer_filter,      opts('Toggle Filter: No Buffer'))
   vim.keymap.set('n', 'c',     api.fs.copy.node,                      opts('Copy'))
-  vim.keymap.set('n', 'C',     api.tree.toggle_git_clean_filter,      opts('Toggle Git Clean'))
+  vim.keymap.set('n', 'C',     api.tree.toggle_git_clean_filter,      opts('Toggle Filter: Git Clean'))
   vim.keymap.set('n', '[c',    api.node.navigate.git.prev,            opts('Prev Git'))
   vim.keymap.set('n', ']c',    api.node.navigate.git.next,            opts('Next Git'))
   vim.keymap.set('n', 'd',     api.fs.remove,                         opts('Delete'))
@@ -53,8 +46,8 @@ local function on_attach(bufnr)
   vim.keymap.set('n', 'f',     api.live_filter.start,                 opts('Filter'))
   vim.keymap.set('n', 'g?',    api.tree.toggle_help,                  opts('Help'))
   vim.keymap.set('n', 'gy',    api.fs.copy.absolute_path,             opts('Copy Absolute Path'))
-  vim.keymap.set('n', 'H',     api.tree.toggle_hidden_filter,         opts('Toggle Dotfiles'))
-  vim.keymap.set('n', 'I',     api.tree.toggle_gitignore_filter,      opts('Toggle Git Ignore'))
+  vim.keymap.set('n', 'H',     api.tree.toggle_hidden_filter,         opts('Toggle Filter: Dotfiles'))
+  vim.keymap.set('n', 'I',     api.tree.toggle_gitignore_filter,      opts('Toggle Filter: Git Ignore'))
   vim.keymap.set('n', 'J',     api.node.navigate.sibling.last,        opts('Last Sibling'))
   vim.keymap.set('n', 'K',     api.node.navigate.sibling.first,       opts('First Sibling'))
   vim.keymap.set('n', 'm',     api.marks.toggle,                      opts('Toggle Bookmark'))
@@ -67,7 +60,7 @@ local function on_attach(bufnr)
   vim.keymap.set('n', 'R',     api.tree.reload,                       opts('Refresh'))
   vim.keymap.set('n', 's',     api.node.run.system,                   opts('Run System'))
   vim.keymap.set('n', 'S',     api.tree.search_node,                  opts('Search'))
-  vim.keymap.set('n', 'U',     api.tree.toggle_custom_filter,         opts('Toggle Hidden'))
+  vim.keymap.set('n', 'U',     api.tree.toggle_custom_filter,         opts('Toggle Filter: Hidden'))
   vim.keymap.set('n', 'W',     api.tree.collapse_all,                 opts('Collapse'))
   vim.keymap.set('n', 'x',     api.fs.cut,                            opts('Cut'))
   vim.keymap.set('n', 'y',     api.fs.copy.filename,                  opts('Copy Name'))
@@ -77,40 +70,18 @@ local function on_attach(bufnr)
   -- END_DEFAULT_ON_ATTACH
 
 
-  -- Mappings removed via:
-  --   remove_keymaps
-  --   OR
-  --   view.mappings.list..action = ""
-  --
-  -- The dummy set before del is done for safety, in case a default mapping does not exist.
-  --
-  -- You might tidy things by removing these along with their default mapping.
-  vim.keymap.set('n', 'O', '', { buffer = bufnr })
-  vim.keymap.del('n', 'O', { buffer = bufnr })
-  vim.keymap.set('n', '<2-RightMouse>', '', { buffer = bufnr })
-  vim.keymap.del('n', '<2-RightMouse>', { buffer = bufnr })
-  vim.keymap.set('n', 'D', '', { buffer = bufnr })
-  vim.keymap.del('n', 'D', { buffer = bufnr })
-  vim.keymap.set('n', 'E', '', { buffer = bufnr })
-  vim.keymap.del('n', 'E', { buffer = bufnr })
-
-
   -- Mappings migrated from view.mappings.list
   --
   -- You will need to insert "your code goes here" for any mappings with a custom action_cb
-  vim.keymap.set('n', 'A', api.tree.expand_all, opts('Expand All'))
-  vim.keymap.set('n', '?', api.tree.toggle_help, opts('Help'))
-  vim.keymap.set('n', 'C', api.tree.change_root_to_node, opts('CD'))
-  vim.keymap.set('n', 'P', function()
-    local node = api.tree.get_node_under_cursor()
-    print(node.absolute_path)
-  end, opts('Print Node Path'))
-
-  vim.keymap.set('n', 'Z', api.node.run.system, opts('Run System'))
+  vim.keymap.set('n', 'l', api.node.open.edit, opts('Open'))
+  vim.keymap.set('n', '<CR>', api.node.open.edit, opts('Open'))
+  vim.keymap.set('n', 'o', api.node.open.edit, opts('Open'))
+  vim.keymap.set('n', 'h', api.node.navigate.parent_close, opts('Close Directory'))
+  vim.keymap.set('n', 'v', api.node.open.vertical, opts('Open: Vertical Split'))
 
 end
 
-nvim_tree.setup ({
+nvim_tree.setup {
   on_attach = on_attach,
   -- actions = {
   --   open_file = {
@@ -162,12 +133,5 @@ nvim_tree.setup ({
   view = {
     width = 30,
     side = "left",
-    mappings = {
-      list = {
-        { key = { "l", "<CR>", "o" }, cb = tree_cb "edit" },
-        { key = "h", cb = tree_cb "close_node" },
-        { key = "v", cb = tree_cb "vsplit" },
-      },
-    },
   },
-})
+}

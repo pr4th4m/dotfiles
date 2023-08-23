@@ -38,10 +38,13 @@ local options = {
   spell = true,                            -- spell check based on treesitter
   splitkeep=cursor,                        -- don't move cursor in split screen
   guicursor="",                            -- block cursor in insert mode
-  laststatus=3                             -- global status line
+  laststatus=3,                            -- global status line
+  whichwrap = "bs<>[]hl",                  -- which "horizontal" keys are allowed to travel to prev/next line
 }
 
 vim.opt.shortmess:append "c"
+vim.opt.iskeyword:append "-"                           -- hyphenated words recognized by searches
+vim.opt.formatoptions:remove({ "c", "r", "o" })        -- don't insert the current comment leader automatically for auto-wrapping comments using 'textwidth', hitting <Enter> in insert mode, or hitting 'o' or 'O' in normal mode.
 
 for k, v in pairs(options) do
   vim.opt[k] = v

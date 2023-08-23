@@ -1,5 +1,5 @@
 local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
+capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
 -- nvim-jdtls configs
 local workspace_dir = vim.fn.fnamemodify(vim.fn.getcwd(), 'p:h:t')
@@ -15,8 +15,8 @@ local config = {
               '--add-modules=ALL-SYSTEM',
               '--add-opens', 'java.base/java.util=ALL-UNNAMED',
               '--add-opens', 'java.base/java.lang=ALL-UNNAMED',
-              '-jar', '/usr/local/Cellar/jdtls/1.18.0/libexec/plugins/org.eclipse.equinox.launcher_1.6.400.v20210924-0641.jar',
-              '-configuration', '/usr/local/Cellar/jdtls/1.18.0/libexec/config_mac',
+              '-jar', '/usr/local/Cellar/jdtls/1.26.0/libexec/plugins/org.eclipse.equinox.launcher_1.6.500.v20230717-2134.jar',
+              '-configuration', '/usr/local/Cellar/jdtls/1.26.0/libexec/config_mac',
               '-data', vim.fn.expand('~/.cache/jdtls-workspace') .. workspace_dir
         },
 
