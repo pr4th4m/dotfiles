@@ -14,13 +14,16 @@ require "conf.comment"
 
 -- navigation
 require "conf.nvim-tree"
+require "conf.oil"
 
 -- telescope
 require "conf.telescope"
 require "conf.project"
 
+-- treesitter
 require "conf.treesitter"
 
+-- LSP
 require "conf.cmp"
 require "conf.lsp"
 require "conf.whichkey"

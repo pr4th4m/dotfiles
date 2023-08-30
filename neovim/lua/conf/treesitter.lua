@@ -7,7 +7,7 @@ end
 configs.setup({
   ensure_installed = { "bash", "c", "cmake", "comment", "cpp",
     "lua", "rust", "go", "godot_resource", "gomod", "gowork",
-    "graphql", "hcl", "help", "hjson", "html", "http",
+    "graphql", "hcl", "hjson", "html", "http",
     "java", "javascript", "jsdoc", "json", "json5", "make", "markdown",
     "python", "regex", "rego", "ruby", "scss", "toml", "typescript",
     "vim", "yaml" },

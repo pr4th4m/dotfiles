@@ -171,6 +171,7 @@ keymap("n", "<leader>gc", "<cmd>Telescope git_commits<CR>", opts)
 
 -- File explorer
 keymap("n", "<leader>e", ":NvimTreeToggle<CR>", opts)
+keymap("n", "-", "<CMD>Oil<CR>", opts)
 
 -- Others
 keymap("n", "<leader>fn", ":Telescope find_files cwd=/Users/ghar/Desktop/scratch<CR>", opts)
