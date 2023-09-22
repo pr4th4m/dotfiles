@@ -23,8 +23,7 @@ require("lazy").setup({
   { 'numToStr/Comment.nvim',                    branch = "master" },
 
   -- Window
-  -- { "nvim-tree/nvim-tree.lua",                  branch = "master" },
-  { "pr4th4m/nvim-tree.lua",                    branch = "master" },
+  { "nvim-tree/nvim-tree.lua",                  branch = "master" },
   { 'stevearc/oil.nvim',                        branch = "master" },
 
   -- Telescope
@@ -63,5 +62,6 @@ require("lazy").setup({
 
   -- Git
   { "tpope/vim-fugitive",                       branch = "master" },
+
 
 })

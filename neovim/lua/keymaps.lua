@@ -133,6 +133,7 @@ keymap("n", "<leader>fm", "<cmd>Telescope marks<CR>", opts)
 keymap("n", "<leader>fi", "<cmd>Telescope builtin<CR>", opts)
 keymap("n", "<leader>fp", "<cmd>Telescope projects<CR>", opts)
 keymap("n", "<leader>fs", "<cmd>Telescope spell_suggest<CR>", opts)
+keymap("n", "<leader>f/", "<cmd>Telescope current_buffer_fuzzy_find<CR>", opts)
 
 -- Lsp
 keymap("n", "<leader>d", "<cmd>Telescope lsp_definitions<CR>", opts)
@@ -147,6 +148,7 @@ keymap("n", "gR", ":vsp | Telescope lsp_references<CR>", opts)
 keymap("n", "gT", ":vsp | Telescope lsp_type_definitions<CR>", opts)
 keymap("n", "<leader>ls", "<cmd>Telescope lsp_document_symbols<CR>", opts)
 keymap("n", "<leader>lw", "<cmd>Telescope lsp_dynamic_workspace_symbols<CR>", opts)
+keymap("n", "<leader>lo", "<cmd>SymbolsOutline<CR>", opts)
 
 keymap("n", "<leader>ld", "<cmd>Telescope diagnostics<CR>", opts)
 keymap("n", "<leader>le", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
