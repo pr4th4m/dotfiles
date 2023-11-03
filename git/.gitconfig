@@ -1,5 +1,5 @@
 [core]
-	editor = nvim
+    editor = nvim
 
 [diff]
     tool = nvimdiff

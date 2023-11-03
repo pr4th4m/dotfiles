@@ -163,3 +163,10 @@ autoload -Uz compinit && compinit -i
 
 # Load sheldon
 eval "$(sheldon source)"
+
+# Postgres cli
+export PATH=/usr/local/opt/libpq/bin:$PATH
+
+# garden cli
+export PATH=$PATH:$HOME/.garden/bin
+export PATH="/usr/local/sbin:$PATH"

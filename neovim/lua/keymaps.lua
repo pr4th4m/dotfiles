@@ -1,4 +1,5 @@
 local opts = { noremap = true, silent = true }
+-- TODO: figure out how to unpack opts into another table
 
 local term_opts = { silent = true }
 
@@ -73,11 +74,12 @@ keymap("n", "<leader>9", "9gt", opts)
 -- switching to last active tab
 keymap("n", "<C-n>", ":exe 'tabn '.g:lasttab<CR>", opts)
 keymap("v", "<C-n>", ":exe 'tabn '.g:lasttab<CR>", opts)
-vim.api.nvim_create_autocmd("TabLeave",  {
-    pattern = "*",
-    callback = function()
-        vim.api.nvim_set_keymap('n', '<C-n>', '<cmd>tabn ' .. vim.api.nvim_tabpage_get_number(0) .. '<CR>', { noremap = true, silent = true })
-    end
+vim.api.nvim_create_autocmd("TabLeave", {
+  pattern = "*",
+  callback = function()
+    vim.api.nvim_set_keymap('n', '<C-n>', '<cmd>tabn ' .. vim.api.nvim_tabpage_get_number(0) .. '<CR>',
+      { noremap = true, silent = true })
+  end
 })
 
 -- Marks
@@ -86,15 +88,13 @@ keymap("n", "<leader>md", ":'D<CR>", opts)
 keymap("n", "<leader>ms", ":'S<CR>", opts)
 keymap("n", "<leader>ma", ":'A<CR>", opts)
 
-
 -- Window
 keymap("n", "<leader>v", "<C-w>v", opts)
 keymap("n", "<leader>x", "<C-w>s", opts)
 keymap("n", "<leader>k", "<C-w><C-q>", opts)
 
-
 -- Insert --
--- Press jj fast to exit insert mode 
+-- Press jj fast to exit insert mode
 keymap("i", "jj", "<ESC>", opts)
 
 -- Visual --
@@ -122,58 +122,71 @@ keymap("x", "<A-k>", ":m '<-2<CR>gv=gv", opts)
 -- keymap("t", "<C-l>", "<C-\\><C-N><C-w>l", term_opts)
 
 -- Telescope
-keymap("n", "<leader>ff", "<cmd>Telescope find_files<CR>", opts)
-keymap("n", "<leader>fc", "<cmd>lua require('telescope.builtin').find_files( { cwd = vim.fn.expand('%:p:h') })<CR>", opts)
-keymap("n", "<leader>fb", "<cmd>Telescope buffers<CR>", opts)
-keymap("n", "<leader>fo", "<cmd>Telescope oldfiles<CR>", opts)
-keymap("n", "<leader>fw", "<cmd>Telescope grep_string<CR>", opts)
-keymap("n", "<leader>fg", "<cmd>lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>", opts)
-keymap("n", "<leader>fm", "<cmd>Telescope marks<CR>", opts)
+keymap("n", "<leader>ff", "<cmd>Telescope find_files<CR>", { desc = "find [F]iles" })
+keymap("n", "<leader>fc", "<cmd>lua require('telescope.builtin').find_files( { cwd = vim.fn.expand('%:p:h') })<CR>", { desc = "find files in [C]urrent dir" })
+-- keymap("n", "<leader>fb", "<cmd>Telescope buffers<CR>", { desc = "[B]uffers" })
+keymap("n", "<leader><space>", "<cmd>Telescope buffers<CR>", { desc = "[B]uffers" })
+keymap("n", "<leader>fo", "<cmd>Telescope oldfiles<CR>", { desc = "[O]ld files" })
+keymap("n", "<leader>fw", "<cmd>Telescope grep_string<CR>", { desc = "grep [W]ord" })
+keymap("n", "<leader>fg", "<cmd>lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>", { desc = "[G]rep" })
+keymap("n", "<leader>fm", "<cmd>Telescope marks<CR>", { desc = "[M]arks" })
 -- keymap("n", "<leader>fc", "<cmd>Telescope commands<CR>", opts)
-keymap("n", "<leader>fi", "<cmd>Telescope builtin<CR>", opts)
-keymap("n", "<leader>fp", "<cmd>Telescope projects<CR>", opts)
-keymap("n", "<leader>fs", "<cmd>Telescope spell_suggest<CR>", opts)
-keymap("n", "<leader>f/", "<cmd>Telescope current_buffer_fuzzy_find<CR>", opts)
+keymap("n", "<leader>fi", "<cmd>Telescope builtin<CR>", { desc = "built[I]n" })
+keymap("n", "<leader>fp", "<cmd>Telescope projects<CR>", { desc = "[P]rojects" })
+keymap("n", "<leader>fs", "<cmd>Telescope spell_suggest<CR>", { desc = "[S]pelling" })
+keymap("n", "<leader>fb", "<cmd>Telescope current_buffer_fuzzy_find<CR>", { desc = "find in current buffer" })
 
 -- Lsp
-keymap("n", "<leader>d", "<cmd>Telescope lsp_definitions<CR>", opts)
-keymap("n", "gd", "<cmd>Telescope lsp_definitions<CR>", opts)
-keymap("n", "gi", "<cmd>Telescope lsp_implementations<CR>", opts)
-keymap("n", "gr", "<cmd>Telescope lsp_references<CR>", opts)
-keymap("n", "gt", "<cmd>Telescope lsp_type_definitions<CR>", opts)
-keymap("n", "<leader>D", ":vsp | Telescope lsp_definitions<CR>", opts)
-keymap("n", "gD", ":vsp | Telescope lsp_definitions<CR>", opts)
-keymap("n", "gI", ":vsp | Telescope lsp_implementations<CR>", opts)
-keymap("n", "gR", ":vsp | Telescope lsp_references<CR>", opts)
-keymap("n", "gT", ":vsp | Telescope lsp_type_definitions<CR>", opts)
-keymap("n", "<leader>ls", "<cmd>Telescope lsp_document_symbols<CR>", opts)
-keymap("n", "<leader>lw", "<cmd>Telescope lsp_dynamic_workspace_symbols<CR>", opts)
-keymap("n", "<leader>lo", "<cmd>SymbolsOutline<CR>", opts)
+keymap("n", "<leader>d", "<cmd>Telescope lsp_definitions<CR>", { desc = "[D]efinitions" })
+keymap("n", "gd", "<cmd>Telescope lsp_definitions<CR>", { desc = "[D]efinitions" })
+keymap("n", "gi", "<cmd>Telescope lsp_implementations<CR>", { desc = "[I]mplementations" })
+keymap("n", "gr", "<cmd>Telescope lsp_references<CR>", { desc = "[R]eferences" })
+keymap("n", "gt", "<cmd>Telescope lsp_type_definitions<CR>", { desc = "[T]ype definition" })
+keymap("n", "<leader>D", ":vsp | Telescope lsp_definitions<CR>", { desc = "[D]efinitions in split" })
+keymap("n", "gD", ":vsp | Telescope lsp_definitions<CR>", { desc = "[D]efinitions in split" })
+keymap("n", "gI", ":vsp | Telescope lsp_implementations<CR>", { desc = "[I]mplementations in split" })
+keymap("n", "gR", ":vsp | Telescope lsp_references<CR>", { desc = "[R]eferences in split" })
+keymap("n", "gT", ":vsp | Telescope lsp_type_definitions<CR>", { desc = "[T]ype definition in split" })
 
-keymap("n", "<leader>ld", "<cmd>Telescope diagnostics<CR>", opts)
-keymap("n", "<leader>le", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
-keymap("n", "<leader>lj", "<cmd>lua vim.diagnostic.goto_next({buffer=0})<cr>", opts)
-keymap("n", "<leader>lk", "<cmd>lua vim.diagnostic.goto_prev({buffer=0})<cr>", opts)
-keymap("n", "<leader>lq", "<cmd>lua vim.diagnostic.setloclist()<CR>", opts)
+keymap("n", "<leader>ls", "<cmd>Telescope lsp_document_symbols<CR>", { desc = "document [S]ymbols" })
+keymap("n", "<leader>lw", "<cmd>Telescope lsp_dynamic_workspace_symbols<CR>", { desc = "[W]orkspace symbols" })
+keymap("n", "<leader>lo", "<cmd>SymbolsOutline<CR>", { desc = "[O]utline symbols" })
 
-keymap("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
-keymap("n", "<leader>lk", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
+keymap("n", "<leader>ld", "<cmd>Telescope diagnostics<CR>", { desc = "workspace [D]iagnostics" })
+keymap("n", "<leader>e", "<cmd>lua vim.diagnostic.open_float()<CR>", { desc = "diagnostics [E]rror" })
+keymap("n", "]d", "<cmd>lua vim.diagnostic.goto_next({buffer=0})<cr>", { desc = "next diagnostics" })
+keymap("n", "[d", "<cmd>lua vim.diagnostic.goto_prev({buffer=0})<cr>", { desc = "previous diagnostics" })
+keymap("n", "<leader>lq", "<cmd>lua vim.diagnostic.setloclist()<CR>", { desc = "[Q]uick list" })
 
-keymap("n", "<leader>la", "<cmd>lua vim.lsp.buf.code_action()<cr>", opts)
-keymap("n", "<leader>lr", "<cmd>lua vim.lsp.buf.rename()<cr>", opts)
-keymap("n", "<leader>lf", "<cmd>lua vim.lsp.buf.format{ async = true }<cr>", opts)
+keymap("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", { desc = "documentation" })
+keymap("n", "<leader>lk", "<cmd>lua vim.lsp.buf.signature_help()<CR>", { desc = "signature help" })
+
+keymap("n", "<leader>la", "<cmd>lua vim.lsp.buf.code_action()<cr>", { desc = "code [A]ction" })
+keymap("n", "<leader>lr", "<cmd>lua vim.lsp.buf.rename()<cr>", { desc = "[R]ename" })
+keymap("n", "<leader>lf", "<cmd>lua vim.lsp.buf.format{ async = true }<cr>", { desc = "[F]ormat" })
+
+-- Debugger
+keymap("n", "<leader>bb", "<cmd>DapToggleBreakpoint<cr>", { desc = "Toggle [B]reakpoint" })
+keymap("n", "<leader>bc", "<cmd>DapContinue<cr>", { desc = "[C]ontinue" })
+keymap("n", "<leader>bs", "<cmd>DapTerminate<cr>", { desc = "[T]erminate" })
+keymap("n", "<leader>bo", "<cmd>DapStepOver<cr>", { desc = "Step [O]ver" })
+keymap("n", "<leader>bi", "<cmd>DapStepInto<cr>", { desc = "Step [I]nto" })
+keymap("n", "<leader>bu", "<cmd>DapStepOut<cr>", { desc = "Step o[U]t" })
+keymap("n", "<leader>bt", "<cmd>lua require('dap-go').debug_test()<cr>", { desc = "[T]est" })
+keymap("n", "<leader>bl", "<cmd>lua require('dap-go').debug_last_test()<cr>", { desc = "[L]ast test" })
+
 
 -- Git
-keymap("n", "<leader>gs", ":Git<CR><C-w>7-", opts)
-keymap("n", "<leader>gp", ":exe 'Git push origin ' . FugitiveHead()<cr>", opts)
-keymap("n", "<leader>gl", ":exe 'Git pull origin ' . FugitiveHead()<cr>", opts)
-keymap("n", "<leader>gb", "<cmd>Telescope git_branches<CR>", opts)
-keymap("n", "<leader>gh", "<cmd>Telescope git_stash<CR>", opts)
-keymap("n", "<leader>gc", "<cmd>Telescope git_commits<CR>", opts)
+keymap("n", "<leader>gs", ":Git<CR><C-w>7-", { desc = "[S]tatus" })
+keymap("n", "<leader>gp", ":exe 'Git push origin ' . FugitiveHead()<cr>", { desc = "[P]ush" })
+keymap("n", "<leader>gl", ":exe 'Git pull origin ' . FugitiveHead()<cr>", { desc = "pul[L]" })
+keymap("n", "<leader>gb", "<cmd>Telescope git_branches<CR>", { desc = "[B]ranch" })
+keymap("n", "<leader>gh", "<cmd>Telescope git_stash<CR>", { desc = "stas[H]" })
+keymap("n", "<leader>gc", "<cmd>Telescope git_commits<CR>", { desc = "[C]ommit" })
 
 -- File explorer
-keymap("n", "<leader>e", ":NvimTreeToggle<CR>", opts)
-keymap("n", "-", "<CMD>Oil<CR>", opts)
+keymap("n", "<leader>o", ":NvimTreeToggle<CR>", { desc = "Toggle Nvim Tr[E]e" })
+keymap("n", "-", "<CMD>Oil<CR>", { desc = "Open Oil" })
 
 -- Others
-keymap("n", "<leader>fn", ":Telescope find_files cwd=/Users/ghar/Desktop/scratch<CR>", opts)
+keymap("n", "<leader>fn", ":Telescope find_files cwd=/Users/ghar/Desktop/scratch<CR>", { desc = "[N]otes" })

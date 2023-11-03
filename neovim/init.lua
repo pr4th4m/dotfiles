@@ -28,3 +28,6 @@ require "conf.cmp"
 require "conf.lsp"
 require "conf.whichkey"
 require "conf.impatient"
+
+-- Debugger
+require "conf.debug"
