@@ -168,13 +168,12 @@ keymap("n", "<leader>lf", "<cmd>lua vim.lsp.buf.format{ async = true }<cr>", { d
 -- Debugger
 keymap("n", "<leader>bb", "<cmd>DapToggleBreakpoint<cr>", { desc = "Toggle [B]reakpoint" })
 keymap("n", "<leader>bc", "<cmd>DapContinue<cr>", { desc = "[C]ontinue" })
-keymap("n", "<leader>bs", "<cmd>DapTerminate<cr>", { desc = "[T]erminate" })
+keymap("n", "<leader>bs", "<cmd>DapTerminate<cr>", { desc = "terminate / [S]top" })
 keymap("n", "<leader>bo", "<cmd>DapStepOver<cr>", { desc = "Step [O]ver" })
 keymap("n", "<leader>bi", "<cmd>DapStepInto<cr>", { desc = "Step [I]nto" })
 keymap("n", "<leader>bu", "<cmd>DapStepOut<cr>", { desc = "Step o[U]t" })
 keymap("n", "<leader>bt", "<cmd>lua require('dap-go').debug_test()<cr>", { desc = "[T]est" })
 keymap("n", "<leader>bl", "<cmd>lua require('dap-go').debug_last_test()<cr>", { desc = "[L]ast test" })
-
 
 -- Git
 keymap("n", "<leader>gs", ":Git<CR><C-w>7-", { desc = "[S]tatus" })
