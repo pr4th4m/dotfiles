@@ -110,10 +110,19 @@ export VISUAL=nvim
 # Let fzf use rg
 # export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow --glob "!.git/*"'
 # export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
-export FZF_DEFAULT_COMMAND="fd --type f --exclude .git --exclude node_modules"
+# export FZF_HIDDEN=--hidden && source ~/.zshrc
+export FZF_DEFAULT_COMMAND="fd --type f --color=never --exclude .git --exclude node_modules $FZF_HIDDEN" 
 export FZF_DEFAULT_OPTS='--layout=reverse --border'
+
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_CTRL_T_OPTS="--height 90% --preview 'bat --theme Nord --plain --pager never --color always {} | head -500'"
+
+# change default clt-c to ctrl-e
+# export FZF_HIDDEN=--hidden && source ~/.zshrc
+zle     -N     fzf-cd-widget
+bindkey '^E'  fzf-cd-widget
+export FZF_ALT_C_COMMAND="fd --type d --color=never --exclude .git --exclude node_modules $FZF_HIDDEN"
+export FZF_ALT_C_OPTS="--height 90% --preview 'tree -C {} | head -500'"
 
 ##### Required paths ######
 
@@ -162,7 +171,7 @@ fpath=(~/.zsh/completion $fpath)
 autoload -Uz compinit && compinit -i
 
 # Load sheldon
-eval "$(sheldon source)"
+# eval "$(sheldon source)"
 
 # Postgres cli
 export PATH=/usr/local/opt/libpq/bin:$PATH

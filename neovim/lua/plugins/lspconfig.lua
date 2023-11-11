@@ -3,6 +3,7 @@ return {
   event = { "BufReadPre", "BufNewFile" },
   dependencies = {
     "hrsh7th/cmp-nvim-lsp",
+    'simrat39/symbols-outline.nvim',
   },
   config = function()
     local M = {}

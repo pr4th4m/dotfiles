@@ -1,5 +1,6 @@
 return {
   "nvim-lualine/lualine.nvim",
+  event = { "UIEnter" },
   config = function()
     local diagnostics = {
       "diagnostics",
