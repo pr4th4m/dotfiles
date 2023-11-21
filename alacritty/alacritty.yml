@@ -13,6 +13,13 @@ env:
 TERM: xterm-256color
 
 window:
+  # Make `Option` key behave as `Alt` (macOS only):
+  #   - OnlyLeft
+  #   - OnlyRight
+  #   - Both
+  #   - None (default)
+  option_as_alt: OnlyLeft
+
   # Window dimensions (changes require restart)
   #
   # Specified in number of columns/lines, not pixels.
@@ -74,6 +81,7 @@ window:
   # startup_mode: Windowed
   # startup_mode: SimpleFullscreen
   startup_mode: SimpleFullscreen
+
 
 scrolling:
   # Maximum number of lines in the scrollback buffer.
@@ -142,7 +150,7 @@ font:
     family: JetBrains Mono NL
 
     # The `style` can be specified to pick a specific face.
-    style: Italic
+    style: Thin Italic
 
   # Point size
   size: 16.5
@@ -203,38 +211,38 @@ font:
 # If `true`, bold text is drawn using the bright color variants.
 draw_bold_text_with_bright_colors: false
 
-# Colors (Tokyo night storm)
-colors:
-  # Default colors
-  primary:
-    background: '0x24283b'
-    foreground: '0xc0caf5'
-
-  # Normal colors
-  normal:
-    black:   '0x1d202f'
-    red:     '0xf7768e'
-    green:   '0x9ece6a'
-    yellow:  '0xe0af68'
-    blue:    '0x7aa2f7'
-    magenta: '0xbb9af7'
-    cyan:    '0x7dcfff'
-    white:   '0xa9b1d6'
-
-  # Bright colors
-  bright:
-    black:   '0x414868'
-    red:     '0xf7768e'
-    green:   '0x9ece6a'
-    yellow:  '0xe0af68'
-    blue:    '0x7aa2f7'
-    magenta: '0xbb9af7'
-    cyan:    '0x7dcfff'
-    white:   '0xc0caf5'
-
-  indexed_colors:
-    - { index: 16, color: '0xff9e64' }
-    - { index: 17, color: '0xdb4b4b' }
+# # Colors (Tokyo night storm)
+# colors:
+#   # Default colors
+#   primary:
+#     background: '0x24283b'
+#     foreground: '0xc0caf5'
+#
+#   # Normal colors
+#   normal:
+#     black:   '0x1d202f'
+#     red:     '0xf7768e'
+#     green:   '0x9ece6a'
+#     yellow:  '0xe0af68'
+#     blue:    '0x7aa2f7'
+#     magenta: '0xbb9af7'
+#     cyan:    '0x7dcfff'
+#     white:   '0xa9b1d6'
+#
+#   # Bright colors
+#   bright:
+#     black:   '0x414868'
+#     red:     '0xf7768e'
+#     green:   '0x9ece6a'
+#     yellow:  '0xe0af68'
+#     blue:    '0x7aa2f7'
+#     magenta: '0xbb9af7'
+#     cyan:    '0x7dcfff'
+#     white:   '0xc0caf5'
+#
+#   indexed_colors:
+#     - { index: 16, color: '0xff9e64' }
+#     - { index: 17, color: '0xdb4b4b' }
 
 # Visual Bell
 #
@@ -362,7 +370,7 @@ selection:
   semantic_escape_chars: ',│`|:"'' ()[]{}<>'
 
   # When set to `true`, selected text will be copied to the primary clipboard.
-  save_to_clipboard: false
+  save_to_clipboard: true
 
 
 cursor:
@@ -514,7 +522,7 @@ key_bindings:
   - { key: End,       mods: Shift,   mode: ~Alt, action: ScrollToBottom }
 
   # Vi Mode
-  - { key: Space,  mods: Shift|Control, mode: ~Search,    action: ToggleViMode            }
+  - { key: Space,  mods: Command|Control, mode: ~Search,    action: ToggleViMode            }
   - { key: Space,  mods: Shift|Control, mode: Vi|~Search, action: ScrollToBottom          }
   - { key: Escape,                      mode: Vi|~Search, action: ClearSelection          }
   - { key: I,                           mode: Vi|~Search, action: ToggleViMode            }
@@ -732,3 +740,6 @@ key_bindings:
   # - { key: X, mods: Alt, chars: "\x1bx" }
   # - { key: Y, mods: Alt, chars: "\x1by" }
   # - { key: Z, mods: Alt, chars: "\x1bz" }
+
+import:
+ - ~/.config/alacritty/themes/catppuccin_frappe.yml

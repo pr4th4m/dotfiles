@@ -1,6 +1,7 @@
 return {
   "nvim-lualine/lualine.nvim",
   event = { "UIEnter" },
+  -- event = { "BufReadPre", "BufNewFile" },
   config = function()
     local diagnostics = {
       "diagnostics",
@@ -25,7 +26,8 @@ return {
     require('lualine').setup {
       options = {
         icons_enabled = false,
-        theme = 'tokyonight',
+        -- theme = 'tokyonight',
+        theme = 'catppuccin',
         component_separators = { '|', '|' },
         section_separators = { '', '' },
       },
@@ -38,7 +40,7 @@ return {
             path = 1,
           },
         },
-        lualine_x = { 'encoding', 'fileformat', 'filetype', get_root_project_name },
+        lualine_x = { 'searchcount', 'encoding', 'fileformat', 'filetype', get_root_project_name },
         lualine_y = { 'branch' },
       }
     }

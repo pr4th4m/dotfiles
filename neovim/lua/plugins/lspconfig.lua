@@ -3,36 +3,11 @@ return {
   event = { "BufReadPre", "BufNewFile" },
   dependencies = {
     "hrsh7th/cmp-nvim-lsp",
-    'simrat39/symbols-outline.nvim',
+    'hedyhli/outline.nvim',
+    "j-hui/fidget.nvim",
   },
   config = function()
     local M = {}
-
-    local servers = {
-      "bashls",
-      "rust_analyzer",
-      "dockerls",
-      "gopls",
-      "jsonls",
-      "yamlls",
-      "lua_ls",
-      "pyright",
-      "marksman"
-    }
-    local lspconfig = require("lspconfig")
-    local opts = {}
-    for _, server in pairs(servers) do
-      opts = {
-        on_attach = require("conf.lsp.handlers").on_attach,
-        capabilities = require("conf.lsp.handlers").capabilities,
-      }
-      server = vim.split(server, "@")[1]
-      -- local require_ok, conf_opts = pcall(require, "conf.lsp.settings." .. server)
-      -- if require_ok then
-      -- 	opts = vim.tbl_deep_extend("force", conf_opts, opts)
-      -- end
-      lspconfig[server].setup(opts)
-    end
 
     local cmp_nvim_lsp = require("cmp_nvim_lsp")
     M.capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -54,7 +29,7 @@ return {
       local config = {
         virtual_text = false, -- disable virtual text
         signs = {
-          active = signs, -- show signs
+          active = signs,     -- show signs
         },
         update_in_insert = true,
         underline = false,
@@ -120,6 +95,28 @@ return {
       -- 	return
       -- end
       -- illuminate.on_attach(client)
+    end
+
+    local servers = {
+      "bashls",
+      "rust_analyzer",
+      "dockerls",
+      "gopls",
+      "jsonls",
+      "yamlls",
+      "lua_ls",
+      "pyright",
+      "marksman"
+    }
+    local lspconfig = require("lspconfig")
+    local opts = {}
+    for _, server in pairs(servers) do
+      opts = {
+        on_attach = M.on_attach,
+        capabilities = M.capabilities,
+      }
+      server = vim.split(server, "@")[1]
+      lspconfig[server].setup(opts)
     end
 
     return M

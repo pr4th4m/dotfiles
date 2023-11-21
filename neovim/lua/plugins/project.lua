@@ -1,6 +1,7 @@
 return {
   "ahmedkhalf/project.nvim",
-  event = "VeryLazy",
+  lazy = true,
+  cmd = { "Telescope" },
   config = function()
     require("project_nvim").setup({
       ---@usage set to false to disable project.nvim.
@@ -39,7 +40,6 @@ return {
       ---@usage path to store the project history for use in telescope
       datapath = vim.fn.stdpath("data"),
     })
-
     -- require("telescope").load_extension('projects')
   end,
 }

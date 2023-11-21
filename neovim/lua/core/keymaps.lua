@@ -20,6 +20,10 @@ vim.g.maplocalleader = " "
 --   command_mode = "c",
 
 -- Normal --
+
+-- Reload neovim config
+keymap("n", "<leader>c", ":source ~/.config/nvim/init.lua<CR>", { desc = "[C]onfig reload" })
+
 -- Better window navigation
 keymap("n", "<C-h>", "<C-w>h", opts)
 keymap("n", "<C-j>", "<C-w>j", opts)
@@ -27,20 +31,20 @@ keymap("n", "<C-k>", "<C-w>k", opts)
 keymap("n", "<C-l>", "<C-w>l", opts)
 
 -- Resize with arrows
-keymap("n", "<C-Down>", ":resize -2<CR>", opts)
-keymap("n", "<C-Up>", ":resize +2<CR>", opts)
-keymap("n", "<C-Right>", ":vertical resize -2<CR>", opts)
-keymap("n", "<C-Left>", ":vertical resize +2<CR>", opts)
-keymap("n", "<C-0>", ":vertical resize -2<CR>", opts)
-keymap("n", "<C-9>", ":vertical resize +2<CR>", opts)
+keymap("n", "<A-j>", ":resize -2<CR>", opts)
+keymap("n", "<A-k>", ":resize +2<CR>", opts)
+keymap("n", "<A-l>", ":vertical resize -2<CR>", opts)
+keymap("n", "<A-h>", ":vertical resize +2<CR>", opts)
+-- keymap("n", "<C-0>", ":vertical resize -2<CR>", opts)
+-- keymap("n", "<C-9>", ":vertical resize +2<CR>", opts)
 
 -- Navigate buffers
 keymap("n", "<S-l>", ":bnext<CR>", opts)
 keymap("n", "<S-h>", ":bprevious<CR>", opts)
 
 -- Move text up and down
-keymap("n", "<A-j>", ":m .+1<CR>==", opts)
-keymap("n", "<A-k>", ":m .-2<CR>==", opts)
+-- keymap("n", "<A-j>", ":m .+1<CR>==", opts)
+-- keymap("n", "<A-k>", ":m .-2<CR>==", opts)
 
 -- Text
 keymap("n", "Y", "y$", opts)
@@ -103,16 +107,16 @@ keymap("v", "<", "<gv", opts)
 keymap("v", ">", ">gv", opts)
 
 -- Move text up and down
-keymap("v", "<A-j>", ":m '>+1<CR>gv=gv", opts)
-keymap("v", "<A-k>", ":m '<-2<CR>gv=gv", opts)
+-- keymap("v", "<A-j>", ":m '>+1<CR>gv=gv", opts)
+-- keymap("v", "<A-k>", ":m '<-2<CR>gv=gv", opts)
 keymap("v", "p", '"_dP', opts)
 
 -- Visual Block --
 -- Move text up and down
 keymap("x", "J", ":m '>+1<CR>gv=gv", opts)
 keymap("x", "K", ":m '<-2<CR>gv=gv", opts)
-keymap("x", "<A-j>", ":m '>+1<CR>gv=gv", opts)
-keymap("x", "<A-k>", ":m '<-2<CR>gv=gv", opts)
+-- keymap("x", "<A-j>", ":m '>+1<CR>gv=gv", opts)
+-- keymap("x", "<A-k>", ":m '<-2<CR>gv=gv", opts)
 
 -- Terminal --
 -- Better terminal navigation
@@ -150,7 +154,7 @@ keymap("n", "gT", ":vsp | Telescope lsp_type_definitions<CR>", { desc = "[T]ype 
 
 keymap("n", "<leader>ls", "<cmd>Telescope lsp_document_symbols<CR>", { desc = "document [S]ymbols" })
 keymap("n", "<leader>lw", "<cmd>Telescope lsp_dynamic_workspace_symbols<CR>", { desc = "[W]orkspace symbols" })
-keymap("n", "<leader>lo", "<cmd>SymbolsOutline<CR>", { desc = "[O]utline symbols" })
+keymap("n", "<leader>lo", "<cmd>Outline<CR>", { desc = "[O]utline symbols" })
 
 keymap("n", "<leader>ld", "<cmd>Telescope diagnostics<CR>", { desc = "workspace [D]iagnostics" })
 keymap("n", "<leader>e", "<cmd>lua vim.diagnostic.open_float()<CR>", { desc = "diagnostics [E]rror" })
@@ -186,6 +190,19 @@ keymap("n", "<leader>gc", "<cmd>Telescope git_commits<CR>", { desc = "[C]ommit" 
 -- File explorer
 keymap("n", "<leader>o", ":NvimTreeToggle<CR>", { desc = "Toggle Nvim Tr[E]e" })
 keymap("n", "-", "<CMD>Oil<CR>", { desc = "Open Oil" })
+
+-- Toggle term mapping
+keymap("n", "<leader>tv", ":ToggleTerm size=80 direction=vertical name=vertical<CR>", { desc = "[V]ertical term" })
+keymap("n", "<leader>th", ":ToggleTerm size=20 direction=horizontal name=horizontal<CR>", { desc = "[H]orizontal term" })
+keymap("n", "<leader>tt", ":ToggleTerm direction=tab name=tab<CR>", { desc = "[T]ab term" })
+keymap("n", "<leader>ts", ":TermSelect<CR>", { desc = "[S]elect term" })
+keymap("n", "<C-b>", ":ToggleTerm direction=float name=float<CR>", { desc = "[F]loat term" })
+keymap("i", "<C-b>", ":ToggleTerm direction=float name=float<CR>", { desc = "[F]loat term" })
+
+-- Http rest client
+keymap("n", "<leader>rn", "<cmd>lua require('rest-nvim').run()<CR>", { desc = "[N]ew request" })
+keymap("n", "<leader>rp", "<cmd>lua require('rest-nvim').run(true)<CR>", { desc = "[P]review request" })
+keymap("n", "<leader>rr", "<cmd>lua require('rest-nvim').last()<CR>", { desc = "[R]epeat request" })
 
 -- Others
 keymap("n", "<leader>fn", ":Telescope find_files cwd=/Users/ghar/Desktop/scratch<CR>", { desc = "[N]otes" })

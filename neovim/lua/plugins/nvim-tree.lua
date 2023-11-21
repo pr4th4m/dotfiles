@@ -1,6 +1,7 @@
 return {
   "nvim-tree/nvim-tree.lua",
-  event = "VeryLazy",
+  lazy = true,
+  cmd = { "NvimTreeToggle" },
   config = function()
     local nvim_tree = require("nvim-tree")
 
