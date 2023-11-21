@@ -5,3 +5,12 @@ undodir/
 backup/
 swp/
 bundle/
+
+# ignore all directories except few for .config
+.config/*
+!.config/alacritty/
+!.config/helix/
+!.config/kitty/
+!.config/lf/
+!.config/nvim/
+!.config/sheldon/

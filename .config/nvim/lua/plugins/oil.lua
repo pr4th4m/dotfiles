@@ -9,6 +9,7 @@ return {
       keymaps = {
         ["<C-l>"] = false,
         ["<C-p>"] = false,
+        ["<C-h>"] = false,
         -- ["l"] = "actions.select",
         -- ["h"] = "actions.parent",
         -- ["<C-p>"] = "actions.select_vsplit",
