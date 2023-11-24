@@ -127,15 +127,19 @@ keymap("x", "K", ":m '<-2<CR>gv=gv", opts)
 
 -- Telescope
 keymap("n", "<leader>ff", "<cmd>Telescope find_files<CR>", { desc = "find [F]iles" })
-keymap("n", "<leader>fc", "<cmd>lua require('telescope.builtin').find_files( { cwd = vim.fn.expand('%:p:h') })<CR>", { desc = "find files in [C]urrent dir" })
+keymap("n", "<leader>fc", "<cmd>lua require('telescope.builtin').find_files( { cwd = vim.fn.expand('%:p:h') })<CR>",
+  { desc = "find files in [C]urrent dir" })
+keymap("n", "<leader>fh", "<cmd>lua require('telescope.builtin').find_files( { hidden = true, no_ignore = true })<CR>",
+  { desc = "find files in [H]idden and Ignored dir" })
 -- keymap("n", "<leader>fb", "<cmd>Telescope buffers<CR>", { desc = "[B]uffers" })
 keymap("n", "<leader><space>", "<cmd>Telescope buffers<CR>", { desc = "[B]uffers" })
 keymap("n", "<leader>fo", "<cmd>Telescope oldfiles<CR>", { desc = "[O]ld files" })
 keymap("n", "<leader>fw", "<cmd>Telescope grep_string<CR>", { desc = "grep [W]ord" })
-keymap("n", "<leader>fg", "<cmd>lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>", { desc = "[G]rep" })
+keymap("n", "<leader>fg", "<cmd>lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>",
+  { desc = "[G]rep" })
 keymap("n", "<leader>fm", "<cmd>Telescope marks<CR>", { desc = "[M]arks" })
 -- keymap("n", "<leader>fc", "<cmd>Telescope commands<CR>", opts)
-keymap("n", "<leader>fi", "<cmd>Telescope builtin<CR>", { desc = "built[I]n" })
+keymap("n", "<leader>ft", "<cmd>Telescope builtin<CR>", { desc = "built[I]n" })
 keymap("n", "<leader>fp", "<cmd>Telescope projects<CR>", { desc = "[P]rojects" })
 keymap("n", "<leader>fs", "<cmd>Telescope spell_suggest<CR>", { desc = "[S]pelling" })
 keymap("n", "<leader>fb", "<cmd>Telescope current_buffer_fuzzy_find<CR>", { desc = "find in current buffer" })
@@ -189,7 +193,7 @@ keymap("n", "<leader>gc", "<cmd>Telescope git_commits<CR>", { desc = "[C]ommit" 
 
 -- File explorer
 keymap("n", "<leader>o", ":NvimTreeToggle<CR>", { desc = "Toggle Nvim Tr[E]e" })
-keymap("n", "-", "<CMD>Oil<CR>", { desc = "Open Oil" })
+keymap("n", "-", ":vsp | Oil<cr>", { desc = "Open Oil" })
 
 -- Toggle term mapping
 keymap("n", "<leader>tv", ":ToggleTerm size=80 direction=vertical name=vertical<CR>", { desc = "[V]ertical term" })
@@ -200,9 +204,9 @@ keymap("n", "<C-b>", ":ToggleTerm direction=float name=float<CR>", { desc = "[F]
 keymap("i", "<C-b>", ":ToggleTerm direction=float name=float<CR>", { desc = "[F]loat term" })
 
 -- Http rest client
-keymap("n", "<leader>rn", "<cmd>lua require('rest-nvim').run()<CR>", { desc = "[N]ew request" })
+keymap("n", "<leader>rr", "<cmd>lua require('rest-nvim').run()<CR>", { desc = "[R]equest" })
 keymap("n", "<leader>rp", "<cmd>lua require('rest-nvim').run(true)<CR>", { desc = "[P]review request" })
-keymap("n", "<leader>rr", "<cmd>lua require('rest-nvim').last()<CR>", { desc = "[R]epeat request" })
+keymap("n", "<leader>rl", "<cmd>lua require('rest-nvim').last()<CR>", { desc = "[L]ast request" })
 
 -- Others
 keymap("n", "<leader>fn", ":Telescope find_files cwd=/Users/ghar/Desktop/scratch<CR>", { desc = "[N]otes" })
