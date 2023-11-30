@@ -193,7 +193,9 @@ keymap("n", "<leader>gc", "<cmd>Telescope git_commits<CR>", { desc = "[C]ommit" 
 
 -- File explorer
 keymap("n", "<leader>o", ":NvimTreeToggle<CR>", { desc = "Toggle Nvim Tr[E]e" })
-keymap("n", "-", ":vsp | Oil<cr>", { desc = "Open Oil" })
+keymap("n", "-", ":Oil<cr>", { desc = "Open Oil" })
+keymap("n", "_", ":vsp | Oil<cr>", { desc = "Open Oil" })
+
 
 -- Toggle term mapping
 keymap("n", "<leader>tv", ":ToggleTerm size=80 direction=vertical name=vertical<CR>", { desc = "[V]ertical term" })
