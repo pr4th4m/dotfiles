@@ -24,6 +24,10 @@ vim.g.maplocalleader = " "
 -- Reload neovim config
 keymap("n", "<leader>c", ":source ~/.config/nvim/init.lua<CR>", { desc = "[C]onfig reload" })
 
+-- new line in normal mode
+keymap('n', 'go', 'o<Esc>0"_D')
+keymap('n', 'gO', 'O<Esc>0"_D')
+
 -- Better window navigation
 keymap("n", "<C-h>", "<C-w>h", opts)
 keymap("n", "<C-j>", "<C-w>j", opts)
@@ -51,6 +55,8 @@ keymap("n", "Y", "y$", opts)
 keymap("n", "D", "d$", opts)
 keymap("n", "C", "c$", opts)
 keymap("n", "P", "viwp", opts)
+keymap('n', 'gp', 'o<Esc>0"_Dp')
+keymap('n', 'gP', 'O<Esc>0"_Dp')
 keymap("n", "<leader>w", ":wa<CR>", opts)
 
 -- Navigation

@@ -14,3 +14,4 @@ bundle/
 !.config/lf/
 !.config/nvim/
 !.config/sheldon/
+!.config/fish/
