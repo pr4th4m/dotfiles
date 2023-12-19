@@ -24,6 +24,7 @@ function fish_mode_prompt; end
 # override kitty clear scrollback functionality
 function clear_only_screen_and_save_content_in_scrollback
     printf "\e[H\e[22J"
+    printf "\e[H\e[2J"
     fish_prompt
 end
 bind -M insert \cl clear_only_screen_and_save_content_in_scrollback

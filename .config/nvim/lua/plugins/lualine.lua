@@ -26,8 +26,7 @@ return {
     require('lualine').setup {
       options = {
         icons_enabled = false,
-        -- theme = 'tokyonight',
-        theme = 'catppuccin',
+        theme = 'github_dark',
         component_separators = { '|', '|' },
         section_separators = { '', '' },
       },
@@ -40,8 +39,9 @@ return {
             path = 1,
           },
         },
-        lualine_x = { 'searchcount', 'encoding', 'fileformat', 'filetype', get_root_project_name },
-        lualine_y = { 'branch' },
+        lualine_x = { 'encoding', 'fileformat', 'filetype' },
+        lualine_y = { get_root_project_name, 'branch' },
+        lualine_z = { 'searchcount', 'progress', 'location' },
       }
     }
   end,

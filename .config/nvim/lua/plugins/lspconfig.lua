@@ -106,7 +106,9 @@ return {
       "yamlls",
       "lua_ls",
       "pyright",
-      "marksman"
+      "marksman",
+      "tsserver",
+      "zk",
     }
     local lspconfig = require("lspconfig")
     local opts = {}

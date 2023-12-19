@@ -11,7 +11,7 @@ return {
         "lua", "rust", "go", "godot_resource", "gomod", "gowork",
         "graphql", "hcl", "hjson", "html", "http",
         "java", "javascript", "jsdoc", "json", "json5", "make", "markdown",
-        "python", "regex", "rego", "ruby", "scss", "toml", "typescript",
+        "markdown_inline", "python", "regex", "rego", "ruby", "scss", "toml", "typescript",
         "vim", "yaml" },
       ignore_install = { "" }, -- List of parsers to ignore installing
       sync_install = false,    -- install languages synchronously (only applied to `ensure_installed`)

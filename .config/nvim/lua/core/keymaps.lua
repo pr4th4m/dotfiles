@@ -141,7 +141,8 @@ keymap("n", "<leader>fh", "<cmd>lua require('telescope.builtin').find_files( { h
 keymap("n", "<leader><space>", "<cmd>Telescope buffers<CR>", { desc = "[B]uffers" })
 keymap("n", "<leader>fo", "<cmd>Telescope oldfiles<CR>", { desc = "[O]ld files" })
 keymap("n", "<leader>fw", "<cmd>Telescope grep_string<CR>", { desc = "grep [W]ord" })
-keymap("n", "<leader>fg", "<cmd>lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>",
+-- keymap("n", "<leader>fg", "<cmd>lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>",
+keymap("n", "<leader>fg", "<cmd>lua require('telescope').extensions.egrepify.egrepify()<CR>",
   { desc = "[G]rep" })
 keymap("n", "<leader>fm", "<cmd>Telescope marks<CR>", { desc = "[M]arks" })
 -- keymap("n", "<leader>fc", "<cmd>Telescope commands<CR>", opts)
