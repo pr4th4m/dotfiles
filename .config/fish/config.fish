@@ -30,6 +30,8 @@ end
 bind -M insert \cl clear_only_screen_and_save_content_in_scrollback
 
 # alias
+# https://hasseg.org/trash/
+alias rm='trash -F'
 alias rg='rg --hyperlink-format=kitty'
 alias cs='cht.sh'
 # alias ls='gls --color --group-directories-first --hyperlink=auto'

@@ -34,6 +34,20 @@ keymap("n", "<C-j>", "<C-w>j", opts)
 keymap("n", "<C-k>", "<C-w>k", opts)
 keymap("n", "<C-l>", "<C-w>l", opts)
 
+-- better up/down
+keymap({ "n", "x" }, "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
+keymap({ "n", "x" }, "<Down>", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
+keymap({ "n", "x" }, "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
+keymap({ "n", "x" }, "<Up>", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
+
+-- https://github.com/mhinz/vim-galore#saner-behavior-of-n-and-n
+keymap("n", "n", "'Nn'[v:searchforward].'zv'", { expr = true, desc = "Next search result" })
+keymap("x", "n", "'Nn'[v:searchforward]", { expr = true, desc = "Next search result" })
+keymap("o", "n", "'Nn'[v:searchforward]", { expr = true, desc = "Next search result" })
+keymap("n", "N", "'nN'[v:searchforward].'zv'", { expr = true, desc = "Prev search result" })
+keymap("x", "N", "'nN'[v:searchforward]", { expr = true, desc = "Prev search result" })
+keymap("o", "N", "'nN'[v:searchforward]", { expr = true, desc = "Prev search result" })
+
 -- Resize with arrows
 keymap("n", "<A-j>", ":resize -2<CR>", opts)
 keymap("n", "<A-k>", ":resize +2<CR>", opts)
@@ -49,6 +63,10 @@ keymap("n", "<S-h>", ":bprevious<CR>", opts)
 -- Move text up and down
 -- keymap("n", "<A-j>", ":m .+1<CR>==", opts)
 -- keymap("n", "<A-k>", ":m .-2<CR>==", opts)
+
+-- store relative line move in jump list
+keymap('n', 'k', '(v:count > 5 ? "m\'" . v:count : "") . "k"', { expr = true })
+keymap('n', 'j', '(v:count > 5 ? "m\'" . v:count : "") . "j"', { expr = true })
 
 -- Text
 keymap("n", "Y", "y$", opts)
@@ -80,6 +98,8 @@ keymap("n", "<leader>6", "6gt", opts)
 keymap("n", "<leader>7", "7gt", opts)
 keymap("n", "<leader>8", "8gt", opts)
 keymap("n", "<leader>9", "9gt", opts)
+-- keymap("n", "<C-L>", "<cmd>tabnext<cr>", { desc = "Next Tab" })
+-- keymap("n", "<C-H>", "<cmd>tabprevious<cr>", { desc = "Previous Tab" })
 
 -- switching to last active tab
 keymap("n", "<C-n>", ":exe 'tabn '.g:lasttab<CR>", opts)
@@ -92,11 +112,15 @@ vim.api.nvim_create_autocmd("TabLeave", {
   end
 })
 
--- Marks
-keymap("n", "<leader>mf", ":'F<CR>", opts)
-keymap("n", "<leader>md", ":'D<CR>", opts)
-keymap("n", "<leader>ms", ":'S<CR>", opts)
-keymap("n", "<leader>ma", ":'A<CR>", opts)
+-- Marks - set and goto marks
+keymap("n", "mf", "mF", opts)
+keymap("n", "md", "mD", opts)
+keymap("n", "ms", "mS", opts)
+keymap("n", "ma", "mA", opts)
+keymap("n", "<leader>mf", "`F", opts)
+keymap("n", "<leader>md", "`D", opts)
+keymap("n", "<leader>ms", "`S", opts)
+keymap("n", "<leader>ma", "`A", opts)
 
 -- Window
 keymap("n", "<leader>v", "<C-w>v", opts)

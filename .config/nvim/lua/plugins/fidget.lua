@@ -3,7 +3,15 @@ return {
   event = { "BufReadPre", "BufNewFile" },
   config = function()
     require("fidget").setup {
-      -- options
+      notification = {
+        override_vim_notify = true,
+        view = {
+          stack_upwards = false,
+        },
+        window = {
+          align = "top",
+        }
+      }
     }
   end,
 }
