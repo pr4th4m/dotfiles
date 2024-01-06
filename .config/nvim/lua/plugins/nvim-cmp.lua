@@ -1,9 +1,10 @@
 return {
   "hrsh7th/nvim-cmp",
+  branch = "main",
   event = "InsertEnter",
   dependencies = {
-    "hrsh7th/cmp-buffer", -- source for text in buffer
-    "hrsh7th/cmp-path",   -- source for file system paths
+    { "hrsh7th/cmp-buffer",           branch = "main" },   -- source for text in buffer
+    { "hrsh7th/cmp-path",             branch = "main" },   -- source for file system paths
     -- Snippets
     { "saadparwaiz1/cmp_luasnip",     branch = "master" }, -- snippet completions
     { "L3MON4D3/LuaSnip",             branch = "master" }, --snippet engine
@@ -108,6 +109,7 @@ return {
         },
         { name = 'luasnip' },
         { name = 'path' },
+        { name = 'codeium' },
       },
 
       preselect = cmp.PreselectMode.None,

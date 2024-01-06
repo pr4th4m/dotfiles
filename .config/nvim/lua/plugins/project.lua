@@ -1,5 +1,6 @@
 return {
   "ahmedkhalf/project.nvim",
+  branch = "main",
   lazy = true,
   cmd = { "Telescope" },
   config = function()

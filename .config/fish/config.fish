@@ -58,5 +58,8 @@ bind -M insert \ce  fzf-cd-widget
 set FZF_ALT_C_COMMAND "fd --type d --color=never --exclude .git --exclude node_modules $FZF_HIDDEN"
 set FZF_ALT_C_OPTS "--height 90% --preview 'tree -C {} | head -500'"
 
+# zk cli
+set ZK_NOTEBOOK_DIR "/Users/ghar/Library/Mobile\ Documents/iCloud~md~obsidian/Documents/notes/"
+
 # Add paths
 fish_add_path /usr/local/bin /usr/local/opt/curl/bin $HOME/.cargo/bin $HOME/Library/Python/2.7/bin $HOME/Library/Python/3.9/bin /usr/local/opt/mysql-client/bin /usr/local/opt/libpq/bin /usr/local/sbin $HOME/.garden/bin $GOPATH/bin $GOROOT/bin

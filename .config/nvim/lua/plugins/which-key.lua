@@ -1,5 +1,6 @@
 return {
   "folke/which-key.nvim",
+  branch = "main",
   -- event = "VeryLazy",
   event = { "BufReadPre", "BufNewFile" },
   init = function()

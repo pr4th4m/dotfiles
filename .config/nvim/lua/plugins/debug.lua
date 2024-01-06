@@ -1,9 +1,10 @@
 return {
   "mfussenegger/nvim-dap",
+  branch = "master",
   event = { "BufReadPre", "BufNewFile" },
   dependencies = {
-    "rcarriga/nvim-dap-ui",
-    { "leoluz/nvim-dap-go", ft = "go" },
+    { "rcarriga/nvim-dap-ui", branch = "master" },
+    { "leoluz/nvim-dap-go",   ft = "go",      branch = "main" },
   },
   config = function()
     local dap = require("dap")

@@ -1,5 +1,6 @@
 return {
   "neovim/nvim-lspconfig",
+  branch = "master",
   event = { "BufReadPre", "BufNewFile" },
   dependencies = {
     "hrsh7th/cmp-nvim-lsp",
@@ -106,9 +107,8 @@ return {
       "yamlls",
       "lua_ls",
       "pyright",
-      "marksman",
+      -- "marksman",
       "tsserver",
-      "zk",
     }
     local lspconfig = require("lspconfig")
     local opts = {}

@@ -241,5 +241,18 @@ keymap("n", "<leader>rr", "<cmd>lua require('rest-nvim').run()<CR>", { desc = "[
 keymap("n", "<leader>rp", "<cmd>lua require('rest-nvim').run(true)<CR>", { desc = "[P]review request" })
 keymap("n", "<leader>rl", "<cmd>lua require('rest-nvim').last()<CR>", { desc = "[L]ast request" })
 
+-- zk cli
+keymap("n", "<leader>zn", "<Cmd>ZkNew { dir = vim.fn.expand('%:p:h'), title = vim.fn.input('Title: ') }<CR>", opts)
+keymap("v", "<leader>zn", ":'<,'>ZkNewFromContentSelection { dir = vim.fn.expand('%:p:h'), title = vim.fn.input('Title: ') }<CR>", opts)
+keymap("n", "<leader>zg", "<Cmd>ZkNotes { sort = { 'modified' } }<CR>", opts)
+keymap("n", "<leader>zf", "<Cmd>ZkNotes { sort = { 'modified' }, match = { vim.fn.input('Search: ') } }<CR>", opts)
+keymap("v", "<leader>zf", ":'<,'>ZkMatch<CR>", opts)
+keymap("n", "<leader>zt", "<Cmd>ZkTags<CR>", opts)
+keymap("n", "<leader>zb", "<Cmd>ZkBacklinks<CR>", opts)
+keymap("n", "<leader>zl", "<Cmd>ZkLinks<CR>", opts)
+keymap("n", "<leader>zi", "<Cmd>ZkInsertLink<CR>", opts)
+keymap("v", "<leader>zi", ":'<,'>ZkInsertLinkAtSelection<CR>", opts)
+
 -- Others
-keymap("n", "<leader>fn", ":Telescope find_files cwd=/Users/ghar/Desktop/scratch<CR>", { desc = "[N]otes" })
+keymap("n", "<leader>fnn", ":Telescope find_files cwd=/Users/ghar/Desktop/scratch<CR>", { desc = "[N]otes" })
+keymap("n", "<leader>fnz", ":Telescope find_files cwd=/Users/ghar/Library/Mobile\\ Documents/iCloud~md~obsidian/Documents/notes<CR>", { desc = "[O]bsidian notes" })

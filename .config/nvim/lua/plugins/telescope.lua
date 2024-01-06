@@ -1,11 +1,12 @@
 return {
   "nvim-telescope/telescope.nvim",
+  branch = "master",
   lazy = true,
   cmd = { "Telescope" },
   dependencies = {
-    "nvim-lua/plenary.nvim",
-    { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
-    "nvim-telescope/telescope-rg.nvim",
+    { "nvim-lua/plenary.nvim",                    branch = "master" },
+    { "nvim-telescope/telescope-fzf-native.nvim", build = "make",   branch = "main" },
+    { "nvim-telescope/telescope-rg.nvim",         branch = "master" },
   },
   config = function()
     local telescope = require("telescope")
@@ -110,10 +111,22 @@ return {
           prefixes = {
             -- rg --no-ignore
             ["."] = {
-                flag = "hidden no-ignore ignore-case",
+              flag = "hidden no-ignore ignore-case",
+            },
+            ["@"] = {
+              flag = "word-regexp",
             },
             ["!"] = {
-                flag = "no-ignore",
+              flag = "glob",
+              cb = function(input)
+                return string.format([[!*{%s}*]], input)
+              end,
+            },
+            ["<"] = {
+              flag = "glob",
+              cb = function(input)
+                return string.format([[!**/{%s}*/**]], input)
+              end,
             },
           },
         },

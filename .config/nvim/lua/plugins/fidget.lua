@@ -1,5 +1,6 @@
 return {
   "j-hui/fidget.nvim",
+  branch = 'main',
   event = { "BufReadPre", "BufNewFile" },
   config = function()
     require("fidget").setup {

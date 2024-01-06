@@ -1,5 +1,6 @@
 return {
   "nvim-tree/nvim-tree.lua",
+  branch = "master",
   lazy = true,
   cmd = { "NvimTreeToggle" },
   config = function()

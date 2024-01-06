@@ -5,45 +5,6 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-# #### zPlug - zsh plugin manager ####
-# export ZPLUG_HOME=/usr/local/opt/zplug
-# source $ZPLUG_HOME/init.zsh
-#
-# # Self update zplug
-# zplug 'zplug/zplug', hook-build:'zplug --self-manage'
-#
-# # Zsh theme
-# zplug "romkatv/powerlevel10k", as:theme
-#
-# # Command completions
-# zplug "zsh-users/zsh-completions"
-#
-# # Syntax highlighting for commands
-# zplug "zdharma/fast-syntax-highlighting"
-#
-# # Quickly search history
-# zplug "zsh-users/zsh-history-substring-search", defer:1
-#
-# # Docker completion
-# zplug "felixr/docker-zsh-completion", defer:1
-#
-# zplug load
-# #### zPlug ####
-
-
-# starship shell theme
-# eval "$(starship init zsh)"
-
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-# [[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
-
-# # history-substring bind k and j for VI mode
-# bindkey -M vicmd 'k' history-substring-search-up
-# bindkey -M vicmd 'j' history-substring-search-down
-
-# Fuzzy finder
-# [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
 # Set locale
 export LC_ALL=en_US.UTF-8
 export LC_CTYPE=en_US.UTF-8
@@ -59,8 +20,8 @@ zle_highlight=(region:'bg=#364A82,fg=#c0caf5')
 
 # history
 export HISTFILE="$HOME/.zsh_history"
-export HISTSIZE=1000000
-export SAVEHIST=1000000
+export HISTSIZE=10000000
+export SAVEHIST=10000000
 setopt INC_APPEND_HISTORY
 setopt SHARE_HISTORY
 setopt HIST_IGNORE_ALL_DUPS
@@ -70,16 +31,27 @@ setopt HIST_SAVE_NO_DUPS
 zstyle ':completion:*' matcher-list 'm:{[:lower:]}={[:upper:]}'
 
 # useful alias
-alias ls='gls --color --group-directories-first'
-alias ll='gls -lh --color --group-directories-first'
-alias cat='bat -pp --theme base16'
+# https://hasseg.org/trash/
+alias rm='trash -F'
+alias rg='rg --hyperlink-format=kitty'
+# alias ls='gls --color --group-directories-first --hyperlink=auto'
+# alias ll='gls -lh --color --group-directories-first --hyperlink=auto'
+alias ls='ls -Gt'
+alias ll='ls -lthG'
+# alias cat='bat -pp --theme base16'
 # alias c='clear'
 alias cs='cht.sh'
-function m() {
-    export CMAP=$@
-    # local cmd=$@
-    # tmux set-environment CMAP $cmd
-}
+# function m() {
+#     export CMAP=$@
+#     # local cmd=$@
+#     # tmux set-environment CMAP $cmd
+# }
+# # unable to use above function from terminal directly
+# # create new function which is used in kitty config with CMAP
+# function csb() {
+#     printf '\n%.0s' {1..$LINES}
+#     clear
+# }
 
 # clear screen and keep scroll buffer
 # https://sw.kovidgoyal.net/kitty/conf/#shortcut-kitty.Reset-the-terminal
@@ -89,19 +61,14 @@ scroll-and-clear-screen() {
 }
 zle -N scroll-and-clear-screen
 bindkey '^l' scroll-and-clear-screen
-# unable to use above function from terminal directly
-# create new function which is used in kitty config with CMAP
-function csb() {
-    printf '\n%.0s' {1..$LINES}
-    clear
-}
 
-# for 256 color support
-if [ -n "$TMUX" ]; then
-    export TERM=screen-256color
-else
-    export TERM=xterm-256color
-fi
+# # for 256 color support
+# if [ -n "$TMUX" ]; then
+#     export TERM=screen-256color
+# else
+#     export TERM=xterm-256color
+# fi
+export TERM=xterm-256color
 
 # make vim as default editor
 export EDITOR=nvim
@@ -161,6 +128,8 @@ export PATH="/usr/local/opt/mysql-client/bin:$PATH"
 # history-substring bind k and j for VI mode
 bindkey -M vicmd 'k' history-substring-search-up
 bindkey -M vicmd 'j' history-substring-search-down
+bindkey '^P' history-substring-search-up
+bindkey '^N' history-substring-search-down
 
 # history search highlighting color
 export HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND='bg=#d33682,fg=#a5b0c5,bold'
@@ -171,7 +140,7 @@ fpath=(~/.zsh/completion $fpath)
 autoload -Uz compinit && compinit -i
 
 # Load sheldon
-# eval "$(sheldon source)"
+eval "$(sheldon source)"
 
 # Postgres cli
 export PATH=/usr/local/opt/libpq/bin:$PATH

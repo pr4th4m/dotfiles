@@ -1,5 +1,6 @@
 return {
   "nvim-lualine/lualine.nvim",
+  branch = "master",
   event = { "UIEnter" },
   -- event = { "BufReadPre", "BufNewFile" },
   config = function()

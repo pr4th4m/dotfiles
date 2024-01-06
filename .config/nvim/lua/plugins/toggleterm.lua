@@ -1,5 +1,6 @@
 return {
   "akinsho/toggleterm.nvim",
+  branch = "main",
   lazy = true,
   cmd = { "ToggleTerm" },
   config = function()

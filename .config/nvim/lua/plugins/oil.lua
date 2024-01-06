@@ -1,5 +1,6 @@
 return {
   "stevearc/oil.nvim",
+  branch = "master",
   lazy = true,
   cmd = { "Oil" },
   config = function()
