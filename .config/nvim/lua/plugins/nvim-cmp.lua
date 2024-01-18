@@ -39,7 +39,7 @@ return {
         ['<C-d>'] = cmp.mapping.scroll_docs(4),
         ['<C-Space>'] = cmp.mapping.complete(),
         ['<C-e>'] = cmp.mapping.close(),
-        ['<CR>'] = cmp.mapping.confirm {
+        ['<C-CR>'] = cmp.mapping.confirm {
           -- behavior = cmp.ConfirmBehavior.Insert,
           behavior = cmp.ConfirmBehavior.Replace,
           select = true,
@@ -97,9 +97,10 @@ return {
 
       -- You should specify your *installed* sources.
       sources = {
-        { name = 'nvim_lsp' },
+        { name = 'nvim_lsp', priority = 3 },
         {
           name = 'buffer',
+          priority = 5,
           option = {
             keyword_length = 2,
             get_bufnrs = function()
@@ -107,9 +108,9 @@ return {
             end
           }
         },
-        { name = 'luasnip' },
-        { name = 'path' },
-        { name = 'codeium' },
+        { name = 'luasnip', priority = 3 },
+        { name = 'codeium',  priority = 4 },
+        { name = 'path',    priority = 1 },
       },
 
       preselect = cmp.PreselectMode.None,
