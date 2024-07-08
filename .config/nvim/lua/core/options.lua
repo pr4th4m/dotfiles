@@ -7,7 +7,8 @@ local options = {
   fileencoding = "utf-8",                  -- the encoding written to a file
   hlsearch = true,                         -- highlight all matches on previous search pattern
   ignorecase = true,                       -- ignore case in search patterns
-  mouse = "a",                             -- allow the mouse to be used in neovim
+  mouse = "",                             -- allow the mouse to be used in neovim
+  -- mouse = "a",                             -- allow the mouse to be used in neovim
   pumheight = 10,                          -- pop up menu height
   showmode = false,                        -- we don't need to see things like -- INSERT -- anymore
   showtabline = 2,                         -- always show tabs
@@ -26,27 +27,28 @@ local options = {
   -- tabstop = 2,                             -- insert 2 spaces for a tab
   cursorline = true,                       -- highlight the current line
   number = true,                           -- set numbered lines
-  relativenumber = true,                  -- set relative numbered lines
+  relativenumber = true,                   -- set relative numbered lines
   numberwidth = 2,                         -- set number column width to 2 {default 4}
+  foldmethod = indent,
 
-  signcolumn = "yes",                      -- always show the sign column, otherwise it would shift the text each time
-  wrap = false,                            -- display lines as one long line
-  linebreak = true,                        -- companion to wrap, don't split words
-  scrolloff = 8,                           -- minimal number of screen lines to keep above and below the cursor
-  sidescrolloff = 8,                       -- minimal number of screen columns either side of cursor if wrap is `false`
+  signcolumn = "yes", -- always show the sign column, otherwise it would shift the text each time
+  wrap = false,       -- display lines as one long line
+  linebreak = true,   -- companion to wrap, don't split words
+  scrolloff = 8,      -- minimal number of screen lines to keep above and below the cursor
+  sidescrolloff = 8,  -- minimal number of screen columns either side of cursor if wrap is `false`
   -- guifont = "Consolas:h17",             -- the font used in graphical neovim applications
   -- guifont = "FiraCode-Light:h17",       -- the font used in graphical neovim applications
-  guifont = "JetBrainsMonoNL-Thin:h16",      -- the font used in graphical neovim applications
-  spell = true,                            -- spell check based on treesitter
-  splitkeep=cursor,                        -- don't move cursor in split screen
-  guicursor="",                            -- block cursor in insert mode
-  laststatus=3,                            -- global status line
-  whichwrap = "bs<>[]hl",                  -- which "horizontal" keys are allowed to travel to prev/next line
+  -- guifont = "JetBrains Mono NL Thin:h16", -- the font used in graphical neovim applications
+  spell = true,           -- spell check based on treesitter
+  splitkeep = cursor,     -- don't move cursor in split screen
+  guicursor = "",         -- block cursor in insert mode
+  laststatus = 3,         -- global status line
+  whichwrap = "bs<>[]hl", -- which "horizontal" keys are allowed to travel to prev/next line
 }
 
 vim.opt.shortmess:append "c"
-vim.opt.iskeyword:append "-"                           -- hyphenated words recognized by searches
-vim.opt.formatoptions:remove({ "c", "r", "o" })        -- don't insert the current comment leader automatically for auto-wrapping comments using 'textwidth', hitting <Enter> in insert mode, or hitting 'o' or 'O' in normal mode.
+vim.opt.iskeyword:append "-"                    -- hyphenated words recognized by searches
+vim.opt.formatoptions:remove({ "c", "r", "o" }) -- don't insert the current comment leader automatically for auto-wrapping comments using 'textwidth', hitting <Enter> in insert mode, or hitting 'o' or 'O' in normal mode.
 
 for k, v in pairs(options) do
   vim.opt[k] = v
@@ -54,4 +56,29 @@ end
 
 vim.cmd "set whichwrap+=<,>,[,],h,l"
 vim.cmd [[set iskeyword+=-]]
-vim.cmd [[set formatoptions-=cro]] -- TODO: this doesn't seem to work
+-- TODO: this doesn't seem to work
+vim.cmd [[set formatoptions-=cro]]
+
+-- show number is tabline
+-- vim.o.tabline = '%t%T%M%#TabLineFill#'
+
+-- neovide settings
+if vim.g.neovide then
+  vim.o.guifont = "JetBrains Mono NL Thin:h16"
+  -- vim.g.neovide_cursor_animation_length = 0.1
+  -- vim.g.neovide_cursor_antialiasing = false
+  -- vim.g.neovide_scroll_animation_length = 0
+  -- vim.g.neovide_cursor_animate_in_insert_mode = true
+  -- vim.g.neovide_cursor_animate_command_line = false
+end
+
+-- -- Highlight when yanking (copying) text
+-- --  Try it with `yap` in normal mode
+-- --  See `:help vim.highlight.on_yank()`
+-- vim.api.nvim_create_autocmd('TextYankPost', {
+--   desc = 'Highlight when yanking (copying) text',
+--   group = vim.api.nvim_create_augroup('ghar-highlight-yank', { clear = true }),
+--   callback = function()
+--     vim.highlight.on_yank()
+--   end,
+-- })

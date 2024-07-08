@@ -8,9 +8,21 @@
 [difftool "nvimdiff"]
     cmd = "nvim -d \"$LOCAL\" \"$REMOTE\""
 
+; [merge]
+; 	tool = fugitive
+; [mergetool]
+; 	prompt = true
+; [mergetool "fugitive"]
+; 	cmd = nvim -f -c \"Gvdiffsplit!\" \"$MERGED\"
+;     ; cmd = nvim -f -c \"Gdiffsplit :3|Gvdiffsplit :2\"
+;     ; cmd = nvim -f -c \"aboveleft Ghdiffsplit :1 | Gvdiffsplit! | wincmd j\"
+;     ; cmd = nvim -f -c 'abo Ghd :2 | abo Gvd! :3 | wincmd j'
+
 [merge]
-	tool = fugitive
+	tool = nvimdiff
 [mergetool]
-	prompt = false
-[mergetool "fugitive"]
-    cmd = nvim -f -c \"Gdiffsplit!\" \"$MERGED\"
+	prompt = true
+[mergetool "vimdiff"]
+	; layout = LOCAL,BASE,REMOTE / MERGED
+	; LOCAL 1do, BASE 2do, REMOTE 3do
+	layout = LOCAL,REMOTE / MERGED

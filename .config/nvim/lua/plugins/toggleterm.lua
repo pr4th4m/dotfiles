@@ -4,7 +4,7 @@ return {
   lazy = true,
   cmd = { "ToggleTerm" },
   config = function()
-    vim.o.shell = "/usr/local/bin/fish"
+    -- vim.o.shell = "/usr/local/bin/fish"
     require("toggleterm").setup {
       on_open = function(term)
         vim.cmd("startinsert!")

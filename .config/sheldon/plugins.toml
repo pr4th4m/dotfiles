@@ -27,6 +27,10 @@ github = "romkatv/powerlevel10k"
 github = "zsh-users/zsh-completions"
 apply = ["defer"]
 
+[plugins.zsh-system-clipboard]
+github = "kutsan/zsh-system-clipboard"
+apply = ["defer"]
+
 [plugins.fast-syntax-highlighting]
 github = "zdharma-continuum/fast-syntax-highlighting"
 apply = ["defer"]

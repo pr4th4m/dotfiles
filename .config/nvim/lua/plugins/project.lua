@@ -2,7 +2,10 @@ return {
   "ahmedkhalf/project.nvim",
   branch = "main",
   lazy = true,
-  cmd = { "Telescope" },
+  -- cmd = { "Telescope" },
+  -- dependencies = {
+  --   { "nvim-telescope/telescope.nvim", branch = "master" }
+  -- },
   config = function()
     require("project_nvim").setup({
       ---@usage set to false to disable project.nvim.

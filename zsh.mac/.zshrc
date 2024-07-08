@@ -17,6 +17,8 @@ export KEYTIMEOUT=20
 bindkey -M viins 'jj' vi-cmd-mode
 # vi mode visual select text color
 zle_highlight=(region:'bg=#364A82,fg=#c0caf5')
+# https://github.com/kutsan/zsh-system-clipboard
+ZSH_SYSTEM_CLIPBOARD_METHOD=pb
 
 # history
 export HISTFILE="$HOME/.zsh_history"
@@ -82,7 +84,7 @@ export FZF_DEFAULT_COMMAND="fd --type f --color=never --exclude .git --exclude n
 export FZF_DEFAULT_OPTS='--layout=reverse --border'
 
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-export FZF_CTRL_T_OPTS="--height 90% --preview 'bat --theme Nord --plain --pager never --color always {} | head -500'"
+export FZF_CTRL_T_OPTS="--bind='enter:become:nvim {+} >/dev/tty' -m --height 90% --preview 'bat --theme Nord --plain --pager never --color always {} | head -500'"
 
 # change default clt-c to ctrl-e
 # export FZF_HIDDEN=--hidden && source ~/.zshrc
@@ -148,3 +150,6 @@ export PATH=/usr/local/opt/libpq/bin:$PATH
 # garden cli
 export PATH=$PATH:$HOME/.garden/bin
 export PATH="/usr/local/sbin:$PATH"
+
+# zoxide
+eval "$(zoxide init --cmd cd zsh)"

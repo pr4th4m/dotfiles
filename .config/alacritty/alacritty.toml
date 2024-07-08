@@ -1,5 +1,5 @@
-TERM = "xterm-256color"
-enable_experimental_conpty_backend = false
+# TERM = "xterm-256color"
+# enable_experimental_conpty_backend = false
 import = ["/Users/ghar/.config/alacritty/themes/catppuccin_frappe.toml"]
 live_config_reload = true
 
@@ -539,11 +539,11 @@ hide_when_typing = false
 action = "PasteSelection"
 mouse = "Middle"
 
-[mouse.double_click]
-threshold = 300
+# [mouse.double_click]
+# threshold = 300
 
-[mouse.triple_click]
-threshold = 300
+# [mouse.triple_click]
+# threshold = 300
 
 [scrolling]
 history = 10000
@@ -560,7 +560,7 @@ program = "/usr/local/bin/zsh"
 decorations = "full"
 dynamic_padding = false
 dynamic_title = true
-energy = "Performance"
+# energy = "Performance"
 opacity = 1.0
 option_as_alt = "OnlyLeft"
 startup_mode = "SimpleFullscreen"

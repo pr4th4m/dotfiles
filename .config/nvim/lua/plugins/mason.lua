@@ -16,6 +16,7 @@ return {
       "pyright",
       "marksman",
       "tsserver",
+      "lemminx",
     }
 
     local settings = {

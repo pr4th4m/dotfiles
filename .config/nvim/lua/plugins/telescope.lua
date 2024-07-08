@@ -6,6 +6,7 @@ return {
   dependencies = {
     { "nvim-lua/plenary.nvim",                    branch = "master" },
     { "nvim-telescope/telescope-fzf-native.nvim", build = "make",   branch = "main" },
+    -- { "natecraddock/telescope-zf-native.nvim", branch = "master" },
     -- { "nvim-telescope/telescope-rg.nvim",         branch = "master" },
     -- { "nvim-telescope/telescope-live-grep-args.nvim", version = "^1.0.0" },
   },
@@ -137,6 +138,7 @@ return {
 
     -- Load extension
     telescope.load_extension('fzf')
+    -- telescope.load_extension("zf-native")
     -- telescope.load_extension("live_grep_args")
     telescope.load_extension('projects')
     telescope.load_extension('egrepify')

@@ -33,6 +33,11 @@ keymap("n", "<C-h>", "<C-w>h", opts)
 keymap("n", "<C-j>", "<C-w>j", opts)
 keymap("n", "<C-k>", "<C-w>k", opts)
 keymap("n", "<C-l>", "<C-w>l", opts)
+keymap("n", "<C-n>", "<C-w>p", opts)
+keymap("n", "<leader>v", "<C-w>v", opts)
+keymap("n", "<leader>x", "<C-w>s", opts)
+keymap("n", "<leader>k", "<C-w><C-q>", opts)
+
 
 -- better up/down
 keymap({ "n", "x" }, "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
@@ -57,8 +62,8 @@ keymap("n", "<A-h>", ":vertical resize +2<CR>", opts)
 -- keymap("n", "<C-9>", ":vertical resize +2<CR>", opts)
 
 -- Navigate buffers
-keymap("n", "<S-l>", ":bnext<CR>", opts)
-keymap("n", "<S-h>", ":bprevious<CR>", opts)
+-- keymap("n", "<S-l>", ":bnext<CR>", opts)
+-- keymap("n", "<S-h>", ":bprevious<CR>", opts)
 
 -- Move text up and down
 -- keymap("n", "<A-j>", ":m .+1<CR>==", opts)
@@ -87,28 +92,31 @@ keymap("n", "<c-d>", "<c-d>zz", opts)
 keymap("n", "<c-u>", "<c-u>zz", opts)
 keymap("n", "n", "nzzzv", opts)
 keymap("n", "N", "Nzzzv", opts)
+keymap("i", "<c-l>", "<c-o>zt", opts)
 
 -- Tab
 keymap("n", "<leader>j", ":tab split<CR>", opts)
-keymap("n", "<leader>1", "1gt", opts)
-keymap("n", "<leader>2", "2gt", opts)
-keymap("n", "<leader>3", "3gt", opts)
-keymap("n", "<leader>4", "4gt", opts)
-keymap("n", "<leader>5", "5gt", opts)
-keymap("n", "<leader>6", "6gt", opts)
-keymap("n", "<leader>7", "7gt", opts)
-keymap("n", "<leader>8", "8gt", opts)
-keymap("n", "<leader>9", "9gt", opts)
--- keymap("n", "<C-L>", "<cmd>tabnext<cr>", { desc = "Next Tab" })
--- keymap("n", "<C-H>", "<cmd>tabprevious<cr>", { desc = "Previous Tab" })
+keymap("n", "s0", "1gt", opts)
+keymap("n", "s9", "2gt", opts)
+keymap("n", "s8", "3gt", opts)
+keymap("n", "s7", "4gt", opts)
+keymap("n", "s5", "5gt", opts)
+keymap("n", "s4", "6gt", opts)
+keymap("n", "s3", "7gt", opts)
+keymap("n", "s2", "8gt", opts)
+keymap("n", "s1", "9gt", opts)
+keymap("n", "sh", "<cmd>tabprevious<cr>", { desc = "Previous Tab" })
+keymap("n", "sl", "<cmd>tabnext<cr>", { desc = "Next Tab" })
+-- keymap("n", "<S-L>", "<cmd>tabnext<cr>", { desc = "Next Tab" })
+-- keymap("n", "<S-H>", "<cmd>tabprevious<cr>", { desc = "Previous Tab" })
 
 -- switching to last active tab
-keymap("n", "<C-n>", ":exe 'tabn '.g:lasttab<CR>", opts)
-keymap("v", "<C-n>", ":exe 'tabn '.g:lasttab<CR>", opts)
+keymap("n", "<c-n>", ":exe 'tabn '.g:lasttab<CR>", opts)
+keymap("v", "<c-n>", ":exe 'tabn '.g:lasttab<CR>", opts)
 vim.api.nvim_create_autocmd("TabLeave", {
   pattern = "*",
   callback = function()
-    vim.api.nvim_set_keymap('n', '<C-n>', '<cmd>tabn ' .. vim.api.nvim_tabpage_get_number(0) .. '<CR>',
+    vim.api.nvim_set_keymap('n', '<c-n>', '<cmd>tabn ' .. vim.api.nvim_tabpage_get_number(0) .. '<CR>',
       { noremap = true, silent = true })
   end
 })
@@ -118,15 +126,10 @@ keymap("n", "mf", "mF", opts)
 keymap("n", "md", "mD", opts)
 keymap("n", "ms", "mS", opts)
 keymap("n", "ma", "mA", opts)
-keymap("n", "<leader>mf", "`F", opts)
-keymap("n", "<leader>md", "`D", opts)
-keymap("n", "<leader>ms", "`S", opts)
-keymap("n", "<leader>ma", "`A", opts)
-
--- Window
-keymap("n", "<leader>v", "<C-w>v", opts)
-keymap("n", "<leader>x", "<C-w>s", opts)
-keymap("n", "<leader>k", "<C-w><C-q>", opts)
+keymap("n", "gmf", "`F", opts)
+keymap("n", "gmd", "`D", opts)
+keymap("n", "gms", "`S", opts)
+keymap("n", "gma", "`A", opts)
 
 -- Insert --
 -- Press jj fast to exit insert mode
@@ -221,17 +224,27 @@ keymap("n", "<leader>bt", "<cmd>lua require('dap-go').debug_test()<cr>", { desc 
 keymap("n", "<leader>bl", "<cmd>lua require('dap-go').debug_last_test()<cr>", { desc = "[L]ast test" })
 
 -- Git
-keymap("n", "<leader>gs", ":Git<CR><C-w>7-", { desc = "[S]tatus" })
+keymap("n", "<leader>gg", ":Git<CR><C-w>7-", { desc = "[G]it status" })
+keymap("n", "<leader>gs", "<cmd>DiffviewOpen<cr>", { desc = "[S]tatus Open" })
+keymap("n", "<leader>gk", "<cmd>DiffviewClose<cr>", { desc = "status [C]lose" })
 keymap("n", "<leader>gp", ":exe 'Git push origin ' . FugitiveHead()<cr>", { desc = "[P]ush" })
 keymap("n", "<leader>gl", ":exe 'Git pull origin ' . FugitiveHead()<cr>", { desc = "pul[L]" })
 keymap("n", "<leader>gb", "<cmd>Telescope git_branches<CR>", { desc = "[B]ranch" })
-keymap("n", "<leader>gh", "<cmd>Telescope git_stash<CR>", { desc = "stas[H]" })
+keymap("n", "<leader>gt", "<cmd>Telescope git_stash<CR>", { desc = "s[T]ash" })
 keymap("n", "<leader>gc", "<cmd>Telescope git_commits<CR>", { desc = "[C]ommit" })
+keymap("n", "<leader>gB", "<cmd>Git blame<CR>", { desc = "[B]lame" })
+keymap("n", "<leader>go", "<cmd>Git log<CR>", { desc = "l[O]g" })
+keymap("n", "<leader>gdd", "<cmd>Gvdiffsplit<CR>", { desc = "[D]iff" })
+keymap("n", "<leader>gdh", "<cmd>Gvdiffsplit HEAD~1<CR>", { desc = "diff [H]ead" })
+keymap("n", "<leader>gha", "<cmd>DiffviewFileHistory<cr>", { desc = "diff [A]ll" })
+keymap("n", "<leader>ghh", "<cmd>DiffviewFileHistory %<cr>", { desc = "diff file [H]istory" })
+-- keymap("n", "<leader>gdf", "<cmd>Git difftool main<CR>", { desc = "diff [F]iles" })
 
 -- File explorer
 keymap("n", "<leader>o", ":NvimTreeToggle<CR>", { desc = "Toggle Nvim Tr[E]e" })
 keymap("n", "-", ":Oil<cr>", { desc = "Open Oil" })
 keymap("n", "_", ":vsp | Oil<cr>", { desc = "Open Oil" })
+keymap("n", "<leader>-", ":vsp | Oil<cr>", { desc = "Open Oil" })
 
 
 -- Toggle term mapping
@@ -261,7 +274,7 @@ keymap("n", "<leader>rl", "<cmd>lua require('rest-nvim').last()<CR>", { desc = "
 
 -- Others
 keymap("n", "<leader>fv", ":Twilight<CR>", { desc = "twilight [V]iew" })
-keymap("n", "<leader>fnn", ":Telescope find_files cwd=/Users/ghar/Desktop/scratch<CR>", { desc = "[N]otes" })
-keymap("n", "<leader>fnz",
+keymap("n", "<leader>fn", ":Telescope find_files cwd=/Users/ghar/Desktop/scratch<CR>", { desc = "[N]otes" })
+keymap("n", "<leader>fd",
   ":Telescope find_files cwd=/Users/ghar/Library/Mobile\\ Documents/iCloud~md~obsidian/Documents/notes<CR>",
   { desc = "[O]bsidian notes" })

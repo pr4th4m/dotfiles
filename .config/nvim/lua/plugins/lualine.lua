@@ -15,6 +15,7 @@ return {
     }
 
     local function get_root_project_name()
+      -- if vim.fn.expand("%:p") ~= "" then
       local project = require("project_nvim.project")
       local root, method = project.get_project_root()
       local dirs = {}
@@ -22,6 +23,8 @@ return {
         table.insert(dirs, d)
       end
       return dirs[#dirs]
+      -- end
+      -- return ""
     end
 
     require('lualine').setup {

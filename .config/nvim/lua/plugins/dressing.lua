@@ -1,6 +1,5 @@
 return {
-  "tpope/vim-fugitive",
+  'stevearc/dressing.nvim',
   branch = "master",
-  lazy = true,
   event = { "BufReadPre", "BufNewFile" },
 }

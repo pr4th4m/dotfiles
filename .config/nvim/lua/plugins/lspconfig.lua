@@ -82,6 +82,12 @@ return {
     end
 
     M.on_attach = function(client, bufnr)
+      if client.name == "yamlls" then
+        client.server_capabilities.documentFormattingProvider = true
+      end
+      if client.name == "marksman" then
+        client.server_capabilities.documentFormattingProvider = true
+      end
       -- if client.name == "tsserver" then
       -- 	client.server_capabilities.documentFormattingProvider = false
       -- end
@@ -109,6 +115,7 @@ return {
       "pyright",
       "marksman",
       "tsserver",
+      "lemminx",
     }
     local lspconfig = require("lspconfig")
     local opts = {}

@@ -3,8 +3,9 @@ return {
   branch = "master",
   event = { "BufReadPre", "BufNewFile" },
   dependencies = {
-    { "rcarriga/nvim-dap-ui", branch = "master" },
-    { "leoluz/nvim-dap-go",   ft = "go",      branch = "main" },
+    { "rcarriga/nvim-dap-ui",  branch = "master" },
+    { "nvim-neotest/nvim-nio", branch = "master" },
+    { "leoluz/nvim-dap-go",    ft = "go",        branch = "main" },
   },
   config = function()
     local dap = require("dap")

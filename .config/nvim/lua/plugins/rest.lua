@@ -1,5 +1,6 @@
 return {
   "rest-nvim/rest.nvim",
+  tag = "v1.2.1",
   branch = "main",
   ft = "http",
   event = { "BufReadPre", "BufNewFile" },
