@@ -21,9 +21,6 @@ vim.g.maplocalleader = " "
 
 -- Normal --
 
--- Reload neovim config
-keymap("n", "<leader>c", ":source ~/.config/nvim/init.lua<CR>", { desc = "[C]onfig reload" })
-
 -- new line in normal mode
 keymap('n', 'go', 'o<Esc>0"_D')
 keymap('n', 'gO', 'O<Esc>0"_D')
@@ -247,13 +244,13 @@ keymap("n", "_", ":vsp | Oil<cr>", { desc = "Open Oil" })
 keymap("n", "<leader>-", ":vsp | Oil<cr>", { desc = "Open Oil" })
 
 
--- Toggle term mapping
-keymap("n", "<leader>tv", ":ToggleTerm size=80 direction=vertical name=vertical<CR>", { desc = "[V]ertical term" })
-keymap("n", "<leader>th", ":ToggleTerm size=20 direction=horizontal name=horizontal<CR>", { desc = "[H]orizontal term" })
-keymap("n", "<leader>tt", ":ToggleTerm direction=tab name=tab<CR>", { desc = "[T]ab term" })
-keymap("n", "<leader>ts", ":TermSelect<CR>", { desc = "[S]elect term" })
-keymap("n", "<C-b>", ":ToggleTerm direction=float name=float<CR>", { desc = "[F]loat term" })
-keymap("i", "<C-b>", ":ToggleTerm direction=float name=float<CR>", { desc = "[F]loat term" })
+-- -- Toggle term mapping
+-- keymap("n", "<leader>tv", ":ToggleTerm size=80 direction=vertical name=vertical<CR>", { desc = "[V]ertical term" })
+-- keymap("n", "<leader>th", ":ToggleTerm size=20 direction=horizontal name=horizontal<CR>", { desc = "[H]orizontal term" })
+-- keymap("n", "<leader>tt", ":ToggleTerm direction=tab name=tab<CR>", { desc = "[T]ab term" })
+-- keymap("n", "<leader>ts", ":TermSelect<CR>", { desc = "[S]elect term" })
+-- keymap("n", "<C-b>", ":ToggleTerm direction=float name=float<CR>", { desc = "[F]loat term" })
+-- keymap("i", "<C-b>", ":ToggleTerm direction=float name=float<CR>", { desc = "[F]loat term" })
 
 -- Http rest client
 keymap("n", "<leader>rr", "<cmd>lua require('rest-nvim').run()<CR>", { desc = "[R]equest" })
@@ -278,3 +275,8 @@ keymap("n", "<leader>fn", ":Telescope find_files cwd=/Users/ghar/Desktop/scratch
 keymap("n", "<leader>fd",
   ":Telescope find_files cwd=/Users/ghar/Library/Mobile\\ Documents/iCloud~md~obsidian/Documents/notes<CR>",
   { desc = "[O]bsidian notes" })
+
+-- Run specified commands
+keymap("n", "<leader>ca", ":AutoRun<CR>", { desc = "[A]uto command" })
+keymap("n", "<leader>cc", ":RunConfig<CR>", { desc = "[C]onfig command" })
+keymap("n", "<C-b>", ":Run<CR>", { desc = "[R]un any command" })
