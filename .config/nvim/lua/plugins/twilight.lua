@@ -1,4 +1,5 @@
 return {
+  enabled = false,
   "folke/twilight.nvim",
   branch = "main",
   event = { "BufReadPre", "BufNewFile" },

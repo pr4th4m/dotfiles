@@ -1,4 +1,5 @@
 return {
+  enabled = false,
   "akinsho/toggleterm.nvim",
   branch = "main",
   lazy = true,

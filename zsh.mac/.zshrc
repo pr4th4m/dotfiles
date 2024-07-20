@@ -153,3 +153,6 @@ export PATH="/usr/local/sbin:$PATH"
 
 # zoxide
 eval "$(zoxide init --cmd cd zsh)"
+
+# required by nvim image https://github.com/3rd/image.nvim
+export DYLD_LIBRARY_PATH="$(brew --prefix)/lib:$DYLD_LIBRARY_PATH"

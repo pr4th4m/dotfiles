@@ -3,9 +3,10 @@ return {
   branch = "master",
   event = { "BufReadPre", "BufNewFile" },
   dependencies = {
-    "hrsh7th/cmp-nvim-lsp",
-    'hedyhli/outline.nvim',
-    "j-hui/fidget.nvim",
+    { "hrsh7th/cmp-nvim-lsp" },
+    { 'hedyhli/outline.nvim' },
+    { "j-hui/fidget.nvim" },
+    { "folke/lazydev.nvim" },
   },
   config = function()
     local M = {}

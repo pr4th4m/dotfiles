@@ -1,4 +1,5 @@
 return {
+  enabled = false,
   "catppuccin/nvim",
   branch = "main",
   lazy = false,    -- make sure we load this during startup if it is your main colorscheme

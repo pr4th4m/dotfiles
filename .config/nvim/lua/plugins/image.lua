@@ -1,6 +1,7 @@
 return {
   "3rd/image.nvim",
-  branch = "master",
+  -- branch = "master",
+  commit = "deb158dd3f49603233a602698b30371af2c3feb7",
   ft = "markdown",
   config = function()
     require("image").setup({
