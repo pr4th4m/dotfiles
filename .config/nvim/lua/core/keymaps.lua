@@ -34,6 +34,7 @@ keymap("n", "<C-n>", "<C-w>p", opts)
 keymap("n", "<leader>v", "<C-w>v", opts)
 keymap("n", "<leader>x", "<C-w>s", opts)
 keymap("n", "<leader>k", "<C-w><C-q>", opts)
+keymap("n", "<c-s-o>", "<c-^>", opts)
 
 
 -- better up/down
@@ -89,34 +90,50 @@ keymap("n", "<c-d>", "<c-d>zz", opts)
 keymap("n", "<c-u>", "<c-u>zz", opts)
 keymap("n", "n", "nzzzv", opts)
 keymap("n", "N", "Nzzzv", opts)
+-- keymap("n", "G", "Gzz")
+keymap("n", "gg", "ggzz")
+keymap("n", "gd", "gdzz")
+keymap("n", "<C-i>", "<C-i>zz")
+keymap("n", "<C-o>", "<C-o>zz")
+keymap("n", "%", "%zz")
+keymap("n", "*", "*zz")
+keymap("n", "#", "#zz")
+keymap("n", "ff", "zt", opts)
 keymap("i", "<c-l>", "<c-o>zt", opts)
 
 -- Tab
-keymap("n", "<leader>j", ":tab split<CR>", opts)
-keymap("n", "s0", "1gt", opts)
-keymap("n", "s9", "2gt", opts)
-keymap("n", "s8", "3gt", opts)
-keymap("n", "s7", "4gt", opts)
-keymap("n", "s5", "5gt", opts)
-keymap("n", "s4", "6gt", opts)
-keymap("n", "s3", "7gt", opts)
-keymap("n", "s2", "8gt", opts)
-keymap("n", "s1", "9gt", opts)
-keymap("n", "sh", "<cmd>tabprevious<cr>", { desc = "Previous Tab" })
-keymap("n", "sl", "<cmd>tabnext<cr>", { desc = "Next Tab" })
+-- keymap("n", "<leader>j", ":tab split<CR>", opts)
+keymap("n", "f0", "1gt", opts)
+keymap("n", "f9", "2gt", opts)
+keymap("n", "f8", "3gt", opts)
+keymap("n", "f7", "4gt", opts)
+keymap("n", "f5", "5gt", opts)
+keymap("n", "f4", "6gt", opts)
+keymap("n", "f3", "7gt", opts)
+keymap("n", "f2", "8gt", opts)
+keymap("n", "f1", "9gt", opts)
+keymap("n", "fj", ":tab split<CR>", opts)
+keymap("n", "fh", "<cmd>tabprevious<cr>", { desc = "Previous Tab" })
+keymap("n", "fl", "<cmd>tabnext<cr>", { desc = "Next Tab" })
+keymap("n", "fe", "<cmd>tabedit %<cr>", { desc = "Open new tab" })
+keymap("n", "<c-n>", "g<tab>", { desc = "Last active tab" })
+keymap("n", "<S-t>", "<cmd>vs#<cr>", { desc = "Open recently closed tab" })
 -- keymap("n", "<S-L>", "<cmd>tabnext<cr>", { desc = "Next Tab" })
 -- keymap("n", "<S-H>", "<cmd>tabprevious<cr>", { desc = "Previous Tab" })
 
 -- switching to last active tab
-keymap("n", "<c-n>", ":exe 'tabn '.g:lasttab<CR>", opts)
-keymap("v", "<c-n>", ":exe 'tabn '.g:lasttab<CR>", opts)
-vim.api.nvim_create_autocmd("TabLeave", {
-  pattern = "*",
-  callback = function()
-    vim.api.nvim_set_keymap('n', '<c-n>', '<cmd>tabn ' .. vim.api.nvim_tabpage_get_number(0) .. '<CR>',
-      { noremap = true, silent = true })
-  end
-})
+-- keymap("n", "<c-b>", ":exe 'tabn '.g:lasttab<CR>", opts)
+-- keymap("v", "<c-b>", ":exe 'tabn '.g:lasttab<CR>", opts)
+-- keymap("i", "<c-b>", ":exe 'tabn '.g:lasttab<CR>", opts)
+-- vim.api.nvim_create_autocmd("TabLeave", {
+--   pattern = "*",
+--   callback = function()
+--     -- vim.api.nvim_set_keymap('n', '<c-b>', '<cmd>tabn ' .. vim.api.nvim_tabpage_get_number(0) .. '<CR>',
+--     --   { noremap = true, silent = true })
+--     vim.api.nvim_set_keymap('i', '<c-b>', '<cmd>tabn ' .. vim.api.nvim_tabpage_get_number(0) .. '<CR>',
+--       { noremap = true, silent = true })
+--   end
+-- })
 
 -- Marks - set and goto marks
 keymap("n", "mf", "mF", opts)
@@ -127,6 +144,13 @@ keymap("n", "gmf", "`F", opts)
 keymap("n", "gmd", "`D", opts)
 keymap("n", "gms", "`S", opts)
 keymap("n", "gma", "`A", opts)
+
+-- search and replace
+keymap("n", "S", function()
+	local cmd = ":%s/<C-r><C-w>/<C-r><C-w>/gI<Left><Left><Left>"
+	local keys = vim.api.nvim_replace_termcodes(cmd, true, false, true)
+	vim.api.nvim_feedkeys(keys, "n", false)
+end)
 
 -- Insert --
 -- Press jj fast to exit insert mode
@@ -159,26 +183,32 @@ keymap("x", "K", ":m '<-2<CR>gv=gv", opts)
 -- Telescope
 keymap("n", "<leader>ff", "<cmd>Telescope find_files<CR>", { desc = "find [F]iles" })
 keymap("n", "<leader>fc", "<cmd>lua require('telescope.builtin').find_files( { cwd = vim.fn.expand('%:p:h') })<CR>",
-  { desc = "find files in [C]urrent dir" })
+	{ desc = "find files in [C]urrent dir" })
 keymap("n", "<leader>fh", "<cmd>lua require('telescope.builtin').find_files( { hidden = true, no_ignore = true })<CR>",
-  { desc = "find files in [H]idden and Ignored dir" })
+	{ desc = "find files in [H]idden and Ignored dir" })
 -- keymap("n", "<leader><space>", "<cmd>Telescope buffers<CR>", { desc = "[B]uffers" })
 keymap("n", "<leader><space>",
-  "<cmd>lua require('telescope.builtin').buffers({sort_lastused = true, ignore_current_buffer = true})<CR>",
-  { desc = "find all buffers" })
+	"<cmd>lua require('telescope.builtin').buffers({sort_lastused = true, ignore_current_buffer = true})<CR>",
+	{ desc = "find all buffers" })
 keymap("n", "<leader>a",
-  "<cmd>lua require('telescope.builtin').buffers({sort_lastused = true, ignore_current_buffer = true, cwd = vim.fn.getcwd()})<CR>",
-  { desc = "find buffers in current project or pwd" })
+	"<cmd>lua require('telescope.builtin').buffers({sort_lastused = true, ignore_current_buffer = true, cwd = vim.fn.getcwd()})<CR>",
+	{ desc = "find buffers in current project or pwd" })
 keymap("n", "<leader>fo", "<cmd>Telescope oldfiles<CR>", { desc = "[O]ld files" })
-keymap("n", "<leader>fw", "<cmd>Telescope grep_string<CR>", { desc = "grep [W]ord" })
+-- keymap("n", "<leader>fw", "<cmd>Telescope grep_string<CR>", { desc = "grep [W]ord" })
+keymap("n", "<leader>fw",
+	"<cmd>lua require('telescope.builtin').grep_string({layout_strategy='vertical', layout_config={prompt_position='bottom'}})<CR>",
+	{ desc = "grep [W]ord" })
 -- keymap("n", "<leader>fg", "<cmd>lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>",
-keymap("n", "<leader>fg", "<cmd>lua require('telescope').extensions.egrepify.egrepify()<CR>",
-  { desc = "[G]rep" })
+--   { desc = "[G]rep" })
+keymap("n", "<leader>fg",
+	"<cmd>lua require('telescope').extensions.egrepify.egrepify({layout_strategy='vertical', layout_config={prompt_position='bottom'}})<CR>",
+	{ desc = "[G]rep" })
+-- keymap("n", "<leader>fg", "<cmd>lua require('telescope').extensions.egrepify.egrepify()<CR>", { desc = "[G]rep" })
 keymap("n", "<leader>fm", "<cmd>Telescope marks<CR>", { desc = "[M]arks" })
 -- keymap("n", "<leader>fc", "<cmd>Telescope commands<CR>", opts)
 keymap("n", "<leader>ft", "<cmd>Telescope builtin<CR>", { desc = "built[I]n" })
 keymap("n", "<leader>fp", "<cmd>Telescope projects<CR>", { desc = "[P]rojects" })
-keymap("n", "<leader>fs", "<cmd>Telescope spell_suggest<CR>", { desc = "[S]pelling" })
+keymap("n", "<leader>fz", "<cmd>Telescope spell_suggest<CR>", { desc = "[S]pelling" })
 keymap("n", "<leader>fb", "<cmd>Telescope current_buffer_fuzzy_find<CR>", { desc = "find in current buffer" })
 
 -- Lsp
@@ -223,7 +253,7 @@ keymap("n", "<leader>bl", "<cmd>lua require('dap-go').debug_last_test()<cr>", { 
 -- Git
 keymap("n", "<leader>gg", ":Git<CR><C-w>7-", { desc = "[G]it status" })
 keymap("n", "<leader>gs", "<cmd>DiffviewOpen<cr>", { desc = "[S]tatus Open" })
-keymap("n", "<leader>gk", "<cmd>DiffviewClose<cr>", { desc = "status [C]lose" })
+keymap("n", "<leader>gx", "<cmd>DiffviewClose<cr>", { desc = "status [C]lose" })
 keymap("n", "<leader>gp", ":exe 'Git push origin ' . FugitiveHead()<cr>", { desc = "[P]ush" })
 keymap("n", "<leader>gl", ":exe 'Git pull origin ' . FugitiveHead()<cr>", { desc = "pul[L]" })
 keymap("n", "<leader>gb", "<cmd>Telescope git_branches<CR>", { desc = "[B]ranch" })
@@ -269,14 +299,39 @@ keymap("n", "<leader>rl", "<cmd>lua require('rest-nvim').last()<CR>", { desc = "
 -- keymap("n", "<leader>zi", "<Cmd>ZkInsertLink<CR>", opts)
 -- keymap("v", "<leader>zi", ":'<,'>ZkInsertLinkAtSelection<CR>", opts)
 
--- Others
-keymap("n", "<leader>fv", ":Twilight<CR>", { desc = "twilight [V]iew" })
-keymap("n", "<leader>fn", ":Telescope find_files cwd=/Users/ghar/Desktop/scratch<CR>", { desc = "[N]otes" })
-keymap("n", "<leader>fd",
-  ":Telescope find_files cwd=/Users/ghar/Library/Mobile\\ Documents/iCloud~md~obsidian/Documents/notes<CR>",
-  { desc = "[O]bsidian notes" })
+-- Session management
+-- load the session for the current directory
+keymap("n", "<leader>sc", function() require("persistence").load() end, { desc = "load session for current directory" })
+-- select a session to load
+keymap("n", "<leader>sl", function() require("persistence").select() end, { desc = "select session to load" })
+-- load the last session
+keymap("n", "<leader>ss", function() require("persistence").load({ last = true }) end, { desc = "load last session" })
+-- stop Persistence => session won't be saved on exit
+keymap("n", "<leader>sx", function() require("persistence").stop() end, { desc = "stop Persistence" })
+
+-- yank absolute and relative path
+keymap("n", "<leader>yp", "<cmd>lua vim.fn.setreg('*', vim.fn.expand('%:p'))<cr>", opts)
+keymap("n", "<leader>yr",
+	"<cmd>lua vim.fn.setreg('*', string.gsub(vim.fn.expand('%:p'), vim.fn.getcwd() .. '/', ''))<cr>",
+	opts)
+keymap("n", "<leader>yf", "<cmd>lua vim.fn.setreg('*', vim.fn.expand('%:t'))<cr>", opts)
 
 -- Run specified commands
 keymap("n", "<leader>ca", ":AutoRun<CR>", { desc = "[A]uto command" })
-keymap("n", "<leader>cc", ":RunConfig<CR>", { desc = "[C]onfig command" })
-keymap("n", "<C-b>", ":Run<CR>", { desc = "[R]un any command" })
+keymap("n", "<leader>cs", ":RunConfig<CR>", { desc = "[C]onfig command" })
+keymap("n", "<leader>cc", ":MdEval<CR>", { desc = "Run markdown codeblock" })
+keymap("n", "<c-b>", ":Run<CR>", { desc = "[R]un any command" })
+
+-- toggle checked / create checkbox if it doesn't exist
+keymap('n', '<leader>lc', "<cmd>lua require('markdown-togglecheck').toggle()<cr>", { desc = 'Toggle Checkmark' });
+
+-- Move between colors schemes
+keymap("n", "<leader>tn", ":NextColour<CR>", { desc = "Next colour scheme" })
+keymap("n", "<leader>tp", ":PreviousColour<CR>", { desc = "Previous colour scheme" })
+
+-- Others
+keymap("n", "<leader>fv", ":Twilight<CR>", { desc = "twilight [V]iew" })
+keymap("n", "<leader>fs", ":Telescope find_files cwd=/Users/ghar/Desktop/scratch<CR>", { desc = "[S]cratch notes" })
+keymap("n", "<leader>fn",
+	":Telescope find_files cwd=/Users/ghar/Library/Mobile\\ Documents/iCloud~md~obsidian/Documents/notes<CR>",
+	{ desc = "[N]otes" })

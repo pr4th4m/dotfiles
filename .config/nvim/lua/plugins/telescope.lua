@@ -90,6 +90,9 @@ return {
         },
       },
       pickers = {
+        colorscheme = {
+          enable_preview = true
+        },
         buffers = {
           sort_mru = true,
           sort_lastused = true,

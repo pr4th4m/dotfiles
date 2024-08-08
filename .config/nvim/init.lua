@@ -6,4 +6,4 @@ require "core.keymaps"
 require "core.lazy"
 
 -- script to auto run commands
-require "core.autorun"
+require "core.utils"

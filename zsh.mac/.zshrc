@@ -105,14 +105,12 @@ export PATH="$HOME/.cargo/bin:$PATH"
 
 # Set python path for user workspace
 # NOTE: pip install <package> --user
-export PATH="$HOME/Library/Python/2.7/bin:$PATH"
-export PATH="$HOME/Library/Python/3.9/bin:$PATH"
+export PATH="$HOME/Library/Python/3.12/bin:$PATH"
 
 # set virtualenvwrapper path
-export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python3
-export WORKON_HOME=$HOME/.virtualenvs
-# TODO: virtualenvwrapper makes zsh very slow
-# source $HOME/Library/Python/2.7/bin/virtualenvwrapper.sh
+# python3 -m venv .virtualenvs
+# source .virtualenvs/bin/activate
+# python3 -m pip install ipdb     
 
 # Golang path
 export GOROOT=/usr/local/go
@@ -147,9 +145,9 @@ eval "$(sheldon source)"
 # Postgres cli
 export PATH=/usr/local/opt/libpq/bin:$PATH
 
-# garden cli
-export PATH=$PATH:$HOME/.garden/bin
-export PATH="/usr/local/sbin:$PATH"
+# # garden cli
+# export PATH=$PATH:$HOME/.garden/bin
+# export PATH="/usr/local/sbin:$PATH"
 
 # zoxide
 eval "$(zoxide init --cmd cd zsh)"

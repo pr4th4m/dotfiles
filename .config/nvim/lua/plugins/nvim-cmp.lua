@@ -97,10 +97,10 @@ return {
 
       -- You should specify your *installed* sources.
       sources = {
-        { name = 'nvim_lsp', priority = 3 },
+        { name = 'nvim_lsp', priority = 4 },
         {
           name = 'buffer',
-          priority = 5,
+          priority = 3,
           option = {
             keyword_length = 2,
             get_bufnrs = function()
@@ -108,8 +108,8 @@ return {
             end
           }
         },
-        { name = 'luasnip', priority = 3 },
-        { name = 'codeium',  priority = 4 },
+        { name = 'luasnip', priority = 2 },
+        { name = 'codeium',  priority = 5 },
         { name = 'path',    priority = 1 },
       },
 

@@ -62,16 +62,6 @@ vim.cmd [[set formatoptions-=cro]]
 -- show number is tabline
 -- vim.o.tabline = '%t%T%M%#TabLineFill#'
 
--- neovide settings
-if vim.g.neovide then
-  vim.o.guifont = "JetBrains Mono NL Thin:h16"
-  -- vim.g.neovide_cursor_animation_length = 0.1
-  -- vim.g.neovide_cursor_antialiasing = false
-  -- vim.g.neovide_scroll_animation_length = 0
-  -- vim.g.neovide_cursor_animate_in_insert_mode = true
-  -- vim.g.neovide_cursor_animate_command_line = false
-end
-
 -- -- Highlight when yanking (copying) text
 -- --  Try it with `yap` in normal mode
 -- --  See `:help vim.highlight.on_yank()`
