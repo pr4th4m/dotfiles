@@ -142,18 +142,3 @@ vim.api.nvim_create_user_command("DeleteAllBuffers", function()
     end
   end
 end, {})
-
-
--- add padding on left
-local left_padding = false
-vim.api.nvim_create_user_command("LeftPadding", function()
-  if not left_padding then
-    local bufnr = vim.api.nvim_create_buf(true, true)
-    vim.api.nvim_buf_set_name(bufnr, "left-padding")
-    vim.api.nvim_open_win(bufnr, false, { split = 'left', width = 60, win = -1 })
-    left_padding = true
-  else
-    vim.api.nvim_buf_delete(vim.fn.bufnr("left-padding"), {})
-    left_padding = false
-  end
-end, {})
