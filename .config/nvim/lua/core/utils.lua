@@ -3,7 +3,8 @@ local function run_command(bufnr, command)
     vim.api.nvim_open_win(bufnr, false, { split = 'right', win = -1 })
   end
 
-  local append_data = function(_, data)
+  local append_data = function(job_id, data, event)
+    print("hello")
     if data then
       vim.api.nvim_buf_set_lines(bufnr, -1, -1, false, data)
     end
@@ -11,7 +12,7 @@ local function run_command(bufnr, command)
 
   vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, {})
   vim.fn.jobstart(command, {
-    stdout_buffered = true,
+    -- stdout_buffered = true,
     on_stdout = append_data,
     on_stderr = append_data,
   })
@@ -50,6 +51,7 @@ vim.api.nvim_create_user_command("Run", function()
   run_command(config.bufnr, config.command)
 end, {})
 
+
 -- change colour scheme
 local colours = { 'github_dark_dimmed', 'habamax', 'github_dark_colorblind', 'github_dark_tritanopia', 'github_dark',
   'sorbet', 'slate' }
@@ -76,8 +78,36 @@ local function select_colour(order, reset_index, condition_index)
   for i = 1, #colours do
     if colours[i] == current_colour then
       local colour_scheme = colours[order(i, reset_index, condition_index)]
-      vim.notify(colour_scheme)
       vim.cmd.colorscheme(colour_scheme)
+      vim.notify(colour_scheme)
+
+      if colour_scheme == 'habamax' then
+        -- vim.opt.fillchars = 'eob: '
+        vim.api.nvim_set_hl(0, 'WinSeparator', { fg = '#434343', bg = bg })
+        vim.api.nvim_set_hl(0, 'WinBar', { fg = '#797979', bg = bg })
+
+        colour_scheme = {
+          normal = {
+            a = { fg = '#b9b9b9', bg = '#696969' },
+            b = { fg = '#696969' },
+            c = { fg = '#696969', bg = '#1c1c1c' }
+          },
+          insert = {
+            a = { fg = '#1c1c1c', bg = '#5d8989' },
+            b = { fg = '#5d8989' },
+            c = { fg = '#696969', bg = '#1c1c1c' }
+          },
+          visual = {
+            a = { fg = '#1c1c1c', bg = '#5db85d' },
+            b = { fg = '#5db85d' },
+            c = { fg = '#696969', bg = '#1c1c1c' }
+          },
+          replace = { c = { bg = '#1c1c1c' } },
+          inactive = { c = { bg = '#1c1c1c' } },
+        }
+      end
+      -- update lualine
+      require('lualine').setup { options = { theme = colour_scheme } }
       return
     end
   end
@@ -89,4 +119,41 @@ end, {})
 
 vim.api.nvim_create_user_command("PreviousColour", function()
   select_colour(previous, #colours, 1)
+end, {})
+
+
+-- poor mans command to open zoxide directory with oil
+vim.api.nvim_create_user_command("ZoxideOil", function()
+  local input = vim.fn.input("dir: ")
+  local command = string.format("zoxide query %s", input)
+  local output = vim.fn.system(command)
+  vim.notify(output)
+  vim.cmd(string.format('Oil %s', output))
+end, {})
+
+
+-- delete all buffers
+vim.api.nvim_create_user_command("DeleteAllBuffers", function()
+  local bufs = vim.api.nvim_list_bufs()
+  local current_buf = vim.api.nvim_get_current_buf()
+  for _, i in ipairs(bufs) do
+    if i ~= current_buf then
+      vim.api.nvim_buf_delete(i, {})
+    end
+  end
+end, {})
+
+
+-- add padding on left
+local left_padding = false
+vim.api.nvim_create_user_command("LeftPadding", function()
+  if not left_padding then
+    local bufnr = vim.api.nvim_create_buf(true, true)
+    vim.api.nvim_buf_set_name(bufnr, "left-padding")
+    vim.api.nvim_open_win(bufnr, false, { split = 'left', width = 60, win = -1 })
+    left_padding = true
+  else
+    vim.api.nvim_buf_delete(vim.fn.bufnr("left-padding"), {})
+    left_padding = false
+  end
 end, {})

@@ -16,7 +16,7 @@ return {
 
     telescope.setup {
       defaults = {
-        path_display = { "smart" },
+        -- path_display = { "smart" },
         sorting_strategy = "ascending",
         dynamic_preview_title = true,
         layout_config = {

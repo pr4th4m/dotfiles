@@ -1,4 +1,5 @@
 return {
+  enabled = false,
   "numToStr/Comment.nvim",
   branch = "master",
   event = { "BufReadPre", "BufNewFile" },

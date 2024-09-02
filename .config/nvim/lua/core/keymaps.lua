@@ -98,8 +98,10 @@ keymap("n", "<C-o>", "<C-o>zz")
 keymap("n", "%", "%zz")
 keymap("n", "*", "*zz")
 keymap("n", "#", "#zz")
-keymap("n", "ff", "zt", opts)
+keymap("n", "ff", "zz", opts)
+keymap("n", "ft", "zt", opts)
 keymap("i", "<c-l>", "<c-o>zt", opts)
+keymap("n", "g<space>", "i<space><esc>", opts)
 
 -- Tab
 -- keymap("n", "<leader>j", ":tab split<CR>", opts)
@@ -194,22 +196,24 @@ keymap("n", "<leader>a",
 	"<cmd>lua require('telescope.builtin').buffers({sort_lastused = true, ignore_current_buffer = true, cwd = vim.fn.getcwd()})<CR>",
 	{ desc = "find buffers in current project or pwd" })
 keymap("n", "<leader>fo", "<cmd>Telescope oldfiles<CR>", { desc = "[O]ld files" })
--- keymap("n", "<leader>fw", "<cmd>Telescope grep_string<CR>", { desc = "grep [W]ord" })
-keymap("n", "<leader>fw",
-	"<cmd>lua require('telescope.builtin').grep_string({layout_strategy='vertical', layout_config={prompt_position='bottom'}})<CR>",
-	{ desc = "grep [W]ord" })
+keymap("n", "<leader>fw", "<cmd>Telescope grep_string<CR>", { desc = "grep [W]ord" })
+-- keymap("n", "<leader>fw",
+-- 	"<cmd>lua require('telescope.builtin').grep_string({layout_strategy='vertical', layout_config={prompt_position='bottom'}})<CR>",
+-- 	{ desc = "grep [W]ord" })
 -- keymap("n", "<leader>fg", "<cmd>lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>",
 --   { desc = "[G]rep" })
-keymap("n", "<leader>fg",
-	"<cmd>lua require('telescope').extensions.egrepify.egrepify({layout_strategy='vertical', layout_config={prompt_position='bottom'}})<CR>",
-	{ desc = "[G]rep" })
--- keymap("n", "<leader>fg", "<cmd>lua require('telescope').extensions.egrepify.egrepify()<CR>", { desc = "[G]rep" })
+-- keymap("n", "<leader>fg",
+-- 	"<cmd>lua require('telescope').extensions.egrepify.egrepify({layout_strategy='vertical', layout_config={prompt_position='bottom'}})<CR>",
+-- 	{ desc = "[G]rep" })
+keymap("n", "<leader>fg", "<cmd>lua require('telescope').extensions.egrepify.egrepify()<CR>", { desc = "[G]rep" })
 keymap("n", "<leader>fm", "<cmd>Telescope marks<CR>", { desc = "[M]arks" })
 -- keymap("n", "<leader>fc", "<cmd>Telescope commands<CR>", opts)
 keymap("n", "<leader>ft", "<cmd>Telescope builtin<CR>", { desc = "built[I]n" })
 keymap("n", "<leader>fp", "<cmd>Telescope projects<CR>", { desc = "[P]rojects" })
 keymap("n", "<leader>fz", "<cmd>Telescope spell_suggest<CR>", { desc = "[S]pelling" })
 keymap("n", "<leader>fb", "<cmd>Telescope current_buffer_fuzzy_find<CR>", { desc = "find in current buffer" })
+-- keymap("n", "<leader>tt", "<cmd>Telescope telescope-tabs list_tabs<cr>", { desc = "list all tabs" })
+keymap("n", "<leader>fd", "<cmd>DeleteAllBuffers<cr>", { desc = "delete all buffers" })
 
 -- Lsp
 keymap("n", "<leader>d", "<cmd>Telescope lsp_definitions<CR>", { desc = "[D]efinitions" })
@@ -228,7 +232,7 @@ keymap("n", "<leader>lw", "<cmd>Telescope lsp_dynamic_workspace_symbols<CR>", { 
 keymap("n", "<leader>lo", "<cmd>Outline<CR>", { desc = "[O]utline symbols" })
 
 keymap("n", "<leader>ld", "<cmd>Telescope diagnostics<CR>", { desc = "workspace [D]iagnostics" })
-keymap("n", "<leader>e", "<cmd>lua vim.diagnostic.open_float()<CR>", { desc = "diagnostics [E]rror" })
+keymap("n", "<leader>le", "<cmd>lua vim.diagnostic.open_float()<CR>", { desc = "diagnostics [E]rror" })
 keymap("n", "]d", "<cmd>lua vim.diagnostic.goto_next({buffer=0})<cr>", { desc = "next diagnostics" })
 keymap("n", "[d", "<cmd>lua vim.diagnostic.goto_prev({buffer=0})<cr>", { desc = "previous diagnostics" })
 keymap("n", "<leader>lq", "<cmd>lua vim.diagnostic.setloclist()<CR>", { desc = "[Q]uick list" })
@@ -268,10 +272,10 @@ keymap("n", "<leader>ghh", "<cmd>DiffviewFileHistory %<cr>", { desc = "diff file
 -- keymap("n", "<leader>gdf", "<cmd>Git difftool main<CR>", { desc = "diff [F]iles" })
 
 -- File explorer
-keymap("n", "<leader>o", ":NvimTreeToggle<CR>", { desc = "Toggle Nvim Tr[E]e" })
+keymap("n", "<leader>tt", ":NvimTreeToggle<CR>", { desc = "Toggle Nvim Tr[E]e" })
 keymap("n", "-", ":Oil<cr>", { desc = "Open Oil" })
 keymap("n", "_", ":vsp | Oil<cr>", { desc = "Open Oil" })
-keymap("n", "<leader>-", ":vsp | Oil<cr>", { desc = "Open Oil" })
+keymap("n", "<leader>-", ":vsp | ZoxideOil<cr>", { desc = "Open Oil with zoxide dir" })
 
 
 -- -- Toggle term mapping
@@ -299,16 +303,16 @@ keymap("n", "<leader>rl", "<cmd>lua require('rest-nvim').last()<CR>", { desc = "
 -- keymap("n", "<leader>zi", "<Cmd>ZkInsertLink<CR>", opts)
 -- keymap("v", "<leader>zi", ":'<,'>ZkInsertLinkAtSelection<CR>", opts)
 
--- Session management
--- load the session for the current directory
-keymap("n", "<leader>sc", function() require("persistence").load() end, { desc = "load session for current directory" })
--- select a session to load
-keymap("n", "<leader>sl", function() require("persistence").select() end, { desc = "select session to load" })
--- load the last session
-keymap("n", "<leader>ss", function() require("persistence").load({ last = true }) end, { desc = "load last session" })
--- stop Persistence => session won't be saved on exit
-keymap("n", "<leader>sx", function() require("persistence").stop() end, { desc = "stop Persistence" })
-
+-- -- Session management
+-- -- load the session for the current directory
+-- keymap("n", "<leader>sc", function() require("persistence").load() end, { desc = "load session for current directory" })
+-- -- select a session to load
+-- keymap("n", "<leader>sl", function() require("persistence").select() end, { desc = "select session to load" })
+-- -- load the last session
+-- keymap("n", "<leader>ss", function() require("persistence").load({ last = true }) end, { desc = "load last session" })
+-- -- stop Persistence => session won't be saved on exit
+-- keymap("n", "<leader>sx", function() require("persistence").stop() end, { desc = "stop Persistence" })
+--
 -- yank absolute and relative path
 keymap("n", "<leader>yp", "<cmd>lua vim.fn.setreg('*', vim.fn.expand('%:p'))<cr>", opts)
 keymap("n", "<leader>yr",
@@ -324,14 +328,19 @@ keymap("n", "<c-b>", ":Run<CR>", { desc = "[R]un any command" })
 
 -- toggle checked / create checkbox if it doesn't exist
 keymap('n', '<leader>lc', "<cmd>lua require('markdown-togglecheck').toggle()<cr>", { desc = 'Toggle Checkmark' });
+keymap('v', '<leader>lc', "<cmd>lua require('markdown-togglecheck').toggle()<cr>", { desc = 'Toggle Checkmark' });
 
 -- Move between colors schemes
 keymap("n", "<leader>tn", ":NextColour<CR>", { desc = "Next colour scheme" })
 keymap("n", "<leader>tp", ":PreviousColour<CR>", { desc = "Previous colour scheme" })
 
 -- Others
+keymap("n", "aa", ":LeftPadding<cr>", { desc = "Add left padding" })
+keymap("n", "<leader>ov", ":vsp term://", { desc = "Open vertical split terminal" })
+keymap("n", "<leader>ox", ":sp term://", { desc = "Open horizontal split terminal" })
+keymap("n", "<leader>/", ":<cmd>noh<cr><cr>", { desc = "Clear search selection" })
 keymap("n", "<leader>fv", ":Twilight<CR>", { desc = "twilight [V]iew" })
 keymap("n", "<leader>fs", ":Telescope find_files cwd=/Users/ghar/Desktop/scratch<CR>", { desc = "[S]cratch notes" })
 keymap("n", "<leader>fn",
-	":Telescope find_files cwd=/Users/ghar/Library/Mobile\\ Documents/iCloud~md~obsidian/Documents/notes<CR>",
+	":Telescope find_files cwd=/Users/ghar/workspace/notes<CR>",
 	{ desc = "[N]otes" })

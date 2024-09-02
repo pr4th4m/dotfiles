@@ -1,6 +1,7 @@
 return {
   "mfussenegger/nvim-dap",
   branch = "master",
+  enabled = false,
   event = { "BufReadPre", "BufNewFile" },
   dependencies = {
     { "rcarriga/nvim-dap-ui",  branch = "master" },

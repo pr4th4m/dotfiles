@@ -1,4 +1,5 @@
 return {
+  enabled = false,
   'hedyhli/outline.nvim',
   branch = "main",
   lazy = true,

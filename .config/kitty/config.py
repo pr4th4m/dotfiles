@@ -1,7 +1,6 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # License: GPLv3 Copyright: 2021, Kovid Goyal <kovid at kovidgoyal.net>
 # License: GPLv3 Copyright: 2023, Yury Ershov <yuriy.ershov at gmail.com>
-# kitty +kitten config.py | less -R
 
 import os
 import re
@@ -21,7 +20,7 @@ from kitty.constants import extensions_dir, is_macos, is_wayland, kitty_base_dir
 from kitty.fast_data_types import Color, num_users, get_options
 from kitty.options.types import Options as KittyOpts
 from kitty.options.types import defaults
-from kitty.options.utils import SequenceMap
+from kitty.options.utils import Sequence
 from kitty.rgb import color_as_sharp
 from kitty.types import MouseEvent, Shortcut, mod_to_names
 from kitty.config import load_config
@@ -237,7 +236,7 @@ def compare_maps(what, final: Dict[AnyEvent, str], final_kitty_mod: int, initial
     print_mapping_changes(what, dict(list(ei.items()) + list(ef.items())), ei, added, removed, changed, f'{cmdArgs.what} {which}:', print)
 
 
-def flatten_sequence_map(m: SequenceMap) -> ShortcutMap:
+def flatten_sequence_map(m: Sequence) -> ShortcutMap:
     ans = {}
     for key_spec, rest_map in m.items():
         for r, action in rest_map.items():
@@ -250,7 +249,7 @@ def compare_opts(opts: KittyOpts, print: Print) -> None:
     printConfig = print if cmdArgs.config else lambda *args, **kwargs: None
     printConfig(link('https://sw.kovidgoyal.net/kitty/conf/', f'{cmdArgs.what} config options:'))
     default_opts = load_config()
-    ignored = ('keymap', 'sequence_map', 'mousemap', 'map', 'mouse_map')
+    ignored = ('keyboard_modes', 'keymap', 'sequence_map', 'mousemap', 'map', 'mouse_map')
     changed_opts = [
         f for f in sorted(defaults._fields)
         if f not in ignored and getattr(opts, f) != getattr(defaults, f)
@@ -288,10 +287,10 @@ def compare_opts(opts: KittyOpts, print: Print) -> None:
 
     compare_maps('mouse', opts.mousemap, opts.kitty_mod, default_opts.mousemap, default_opts.kitty_mod, print)
 
-    final_, initial_ = opts.keymap, default_opts.keymap
+    final_, initial_ = opts.keyboard_modes, default_opts.keyboard_modes
     final: ShortcutMap = {Shortcut((k,)): v for k, v in final_.items()}
     initial: ShortcutMap = {Shortcut((k,)): v for k, v in initial_.items()}
-    final_s, initial_s = map(flatten_sequence_map, (opts.sequence_map, default_opts.sequence_map))
+    final_s, initial_s = map(flatten_sequence_map, (opts.keyboard_modes, default_opts.keyboard_modes))
     final.update(final_s)
     initial.update(initial_s)
     compare_maps('keys', final, opts.kitty_mod, initial, default_opts.kitty_mod, print)
@@ -517,4 +516,5 @@ from kittens.tui.handler import result_handler
 def handle_result(args, answer, target_window_id, boss) -> None:
     parseArgs(args)
     boss.display_scrollback(boss.active_window, debug_config(get_options()), title='Full kitty config', report_cursor=False)
+
 

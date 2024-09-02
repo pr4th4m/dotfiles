@@ -1,4 +1,5 @@
 return {
+  enabled = false,
   "pr4th4m/mdeval.nvim",
   branch = "master",
   ft = "markdown",

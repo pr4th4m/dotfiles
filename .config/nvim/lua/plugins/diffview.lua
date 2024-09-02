@@ -1,4 +1,5 @@
 return {
+  enabled = false,
   "sindrets/diffview.nvim",
   branch = "main",
   cmd = { "DiffviewOpen", "DiffviewFileHistory" },

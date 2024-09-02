@@ -8,6 +8,14 @@ return {
       delete_to_trash = true,
       trash_command = "trash -F",
       prompt_save_on_select_new_entry = false,
+      skip_confirm_for_simple_edits = true,
+      view_options = {
+        natural_order = false,
+        sort = {
+          { "type", "asc" },
+          { "mtime", "desc" }
+        },
+      },
       keymaps = {
         ["`"] = "actions.tcd",
         ["~"] = "<cmd>edit $HOME<CR>",
@@ -17,8 +25,8 @@ return {
         -- ["l"] = "actions.select",
         -- ["h"] = "actions.parent",
         -- ["<C-p>"] = "actions.select_vsplit",
-        ["<C-o>"] = "actions.open_external",
-        ["<C-p>"] = "actions.preview",
+        -- ["<C-o>"] = "actions.open_external",
+        ["gp"] = "actions.preview",
         ["<C-v>"] = "actions.select_vsplit",
         ["<C-x>"] = "actions.select_split",
         ["<C-S-r>"] = "actions.refresh",
@@ -36,6 +44,12 @@ return {
             end
           end,
         },
+        ["go"] = {
+          desc = "Previous active directory",
+          callback = function()
+            vim.cmd("<C-c>-")
+          end
+        }
       },
     })
   end,
