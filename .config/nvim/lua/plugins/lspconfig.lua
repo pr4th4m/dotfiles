@@ -115,8 +115,9 @@ return {
       "lua_ls",
       "pyright",
       "marksman",
-      "tsserver",
+      "ts_ls",
       "lemminx",
+      "eslint",
     }
     local lspconfig = require("lspconfig")
     local opts = {}

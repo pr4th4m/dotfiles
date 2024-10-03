@@ -95,11 +95,12 @@ keymap("n", "gg", "ggzz")
 keymap("n", "gd", "gdzz")
 keymap("n", "<C-i>", "<C-i>zz")
 keymap("n", "<C-o>", "<C-o>zz")
+keymap("n", "<leader>d", "<leader>dzz")
 keymap("n", "%", "%zz")
 keymap("n", "*", "*zz")
 keymap("n", "#", "#zz")
-keymap("n", "ff", "zz", opts)
-keymap("n", "ft", "zt", opts)
+keymap("n", "ft", "zz", opts)
+keymap("n", "ff", "zt", opts)
 keymap("i", "<c-l>", "<c-o>zt", opts)
 keymap("n", "g<space>", "i<space><esc>", opts)
 
@@ -287,9 +288,8 @@ keymap("n", "<leader>-", ":vsp | ZoxideOil<cr>", { desc = "Open Oil with zoxide 
 -- keymap("i", "<C-b>", ":ToggleTerm direction=float name=float<CR>", { desc = "[F]loat term" })
 
 -- Http rest client
-keymap("n", "<leader>rr", "<cmd>lua require('rest-nvim').run()<CR>", { desc = "[R]equest" })
-keymap("n", "<leader>rp", "<cmd>lua require('rest-nvim').run(true)<CR>", { desc = "[P]review request" })
-keymap("n", "<leader>rl", "<cmd>lua require('rest-nvim').last()<CR>", { desc = "[L]ast request" })
+keymap("n", "<leader>rr", "<cmd>Rest run<CR>", { desc = "[R]equest" })
+keymap("n", "<leader>ro", "<cmd>Rest open<CR>", { desc = "[O]pen request window" })
 
 -- -- zk cli
 -- keymap("n", "<leader>zn", "<Cmd>ZkNew { dir = vim.fn.expand('%:p:h'), title = vim.fn.input('Title: ') }<CR>", opts)
@@ -327,8 +327,9 @@ keymap("n", "<leader>cc", ":MdEval<CR>", { desc = "Run markdown codeblock" })
 keymap("n", "<c-b>", ":Run<CR>", { desc = "[R]un any command" })
 
 -- toggle checked / create checkbox if it doesn't exist
-keymap('n', '<leader>lc', "<cmd>lua require('markdown-togglecheck').toggle()<cr>", { desc = 'Toggle Checkmark' });
-keymap('v', '<leader>lc', "<cmd>lua require('markdown-togglecheck').toggle()<cr>", { desc = 'Toggle Checkmark' });
+keymap('n', '<leader>mc', "<cmd>lua require('markdown-togglecheck').toggle()<cr>", { desc = 'Toggle Checkmark' });
+keymap('v', '<leader>mc', "<cmd>lua require('markdown-togglecheck').toggle()<cr>", { desc = 'Toggle Checkmark' });
+keymap('v', '<leader>md', "<cmd>SortCheckboxes<cr>", { desc = 'Sort Checkmark' });
 
 -- Move between colors schemes
 keymap("n", "<leader>tn", ":NextColour<CR>", { desc = "Next colour scheme" })

@@ -14,10 +14,9 @@ cursor_shape block
 cursor_blink_interval -3
 
 # Performance settings
-input_delay 0
-repaint_delay 2
 sync_to_monitor no
-wayland_enable_ime no
+repaint_delay 1
+input_delay 0
 
 # kitten to display key mappings
 # https://github.com/ershov/kitty_config
@@ -134,11 +133,11 @@ italic_font      JetBrains Mono NL Thin Italic
 bold_font        JetBrains Mono NL ExtraLight
 bold_italic_font JetBrains Mono NL ExtraLight Italic
 # font_size 16
-# font_size 16.6
-# external monitor
-font_size 17
+# font_size 17
+# monitor
+font_size 16.5
 adjust_line_height 1
-adjust_column_width -1
+adjust_column_width 0
 
 shell /usr/local/bin/zsh
 editor /usr/local/bin/nvim
@@ -173,6 +172,6 @@ background_opacity 1.0
 
 
 # BEGIN_KITTY_THEME
-# kanagawabones
+# Habamax
 include current-theme.conf
 # END_KITTY_THEME

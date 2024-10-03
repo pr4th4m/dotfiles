@@ -1,6 +1,6 @@
 # TERM = "xterm-256color"
 # enable_experimental_conpty_backend = false
-import = ["/Users/ghar/.config/alacritty/themes/catppuccin_frappe.toml"]
+import = ["/Users/ghar/.config/alacritty/themes/kanagawabones.toml"]
 live_config_reload = true
 
 [bell]

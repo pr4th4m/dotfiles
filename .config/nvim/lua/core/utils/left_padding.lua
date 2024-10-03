@@ -15,10 +15,10 @@
 local function left_padding()
   local left_padding_already_open = false
   local win_count = 0
-  local tabwins = vim.fn.tabpagebuflist(vim.fn.tabpagenr())
+  local tabbufs = vim.fn.tabpagebuflist(vim.fn.tabpagenr())
 
-  for _, win in ipairs(tabwins) do
-    local name = vim.fn.bufname(win)
+  for _, buf in ipairs(tabbufs) do
+    local name = vim.fn.bufname(buf)
     if name == "left-padding" then
       left_padding_already_open = true
     elseif name == "" then
@@ -26,7 +26,7 @@ local function left_padding()
       win_count = win_count + 1
     end
   end
-  vim.notify(vim.inspect(win_count))
+  -- vim.notify(vim.inspect(win_count))
 
   if win_count == 1 then
     vim.defer_fn(function()
@@ -51,6 +51,7 @@ local function left_padding()
       if bufnr_exists ~= -1 then
         -- delete left-padding buffer
         vim.api.nvim_buf_delete(vim.fn.bufnr("left-padding"), { force = true })
+        -- vim.api.nvim_win_close(left_padding_win, false)
       end
     end, 1)
   end
