@@ -1,7 +1,7 @@
 return {
+  enabled = false,
   "Exafunction/codeium.nvim",
-  -- branch = "main",
-  commit = "aa06fa21dd518a81b84aa468e2f52051cbd45f12",
+  branch = "main",
   event = { "BufReadPre", "BufNewFile" },
   dependencies = {
     "nvim-lua/plenary.nvim",

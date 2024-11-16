@@ -56,3 +56,7 @@ zf
 zk
 zoxide
 zsh
+neovim
+rust
+go
+python3

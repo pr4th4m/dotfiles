@@ -1,0 +1,28 @@
+return {
+  'EvWilson/spelunk.nvim',
+  lazy = true,
+  keys = { "<leader>ss" },
+  dependencies = {
+    'nvim-lua/plenary.nvim',         -- For window drawing utilities
+    'nvim-telescope/telescope.nvim', -- Optional: for fuzzy search capabilities
+  },
+  config = function()
+    require('spelunk').setup({
+      enable_persist = true,
+      base_mappings = {
+        -- Toggle the UI open/closed
+        toggle = '<leader>st',
+        -- Add a bookmark to the current stack
+        add = '<leader>sa',
+        -- Move to the next bookmark in the stack
+        next_bookmark = '<leader>sn',
+        -- Move to the previous bookmark in the stack
+        prev_bookmark = '<leader>sp',
+        -- Fuzzy-find all bookmarks
+        search_bookmarks = '<leader>ss',
+        -- Fuzzy-find bookmarks in current stack
+        search_current_bookmarks = '<leader>sc'
+      },
+    })
+  end
+}

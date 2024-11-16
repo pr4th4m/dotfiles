@@ -31,11 +31,11 @@ return {
       -- This is what I changed to make my images look smaller, like a
       -- thumbnail, the default value is 50
       -- max_height_window_percentage = 20,
-      max_height_window_percentage = 40,
+      max_height_window_percentage = 90,
 
       -- toggles images when windows are overlapped
-      window_overlap_clear_enabled = false,
-      window_overlap_clear_ft_ignore = { "cmp_menu", "cmp_docs", "" },
+      -- window_overlap_clear_enabled = false,
+      -- window_overlap_clear_ft_ignore = { "cmp_menu", "cmp_docs", "" },
 
       -- auto show/hide images when the editor gains/looses focus
       editor_only_render_when_focused = true,

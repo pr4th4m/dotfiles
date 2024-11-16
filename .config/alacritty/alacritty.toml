@@ -1,7 +1,3 @@
-# TERM = "xterm-256color"
-# enable_experimental_conpty_backend = false
-import = ["/Users/ghar/.config/alacritty/themes/kanagawabones.toml"]
-live_config_reload = true
 
 [bell]
 animation = "EaseOutExpo"
@@ -39,7 +35,7 @@ style = "Thin Italic"
 
 [font.normal]
 family = "JetBrains Mono NL"
-style = "Thin"
+style = "ExtraLight"
 
 [font.offset]
 x = 0
@@ -516,7 +512,7 @@ key = "N"
 mods = "Command"
 
 [[keyboard.bindings]]
-action = "ToggleFullscreen"
+action = "ToggleSimpleFullscreen"
 key = "F"
 mods = "Command|Control"
 
@@ -553,7 +549,7 @@ multiplier = 3
 save_to_clipboard = true
 semantic_escape_chars = ",│`|:\"' ()[]{}<>"
 
-[shell]
+[terminal.shell]
 program = "/usr/local/bin/zsh"
 
 [window]
@@ -563,7 +559,7 @@ dynamic_title = true
 # energy = "Performance"
 opacity = 1.0
 option_as_alt = "OnlyLeft"
-startup_mode = "SimpleFullscreen"
+# startup_mode = "SimpleFullscreen"
 
 [window.dimensions]
 columns = 0
@@ -572,3 +568,11 @@ lines = 0
 [window.padding]
 x = 0
 y = 0
+
+[general]
+live_config_reload = true
+# TERM = "xterm-256color"
+# enable_experimental_conpty_backend = false
+import = ["/Users/ghar/.config/alacritty/themes/kanagawabones.toml"]
+
+[terminal]

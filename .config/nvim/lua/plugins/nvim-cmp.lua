@@ -130,13 +130,20 @@ return {
         -- temporary, remove later
         format = function(_, vim_item)
           if vim_item.kind == 'Codeium' then
-            vim_item.kind = 'c'
+            vim_item.kind = ' '
           end
           return vim_item
         end,
       },
     }
 
+    -- Setup up vim-dadbod
+    cmp.setup.filetype({ "sql" }, {
+      sources = {
+        { name = "vim-dadbod-completion" },
+        { name = "buffer" },
+      },
+    })
 
     cmp.setup.cmdline('/', {
       mapping = cmp.mapping.preset.cmdline(),

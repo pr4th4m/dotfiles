@@ -1,0 +1,116 @@
+return {
+  "ibhagwan/fzf-lua",
+  branch = "main",
+  lazy = true,
+  cmd = { "FzfLua" },
+  dependencies = {
+    "nvim-lua/plenary.nvim",
+  },
+  config = function()
+    local actions = require("fzf-lua.actions")
+    require("fzf-lua").setup({
+      -- "max-perf",
+      fzf_bin  = 'sk',
+      defaults = {
+        git_icons   = false, -- show git icons?
+        file_icons  = false, -- show file icons (true|"devicons"|"mini")?
+        color_icons = false, -- colorize file|git icons
+      },
+      winopts  = {
+        width   = 0.8,
+        height  = 0.9,
+        preview = {
+          hidden       = "nohidden",
+          vertical     = "up:45%",
+          horizontal   = "right:50%",
+          layout       = "flex",
+          flip_columns = 120,
+          delay        = 10,
+          winopts      = { number = false },
+        },
+      },
+      fzf_opts = {
+        ['--cycle'] = true,
+      },
+      lsp      = {
+        jump_to_single_result = true,
+        jump_to_single_result_action = actions.file_edit,
+      },
+      keymap   = {
+        builtin = {
+          ["<C-/>"]    = "toggle-help",
+          ["<F2>"]     = "toggle-fullscreen",
+          -- Only valid with the 'builtin' previewer
+          ["<F3>"]     = "toggle-preview-wrap",
+          ["<F4>"]     = "toggle-preview",
+          ["<F5>"]     = "toggle-preview-ccw",
+          ["<F6>"]     = "toggle-preview-cw",
+          ["<C-d>"]    = "preview-page-down",
+          ["<C-u>"]    = "preview-page-up",
+          ["<S-left>"] = "preview-page-reset",
+        },
+        fzf = {
+          ["ctrl-z"] = "abort",
+          ["ctrl-f"] = "half-page-down",
+          ["ctrl-b"] = "half-page-up",
+          ["ctrl-a"] = "beginning-of-line",
+          ["ctrl-e"] = "end-of-line",
+          ["alt-a"]  = "toggle-all",
+          -- Only valid with fzf previewers (bat/cat/git/etc)
+          ["f3"]     = "toggle-preview-wrap",
+          ["f4"]     = "toggle-preview",
+          ["ctrl-d"] = "preview-page-down",
+          ["ctrl-u"] = "preview-page-up",
+          ["ctrl-q"] = "select-all+accept",
+        },
+      },
+      files    = {
+        find_opts = [[-type f -not -path '*/\.git/*' -printf '%P\n']],
+        rg_opts   = [[--color=never --files --follow -g "!.git"]],
+        fd_opts   = [[--color=never --type f --follow --exclude .git]],
+        actions   = {
+          ["enter"]  = actions.file_edit_or_qf,
+          ["ctrl-x"] = actions.file_split,
+          ["ctrl-v"] = actions.file_vsplit,
+          ["ctrl-t"] = actions.file_tabedit,
+          ["alt-q"]  = actions.file_sel_to_qf,
+          -- inherits from 'actions.files', here we can override
+          -- or set bind to 'false' to disable a default action
+          -- action to toggle `--no-ignore`, requires fd or rg installed
+          ["ctrl-i"] = { actions.toggle_ignore },
+          ["ctrl-g"] = { actions.toggle_hidden },
+          -- uncomment to override `actions.file_edit_or_qf`
+          -- custom actions are available too
+          --   ["ctrl-y"]    = function(selected) print(selected[1]) end,
+        }
+      },
+      grep     = {
+        fzf_bin        = 'fzf',
+        actions        = {
+          -- actions inherit from 'actions.files' and merge
+          -- this action toggles between 'grep' and 'live_grep'
+          ["ctrl-o"] = { actions.grep_lgrep },
+          ["ctrl-g"] = { actions.toggle_hidden },
+          ["ctrl-i"] = { actions.toggle_ignore },
+          -- ["ctrl-q"] = {
+          --   fn = actions.file_edit_or_qf,
+          --   prefix = "select-all+",
+          -- },
+          -- uncomment to enable '.gitignore' toggle for grep
+          -- ["ctrl-r"]   = { actions.toggle_ignore }
+        },
+      },
+      buffers  = {
+        keymap = {
+          builtin = {
+            ["<C-d>"] = false
+          }
+        },
+        actions = {
+          ["ctrl-x"] = false,
+          ["ctrl-d"] = { actions.buf_del, actions.resume }
+        },
+      },
+    })
+  end
+}

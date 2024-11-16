@@ -83,12 +83,18 @@ return {
     end
 
     M.on_attach = function(client, bufnr)
+
+      client.server_capabilities.documentFormattingProvider = true
+      client.server_capabilities.documentRangeFormattingProvider = true
+
       if client.name == "yamlls" then
         client.server_capabilities.documentFormattingProvider = true
       end
+
       if client.name == "marksman" then
         client.server_capabilities.documentFormattingProvider = true
       end
+
       -- if client.name == "tsserver" then
       -- 	client.server_capabilities.documentFormattingProvider = false
       -- end

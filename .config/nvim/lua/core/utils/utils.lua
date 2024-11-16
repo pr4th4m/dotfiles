@@ -30,7 +30,7 @@ vim.api.nvim_create_autocmd("FileType", {
 
       -- Get the start and end lines of the visual selection
       local start_line = vim.fn.line("'<") - 1 -- Convert to 0-indexed
-      local end_line = vim.fn.line("'>")   -- 1-indexed
+      local end_line = vim.fn.line("'>")       -- 1-indexed
 
       -- Ensure end_line is inclusive (get_lines uses 0-based exclusive end)
       end_line = end_line + 1
@@ -61,4 +61,22 @@ vim.api.nvim_create_autocmd("FileType", {
       end
     end, {})
   end,
+})
+
+-- move cursor to middle
+vim.api.nvim_create_autocmd({ 'CursorMoved' }, {
+  desc = 'Center When Cursor Line Significantly Changed',
+  pattern = '*',
+  callback = (function()
+    local initialCursorPos = vim.fn.getcurpos()
+    local prevLine = initialCursorPos[2]
+    return function()
+      local curr_cursor_pos = vim.fn.getcurpos()
+      local currLine = curr_cursor_pos[2]
+      if (math.abs(prevLine - currLine) > 50) then
+        vim.cmd("norm! zz")
+      end
+      prevLine = currLine
+    end
+  end)()
 })

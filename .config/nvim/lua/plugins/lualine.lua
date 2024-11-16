@@ -36,17 +36,17 @@ return {
     local habamax_theme = {
       normal = {
         a = { fg = '#b9b9b9', bg = '#696969' },
-        b = { fg = '#696969' },
+        b = { fg = '#696969', bg = '#1c1c1c' },
         c = { fg = '#696969', bg = '#1c1c1c' }
       },
       insert = {
         a = { fg = '#1c1c1c', bg = '#5d8989' },
-        b = { fg = '#5d8989' },
+        b = { fg = '#5d8989', bg = '#1c1c1c' },
         c = { fg = '#696969', bg = '#1c1c1c' }
       },
       visual = {
-        a = { fg = '#1c1c1c', bg = '#5db85d' },
-        b = { fg = '#5db85d' },
+        a = { fg = '#1c1c1c', bg = '#7ca5a5' },
+        b = { fg = '#7ca5a5', bg = '#1c1c1c' },
         c = { fg = '#696969', bg = '#1c1c1c' }
       },
       replace = { c = { bg = '#1c1c1c' } },

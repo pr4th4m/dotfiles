@@ -33,7 +33,8 @@ keymap("n", "<C-l>", "<C-w>l", opts)
 keymap("n", "<C-n>", "<C-w>p", opts)
 keymap("n", "<leader>v", "<C-w>v", opts)
 keymap("n", "<leader>x", "<C-w>s", opts)
-keymap("n", "<leader>k", "<C-w><C-q>", opts)
+-- keymap("n", "<leader>k", "<C-w><C-q>", opts)
+keymap("n", "<leader>k", ":ConfirmQuit<CR>", opts)
 keymap("n", "<c-s-o>", "<c-^>", opts)
 
 
@@ -72,6 +73,11 @@ keymap('n', 'k', '(v:count > 5 ? "m\'" . v:count : "") . "k"', { expr = true })
 keymap('n', 'j', '(v:count > 5 ? "m\'" . v:count : "") . "j"', { expr = true })
 
 -- Text
+-- silent yank messages
+-- map <silent> sj :exe ":silent normal yG"<CR>
+vim.keymap.set("n", "L", function()
+	vim.cmd("silent normal yG")
+end, { silent = true })
 keymap("n", "Y", "y$", opts)
 keymap("n", "D", "d$", opts)
 keymap("n", "C", "c$", opts)
@@ -95,7 +101,6 @@ keymap("n", "gg", "ggzz")
 keymap("n", "gd", "gdzz")
 keymap("n", "<C-i>", "<C-i>zz")
 keymap("n", "<C-o>", "<C-o>zz")
-keymap("n", "<leader>d", "<leader>dzz")
 keymap("n", "%", "%zz")
 keymap("n", "*", "*zz")
 keymap("n", "#", "#zz")
@@ -178,26 +183,29 @@ keymap("x", "K", ":m '<-2<CR>gv=gv", opts)
 
 -- Terminal --
 -- Better terminal navigation
--- keymap("t", "<C-h>", "<C-\\><C-N><C-w>h", term_opts)
--- keymap("t", "<C-j>", "<C-\\><C-N><C-w>j", term_opts)
--- keymap("t", "<C-k>", "<C-\\><C-N><C-w>k", term_opts)
+keymap("t", "<C-h>", "<C-\\><C-N><C-w>h", term_opts)
+keymap("t", "<C-j>", "<C-\\><C-N><C-w>j", term_opts)
+keymap("t", "<C-k>", "<C-\\><C-N><C-w>k", term_opts)
 -- keymap("t", "<C-l>", "<C-\\><C-N><C-w>l", term_opts)
 
 -- Telescope
-keymap("n", "<leader>ff", "<cmd>Telescope find_files<CR>", { desc = "find [F]iles" })
-keymap("n", "<leader>fc", "<cmd>lua require('telescope.builtin').find_files( { cwd = vim.fn.expand('%:p:h') })<CR>",
-	{ desc = "find files in [C]urrent dir" })
-keymap("n", "<leader>fh", "<cmd>lua require('telescope.builtin').find_files( { hidden = true, no_ignore = true })<CR>",
-	{ desc = "find files in [H]idden and Ignored dir" })
+-- keymap("n", "<leader>ff", "<cmd>Telescope find_files<CR>", { desc = "find [F]iles" })
+-- keymap("n", "<leader>fc", "<cmd>lua require('telescope.builtin').find_files( { cwd = vim.fn.expand('%:p:h') })<CR>",
+-- 	{ desc = "find files in [C]urrent dir" })
+-- keymap("n", "<leader>fh", "<cmd>lua require('telescope.builtin').find_files( { hidden = true, no_ignore = true })<CR>",
+-- 	{ desc = "find files in [H]idden and Ignored dir" })
 -- keymap("n", "<leader><space>", "<cmd>Telescope buffers<CR>", { desc = "[B]uffers" })
-keymap("n", "<leader><space>",
-	"<cmd>lua require('telescope.builtin').buffers({sort_lastused = true, ignore_current_buffer = true})<CR>",
-	{ desc = "find all buffers" })
-keymap("n", "<leader>a",
-	"<cmd>lua require('telescope.builtin').buffers({sort_lastused = true, ignore_current_buffer = true, cwd = vim.fn.getcwd()})<CR>",
-	{ desc = "find buffers in current project or pwd" })
-keymap("n", "<leader>fo", "<cmd>Telescope oldfiles<CR>", { desc = "[O]ld files" })
-keymap("n", "<leader>fw", "<cmd>Telescope grep_string<CR>", { desc = "grep [W]ord" })
+-- keymap("n", "<leader><space>",
+-- 	"<cmd>lua require('telescope.builtin').buffers({sort_lastused = true, ignore_current_buffer = true})<CR>",
+-- 	{ desc = "find all buffers" })
+-- keymap("n", "<leader>a",
+-- 	"<cmd>lua require('telescope.builtin').buffers({sort_lastused = true, ignore_current_buffer = true, cwd = vim.fn.getcwd()})<CR>",
+-- 	{ desc = "find buffers in current project or pwd" })
+-- keymap("n", "<leader>fo", "<cmd>lua require('telescope.builtin').oldfiles({file_ignore_patterns={'%.dbout$'}})<CR>",
+-- 	{ desc = "[O]ld files" })
+-- keymap("n", "<leader>fo", "<cmd>Telescope oldfiles<CR>", { desc = "[O]ld files" })
+
+-- keymap("n", "<leader>fw", "<cmd>Telescope grep_string<CR>", { desc = "grep [W]ord" })
 -- keymap("n", "<leader>fw",
 -- 	"<cmd>lua require('telescope.builtin').grep_string({layout_strategy='vertical', layout_config={prompt_position='bottom'}})<CR>",
 -- 	{ desc = "grep [W]ord" })
@@ -206,33 +214,33 @@ keymap("n", "<leader>fw", "<cmd>Telescope grep_string<CR>", { desc = "grep [W]or
 -- keymap("n", "<leader>fg",
 -- 	"<cmd>lua require('telescope').extensions.egrepify.egrepify({layout_strategy='vertical', layout_config={prompt_position='bottom'}})<CR>",
 -- 	{ desc = "[G]rep" })
-keymap("n", "<leader>fg", "<cmd>lua require('telescope').extensions.egrepify.egrepify()<CR>", { desc = "[G]rep" })
-keymap("n", "<leader>fm", "<cmd>Telescope marks<CR>", { desc = "[M]arks" })
+-- keymap("n", "<leader>fg", "<cmd>lua require('telescope').extensions.egrepify.egrepify()<CR>", { desc = "[G]rep" })
+-- keymap("n", "<leader>fm", "<cmd>Telescope marks<CR>", { desc = "[M]arks" })
 -- keymap("n", "<leader>fc", "<cmd>Telescope commands<CR>", opts)
-keymap("n", "<leader>ft", "<cmd>Telescope builtin<CR>", { desc = "built[I]n" })
-keymap("n", "<leader>fp", "<cmd>Telescope projects<CR>", { desc = "[P]rojects" })
-keymap("n", "<leader>fz", "<cmd>Telescope spell_suggest<CR>", { desc = "[S]pelling" })
-keymap("n", "<leader>fb", "<cmd>Telescope current_buffer_fuzzy_find<CR>", { desc = "find in current buffer" })
+-- keymap("n", "<leader>ft", "<cmd>Telescope builtin<CR>", { desc = "built[I]n" })
+-- keymap("n", "<leader>fp", "<cmd>Telescope projects<CR>", { desc = "[P]rojects" })
+-- keymap("n", "<leader>fz", "<cmd>Telescope spell_suggest<CR>", { desc = "[S]pelling" })
+-- keymap("n", "<leader>fb", "<cmd>Telescope current_buffer_fuzzy_find<CR>", { desc = "find in current buffer" })
 -- keymap("n", "<leader>tt", "<cmd>Telescope telescope-tabs list_tabs<cr>", { desc = "list all tabs" })
-keymap("n", "<leader>fd", "<cmd>DeleteAllBuffers<cr>", { desc = "delete all buffers" })
+-- keymap("n", "<leader>fd", "<cmd>DeleteAllBuffers<cr>", { desc = "delete all buffers" })
 
 -- Lsp
-keymap("n", "<leader>d", "<cmd>Telescope lsp_definitions<CR>", { desc = "[D]efinitions" })
-keymap("n", "gd", "<cmd>Telescope lsp_definitions<CR>", { desc = "[D]efinitions" })
-keymap("n", "gi", "<cmd>Telescope lsp_implementations<CR>", { desc = "[I]mplementations" })
-keymap("n", "gr", "<cmd>Telescope lsp_references<CR>", { desc = "[R]eferences" })
-keymap("n", "gt", "<cmd>Telescope lsp_type_definitions<CR>", { desc = "[T]ype definition" })
-keymap("n", "<leader>D", ":vsp | Telescope lsp_definitions<CR>", { desc = "[D]efinitions in split" })
-keymap("n", "gD", ":vsp | Telescope lsp_definitions<CR>", { desc = "[D]efinitions in split" })
-keymap("n", "gI", ":vsp | Telescope lsp_implementations<CR>", { desc = "[I]mplementations in split" })
-keymap("n", "gR", ":vsp | Telescope lsp_references<CR>", { desc = "[R]eferences in split" })
-keymap("n", "gT", ":vsp | Telescope lsp_type_definitions<CR>", { desc = "[T]ype definition in split" })
+-- keymap("n", "<leader>d", "<cmd>Telescope lsp_definitions<CR>", { desc = "[D]efinitions" })
+-- keymap("n", "gd", "<cmd>Telescope lsp_definitions<CR>", { desc = "[D]efinitions" })
+-- keymap("n", "gi", "<cmd>Telescope lsp_implementations<CR>", { desc = "[I]mplementations" })
+-- keymap("n", "gr", "<cmd>Telescope lsp_references<CR>", { desc = "[R]eferences" })
+-- keymap("n", "gt", "<cmd>Telescope lsp_type_definitions<CR>", { desc = "[T]ype definition" })
+-- keymap("n", "<leader>D", ":vsp | Telescope lsp_definitions<CR>", { desc = "[D]efinitions in split" })
+-- keymap("n", "gD", ":vsp | Telescope lsp_definitions<CR>", { desc = "[D]efinitions in split" })
+-- keymap("n", "gI", ":vsp | Telescope lsp_implementations<CR>", { desc = "[I]mplementations in split" })
+-- keymap("n", "gR", ":vsp | Telescope lsp_references<CR>", { desc = "[R]eferences in split" })
+-- keymap("n", "gT", ":vsp | Telescope lsp_type_definitions<CR>", { desc = "[T]ype definition in split" })
 
-keymap("n", "<leader>ls", "<cmd>Telescope lsp_document_symbols<CR>", { desc = "document [S]ymbols" })
-keymap("n", "<leader>lw", "<cmd>Telescope lsp_dynamic_workspace_symbols<CR>", { desc = "[W]orkspace symbols" })
-keymap("n", "<leader>lo", "<cmd>Outline<CR>", { desc = "[O]utline symbols" })
+-- keymap("n", "<leader>ls", "<cmd>Telescope lsp_document_symbols<CR>", { desc = "document [S]ymbols" })
+-- keymap("n", "<leader>lw", "<cmd>Telescope lsp_dynamic_workspace_symbols<CR>", { desc = "[W]orkspace symbols" })
+-- keymap("n", "<leader>lo", "<cmd>Outline<CR>", { desc = "[O]utline symbols" })
 
-keymap("n", "<leader>ld", "<cmd>Telescope diagnostics<CR>", { desc = "workspace [D]iagnostics" })
+-- keymap("n", "<leader>ld", "<cmd>Telescope diagnostics<CR>", { desc = "workspace [D]iagnostics" })
 keymap("n", "<leader>le", "<cmd>lua vim.diagnostic.open_float()<CR>", { desc = "diagnostics [E]rror" })
 keymap("n", "]d", "<cmd>lua vim.diagnostic.goto_next({buffer=0})<cr>", { desc = "next diagnostics" })
 keymap("n", "[d", "<cmd>lua vim.diagnostic.goto_prev({buffer=0})<cr>", { desc = "previous diagnostics" })
@@ -244,6 +252,45 @@ keymap("n", "<leader>lk", "<cmd>lua vim.lsp.buf.signature_help()<CR>", { desc = 
 keymap("n", "<leader>la", "<cmd>lua vim.lsp.buf.code_action()<cr>", { desc = "code [A]ction" })
 keymap("n", "<leader>lr", "<cmd>lua vim.lsp.buf.rename()<cr>", { desc = "[R]ename" })
 keymap("n", "<leader>lf", "<cmd>lua vim.lsp.buf.format{ async = true }<cr>", { desc = "[F]ormat" })
+
+-- FZF
+keymap("n", "<leader>ff", "<cmd>FzfLua files<CR>", { desc = "find [F]iles" })
+keymap("n", "<leader>fc", "<cmd>lua require('fzf-lua').files({cwd = vim.fn.expand('%:p:h')})<CR>",
+	{ desc = "find files in [C]urrent dir" })
+keymap("n", "<leader>fh", "<cmd>lua require('fzf-lua').files( { hidden = true, no_ignore = true })<CR>",
+	{ desc = "find files in [H]idden and Ignored dir" })
+keymap("n", "<leader><space>",
+	"<cmd>lua require('fzf-lua').buffers({sort_lastused = true, ignore_current_buffer = true})<CR>",
+	{ desc = "find all buffers" })
+keymap("n", "<leader>a",
+	"<cmd>lua require('fzf-lua').buffers({sort_lastused = true, ignore_current_buffer = true, cwd = vim.fn.getcwd()})<CR>",
+	{ desc = "find buffers in current project or pwd" })
+keymap("n", "<leader>fo", "<cmd>lua require('fzf-lua').oldfiles({file_ignore_patterns={'%.dbout$'}})<CR>",
+	{ desc = "[O]ld files" })
+
+keymap("n", "<leader>fw", "<cmd>FzfLua grep_cword<CR>", { desc = "grep [W]ord" })
+keymap("n", "<leader>fg", "<cmd>FzfLua live_grep_native<CR>", { desc = "[G]rep" })
+
+keymap("n", "<leader>fm", "<cmd>FzfLua marks<CR>", { desc = "[M]arks" })
+keymap("n", "<leader>ft", "<cmd>FzfLua builtin<CR>", { desc = "built[I]n" })
+keymap("n", "<leader>fz", "<cmd>FzfLua spell_suggest<CR>", { desc = "[S]pelling" })
+keymap("n", "<leader>fb", "<cmd>FzfLua grep_curbuf<CR>", { desc = "find in current buffer" })
+keymap("n", "<leader>fd", "<cmd>DeleteAllBuffers<cr>", { desc = "delete all buffers" })
+
+-- FZF LSP
+keymap("n", "<leader>d", "<cmd>FzfLua lsp_definitions<CR>", { desc = "[D]efinitions" })
+keymap("n", "gd", "<cmd>FzfLua lsp_definitions<CR>", { desc = "[D]efinitions" })
+keymap("n", "gi", "<cmd>FzfLua lsp_implementations<CR>", { desc = "[I]mplementations" })
+keymap("n", "gr", "<cmd>FzfLua lsp_references<CR>", { desc = "[R]eferences" })
+keymap("n", "gt", "<cmd>FzfLua lsp_type_definitions<CR>", { desc = "[T]ype definition" })
+keymap("n", "<leader>D", ":vsp | FzfLua lsp_definitions<CR>", { desc = "[D]efinitions in split" })
+keymap("n", "gD", ":vsp | FzfLua lsp_definitions<CR>", { desc = "[D]efinitions in split" })
+keymap("n", "gI", ":vsp | FzfLua lsp_implementations<CR>", { desc = "[I]mplementations in split" })
+keymap("n", "gR", ":vsp | FzfLua lsp_references<CR>", { desc = "[R]eferences in split" })
+keymap("n", "gT", ":vsp | FzfLua lsp_type_definitions<CR>", { desc = "[T]ype definition in split" })
+keymap("n", "<leader>ls", "<cmd>FzfLua lsp_document_symbols<CR>", { desc = "document [S]ymbols" })
+keymap("n", "<leader>lw", "<cmd>FzfLua lsp_workspace_symbols<CR>", { desc = "[W]orkspace symbols" })
+keymap("n", "<leader>ld", "<cmd>FzfLua lsp_workspace_diagnostics<CR>", { desc = "workspace [D]iagnostics" })
 
 -- Debugger
 keymap("n", "<leader>bb", "<cmd>DapToggleBreakpoint<cr>", { desc = "Toggle [B]reakpoint" })
@@ -261,9 +308,9 @@ keymap("n", "<leader>gs", "<cmd>DiffviewOpen<cr>", { desc = "[S]tatus Open" })
 keymap("n", "<leader>gx", "<cmd>DiffviewClose<cr>", { desc = "status [C]lose" })
 keymap("n", "<leader>gp", ":exe 'Git push origin ' . FugitiveHead()<cr>", { desc = "[P]ush" })
 keymap("n", "<leader>gl", ":exe 'Git pull origin ' . FugitiveHead()<cr>", { desc = "pul[L]" })
-keymap("n", "<leader>gb", "<cmd>Telescope git_branches<CR>", { desc = "[B]ranch" })
-keymap("n", "<leader>gt", "<cmd>Telescope git_stash<CR>", { desc = "s[T]ash" })
-keymap("n", "<leader>gc", "<cmd>Telescope git_commits<CR>", { desc = "[C]ommit" })
+keymap("n", "<leader>gb", "<cmd>FzfLua git_branches<CR>", { desc = "[B]ranch" })
+keymap("n", "<leader>gt", "<cmd>FzfLua git_stash<CR>", { desc = "s[T]ash" })
+keymap("n", "<leader>gc", "<cmd>FzfLua git_commits<CR>", { desc = "[C]ommit" })
 keymap("n", "<leader>gB", "<cmd>Git blame<CR>", { desc = "[B]lame" })
 keymap("n", "<leader>go", "<cmd>Git log<CR>", { desc = "l[O]g" })
 keymap("n", "<leader>gdd", "<cmd>Gvdiffsplit<CR>", { desc = "[D]iff" })
@@ -335,13 +382,17 @@ keymap('v', '<leader>md', "<cmd>SortCheckboxes<cr>", { desc = 'Sort Checkmark' }
 keymap("n", "<leader>tn", ":NextColour<CR>", { desc = "Next colour scheme" })
 keymap("n", "<leader>tp", ":PreviousColour<CR>", { desc = "Previous colour scheme" })
 
+-- Bookmark file
+keymap("n", "<leader>hh", ":OpenBookmark<CR>", { desc = "Open bookmark with telescope" })
+keymap("n", "<leader>ha", ":Bookmark<CR>", { desc = "Add bookmark" })
+
 -- Others
 keymap("n", "aa", ":LeftPadding<cr>", { desc = "Add left padding" })
+keymap('n', '<leader>oo', ':vsp | term<CR><cmd>lua vim.fn.getcwd()<CR>', { noremap = true, silent = true })
 keymap("n", "<leader>ov", ":vsp term://", { desc = "Open vertical split terminal" })
 keymap("n", "<leader>ox", ":sp term://", { desc = "Open horizontal split terminal" })
+keymap("n", "<leader>od", ":DBUIToggle<cr>", { desc = "Open database connections" })
 keymap("n", "<leader>/", ":<cmd>noh<cr><cr>", { desc = "Clear search selection" })
 keymap("n", "<leader>fv", ":Twilight<CR>", { desc = "twilight [V]iew" })
-keymap("n", "<leader>fs", ":Telescope find_files cwd=/Users/ghar/Desktop/scratch<CR>", { desc = "[S]cratch notes" })
-keymap("n", "<leader>fn",
-	":Telescope find_files cwd=/Users/ghar/workspace/notes<CR>",
-	{ desc = "[N]otes" })
+keymap("n", "<leader>fs", ":FzfLua files cwd=/Users/ghar/Desktop/scratch<CR>", { desc = "[S]cratch notes" })
+keymap("n", "<leader>fn", ":FzfLua files cwd=/Users/ghar/workspace/notes<CR>", { desc = "[N]otes" })

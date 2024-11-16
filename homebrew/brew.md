@@ -1,2 +1,2 @@
-brew leaves > brew_packages.txt
-xargs brew install < brew_packages.txt
+brew leaves > packages.txt
+cat packages.txt | xargs brew install

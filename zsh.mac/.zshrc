@@ -97,6 +97,7 @@ export FZF_ALT_C_OPTS="--height 90% --preview 'tree -C {} | head -500'"
 
 # Home brew installation path
 export PATH="/usr/local/bin:$PATH"
+
 export PATH="/usr/local/opt/curl/bin:$PATH"
 export PATH="/usr/local/opt/openssl@1.1/bin:$PATH"
 
@@ -113,10 +114,11 @@ export PATH="$HOME/Library/Python/3.12/bin:$PATH"
 # python3 -m pip install ipdb     
 
 # Golang path
-export GOROOT=/usr/local/go
+# export GOROOT=/usr/local/go
+# export PATH=$PATH:$GOPATH/bin:$GOROOT/bin
 export GOPATH=$HOME/go
 export GOBIN=$GOPATH/bin
-export PATH=$PATH:$GOPATH/bin:$GOROOT/bin
+export PATH=$PATH:$GOPATH/bin
 
 export PATH="/usr/local/opt/mysql-client/bin:$PATH"
 
