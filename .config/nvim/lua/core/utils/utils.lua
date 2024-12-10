@@ -1,13 +1,3 @@
--- poor mans command to open zoxide directory with oil
-vim.api.nvim_create_user_command("ZoxideOil", function()
-  local input = vim.fn.input("dir: ")
-  local command = string.format("zoxide query %s", input)
-  local output = vim.fn.system(command)
-  vim.notify(output)
-  vim.cmd(string.format('Oil %s', output))
-end, {})
-
-
 -- delete all buffers
 vim.api.nvim_create_user_command("DeleteAllBuffers", function()
   local bufs = vim.api.nvim_list_bufs()
@@ -80,3 +70,60 @@ vim.api.nvim_create_autocmd({ 'CursorMoved' }, {
     end
   end)()
 })
+
+-- open file in float window
+local function open_file_in_float(file_path)
+  -- Ensure the file exists
+  if vim.fn.filereadable(file_path) == 0 then
+    vim.notify("File not found: " .. file_path, vim.log.levels.ERROR)
+    return
+  end
+
+  -- Calculate floating window dimensions
+  local width = math.floor(vim.o.columns * 0.78)
+  local height = math.floor(vim.o.lines * 0.8)
+  local col = math.floor((vim.o.columns - width) / 2)
+  local row = math.floor((vim.o.lines - height) / 3)
+
+  -- Open the file in a new buffer
+  local buf = vim.fn.bufadd(file_path)
+  vim.fn.bufload(buf)
+
+  local filename = vim.fn.expand(file_path:match("([^/]+)$"))
+  local modified = vim.bo.modified and '[+]' or ''
+  local border_title = string.format(" %s %s ", filename, modified)
+
+  -- Open the floating window
+  local opts = {
+    relative = 'editor',
+    width = width,
+    height = height,
+    col = col,
+    row = row,
+    style = 'minimal',
+    border = 'rounded',
+    title = border_title, -- Add the border title
+    title_pos = 'right',  -- Center the title
+  }
+  local win = vim.api.nvim_open_win(buf, true, opts)
+
+  -- Enable line numbers in the floating window
+  vim.api.nvim_win_set_option(win, 'number', true)
+  vim.api.nvim_win_set_option(win, 'relativenumber', true)
+
+  vim.api.nvim_set_hl(0, 'NormalFloat', { bg = '#1e1e1e', fg = '#d4d4d4' }) -- Example colors
+  vim.api.nvim_set_hl(0, 'FloatBorder', { bg = '#1e1e1e', fg = '#a8a8a8' })
+  -- Optional: Set keymaps for closing the window
+  -- vim.api.nvim_buf_set_keymap(buf, 'n', 'q', '<Cmd>close<CR>', { noremap = true, silent = true })
+end
+
+local float_window = false
+vim.api.nvim_create_user_command("OpenInFloat", function(opts)
+  if float_window == false then
+    open_file_in_float(opts.args) -- Pass the file path argument
+    float_window = true
+  else
+    float_window = false
+    vim.cmd('close')
+  end
+end, { nargs = 1 })               -- Ensure exactly one argument is passed

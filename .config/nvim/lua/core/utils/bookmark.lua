@@ -89,19 +89,15 @@ local fzf = require('fzf-lua')
 local actions = require("fzf-lua.actions")
 
 -- Function to show bookmarks with fzf-lua
-local function show_bookmarks_in_fzf()
-  local bookmarks = load_bookmarks()
-
+local function show_bookmarks_in_fzf(bookmarks)
   fzf.fzf_exec(
     bookmarks,
     {
-      prompt = 'Bookmarks> ',
-      winopts  = {
-        width   = 0.5,
-        height  = 0.6,
+      prompt  = 'Bookmarks> ',
+      winopts = {
+        width  = 0.5,
+        height = 0.6,
       },
-      sort_lastused = true,
-      ignore_current_buffer = true,
       actions = {
         ['ctrl-d'] = function(selected)
           remove_bookmark(selected[1]) -- Remove the selected bookmark
@@ -115,6 +111,56 @@ local function show_bookmarks_in_fzf()
   )
 end
 
+local bookmarks = load_bookmarks()
 vim.api.nvim_create_user_command("OpenBookmark", function()
-  show_bookmarks_in_fzf()
+  show_bookmarks_in_fzf(bookmarks)
+end, {})
+
+
+-- poor mans command to open zoxide directory with oil
+vim.api.nvim_create_user_command("ZoxideList", function()
+  -- open zoxide in Oil
+  -- local input = vim.fn.input("dir: ")
+  -- local command = string.format("zoxide query %s", input)
+  -- local output = vim.fn.system(command)
+  -- vim.notify(output)
+  -- vim.cmd(string.format('Oil %s', output))
+
+  -- open zoxide in fzf lua
+  local output = vim.fn.system("zoxide query -l")
+  local directories = {}
+  for line in output:gmatch("[^\r\n]+") do
+    table.insert(directories, line)
+  end
+
+  fzf.fzf_exec(
+    directories,
+    {
+      prompt        = 'Zoxide> ',
+      winopts       = {
+        width  = 0.5,
+        height = 0.6,
+      },
+      sort_lastused = true,
+      actions       = {
+        ["default"] = function(e)
+          vim.cmd.cd(e[1])
+          vim.cmd("FzfLua files cwd=" .. e[1])
+        end,
+        ["ctrl-d"]  = function(selected)
+          -- Delete the selected directory from zoxide
+          local dir = selected[1]
+          if dir then
+            local cmd = string.format("zoxide remove %s", vim.fn.fnameescape(dir))
+            os.execute(cmd)
+            vim.notify("Removed from zoxide: " .. dir)
+          end
+        end,
+        ["enter"]   = actions.file_edit_or_qf,
+        ["ctrl-x"]  = actions.file_split,
+        ["ctrl-v"]  = actions.file_vsplit,
+        ["ctrl-t"]  = actions.file_tabedit,
+      },
+    }
+  )
 end, {})

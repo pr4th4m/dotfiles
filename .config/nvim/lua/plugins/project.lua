@@ -66,7 +66,7 @@ return {
             if choice == 1 then
               local history = require("project_nvim.utils.history")
               for _, v in ipairs(x) do
-                history.delete_project(v)
+                history.delete_project({ value = v })
               end
             end
           end,

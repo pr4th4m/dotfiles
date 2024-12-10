@@ -33,8 +33,8 @@ keymap("n", "<C-l>", "<C-w>l", opts)
 keymap("n", "<C-n>", "<C-w>p", opts)
 keymap("n", "<leader>v", "<C-w>v", opts)
 keymap("n", "<leader>x", "<C-w>s", opts)
--- keymap("n", "<leader>k", "<C-w><C-q>", opts)
-keymap("n", "<leader>k", ":ConfirmQuit<CR>", opts)
+keymap("n", "<leader>k", "<C-w><C-q>", opts)
+-- keymap("n", "<leader>k", ":ConfirmQuit<CR>", opts)
 keymap("n", "<c-s-o>", "<c-^>", opts)
 
 
@@ -125,7 +125,7 @@ keymap("n", "fh", "<cmd>tabprevious<cr>", { desc = "Previous Tab" })
 keymap("n", "fl", "<cmd>tabnext<cr>", { desc = "Next Tab" })
 keymap("n", "fe", "<cmd>tabedit %<cr>", { desc = "Open new tab" })
 keymap("n", "<c-n>", "g<tab>", { desc = "Last active tab" })
-keymap("n", "<S-t>", "<cmd>vs#<cr>", { desc = "Open recently closed tab" })
+-- keymap("n", "<S-t>", "<cmd>vs#<cr>", { desc = "Open recently closed tab" })
 -- keymap("n", "<S-L>", "<cmd>tabnext<cr>", { desc = "Next Tab" })
 -- keymap("n", "<S-H>", "<cmd>tabprevious<cr>", { desc = "Previous Tab" })
 
@@ -249,15 +249,18 @@ keymap("n", "<leader>lq", "<cmd>lua vim.diagnostic.setloclist()<CR>", { desc = "
 keymap("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", { desc = "documentation" })
 keymap("n", "<leader>lk", "<cmd>lua vim.lsp.buf.signature_help()<CR>", { desc = "signature help" })
 
-keymap("n", "<leader>la", "<cmd>lua vim.lsp.buf.code_action()<cr>", { desc = "code [A]ction" })
+-- keymap("n", "<leader>la", "<cmd>lua vim.lsp.buf.code_action()<cr>", { desc = "code [A]ction" })
+keymap("n", "<leader>la", "<cmd>FzfLua lsp_code_actions<cr>", { desc = "code [A]ction" })
 keymap("n", "<leader>lr", "<cmd>lua vim.lsp.buf.rename()<cr>", { desc = "[R]ename" })
 keymap("n", "<leader>lf", "<cmd>lua vim.lsp.buf.format{ async = true }<cr>", { desc = "[F]ormat" })
 
 -- FZF
 keymap("n", "<leader>ff", "<cmd>FzfLua files<CR>", { desc = "find [F]iles" })
-keymap("n", "<leader>fc", "<cmd>lua require('fzf-lua').files({cwd = vim.fn.expand('%:p:h')})<CR>",
+keymap("n", "<leader>fc",
+	"<cmd>lua require('fzf-lua').files({cwd = vim.fn.expand('%:p:h')})<CR>",
 	{ desc = "find files in [C]urrent dir" })
-keymap("n", "<leader>fh", "<cmd>lua require('fzf-lua').files( { hidden = true, no_ignore = true })<CR>",
+keymap("n", "<leader>fh",
+	"<cmd>lua require('fzf-lua').files( {hidden = true, no_ignore = true })<CR>",
 	{ desc = "find files in [H]idden and Ignored dir" })
 keymap("n", "<leader><space>",
 	"<cmd>lua require('fzf-lua').buffers({sort_lastused = true, ignore_current_buffer = true})<CR>",
@@ -265,7 +268,8 @@ keymap("n", "<leader><space>",
 keymap("n", "<leader>a",
 	"<cmd>lua require('fzf-lua').buffers({sort_lastused = true, ignore_current_buffer = true, cwd = vim.fn.getcwd()})<CR>",
 	{ desc = "find buffers in current project or pwd" })
-keymap("n", "<leader>fo", "<cmd>lua require('fzf-lua').oldfiles({file_ignore_patterns={'%.dbout$'}})<CR>",
+keymap("n", "<leader>fo",
+	"<cmd>lua require('fzf-lua').oldfiles({file_ignore_patterns={'%.dbout$'}})<CR>",
 	{ desc = "[O]ld files" })
 
 keymap("n", "<leader>fw", "<cmd>FzfLua grep_cword<CR>", { desc = "grep [W]ord" })
@@ -276,6 +280,7 @@ keymap("n", "<leader>ft", "<cmd>FzfLua builtin<CR>", { desc = "built[I]n" })
 keymap("n", "<leader>fz", "<cmd>FzfLua spell_suggest<CR>", { desc = "[S]pelling" })
 keymap("n", "<leader>fb", "<cmd>FzfLua grep_curbuf<CR>", { desc = "find in current buffer" })
 keymap("n", "<leader>fd", "<cmd>DeleteAllBuffers<cr>", { desc = "delete all buffers" })
+keymap("n", ",,", "<cmd>FzfLua resume<cr>", { desc = "resume action" })
 
 -- FZF LSP
 keymap("n", "<leader>d", "<cmd>FzfLua lsp_definitions<CR>", { desc = "[D]efinitions" })
@@ -290,7 +295,11 @@ keymap("n", "gR", ":vsp | FzfLua lsp_references<CR>", { desc = "[R]eferences in 
 keymap("n", "gT", ":vsp | FzfLua lsp_type_definitions<CR>", { desc = "[T]ype definition in split" })
 keymap("n", "<leader>ls", "<cmd>FzfLua lsp_document_symbols<CR>", { desc = "document [S]ymbols" })
 keymap("n", "<leader>lw", "<cmd>FzfLua lsp_workspace_symbols<CR>", { desc = "[W]orkspace symbols" })
-keymap("n", "<leader>ld", "<cmd>FzfLua lsp_workspace_diagnostics<CR>", { desc = "workspace [D]iagnostics" })
+-- keymap("n", "<leader>ld", "<cmd>FzfLua lsp_workspace_diagnostics<CR>", { desc = "workspace [D]iagnostics" })
+keymap("n", "<leader>ld", "<cmd>lua require('fzf-lua').lsp_workspace_diagnostics({fzf_bin='fzf'})<CR>",
+	{ desc = "workspace [D]iagnostics" })
+keymap("n", "<leader>lb", "<cmd>lua require('fzf-lua').lsp_document_diagnostics({fzf_bin='fzf'})<CR>",
+	{ desc = "document [D]iagnostics" })
 
 -- Debugger
 keymap("n", "<leader>bb", "<cmd>DapToggleBreakpoint<cr>", { desc = "Toggle [B]reakpoint" })
@@ -323,7 +332,7 @@ keymap("n", "<leader>ghh", "<cmd>DiffviewFileHistory %<cr>", { desc = "diff file
 keymap("n", "<leader>tt", ":NvimTreeToggle<CR>", { desc = "Toggle Nvim Tr[E]e" })
 keymap("n", "-", ":Oil<cr>", { desc = "Open Oil" })
 keymap("n", "_", ":vsp | Oil<cr>", { desc = "Open Oil" })
-keymap("n", "<leader>-", ":vsp | ZoxideOil<cr>", { desc = "Open Oil with zoxide dir" })
+keymap("n", "<leader>hd", ":ZoxideList<cr>", { desc = "Open with zoxide dir" })
 
 
 -- -- Toggle term mapping
@@ -394,5 +403,8 @@ keymap("n", "<leader>ox", ":sp term://", { desc = "Open horizontal split termina
 keymap("n", "<leader>od", ":DBUIToggle<cr>", { desc = "Open database connections" })
 keymap("n", "<leader>/", ":<cmd>noh<cr><cr>", { desc = "Clear search selection" })
 keymap("n", "<leader>fv", ":Twilight<CR>", { desc = "twilight [V]iew" })
-keymap("n", "<leader>fs", ":FzfLua files cwd=/Users/ghar/Desktop/scratch<CR>", { desc = "[S]cratch notes" })
+keymap("n", "<leader>e", ":OpenInFloat /Users/ghar/Desktop/quicknote/quicknote.md<CR>", { desc = "Quick Notes" })
 keymap("n", "<leader>fn", ":FzfLua files cwd=/Users/ghar/workspace/notes<CR>", { desc = "[N]otes" })
+keymap("n", "<leader>fs",
+	"<cmd>lua require('fzf-lua').files({cwd='/Users/ghar/Desktop/scratch', cmd = 'fd --color=never --type f --follow --exclude .git --strip-cwd-prefix -X ls -t' })<CR>",
+	{ desc = "[S]cratch notes" })

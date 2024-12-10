@@ -13,7 +13,7 @@ require "core.lazy"
 
 -- lazy load utils
 vim.api.nvim_create_autocmd("CmdUndefined", {
-    pattern = "OpenBookmark",
+    pattern = { "OpenBookmark", "ZoxideList" },
     once = true,
     callback = function()
         require "core.utils.bookmark"
