@@ -15,3 +15,4 @@ bundle/
 !.config/nvim/
 !.config/sheldon/
 !.config/fish/
+!.config/k9s/

@@ -1,0 +1,51 @@
+plugins:
+  stern:
+    shortCut: Shift-L
+    confirm: false
+    description: "Logs <Stern>"
+    scopes:
+      - pods
+    command: kitty
+    background: false
+    args:
+      - "@"
+      - "launch"
+      - "--type=tab"
+      - "stern"
+      - --tail
+      - 50
+      - $FILTER
+      - -n
+      - $NAMESPACE
+      - --context
+      - $CONTEXT
+  shell-in-new-tab:
+    shortCut: Ctrl-O
+    confirm: false
+    description: shell in kitty
+    scopes:
+      - pods
+    command: kitty
+    args:
+      - "@"
+      - "launch"
+      - "--type=tab"
+      - "kubectl"
+      - "exec"
+      - "-it"
+      - "--namespace"
+      - $NAMESPACE
+      - $NAME
+      - "--"
+      - "sh"
+  watch-events:
+    shortCut: Shift-E
+    confirm: false
+    description: Get Events
+    scopes:
+    - all
+    command: sh
+    background: false
+    args:
+    - -c
+    - "watch -n 5 kubectl get events --context $CONTEXT --namespace $NAMESPACE --field-selector involvedObject.name=$NAME"
