@@ -332,7 +332,7 @@ keymap("n", "<leader>ghh", "<cmd>DiffviewFileHistory %<cr>", { desc = "diff file
 keymap("n", "<leader>tt", ":NvimTreeToggle<CR>", { desc = "Toggle Nvim Tr[E]e" })
 keymap("n", "-", ":Oil<cr>", { desc = "Open Oil" })
 keymap("n", "_", ":vsp | Oil<cr>", { desc = "Open Oil" })
-keymap("n", "<leader>hd", ":ZoxideList<cr>", { desc = "Open with zoxide dir" })
+keymap("n", "<leader>fx", ":ZoxideList<cr>", { desc = "Open with zoxide dir" })
 
 
 -- -- Toggle term mapping
@@ -395,6 +395,13 @@ keymap("n", "<leader>tp", ":PreviousColour<CR>", { desc = "Previous colour schem
 keymap("n", "<leader>hh", ":OpenBookmark<CR>", { desc = "Open bookmark with telescope" })
 keymap("n", "<leader>ha", ":Bookmark<CR>", { desc = "Add bookmark" })
 
+-- notes
+keymap("n", "<leader>e", ":OpenInFloat /Users/prathameshnevagi/Library/CloudStorage/OneDrive-QuickHealTechnologiesLtd/quicknote/quicknote.md<CR>", { desc = "Quick Notes" })
+keymap("n", "<leader>fn", ":FzfLua files cwd=/Users/prathameshnevagi/notes<CR>", { desc = "[N]otes" })
+keymap("n", "<leader>fs",
+	"<cmd>lua require('fzf-lua').files({cwd='/Users/prathameshnevagi/Library/CloudStorage/OneDrive-QuickHealTechnologiesLtd/scratch', cmd = 'fd --color=never --type f --follow --exclude .git --strip-cwd-prefix -X ls -t' })<CR>",
+	{ desc = "[S]cratch notes" })
+
 -- Others
 keymap("n", "aa", ":LeftPadding<cr>", { desc = "Add left padding" })
 keymap('n', '<leader>oo', ':vsp | term<CR><cmd>lua vim.fn.getcwd()<CR>', { noremap = true, silent = true })
@@ -403,8 +410,3 @@ keymap("n", "<leader>ox", ":sp term://", { desc = "Open horizontal split termina
 keymap("n", "<leader>od", ":DBUIToggle<cr>", { desc = "Open database connections" })
 keymap("n", "<leader>/", ":<cmd>noh<cr><cr>", { desc = "Clear search selection" })
 keymap("n", "<leader>fv", ":Twilight<CR>", { desc = "twilight [V]iew" })
-keymap("n", "<leader>e", ":OpenInFloat /Users/ghar/Desktop/quicknote/quicknote.md<CR>", { desc = "Quick Notes" })
-keymap("n", "<leader>fn", ":FzfLua files cwd=/Users/ghar/workspace/notes<CR>", { desc = "[N]otes" })
-keymap("n", "<leader>fs",
-	"<cmd>lua require('fzf-lua').files({cwd='/Users/ghar/Desktop/scratch', cmd = 'fd --color=never --type f --follow --exclude .git --strip-cwd-prefix -X ls -t' })<CR>",
-	{ desc = "[S]cratch notes" })

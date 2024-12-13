@@ -1,16 +1,19 @@
 return function(INPUT_LINE_NUMBER, CURSOR_LINE, CURSOR_COLUMN)
   -- print('kitty sent:', INPUT_LINE_NUMBER, CURSOR_LINE, CURSOR_COLUMN)
   vim.opt.encoding='utf-8'
-  vim.opt.clipboard = 'unnamed'
+  -- vim.opt.clipboard = 'unnamed'
+  vim.opt.clipboard = 'unnamedplus'
   vim.opt.compatible = false
-  vim.opt.number = false
-  vim.opt.relativenumber = false
+  vim.opt.number = true
+  vim.opt.relativenumber = true
   vim.opt.termguicolors = true
   vim.opt.showmode = false
   vim.opt.ruler = false
   vim.opt.laststatus = 0
   vim.o.cmdheight = 1
   vim.opt.showcmd = false
+  vim.opt.ignorecase = true
+  vim.opt.smartcase = true
   vim.opt.scrollback = INPUT_LINE_NUMBER + CURSOR_LINE
   local term_buf = vim.api.nvim_create_buf(true, false);
   local term_io = vim.api.nvim_open_term(term_buf, {})

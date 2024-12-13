@@ -10,7 +10,7 @@ return {
     null_ls.setup({
       sources = {
         null_ls.builtins.formatting.prettierd.with({
-          disabled_filetypes = { "markdown" },
+          disabled_filetypes = { "markdown", "yaml" },
         }),
         null_ls.builtins.formatting.black,
         null_ls.builtins.formatting.gofmt,

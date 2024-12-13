@@ -156,3 +156,6 @@ eval "$(zoxide init --cmd cd zsh)"
 
 # required by nvim image https://github.com/3rd/image.nvim
 export DYLD_LIBRARY_PATH="$(brew --prefix)/lib:$DYLD_LIBRARY_PATH"
+
+# k9s config directory
+export K9S_CONFIG_DIR=$HOME/.config/k9s
