@@ -70,6 +70,8 @@ vim.api.nvim_create_autocmd({ "TermOpen", "BufEnter" }, {
         if vim.opt.buftype:get() == "terminal" then
             vim.cmd(":startinsert")
             vim.opt_local.spell = false
+            vim.opt.number = false
+            vim.opt.relativenumber = false
         end
     end
 })
