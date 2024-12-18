@@ -38,3 +38,7 @@ apply = ["defer"]
 [plugins.zsh-history-substring-search]
 github = "zsh-users/zsh-history-substring-search"
 apply = ["defer"]
+
+[plugins.zsh-ssh]
+github = 'sunlei/zsh-ssh'
+apply = ["defer"]
