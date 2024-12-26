@@ -1,4 +1,5 @@
 return {
+  enabled = false,
   "hrsh7th/nvim-cmp",
   branch = "main",
   event = "InsertEnter",

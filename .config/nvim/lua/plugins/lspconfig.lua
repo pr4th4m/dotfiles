@@ -3,17 +3,18 @@ return {
   branch = "master",
   event = { "BufReadPre", "BufNewFile" },
   dependencies = {
-    { "hrsh7th/cmp-nvim-lsp" },
+    -- { "hrsh7th/cmp-nvim-lsp" },
+    { 'saghen/blink.cmp' },
     { "j-hui/fidget.nvim" },
     { "folke/lazydev.nvim" },
   },
   config = function()
     local M = {}
 
-    local cmp_nvim_lsp = require("cmp_nvim_lsp")
+    -- local cmp_nvim_lsp = require("cmp_nvim_lsp")
     M.capabilities = vim.lsp.protocol.make_client_capabilities()
     M.capabilities.textDocument.completion.completionItem.snippetSupport = true
-    M.capabilities = cmp_nvim_lsp.default_capabilities(M.capabilities)
+    -- M.capabilities = cmp_nvim_lsp.default_capabilities(M.capabilities)
 
     M.setup = function()
       local signs = {
@@ -82,7 +83,6 @@ return {
     end
 
     M.on_attach = function(client, bufnr)
-
       client.server_capabilities.documentFormattingProvider = true
       client.server_capabilities.documentRangeFormattingProvider = true
 
@@ -129,7 +129,8 @@ return {
     for _, server in pairs(servers) do
       opts = {
         on_attach = M.on_attach,
-        capabilities = M.capabilities,
+        -- capabilities = M.capabilities,
+        capabilities = require('blink.cmp').get_lsp_capabilities(M.capabilities)
       }
       server = vim.split(server, "@")[1]
       lspconfig[server].setup(opts)
