@@ -41,38 +41,19 @@ alias rg='rg --hyperlink-format=kitty'
 alias ls='ls -Gt'
 alias ll='ls -lthG'
 # alias cat='bat -pp --theme base16'
-alias c='clear'
 alias cs='cht.sh'
-# function m() {
-#     export CMAP=$@
-#     # local cmd=$@
-#     # tmux set-environment CMAP $cmd
-# }
-# # unable to use above function from terminal directly
-# # create new function which is used in kitty config with CMAP
-# function csb() {
+
+# # clear screen and keep scroll buffer
+# # https://sw.kovidgoyal.net/kitty/conf/#shortcut-kitty.Reset-the-terminal
+# scroll-and-clear-screen() {
 #     printf '\n%.0s' {1..$LINES}
-#     clear
+#     zle clear-screen
 # }
-
-# clear screen and keep scroll buffer
-# https://sw.kovidgoyal.net/kitty/conf/#shortcut-kitty.Reset-the-terminal
-scroll-and-clear-screen() {
-    printf '\n%.0s' {1..$LINES}
-    zle clear-screen
-}
-zle -N scroll-and-clear-screen
-bindkey '^l' scroll-and-clear-screen
-
-# # for 256 color support
-# if [ -n "$TMUX" ]; then
-#     export TERM=screen-256color
-# else
-#     export TERM=xterm-256color
-# fi
-export TERM=xterm-256color
+# zle -N scroll-and-clear-screen
+# bindkey '^l' scroll-and-clear-screen
 
 # make vim as default editor
+export TERM=xterm-256color
 export EDITOR=nvim
 export VISUAL=nvim
 
@@ -151,6 +132,36 @@ export PATH=/usr/local/opt/libpq/bin:$PATH
 # export PATH=$PATH:$HOME/.garden/bin
 # export PATH="/usr/local/sbin:$PATH"
 
+# required by nvim image https://github.com/3rd/image.nvim
+export DYLD_LIBRARY_PATH="$(brew --prefix)/lib:$DYLD_LIBRARY_PATH"
+
+# k9s config directory
+export K9S_CONFIG_DIR=$HOME/.config/k9s
+
+# bw session key
+export BW_SESSION="+nieQbVzdqxUqLN+ee0TSb5g5fCEBAjVItedCj+1gDzSzrszM1lpEpVa7IrCLONJ6JLh2CILZV9ss1/TrrAyng=="
+
+
+## Useful zsh functions
+# keepassxc fzf integration
+keepass_fzf() {
+  local db_path=/Users/prathameshnevagi/Library/CloudStorage/OneDrive-QuickHealTechnologiesLtd/SecretStore/QHSecretStore.kdbx
+  local keyfile_path=/Users/prathameshnevagi/Library/CloudStorage/OneDrive-QuickHealTechnologiesLtd/SecretStore/qhkeyfile.keyx
+
+  local entry
+  entry=$( keepassxc-cli ls $db_path -f -R --no-password -k $keyfile_path | fzf --prompt="KeepassXC> " --height "40%" )
+
+  if [ -n "$entry" ]; then
+    # Copy the selected entry's password to the clipboard
+    keepassxc-cli clip "$db_path" "$entry" 0 -q --no-password --key-file "$keyfile_path"
+  fi
+
+  # Inform the user
+  # echo "Password for '$entry' copied to clipboard."
+}
+zle -N keepass_fzf
+bindkey '^G' keepass_fzf
+
 # zoxide
 eval "$(zoxide init --cmd cd zsh)"
 zoxide_fzf() {
@@ -163,9 +174,3 @@ zoxide_fzf() {
 }
 zle -N zoxide_fzf
 bindkey '^Y' zoxide_fzf
-
-# required by nvim image https://github.com/3rd/image.nvim
-export DYLD_LIBRARY_PATH="$(brew --prefix)/lib:$DYLD_LIBRARY_PATH"
-
-# k9s config directory
-export K9S_CONFIG_DIR=$HOME/.config/k9s
