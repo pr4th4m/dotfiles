@@ -22,7 +22,7 @@ TERM = "xterm-256color"
 size = 17
 
 [font.bold]
-family = "JetBrains Mono NL"
+family = "JetBrains Mono"
 style = "ExtraLight"
 
 [font.glyph_offset]
@@ -30,11 +30,11 @@ x = 0
 y = 0
 
 [font.italic]
-family = "JetBrains Mono NL"
+family = "JetBrains Mono"
 style = "Thin Italic"
 
 [font.normal]
-family = "JetBrains Mono NL"
+family = "JetBrains Mono"
 style = "ExtraLight"
 
 [font.offset]
