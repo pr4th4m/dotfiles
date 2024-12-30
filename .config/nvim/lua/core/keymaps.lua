@@ -378,8 +378,8 @@ keymap("n", "<leader>yf", "<cmd>lua vim.fn.setreg('*', vim.fn.expand('%:t'))<cr>
 
 -- Run specified commands
 keymap("n", "<leader>ca", ":AutoRun<CR>", { desc = "[A]uto command" })
-keymap("n", "<leader>cs", ":RunConfig<CR>", { desc = "[C]onfig command" })
-keymap("n", "<leader>cc", ":MdEval<CR>", { desc = "Run markdown codeblock" })
+keymap("n", "<leader>cc", ":RunConfig<CR>", { desc = "[C]onfig command" })
+keymap("n", "<leader>cm", ":MdEval<CR>", { desc = "Run markdown codeblock" })
 keymap("n", "<c-b>", ":Run<CR>", { desc = "[R]un any command" })
 
 -- toggle checked / create checkbox if it doesn't exist
@@ -410,3 +410,4 @@ keymap("n", "<leader>ox", ":sp term://", { desc = "Open horizontal split termina
 keymap("n", "<leader>od", ":DBUIToggle<cr>", { desc = "Open database connections" })
 keymap("n", "<leader>/", ":<cmd>noh<cr><cr>", { desc = "Clear search selection" })
 keymap("n", "<leader>fv", ":Twilight<CR>", { desc = "twilight [V]iew" })
+keymap("n", "<leader>cd", ":DiffWindow<CR>", { desc = "Diff multiple windows" })

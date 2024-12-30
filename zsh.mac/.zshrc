@@ -41,7 +41,7 @@ alias rg='rg --hyperlink-format=kitty'
 alias ls='ls -Gt'
 alias ll='ls -lthG'
 # alias cat='bat -pp --theme base16'
-# alias c='clear'
+alias c='clear'
 alias cs='cht.sh'
 # function m() {
 #     export CMAP=$@
@@ -153,6 +153,16 @@ export PATH=/usr/local/opt/libpq/bin:$PATH
 
 # zoxide
 eval "$(zoxide init --cmd cd zsh)"
+zoxide_fzf() {
+  # selected=$(zoxide query -l | fzf --prompt="Zoxide> " --preview="ls -la {}" --bind "ctrl-d:execute(zoxide remove {})+abort")
+  selected=$(zoxide query -l | fzf --prompt="Zoxide> " --height "40%" --preview="ls -la {}")
+  if [ -n "$selected" ]; then
+    cd "$selected" || return
+    # echo "Changed directory to: $selected"
+  fi
+}
+zle -N zoxide_fzf
+bindkey '^Y' zoxide_fzf
 
 # required by nvim image https://github.com/3rd/image.nvim
 export DYLD_LIBRARY_PATH="$(brew --prefix)/lib:$DYLD_LIBRARY_PATH"

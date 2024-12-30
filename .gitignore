@@ -15,4 +15,4 @@ bundle/
 !.config/nvim/
 !.config/sheldon/
 !.config/fish/
-!.config/k9s/
+!.config/k9s/plugins.yaml

@@ -45,22 +45,47 @@ vim.api.nvim_create_user_command("AutoRun", function()
 end, {})
 
 -- Run command manually
-local config = { bufnr = 0, command = "" }
-local buffer_name = "command-output"
+local config = { bufnr = 0, command = "", subtitute = false }
+-- local buffer_name = "command-output"
 vim.api.nvim_create_user_command("RunConfig", function()
-  local command, _ = string.gsub(vim.fn.input("Command: "), '%%', vim.fn.expand('%'))
-  -- config.command = vim.split(command, " ")
-  config.command = command
-
-  local bufnr_exists = vim.fn.bufnr(buffer_name)
-  if bufnr_exists == -1 then
-    config.bufnr = vim.api.nvim_create_buf(true, true)
-    vim.api.nvim_buf_set_name(config.bufnr, buffer_name)
-    -- vim.bo[config.bufnr].filetype = 'log'
-    -- vim.api.nvim_buf_set_option(config.bufnr, 'filetype', 'log')
+  config.command = vim.fn.input("Command: ")
+  if config.command:find("%%") then
+    config.subtitute = false
+    config.command, _ = string.gsub(config.command, '%%', vim.fn.expand('%'))
+  else
+    config.subtitute = true
   end
+
+  -- local input_command = vim.fn.input("Command: ")
+  -- if not input_command:find("%%") then
+  --   input_command = input_command .. " %"
+  -- end
+  -- local command, _ = string.gsub(input_command, '%%', vim.fn.expand('%'))
+  -- config.command = vim.split(command, " ")
+  -- config.command = command
+
+  -- local bufnr_exists = vim.fn.bufnr(buffer_name)
+  -- if bufnr_exists == -1 then
+  --   config.bufnr = vim.api.nvim_create_buf(true, true)
+  --   vim.api.nvim_buf_set_name(config.bufnr, buffer_name)
+  --   -- vim.bo[config.bufnr].filetype = 'log'
+  --   -- vim.api.nvim_buf_set_option(config.bufnr, 'filetype', 'log')
+  -- end
 end, {})
 
+local function send_to_kitty(cmd)
+  -- Send a command to the focused Kitty terminal
+  local escaped_cmd = cmd:gsub("'", [["'"]]) .. "\n"
+  -- vim.fn.system("kitty @ send-text -m neighbor:bottom '" .. escaped_cmd .. "'")
+  vim.fn.system("kitty @ send-text -m num:1 '" .. escaped_cmd .. "'")
+end
+
 vim.api.nvim_create_user_command("Run", function()
-  run_command(config.bufnr, config.command)
+  -- run_command(config.bufnr, config.command)
+
+  local command = config.command
+  if config.subtitute then
+    command = command .. " " .. vim.fn.expand('%')
+  end
+  send_to_kitty(command)
 end, {})

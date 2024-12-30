@@ -37,7 +37,8 @@ plugins:
       - $NAMESPACE
       - $NAME
       - "--"
-      - "sh"
+      # - "sh"
+      - "/bin/bash"
   watch-events:
     shortCut: Shift-E
     confirm: false

@@ -53,23 +53,23 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
--- move cursor to middle
-vim.api.nvim_create_autocmd({ 'CursorMoved' }, {
-  desc = 'Center When Cursor Line Significantly Changed',
-  pattern = '*',
-  callback = (function()
-    local initialCursorPos = vim.fn.getcurpos()
-    local prevLine = initialCursorPos[2]
-    return function()
-      local curr_cursor_pos = vim.fn.getcurpos()
-      local currLine = curr_cursor_pos[2]
-      if (math.abs(prevLine - currLine) > 50) then
-        vim.cmd("norm! zz")
-      end
-      prevLine = currLine
-    end
-  end)()
-})
+-- -- move cursor to middle
+-- vim.api.nvim_create_autocmd({ 'CursorMoved' }, {
+--   desc = 'Center When Cursor Line Significantly Changed',
+--   pattern = '*',
+--   callback = (function()
+--     local initialCursorPos = vim.fn.getcurpos()
+--     local prevLine = initialCursorPos[2]
+--     return function()
+--       local curr_cursor_pos = vim.fn.getcurpos()
+--       local currLine = curr_cursor_pos[2]
+--       if (math.abs(prevLine - currLine) > 50) then
+--         vim.cmd("norm! zz")
+--       end
+--       prevLine = currLine
+--     end
+--   end)()
+-- })
 
 -- open file in float window
 local function open_file_in_float(file_path)
@@ -127,3 +127,15 @@ vim.api.nvim_create_user_command("OpenInFloat", function(opts)
     vim.cmd('close')
   end
 end, { nargs = 1 })               -- Ensure exactly one argument is passed
+
+-- diff multiple files
+local diff_window = false
+vim.api.nvim_create_user_command("DiffWindow", function(opts)
+  if diff_window == false then
+    vim.cmd('windo diffthis')
+    diff_window = true
+  else
+    diff_window = false
+    vim.cmd('windo diffoff')
+  end
+end,{})

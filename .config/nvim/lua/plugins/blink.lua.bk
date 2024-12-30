@@ -3,9 +3,6 @@ return {
   version = '*',
   event = "InsertEnter",
   opts = {
-    appearance = {
-      nerd_font_variant = 'normal'
-    },
     sources = {
       default = { 'lsp', 'buffer', 'path' },
       cmdline = function()
@@ -31,11 +28,6 @@ return {
         },
       },
     },
-    -- windows = {
-    --   autocomplete = {
-    --     draw = "minimal",
-    --   },
-    -- }
   },
   opts_extend = { "sources.default" }
 }
