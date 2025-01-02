@@ -42,15 +42,7 @@ alias ls='ls -Gt'
 alias ll='ls -lthG'
 # alias cat='bat -pp --theme base16'
 alias cs='cht.sh'
-
-# # clear screen and keep scroll buffer
-# # https://sw.kovidgoyal.net/kitty/conf/#shortcut-kitty.Reset-the-terminal
-# scroll-and-clear-screen() {
-#     printf '\n%.0s' {1..$LINES}
-#     zle clear-screen
-# }
-# zle -N scroll-and-clear-screen
-# bindkey '^l' scroll-and-clear-screen
+alias ks='kitty @ send-text -m ' 
 
 # make vim as default editor
 export TERM=xterm-256color
@@ -174,3 +166,21 @@ zoxide_fzf() {
 }
 zle -N zoxide_fzf
 bindkey '^Y' zoxide_fzf
+
+# clear screen and keep scroll buffer
+# https://sw.kovidgoyal.net/kitty/conf/#shortcut-kitty.Reset-the-terminal
+clear_screen() {
+    builtin print -rn -- $'\r\e[0J\e[H\e[22J' >"$TTY"
+    builtin zle .reset-prompt
+    builtin zle -R
+}
+zle -N clear_screen
+bindkey '^o' clear_screen
+
+clear_screen_and_scrollback() {
+    builtin print -rn -- $'\r\e[0J\e[H\e[3J' >"$TTY"
+    builtin zle .reset-prompt
+    builtin zle -R
+}
+zle -N clear_screen_and_scrollback
+bindkey '^]' clear_screen_and_scrollback
