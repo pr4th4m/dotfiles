@@ -3,8 +3,8 @@ return {
   branch = "master",
   event = { "BufReadPre", "BufNewFile" },
   dependencies = {
-    { "hrsh7th/cmp-nvim-lsp" },
-    -- { 'saghen/blink.cmp' },
+    -- { "hrsh7th/cmp-nvim-lsp" },
+    { 'saghen/blink.cmp' },
     { "j-hui/fidget.nvim" },
     { "folke/lazydev.nvim" },
   },
@@ -129,8 +129,8 @@ return {
       opts = {
         on_attach = M.on_attach,
         -- capabilities = M.capabilities,
-        -- capabilities = require('blink.cmp').get_lsp_capabilities(M.capabilities)
-        capabilities = require("cmp_nvim_lsp").default_capabilities(M.capabilities)
+        capabilities = require('blink.cmp').get_lsp_capabilities(M.capabilities)
+        -- capabilities = require("cmp_nvim_lsp").default_capabilities(M.capabilities)
       }
       server = vim.split(server, "@")[1]
       lspconfig[server].setup(opts)
