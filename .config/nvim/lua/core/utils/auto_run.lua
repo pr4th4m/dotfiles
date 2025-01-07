@@ -76,9 +76,9 @@ end, {})
 local function send_to_kitty(cmd)
   -- Send a command to the focused Kitty terminal
   local escaped_cmd = cmd:gsub("'", [["'"]]) .. "\n"
-  -- vim.fn.system("kitty @ send-text -m neighbor:bottom '" .. escaped_cmd .. "'")
   vim.fn.system("kitty @ send-text -m num:0 'clear\n'")
-  vim.fn.system("kitty @ send-text -m num:0 '" .. escaped_cmd .. "'")
+  -- vim.fn.system("kitty @ send-text -m num:0 '" .. escaped_cmd .. "'")
+  vim.fn.system("kitty @ send-text -m neighbor:bottom '" .. escaped_cmd .. "'")
 end
 
 vim.api.nvim_create_user_command("Run", function()
