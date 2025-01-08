@@ -41,7 +41,8 @@ return {
       },
       list = {
         max_items = 200,
-        selection = 'auto_insert',
+        selection = { preselect = false, auto_insert = true },
+        -- selection = { auto_insert = true },
         cycle = {
           from_bottom = true,
           from_top = true,
