@@ -11,13 +11,17 @@ plugins:
       - "@"
       - "launch"
       - "--type=tab"
-      - "stern"
-      - --tail
-      - 50
+      - "--hold"
+      - "env"
+      - "PATH=/usr/local/bin:$PATH"
+      - "/Users/prathameshnevagi/.config/k9s/k9s-stern.sh"
+      # - "stern"
+      # - --tail
+      # - 50
       - $FILTER
-      - -n
+      # - -n
       - $NAMESPACE
-      - --context
+      # - --context
       - $CONTEXT
   shell-in-new-tab:
     shortCut: Shift-G
@@ -30,6 +34,8 @@ plugins:
       - "@"
       - "launch"
       - "--type=tab"
+      - "env"
+      - "PATH=/usr/local/bin:$PATH"
       - "kubectl"
       - "exec"
       - "-it"
