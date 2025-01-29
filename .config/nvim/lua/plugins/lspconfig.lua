@@ -110,7 +110,6 @@ return {
 
     local servers = {
       "bashls",
-      "rust_analyzer",
       "dockerls",
       "gopls",
       "jsonls",

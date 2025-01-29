@@ -2,12 +2,12 @@ return {
   "stevearc/oil.nvim",
   branch = "master",
   lazy = true,
-  -- cmd = { "Oil" },
+  cmd = { "Oil" },
   event = { "BufReadPre", "BufNewFile" },
   config = function()
     require("oil").setup({
       delete_to_trash = true,
-      trash_command = "trash -F",
+      -- trash_command = "trash -F",
       prompt_save_on_select_new_entry = false,
       skip_confirm_for_simple_edits = true,
       default_file_explorer = true,

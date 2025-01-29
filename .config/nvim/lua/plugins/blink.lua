@@ -4,24 +4,10 @@ return {
   event = "InsertEnter",
   opts = {
     keymap = {
+      ['<C-b>'] = {},
       cmdline = {
         preset = 'super-tab',
       }
-    },
-    sources = {
-      default = { 'lsp', 'buffer', 'path' },
-      cmdline = function()
-        local type = vim.fn.getcmdtype()
-        -- Search forward and backward
-        if type == "/" or type == "?" then
-          return { "buffer" }
-        end
-        -- Commands
-        if type == ":" then
-          return { "cmdline" }
-        end
-        return {}
-      end,
     },
     completion = {
       menu = {
@@ -46,6 +32,28 @@ return {
         cycle = {
           from_bottom = true,
           from_top = true,
+        },
+      },
+    },
+    sources = {
+      default = { 'lsp', 'buffer', 'path', 'lazydev' },
+      cmdline = function()
+        local type = vim.fn.getcmdtype()
+        -- Search forward and backward
+        if type == "/" or type == "?" then
+          return { "buffer" }
+        end
+        -- Commands
+        if type == ":" then
+          return { "cmdline" }
+        end
+        return {}
+      end,
+      providers = {
+        lazydev = {
+          name = "LazyDev",
+          module = "lazydev.integrations.blink",
+          score_offset = 100,
         },
       },
     },

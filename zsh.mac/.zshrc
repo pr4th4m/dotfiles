@@ -34,7 +34,7 @@ zstyle ':completion:*' matcher-list 'm:{[:lower:]}={[:upper:]}'
 
 # useful alias
 # https://hasseg.org/trash/
-alias rm='trash -F'
+alias rm='trash'
 alias rg='rg --hyperlink-format=kitty'
 # alias ls='gls --color --group-directories-first --hyperlink=auto'
 # alias ll='gls -lh --color --group-directories-first --hyperlink=auto'

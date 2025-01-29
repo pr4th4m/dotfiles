@@ -7,7 +7,6 @@ return {
   config = function()
     local servers = {
       "bashls",
-      "rust_analyzer",
       "dockerls",
       "gopls",
       "jsonls",
