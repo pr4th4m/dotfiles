@@ -19,7 +19,7 @@ return {
               width = { fill = true },
               text = function(ctx) return ctx.kind:sub(1, 3):lower() end,
               highlight = function(ctx)
-                return require('blink.cmp.completion.windows.render.tailwind').get_hl(ctx) or 'BlinkCmpKind' .. ctx.kind
+                return (require('blink.cmp.completion.windows.render.tailwind').get_hl(ctx) or 'BlinkCmpKind') .. ctx.kind
               end,
             },
           },
@@ -36,6 +36,7 @@ return {
       },
     },
     sources = {
+      -- default = { 'codeium', 'lsp', 'buffer', 'path', 'lazydev' },
       default = { 'lsp', 'buffer', 'path', 'lazydev' },
       cmdline = function()
         local type = vim.fn.getcmdtype()
@@ -50,6 +51,10 @@ return {
         return {}
       end,
       providers = {
+        -- codeium = {
+        --   name = "codeium",
+        --   module = "blink.compat.source",
+        -- },
         lazydev = {
           name = "LazyDev",
           module = "lazydev.integrations.blink",

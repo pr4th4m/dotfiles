@@ -10,11 +10,11 @@ return {
     null_ls.setup({
       sources = {
         null_ls.builtins.formatting.prettierd.with({
-          disabled_filetypes = { "markdown", "yaml" },
+          disabled_filetypes = { "markdown", "yaml", "go" },
         }),
         null_ls.builtins.formatting.black,
-        null_ls.builtins.formatting.gofmt,
-        null_ls.builtins.formatting.goimports,
+        -- null_ls.builtins.formatting.gofmt,
+        -- null_ls.builtins.formatting.goimports,
       },
 
       on_attach = function(client, bufnr)

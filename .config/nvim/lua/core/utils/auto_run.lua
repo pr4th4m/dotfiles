@@ -49,11 +49,13 @@ local config = { bufnr = 0, command = "", subtitute = false }
 -- local buffer_name = "command-output"
 vim.api.nvim_create_user_command("RunConfig", function()
   config.command = vim.fn.input("Command: ")
-  if config.command:find("%%") then
+  if config.command:find("@") then
+    config.subtitute = true
+    -- remove the last @ sign
+    config.command = config.command:gsub("@$", "")
+  else
     config.subtitute = false
     config.command, _ = string.gsub(config.command, '%%', vim.fn.expand('%'))
-  else
-    config.subtitute = true
   end
 
   -- local input_command = vim.fn.input("Command: ")
@@ -91,7 +93,7 @@ vim.api.nvim_create_user_command("Run", function()
 
   local command = config.command
   if config.subtitute then
-    command = command .. " " .. vim.fn.expand('%')
+    command = command .. "" .. vim.fn.expand('%')
   end
   send_to_kitty(command)
 end, {})

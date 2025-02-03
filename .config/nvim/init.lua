@@ -31,5 +31,6 @@ vim.api.nvim_create_autocmd({ "BufReadPre", "BufNewFile" }, {
     callback = function()
         require "core.utils.utils"
         require "core.utils.auto_run"
+        require "core.utils.send_text"
     end,
 })
