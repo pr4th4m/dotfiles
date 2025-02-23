@@ -4,17 +4,18 @@ return {
   lazy = true,
   cmd = { "Telescope" },
   dependencies = {
-    { "nvim-lua/plenary.nvim",                    branch = "master" },
-    { "nvim-telescope/telescope-fzf-native.nvim", build = "make",   branch = "main" },
+    { "nvim-lua/plenary.nvim",                        branch = "master" },
+    { "nvim-telescope/telescope-fzf-native.nvim",     build = "make",   branch = "main" },
     -- { "natecraddock/telescope-zf-native.nvim", branch = "master" },
     -- { "nvim-telescope/telescope-rg.nvim",         branch = "master" },
-    -- { "nvim-telescope/telescope-live-grep-args.nvim", version = "^1.0.0" },
+    { "nvim-telescope/telescope-live-grep-args.nvim", branch = "master" },
   },
   config = function()
     local telescope = require("telescope")
     local actions = require("telescope.actions")
-    local action_state = require('telescope.actions.state')
-    local oil = require('oil')
+    -- local action_state = require('telescope.actions.state')
+    -- local oil = require('oil')
+    local lga_actions = require("telescope-live-grep-args.actions")
 
     -- Custom action to handle both Oil paths and regular files
     local function open_in_split_or_oil(prompt_bufnr)
@@ -125,6 +126,7 @@ return {
         },
       },
 
+
       extensions = {
         fzf = {
           fuzzy = true,                    -- false will only do exact matching
@@ -132,38 +134,60 @@ return {
           override_file_sorter = true,     -- override the file sorter
           case_mode = "smart_case",        -- or "ignore_case" or "respect_case" -- the default case_mode is "smart_case"
         },
-        egrepify = {
-          prefixes = {
-            -- #md, >dir, <dir-ignore, &file, !file-ignore
-            -- rg --no-ignore
-            ["."] = {
-              flag = "hidden no-ignore ignore-case",
-            },
-            ["@"] = {
-              flag = "word-regexp",
-            },
-            ["!"] = {
-              flag = "glob",
-              cb = function(input)
-                return string.format([[!*{%s}*]], input)
-              end,
-            },
-            ["<"] = {
-              flag = "glob",
-              cb = function(input)
-                return string.format([[!**/{%s}*/**]], input)
-              end,
+        live_grep_args = {
+          -- auto_quoting = true, -- enable/disable auto-quoting
+          -- define mappings, e.g.
+          mappings = { -- extend mappings
+            i = {
+              ["<C-k>"] = lga_actions.quote_prompt(),
+              ["<C-h>"] = lga_actions.quote_prompt({ postfix = " -. --no-ignore " }),
+              -- ["<C-f>"] = lga_actions.quote_prompt({ postfix = " -t " }),
+              -- freeze the current list and start a fuzzy search in the frozen list
+              -- ["<C-space>"] = actions.to_fuzzy_refine,
             },
           },
-        },
+          -- ... also accepts theme settings, for example:
+          -- theme = "dropdown", -- use dropdown theme
+          -- theme = { }, -- use own theme spec
+          -- layout_config = { mirror=true }, -- mirror preview pane
+        }
+        -- egrepify = {
+        --   prefixes = {
+        --     -- #md, >dir, <dir-ignore, &file, !file-ignore
+        --     -- rg --no-ignore
+        --     ["."] = {
+        --       flag = "hidden no-ignore ignore-case",
+        --     },
+        --     ["@"] = {
+        --       flag = "word-regexp",
+        --     },
+        --     ["!"] = {
+        --       flag = "glob",
+        --       cb = function(input)
+        --         return string.format([[!*{%s}*]], input)
+        --       end,
+        --     },
+        --     ["<"] = {
+        --       flag = "glob",
+        --       cb = function(input)
+        --         return string.format([[!**/{%s}*/**]], input)
+        --       end,
+        --     },
+        --   },
+        -- },
       }
     }
 
     -- Load extension
     telescope.load_extension('fzf')
     -- telescope.load_extension("zf-native")
-    -- telescope.load_extension("live_grep_args")
     telescope.load_extension('projects')
-    telescope.load_extension('egrepify')
+    telescope.load_extension("live_grep_args")
+    -- telescope.load_extension('egrepify')
+
+    -- telescope-live-grep-args keymaps
+    local live_grep_args_shortcuts = require("telescope-live-grep-args.shortcuts")
+    vim.keymap.set("n", "<leader>fw", live_grep_args_shortcuts.grep_word_under_cursor)
+    vim.keymap.set("n", "<leader>fv", live_grep_args_shortcuts.grep_visual_selection)
   end,
 }

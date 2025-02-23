@@ -127,14 +127,24 @@ return {
         native_menu = false,
       },
       formatting = {
-        -- temporary, remove later
-        format = function(_, vim_item)
-          if vim_item.kind == 'Codeium' then
-            vim_item.kind = ' '
+        format = function(entry, vim_item)
+          -- Trim the text to a maximum length
+          local max_width = 50
+          if #vim_item.abbr > max_width then
+            vim_item.abbr = string.sub(vim_item.abbr, 1, max_width) .. '...'
           end
           return vim_item
-        end,
+        end
       },
+      -- formatting = {
+      --   -- temporary, remove later
+      --   format = function(_, vim_item)
+      --     if vim_item.kind == 'Codeium' then
+      --       vim_item.kind = ' '
+      --     end
+      --     return vim_item
+      --   end,
+      -- },
     }
 
     cmp.setup.cmdline('/', {

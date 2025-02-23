@@ -10,8 +10,8 @@ return {
   config = function()
     local actions = require("fzf-lua.actions")
     require("fzf-lua").setup({
-      -- "max-perf",
-      fzf_bin  = 'sk',
+      "max-perf",
+      -- fzf_bin  = 'sk',
       defaults = {
         git_icons   = false, -- show git icons?
         file_icons  = false, -- show file icons (true|"devicons"|"mini")?
@@ -36,8 +36,8 @@ return {
         ['--multi'] = true,
       },
       lsp      = {
-        jump_to_single_result = true,
-        jump_to_single_result_action = actions.file_edit,
+        jump1 = true,
+        jump1_action = actions.file_edit,
       },
       keymap   = {
         builtin = {

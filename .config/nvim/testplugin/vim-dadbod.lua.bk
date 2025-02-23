@@ -13,7 +13,7 @@ return {
   init = function()
     -- Your DBUI configuration
     vim.g.db_ui_use_nerd_fonts = 0
-    vim.g.db_ui_save_location = '~/workspace/database/queries'
+    vim.g.db_ui_save_location = '~/OneDrive/config/nvim-dadbod/'
     vim.o.previewheight = 30
 
     vim.api.nvim_create_autocmd("FileType", {
@@ -29,5 +29,9 @@ return {
         vim.opt_local.foldenable = false
       end,
     })
+
+    vim.g.dbs = {
+      { name = 'onprem-qa-performance-db-s1r1', url = 'clickhouse://test_user:test_password@localhost:9001/performance_db' },
+    }
   end,
 }

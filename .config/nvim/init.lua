@@ -19,13 +19,13 @@ vim.api.nvim_create_autocmd("CmdUndefined", {
         require "core.utils.bookmark"
     end,
 })
-vim.api.nvim_create_autocmd("CmdUndefined", {
-    pattern = { "NextColour", "PreviousColour" },
-    once = true,
-    callback = function()
-        require "core.utils.colorscheme"
-    end,
-})
+-- vim.api.nvim_create_autocmd("CmdUndefined", {
+--     pattern = { "NextColour", "PreviousColour" },
+--     once = true,
+--     callback = function()
+--         require "core.utils.colorscheme"
+--     end,
+-- })
 vim.api.nvim_create_autocmd({ "BufReadPre", "BufNewFile" }, {
     once = true,
     callback = function()

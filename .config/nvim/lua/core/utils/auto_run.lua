@@ -84,8 +84,8 @@ local function send_to_kitty(cmd)
   -- vim.fn.system("kitty @ send-text -m neighbor:bottom 'clear\n'")
   -- vim.fn.system("kitty @ send-text -m neighbor:bottom '" .. escaped_cmd .. "'")
 
-  vim.fn.system("kitty @ send-text -m num:1 'clear\n'")
-  vim.fn.system("kitty @ send-text -m num:1 '" .. escaped_cmd .. "'")
+  vim.fn.system("kitty @ send-text -t index:1 'clear\n'")
+  vim.fn.system("kitty @ send-text -t index:1 '" .. escaped_cmd .. "'")
 end
 
 vim.api.nvim_create_user_command("Run", function()
