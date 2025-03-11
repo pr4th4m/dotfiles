@@ -36,9 +36,13 @@ return {
     telescope.setup {
       defaults = {
         -- path_display = { "smart" },
+        path_display = { "truncate" },
+        file_ignore_patterns = { "node_modules", ".git/" },
         sorting_strategy = "ascending",
         dynamic_preview_title = true,
         layout_config = {
+          width = 0.7,
+          height = 0.7,
           prompt_position = "top",
           preview_width = 0.5,
         },

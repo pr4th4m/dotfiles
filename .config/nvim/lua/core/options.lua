@@ -18,24 +18,23 @@ local options = {
     splitright = true,                       -- force all vertical splits to go to the right of current window
     swapfile = false,                        -- creates a swapfile
     -- termguicolors = true,                    -- set term gui colors (most terminals support this)
-    timeoutlen = 300,                        -- time to wait for a mapped sequence to complete (in milliseconds)
-    undofile = true,                         -- enable persistent undo
-    updatetime = 300,                        -- faster completion (4000ms default)
-    writebackup = false,                     -- if a file is being edited by another program (or was written to file while editing with another program), it is not allowed to be edited
-    expandtab = true,                        -- convert tabs to spaces
-    shiftwidth = 4,                          -- the number of spaces inserted for each indentation
-    tabstop = 4,                             -- insert 2 spaces for a tab
-    cursorline = true,                       -- highlight the current line
-    number = true,                           -- set numbered lines
-    relativenumber = true,                   -- set relative numbered lines
-    numberwidth = 2,                         -- set number column width to 2 {default 4}
+    -- timeoutlen = 500,                        -- time to wait for a mapped sequence to complete (in milliseconds)
+    undofile = true,       -- enable persistent undo
+    writebackup = false,   -- if a file is being edited by another program (or was written to file while editing with another program), it is not allowed to be edited
+    expandtab = true,      -- convert tabs to spaces
+    shiftwidth = 4,        -- the number of spaces inserted for each indentation
+    tabstop = 4,           -- insert 2 spaces for a tab
+    cursorline = true,     -- highlight the current line
+    number = true,         -- set numbered lines
+    relativenumber = true, -- set relative numbered lines
+    numberwidth = 2,       -- set number column width to 2 {default 4}
     foldmethod = indent,
 
     signcolumn = "yes", -- always show the sign column, otherwise it would shift the text each time
     wrap = false,       -- display lines as one long line
     linebreak = true,   -- companion to wrap, don't split words
-    scrolloff = 8,      -- minimal number of screen lines to keep above and below the cursor
-    sidescrolloff = 8,  -- minimal number of screen columns either side of cursor if wrap is `false`
+    -- scrolloff = 8,      -- minimal number of screen lines to keep above and below the cursor
+    -- sidescrolloff = 8,  -- minimal number of screen columns either side of cursor if wrap is `false`
     -- guifont = "Consolas:h17",             -- the font used in graphical neovim applications
     -- guifont = "FiraCode-Light:h17",       -- the font used in graphical neovim applications
     guifont = "JetBrains Mono NL Thin:h17", -- the font used in graphical neovim applications
@@ -45,6 +44,25 @@ local options = {
     laststatus = 3,                         -- global status line
     winbar = "%=%m %f",
     whichwrap = "bs<>[]hl",                 -- which "horizontal" keys are allowed to travel to prev/next line
+
+    -- performance
+    -- Redraw settings
+    lazyredraw = true, -- Avoid UI redraws when running macros
+    ttyfast = true,    -- Faster UI updates
+    updatetime = 300,  -- Reduce update time
+
+    -- Key mapping speed
+    -- ttimeoutlen = 100,
+    timeoutlen = 300, -- Reduce time for mapped sequence completion
+    ttimeoutlen = 0,  -- Instant response for key sequences
+
+    -- Buffer handling
+    hidden = true,
+
+    -- faster scroll
+    scrolloff = 5,
+    sidescrolloff = 5,
+    smoothscroll = false,
 }
 
 -- set winbar colour
@@ -53,6 +71,10 @@ vim.api.nvim_set_hl(0, 'WinBar', { fg = '#797979', bg = bg })
 vim.opt.shortmess:append "c"
 vim.opt.iskeyword:append "-"                    -- hyphenated words recognized by searches
 vim.opt.formatoptions:remove({ "c", "r", "o" }) -- don't insert the current comment leader automatically for auto-wrapping comments using 'textwidth', hitting <Enter> in insert mode, or hitting 'o' or 'O' in normal mode.
+
+-- disable netrw
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
 
 for k, v in pairs(options) do
     vim.opt[k] = v
@@ -75,7 +97,6 @@ vim.api.nvim_create_autocmd({ "TermOpen", "BufEnter" }, {
         end
     end
 })
-
 
 -- -- Put anything you want to happen only in Neovide here
 -- if vim.g.neovide then

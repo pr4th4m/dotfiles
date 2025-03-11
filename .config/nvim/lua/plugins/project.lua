@@ -2,7 +2,8 @@ return {
   "ahmedkhalf/project.nvim",
   branch = "main",
   lazy = true,
-  -- keys = { "<leader>fp" },
+  keys = { "<leader>fp" },
+  event = { "BufReadPre", "BufNewFile" },
   config = function()
     require("project_nvim").setup({
       ---@usage set to false to disable project.nvim.
@@ -36,6 +37,10 @@ return {
 
       ---@usage list of lsp client names to ignore when using **lsp** detection. eg: { "efm", ... }
       ignore_lsp = {},
+
+      -- Don't calculate root dir on specific directories
+      -- Ex: { "~/.cargo/*", ... }
+      exclude_dirs = { "~/go/*", "/usr/local/Cellar/*" },
 
       ---@type string
       ---@usage path to store the project history for use in telescope

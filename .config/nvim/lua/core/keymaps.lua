@@ -326,9 +326,9 @@ keymap("n", "<leader>gs", "<cmd>DiffviewOpen<cr>", { desc = "[S]tatus Open" })
 keymap("n", "<leader>ge", "<cmd>DiffviewClose<cr>", { desc = "status [C]lose" })
 keymap("n", "<leader>gp", ":exe 'Git push origin ' . FugitiveHead()<cr>", { desc = "[P]ush" })
 keymap("n", "<leader>gl", ":exe 'Git pull origin ' . FugitiveHead()<cr>", { desc = "pul[L]" })
-keymap("n", "<leader>gb", "<cmd>FzfLua git_branches<CR>", { desc = "[B]ranch" })
-keymap("n", "<leader>gt", "<cmd>FzfLua git_stash<CR>", { desc = "s[T]ash" })
-keymap("n", "<leader>gc", "<cmd>FzfLua git_commits<CR>", { desc = "[C]ommit" })
+keymap("n", "<leader>gb", "<cmd>Telescope git_branches<CR>", { desc = "[B]ranch" })
+keymap("n", "<leader>gt", "<cmd>Telescope git_stash<CR>", { desc = "s[T]ash" })
+keymap("n", "<leader>gc", "<cmd>Telescope git_commits<CR>", { desc = "[C]ommit" })
 keymap("n", "<leader>gB", "<cmd>Git blame<CR>", { desc = "[B]lame" })
 keymap("n", "<leader>go", "<cmd>Git log<CR>", { desc = "l[O]g" })
 keymap("n", "<leader>gx", "<cmd>silent GBrowse<CR>", { desc = "Open file in browser" })
@@ -418,7 +418,8 @@ keymap("n", "<leader>cd", ":DiffWindow<CR>", { desc = "Diff multiple windows" })
 
 -- notes
 keymap("n", "<leader>e",
-	":OpenInFloat /Users/prathameshnevagi/Library/CloudStorage/OneDrive-QuickHealTechnologiesLtd/quicknote/quicknote.md<CR>",
+	-- ":OpenInFloat /Users/prathameshnevagi/Library/CloudStorage/OneDrive-QuickHealTechnologiesLtd/quicknote/quicknote.md<CR>",
+	":tabnew /Users/prathameshnevagi/Library/CloudStorage/OneDrive-QuickHealTechnologiesLtd/quicknote/quicknote.md<CR>",
 	{ desc = "Quick Notes" })
 keymap("n", "<leader>fn",
 	":Telescope find_files cwd=/Users/prathameshnevagi/notes layout_config={width=0.6,height=0.7}<CR>",

@@ -117,16 +117,16 @@ local function open_file_in_float(file_path)
   -- vim.api.nvim_buf_set_keymap(buf, 'n', 'q', '<Cmd>close<CR>', { noremap = true, silent = true })
 end
 
-local float_window = false
-vim.api.nvim_create_user_command("OpenInFloat", function(opts)
-  if float_window == false then
-    open_file_in_float(opts.args) -- Pass the file path argument
-    float_window = true
-  else
-    float_window = false
-    vim.cmd('close')
-  end
-end, { nargs = 1 })               -- Ensure exactly one argument is passed
+-- local float_window = false
+-- vim.api.nvim_create_user_command("OpenInFloat", function(opts)
+--   if float_window == false then
+--     open_file_in_float(opts.args) -- Pass the file path argument
+--     float_window = true
+--   else
+--     float_window = false
+--     vim.cmd('close')
+--   end
+-- end, { nargs = 1 })               -- Ensure exactly one argument is passed
 
 -- diff multiple files
 local diff_window = false

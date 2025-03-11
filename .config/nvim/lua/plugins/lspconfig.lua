@@ -47,6 +47,9 @@ return {
 
       vim.diagnostic.config(config)
 
+      -- disable unused semantic tokens
+      vim.lsp.handlers["textDocument/semanticTokens/full"] = function() end
+
       -- vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
       --   border = "rounded",
       -- })
@@ -132,6 +135,7 @@ return {
         on_attach = M.on_attach,
         -- capabilities = M.capabilities,
         capabilities = require('blink.cmp').get_lsp_capabilities(M.capabilities)
+        -- capabilities = require('cmp_nvim_lsp').default_capabilities(M.capabilities)
       }
       server = vim.split(server, "@")[1]
       lspconfig[server].setup(opts)
