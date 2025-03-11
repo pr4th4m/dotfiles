@@ -11,6 +11,9 @@ require "core.keymaps"
 -- load plugins with lazy
 require "core.lazy"
 
+-- custom tabline
+vim.opt.tabline = "%!v:lua.require('core.utils.tabline').setup()"
+
 -- lazy load utils
 vim.api.nvim_create_autocmd("CmdUndefined", {
     pattern = { "OpenBookmark", "ZoxideList" },

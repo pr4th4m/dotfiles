@@ -2,7 +2,8 @@ return {
   "ahmedkhalf/project.nvim",
   branch = "main",
   lazy = true,
-  keys = { "<leader>fp" },
+  -- keys = { "<leader>fp" },
+  cmd = { "Telescope project" },
   event = { "BufReadPre", "BufNewFile" },
   config = function()
     require("project_nvim").setup({

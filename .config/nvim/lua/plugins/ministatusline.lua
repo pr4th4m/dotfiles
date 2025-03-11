@@ -3,6 +3,20 @@ return {
   version = false,
   event = { "UIEnter" },
   config = function()
+    -- this is neovim default tabline
+    local function set_default_tabline_colors()
+      -- Get colors from current theme
+      local normal = vim.api.nvim_get_hl(0, { name = 'Normal' })
+      local cursor_line = vim.api.nvim_get_hl(0, { name = 'CursorLine' })
+      local pmenu_sel = vim.api.nvim_get_hl(0, { name = 'PmenuSel' })
+
+      -- Set tabline colors based on theme colors
+      vim.api.nvim_set_hl(0, 'TabLineSel', { fg = normal.fg, bg = cursor_line.bg })
+      vim.api.nvim_set_hl(0, 'TabLine', { fg = normal.fg, bg = '#1c1c1c' })
+
+      vim.api.nvim_set_hl(0, 'TabLineFill', { bg = normal.bg })
+    end
+
     local function setup_mini_statusline_theme()
       -- Define colors for different modes
       vim.api.nvim_set_hl(0, 'MiniStatuslineModeNormal', { fg = '#b9b9b9', bg = '#696969' })
@@ -27,12 +41,14 @@ return {
 
     -- Call the function to set up the theme
     setup_mini_statusline_theme()
+    set_default_tabline_colors()
 
     -- Make sure the theme is applied whenever the colorscheme changes
     vim.api.nvim_create_autocmd('ColorScheme', {
       pattern = '*',
       callback = function()
         setup_mini_statusline_theme()
+        set_default_tabline_colors()
       end
     })
 
@@ -73,7 +89,7 @@ return {
           end
 
           -- local filename      = statusline.section_filename({ trunc_width = 140 })
-          local fileinfo      = statusline.section_fileinfo({ trunc_width = 120 })
+          -- local fileinfo      = statusline.section_fileinfo({ trunc_width = 120 })
           local location      = statusline.section_location({ trunc_width = 75 })
           local search        = statusline.section_searchcount({ trunc_width = 75 })
 
@@ -83,7 +99,7 @@ return {
             '%<', -- Mark general truncate point
             -- { hl = 'MiniStatuslineFilename', strings = { filename } },
             '%=', -- End left alignment
-            { hl = 'MiniStatuslineFileinfo', strings = { git_branch(), root_project(), fileinfo } },
+            { hl = 'MiniStatuslineFileinfo', strings = { git_branch(), root_project() } },
             { hl = mode_hl,                  strings = { search, location } },
           })
         end
