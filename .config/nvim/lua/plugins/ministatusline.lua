@@ -11,7 +11,7 @@ return {
       local pmenu_sel = vim.api.nvim_get_hl(0, { name = 'PmenuSel' })
 
       -- Set tabline colors based on theme colors
-      vim.api.nvim_set_hl(0, 'TabLineSel', { fg = normal.fg, bg = cursor_line.bg })
+      vim.api.nvim_set_hl(0, 'TabLineSel', { fg = normal.fg, bg = '#696969', bold = true })
       vim.api.nvim_set_hl(0, 'TabLine', { fg = normal.fg, bg = '#1c1c1c' })
 
       vim.api.nvim_set_hl(0, 'TabLineFill', { bg = normal.bg })
