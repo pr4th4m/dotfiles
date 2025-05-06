@@ -1,7 +1,7 @@
-kitty
 awscli
 bat
 btop
+calc
 colima
 coreutils
 delve
@@ -16,6 +16,7 @@ git-delta
 glow
 go
 helm
+hey
 htop
 jdtls
 jq
@@ -28,6 +29,7 @@ luarocks
 maven
 moreutils
 ncdu
+neovim
 noahgorstein/tap/jqp
 node
 nvm
@@ -38,9 +40,9 @@ sk
 sshs
 stern
 telnet
+tldr
 trash
 unar
-utf8proc
 vegeta
 watch
 websocat
@@ -50,6 +52,4 @@ yazi
 yq
 zoxide
 zsh
-vimr
-keepassxc
-alacritty
+kitty
