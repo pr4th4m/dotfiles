@@ -142,6 +142,8 @@ return {
     end
 
     lspconfig.gopls.setup({
+      on_attach = M.on_attach,
+      capabilities = require('blink.cmp').get_lsp_capabilities(M.capabilities),
       root_dir = require('lspconfig.util').root_pattern("go.mod", ".git"),
       settings = {
         gopls = {

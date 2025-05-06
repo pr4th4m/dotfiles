@@ -99,7 +99,7 @@ return {
             '%<', -- Mark general truncate point
             -- { hl = 'MiniStatuslineFilename', strings = { filename } },
             '%=', -- End left alignment
-            { hl = 'MiniStatuslineFileinfo', strings = { git_branch(), root_project() } },
+            { hl = 'MiniStatuslineFileinfo', strings = { root_project(), git_branch() } },
             { hl = mode_hl,                  strings = { search, location } },
           })
         end

@@ -1,7 +1,8 @@
 return {
   'saghen/blink.cmp',
-  version = '*',
-  event = "InsertEnter",
+  -- version = '*',
+  version = '1.*',
+  -- event = "InsertEnter",
   opts = {
     -- cmdline = {
     --   sources = function()
@@ -75,5 +76,12 @@ return {
       },
     },
   },
-  opts_extend = { "sources.default" }
+  opts_extend = { "sources.default" },
+  -- config = function()
+  --   vim.lsp.config('*', {
+  --     capabilities = require('blink.cmp').get_lsp_capabilities(),
+  --     root_markers = { '.git' },
+  --   })
+  --   vim.lsp.enable('go')
+  -- end
 }

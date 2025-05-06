@@ -22,7 +22,7 @@ plugins:
       # - -n
       - $NAMESPACE
       # - --context
-      - $CONTEXT
+      # - $CONTEXT
   shell-in-new-tab:
     shortCut: Shift-G
     confirm: false
