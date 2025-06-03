@@ -355,8 +355,8 @@ keymap("n", "<leader>fx", ":ZoxideList<cr>", { desc = "Open with zoxide dir" })
 -- keymap("i", "<C-b>", ":ToggleTerm direction=float name=float<CR>", { desc = "[F]loat term" })
 
 -- Http rest client
-keymap("n", "<leader>rr", "<cmd>Rest run<CR>", { desc = "[R]equest" })
-keymap("n", "<leader>ro", "<cmd>Rest open<CR>", { desc = "[O]pen request window" })
+-- keymap("n", "<leader>rr", "<cmd>Rest run<CR>", { desc = "[R]equest" })
+-- keymap("n", "<leader>ro", "<cmd>Rest open<CR>", { desc = "[O]pen request window" })
 
 -- -- zk cli
 -- keymap("n", "<leader>zn", "<Cmd>ZkNew { dir = vim.fn.expand('%:p:h'), title = vim.fn.input('Title: ') }<CR>", opts)
