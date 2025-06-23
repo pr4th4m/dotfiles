@@ -104,8 +104,8 @@ keymap("n", "<C-o>", "<C-o>zz")
 keymap("n", "%", "%zz")
 keymap("n", "*", "*zz")
 keymap("n", "#", "#zz")
-keymap("n", "ft", "zz", opts)
-keymap("n", "ff", "zt", opts)
+keymap("n", "ft", "zt", opts)
+keymap("n", "ff", "zz", opts)
 keymap("i", "<c-l>", "<c-o>zt", opts)
 keymap("n", "g<space>", "i<space><esc>", opts)
 
@@ -355,8 +355,8 @@ keymap("n", "<leader>fx", ":ZoxideList<cr>", { desc = "Open with zoxide dir" })
 -- keymap("i", "<C-b>", ":ToggleTerm direction=float name=float<CR>", { desc = "[F]loat term" })
 
 -- Http rest client
--- keymap("n", "<leader>rr", "<cmd>Rest run<CR>", { desc = "[R]equest" })
--- keymap("n", "<leader>ro", "<cmd>Rest open<CR>", { desc = "[O]pen request window" })
+keymap("n", "<leader>rr", "<cmd>Rest run<CR>", { desc = "[R]equest" })
+keymap("n", "<leader>ro", "<cmd>Rest open<CR>", { desc = "[O]pen request window" })
 
 -- -- zk cli
 -- keymap("n", "<leader>zn", "<Cmd>ZkNew { dir = vim.fn.expand('%:p:h'), title = vim.fn.input('Title: ') }<CR>", opts)
@@ -417,13 +417,18 @@ keymap("n", "<leader>/", ":<cmd>noh<cr><cr>", { desc = "Clear search selection" 
 keymap("n", "<leader>cd", ":DiffWindow<CR>", { desc = "Diff multiple windows" })
 
 -- notes
-keymap("n", "<leader>e",
+keymap("n", "<leader>q",
 	-- ":OpenInFloat /Users/prathameshnevagi/Library/CloudStorage/OneDrive-QuickHealTechnologiesLtd/quicknote/quicknote.md<CR>",
-	":tabnew /Users/prathameshnevagi/Library/CloudStorage/OneDrive-QuickHealTechnologiesLtd/quicknote/quicknote.md<CR>",
+	":tabnew /Users/prathameshnevagi/Library/CloudStorage/OneDrive-QuickHealTechnologiesLtd/notes/quicknote/quicknote.md<CR>",
 	{ desc = "Quick Notes" })
-keymap("n", "<leader>fn",
+keymap("n", "<leader>s", function()
+	local datetime = os.date("%Y-%m-%d_%H-%M-%S")
+	local filename = "/Users/prathameshnevagi/Library/CloudStorage/OneDrive-QuickHealTechnologiesLtd/notes/scratch/" .. datetime .. ".md"
+	vim.cmd("tabnew " .. filename)
+end, { desc = "[S]cratch Notes" })
+keymap("n", "<leader>n",
+	"<cmd>lua require('telescope.builtin').find_files({cwd='/Users/prathameshnevagi/Library/CloudStorage/OneDrive-QuickHealTechnologiesLtd/notes', cmd = 'fd --color=never --type f --follow --exclude .git --strip-cwd-prefix -X ls -t', layout_config={width=0.6,height=0.7}})<CR>",
+	{ desc = "[N]otes list" })
+keymap("n", "<leader>N",
 	":Telescope find_files cwd=/Users/prathameshnevagi/notes layout_config={width=0.6,height=0.7}<CR>",
-	{ desc = "[N]otes" })
-keymap("n", "<leader>fs",
-	"<cmd>lua require('telescope.builtin').find_files({cwd='/Users/prathameshnevagi/Library/CloudStorage/OneDrive-QuickHealTechnologiesLtd/scratch', cmd = 'fd --color=never --type f --follow --exclude .git --strip-cwd-prefix -X ls -t', layout_config={width=0.6,height=0.7}})<CR>",
-	{ desc = "[S]cratch notes" })
+	{ desc = "Github [N]otes" })

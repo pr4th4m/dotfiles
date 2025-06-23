@@ -117,11 +117,12 @@ return {
     local servers = {
       "bashls",
       "dockerls",
-      "gopls",
+      -- "gopls",
       "jsonls",
       "yamlls",
       "lua_ls",
-      "pyright",
+      -- "pyright",
+      "ruff",
       "marksman",
       "ts_ls",
       "lemminx",
@@ -152,6 +153,29 @@ return {
           staticcheck = false,
         }
       }
+    })
+
+    local util = require 'lspconfig.util'
+    lspconfig.pyright.setup({
+      on_attach = M.on_attach,
+      capabilities = require('blink.cmp').get_lsp_capabilities(M.capabilities),
+      before_init = function(_, config)
+        local venv_path = config.root_dir .. "/venv/bin/python"
+        if vim.fn.executable(venv_path) == 1 then
+          config.settings.python.pythonPath = venv_path
+        else
+          local parent_venv = util.find_git_ancestor(config.root_dir) .. "/venv/bin/python"
+          if vim.fn.executable(parent_venv) == 1 then
+            config.settings.python.pythonPath = parent_venv
+          end
+        end
+      end,
+      root_dir = function(fname)
+        return util.find_git_ancestor(fname)
+      end,
+      -- root_dir = function(fname)
+      --   return util.root_pattern("requirements.txt", ".git")(fname)
+      -- end,
     })
 
     return M

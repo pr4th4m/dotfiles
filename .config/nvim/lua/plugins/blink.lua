@@ -27,7 +27,7 @@ return {
     completion = {
       menu = {
         draw = {
-          columns = { { 'label', 'label_description', gap = 0.5 }, { 'kind' } },
+          columns = { { 'label', 'label_description', gap = 1 }, { 'kind' } },
           -- components = {
           --   kind = {
           --     ellipsis = false,
