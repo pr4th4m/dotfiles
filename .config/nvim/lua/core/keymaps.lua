@@ -256,6 +256,7 @@ keymap("n", "<leader>la", "<cmd>lua vim.lsp.buf.code_action()<cr>", { desc = "co
 -- keymap("n", "<leader>la", "<cmd>FzfLua lsp_code_actions<cr>", { desc = "code [A]ction" })
 keymap("n", "<leader>lr", "<cmd>lua vim.lsp.buf.rename()<cr>", { desc = "[R]ename" })
 keymap("n", "<leader>lf", "<cmd>lua vim.lsp.buf.format{ async = true }<cr>", { desc = "[F]ormat" })
+keymap("n", "<leader>lm", "<cmd>silent %!jq -c .<cr>", { desc = "Json minified" })
 
 -- FZF
 -- keymap("n", "<leader>ff", "<cmd>FzfLua files<CR>", { desc = "find [F]iles" })
@@ -343,6 +344,7 @@ keymap("n", "<leader>ghh", "<cmd>DiffviewFileHistory %<cr>", { desc = "diff file
 keymap("n", "<leader>tt", ":NvimTreeToggle<CR>", { desc = "Toggle Nvim Tr[E]e" })
 keymap("n", "-", ":Oil<cr>", { desc = "Open Oil" })
 keymap("n", "_", ":vsp | Oil<cr>", { desc = "Open Oil" })
+keymap("n", "<leader>~", ":vsp | Oil ~/<cr>", { desc = "Open Oil in home directory" })
 keymap("n", "<leader>fx", ":ZoxideList<cr>", { desc = "Open with zoxide dir" })
 
 
@@ -419,16 +421,16 @@ keymap("n", "<leader>cd", ":DiffWindow<CR>", { desc = "Diff multiple windows" })
 -- notes
 keymap("n", "<leader>q",
 	-- ":OpenInFloat /Users/prathameshnevagi/Library/CloudStorage/OneDrive-QuickHealTechnologiesLtd/quicknote/quicknote.md<CR>",
-	":tabnew /Users/prathameshnevagi/Library/CloudStorage/OneDrive-QuickHealTechnologiesLtd/notes/quicknote/quicknote.md<CR>",
+	":tabnew ~/Desktop/notes/quicknote/quicknote.md<CR>",
 	{ desc = "Quick Notes" })
 keymap("n", "<leader>s", function()
 	local datetime = os.date("%Y-%m-%d_%H-%M-%S")
-	local filename = "/Users/prathameshnevagi/Library/CloudStorage/OneDrive-QuickHealTechnologiesLtd/notes/scratch/" .. datetime .. ".md"
+	local filename = "~/Desktop/notes/scratch/" .. datetime .. ".md"
 	vim.cmd("tabnew " .. filename)
 end, { desc = "[S]cratch Notes" })
 keymap("n", "<leader>n",
-	"<cmd>lua require('telescope.builtin').find_files({cwd='/Users/prathameshnevagi/Library/CloudStorage/OneDrive-QuickHealTechnologiesLtd/notes', cmd = 'fd --color=never --type f --follow --exclude .git --strip-cwd-prefix -X ls -t', layout_config={width=0.6,height=0.7}})<CR>",
+	"<cmd>lua require('telescope.builtin').find_files({cwd='~/Desktop/notes', cmd = 'fd --color=never --type f --follow --exclude .git --strip-cwd-prefix -X ls -t', layout_config={width=0.6,height=0.7}})<CR>",
 	{ desc = "[N]otes list" })
 keymap("n", "<leader>N",
-	":Telescope find_files cwd=/Users/prathameshnevagi/notes layout_config={width=0.6,height=0.7}<CR>",
+	":Telescope find_files cwd=~/workspace/notes layout_config={width=0.6,height=0.7}<CR>",
 	{ desc = "Github [N]otes" })
