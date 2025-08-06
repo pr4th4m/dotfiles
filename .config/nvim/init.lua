@@ -20,6 +20,7 @@ vim.api.nvim_create_autocmd("CmdUndefined", {
     once = true,
     callback = function()
         require "core.utils.bookmark"
+        require "core.utils.zoxide"
     end,
 })
 vim.api.nvim_create_autocmd("CmdUndefined", {
@@ -33,7 +34,7 @@ vim.api.nvim_create_autocmd({ "BufReadPre", "BufNewFile" }, {
     once = true,
     callback = function()
         require "core.utils.utils"
-        require "core.utils.auto_run"
         require "core.utils.send_text"
+        -- require "core.utils.auto_run"
     end,
 })

@@ -60,7 +60,7 @@ local options = {
     hidden = true,
 
     -- faster scroll
-    scrolloff = 5,
+    scrolloff = 10,
     sidescrolloff = 5,
     smoothscroll = false,
 }

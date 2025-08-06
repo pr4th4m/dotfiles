@@ -37,6 +37,11 @@ keymap("n", "<leader>k", "<C-w><C-q>", opts)
 -- keymap("n", "<leader>k", ":ConfirmQuit<CR>", opts)
 keymap("n", "<c-s-o>", "<c-^>", opts)
 
+-- Resize window (decrease/increase height/width)
+keymap('n', '<C-S-k>', '<C-w>+', { desc = 'Increase window height' })
+keymap('n', '<C-S-j>', '<C-w>-', { desc = 'Decrease window height' })
+keymap('n', '<C-S-l>', '<C-w>>', { desc = 'Increase window width' })
+keymap('n', '<C-S-h>', '<C-w><', { desc = 'Decrease window width' })
 
 -- better up/down
 keymap({ "n", "x" }, "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
@@ -104,8 +109,8 @@ keymap("n", "<C-o>", "<C-o>zz")
 keymap("n", "%", "%zz")
 keymap("n", "*", "*zz")
 keymap("n", "#", "#zz")
-keymap("n", "ft", "zt", opts)
-keymap("n", "ff", "zz", opts)
+keymap("n", "ft", "zz", opts)
+keymap("n", "ff", "zt", opts)
 keymap("i", "<c-l>", "<c-o>zt", opts)
 keymap("n", "g<space>", "i<space><esc>", opts)
 
@@ -219,7 +224,7 @@ keymap("n", "<leader>fm", "<cmd>Telescope marks<CR>", { desc = "[M]arks" })
 -- keymap("n", "<leader>fc", "<cmd>Telescope commands<CR>", opts)
 keymap("n", "<leader>ft", "<cmd>Telescope builtin<CR>", { desc = "built[I]n" })
 keymap("n", "<leader>fp", "<cmd>Telescope projects<CR>", { desc = "[P]rojects" })
-keymap("n", "<leader>fz", "<cmd>Telescope spell_suggest<CR>", { desc = "[S]pelling" })
+keymap("n", "<leader>f=", "<cmd>Telescope spell_suggest<CR>", { desc = "[S]pelling" })
 keymap("n", "<leader>fb", "<cmd>Telescope current_buffer_fuzzy_find<CR>", { desc = "find in current buffer" })
 -- keymap("n", "<leader>tt", "<cmd>Telescope telescope-tabs list_tabs<cr>", { desc = "list all tabs" })
 keymap("n", "<leader>fd", "<cmd>DeleteAllBuffers<cr>", { desc = "delete all buffers" })
@@ -345,7 +350,8 @@ keymap("n", "<leader>tt", ":NvimTreeToggle<CR>", { desc = "Toggle Nvim Tr[E]e" }
 keymap("n", "-", ":Oil<cr>", { desc = "Open Oil" })
 keymap("n", "_", ":vsp | Oil<cr>", { desc = "Open Oil" })
 keymap("n", "<leader>~", ":vsp | Oil ~/<cr>", { desc = "Open Oil in home directory" })
-keymap("n", "<leader>fx", ":ZoxideList<cr>", { desc = "Open with zoxide dir" })
+keymap("n", "<leader>fz", ":ZoxideList<cr>", { desc = "Open with zoxide dir" })
+keymap('n', '<leader>e', ':Neotree toggle<CR>', { desc = 'Toggle Neo-tree Explorer' })
 
 
 -- -- Toggle term mapping

@@ -21,8 +21,8 @@ plugins:
       - $FILTER
       # - -n
       - $NAMESPACE
-      # - --context
-      # - $CONTEXT
+      - --context
+      - $CONTEXT
   shell-in-new-tab:
     shortCut: Shift-G
     confirm: false
@@ -41,6 +41,8 @@ plugins:
       - "-it"
       - "--namespace"
       - $NAMESPACE
+      - --context
+      - $CONTEXT
       - $NAME
       - "--"
       # - "sh"

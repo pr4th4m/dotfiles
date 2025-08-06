@@ -37,9 +37,10 @@ return {
         require("mason-lspconfig").setup({
             ensure_installed = servers,
             automatic_installation = true,
-            automatic_enable = {
-                exclude = { "gopls", "pyright" }
-            }
+            -- automatic_enable = {
+            --     exclude = { "gopls", "pyright", "marksman" }
+            -- }
+            automatic_enable = false,
         })
 
         -- local lspconfig = require("lspconfig")

@@ -2,7 +2,7 @@ return {
   'saghen/blink.cmp',
   -- version = '*',
   version = '1.*',
-  -- event = "InsertEnter",
+  event = "InsertEnter",
   opts = {
     -- cmdline = {
     --   sources = function()
