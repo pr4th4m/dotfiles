@@ -1,7 +1,7 @@
 -- change colour scheme
 -- local colours = { 'github_dark_dimmed', 'habamax', 'github_dark_colorblind', 'github_dark_tritanopia', 'github_dark',
 --   'default', 'lunaperche' }
-local colours = { 'habamax', 'default', 'lunaperche' }
+local colours = { 'habamax', 'onedark', 'default', 'lunaperche' }
 
 local function previous(index, reset_index, condition_index)
   if index > condition_index then
