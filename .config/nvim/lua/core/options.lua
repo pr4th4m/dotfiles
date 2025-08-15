@@ -63,6 +63,13 @@ local options = {
     scrolloff = 10,
     sidescrolloff = 5,
     smoothscroll = false,
+
+    -- show border for lsp
+    winborder = 'rounded',
+
+    -- Show whitespace characters
+    list = true,
+    listchars = { tab = '» ', trail = '·', nbsp = '␣' }
 }
 
 -- set winbar colour
