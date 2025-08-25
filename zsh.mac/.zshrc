@@ -35,6 +35,7 @@ zstyle ':completion:*' matcher-list 'm:{[:lower:]}={[:upper:]}'
 # useful alias
 # https://hasseg.org/trash/
 alias rm='trash'
+
 alias rg='rg --hyperlink-format=kitty'
 # alias ls='gls --color --group-directories-first --hyperlink=auto'
 # alias ll='gls -lh --color --group-directories-first --hyperlink=auto'
@@ -69,13 +70,16 @@ export FZF_ALT_C_OPTS="--height 90% --preview 'tree -C {} | head -500'"
 ##### Required paths ######
 
 # Home brew installation path
-export PATH="/usr/local/bin:$PATH"
+export PATH="/opt/homebrew/bin:$PATH"
+
+# https://hasseg.org/trash/
+export PATH="/opt/homebrew/opt/trash/bin:$PATH"
 
 export PATH="/usr/local/opt/curl/bin:$PATH"
 export PATH="/usr/local/opt/openssl@1.1/bin:$PATH"
 
 # Rust package manager
-export PATH="$HOME/.cargo/bin:$PATH"
+# export PATH="$HOME/.cargo/bin:$PATH"
 
 # Set python path for user workspace
 # NOTE: pip install <package> --user

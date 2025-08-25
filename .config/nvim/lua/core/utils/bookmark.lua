@@ -54,16 +54,16 @@ vim.api.nvim_create_user_command("Bookmark", function()
   bookmark_current_file()
 end, {})
 
--- Telescope integration
-local actions = require('telescope.actions')
-local action_state = require('telescope.actions.state')
-
-local function open_bookmark(prompt_bufnr)
-  local selection = action_state.get_selected_entry()
-  actions.close(prompt_bufnr)
-  vim.cmd('edit ' .. selection.value)
-end
-
+-- -- Telescope integration
+-- local actions = require('telescope.actions')
+-- local action_state = require('telescope.actions.state')
+--
+-- local function open_bookmark(prompt_bufnr)
+--   local selection = action_state.get_selected_entry()
+--   actions.close(prompt_bufnr)
+--   vim.cmd('edit ' .. selection.value)
+-- end
+--
 -- utils/bookmarks.lua integration for telescope
 local function show_bookmarks_in_telescope()
   local bookmarks = load_bookmarks()
@@ -86,36 +86,35 @@ local function show_bookmarks_in_telescope()
   }):find()
 end
 
--- local fzf = require('fzf-lua')
--- local actions = require("fzf-lua.actions")
---
--- -- Function to show bookmarks with fzf-lua
--- local function show_bookmarks_in_fzf(bookmarks)
---   fzf.fzf_exec(
---     bookmarks,
---     {
---       prompt  = 'Bookmarks> ',
---       winopts = {
---         width  = 0.5,
---         height = 0.6,
---       },
---       actions = {
---         ['ctrl-d'] = function(selected)
---           remove_bookmark(selected[1]) -- Remove the selected bookmark
---         end,
---         ["enter"]  = actions.file_edit_or_qf,
---         ["ctrl-x"] = actions.file_split,
---         ["ctrl-v"] = actions.file_vsplit,
---         ["ctrl-t"] = actions.file_tabedit,
---       },
---     }
---   )
--- end
---
--- local bookmarks = load_bookmarks()
+local fzf = require('fzf-lua')
+local actions = require("fzf-lua.actions")
+-- Function to show bookmarks with fzf-lua
+local function show_bookmarks_in_fzf(bookmarks)
+  fzf.fzf_exec(
+    bookmarks,
+    {
+      prompt  = 'Bookmarks> ',
+      winopts = {
+        width  = 0.5,
+        height = 0.6,
+      },
+      actions = {
+        ['ctrl-d'] = function(selected)
+          remove_bookmark(selected[1]) -- Remove the selected bookmark
+        end,
+        ["enter"]  = actions.file_edit_or_qf,
+        ["ctrl-x"] = actions.file_split,
+        ["ctrl-v"] = actions.file_vsplit,
+        ["ctrl-t"] = actions.file_tabedit,
+      },
+    }
+  )
+end
+
+local bookmarks = load_bookmarks()
 vim.api.nvim_create_user_command("OpenBookmark", function()
-  -- show_bookmarks_in_fzf(bookmarks)
-  show_bookmarks_in_telescope()
+  show_bookmarks_in_fzf(bookmarks)
+  -- show_bookmarks_in_telescope()
 end, {})
 
 

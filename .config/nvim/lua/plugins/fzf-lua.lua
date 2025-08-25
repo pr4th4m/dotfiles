@@ -12,34 +12,42 @@ return {
     require("fzf-lua").setup({
       "max-perf",
       -- fzf_bin  = 'sk',
-      defaults = {
+      defaults   = {
         git_icons   = false, -- show git icons?
         file_icons  = false, -- show file icons (true|"devicons"|"mini")?
         color_icons = false, -- colorize file|git icons
+        previewer = 'bat',
       },
-      winopts  = {
+      winopts    = {
+        default = 'cat',
         width   = 0.8,
-        height  = 0.9,
+        height  = 0.7,
         preview = {
           hidden       = "nohidden",
-          vertical     = "up:45%",
-          horizontal   = "right:50%",
+          vertical     = "down:45%",
+          horizontal   = "right:60%",
           layout       = "flex",
           flip_columns = 120,
           delay        = 10,
           winopts      = { number = false },
         },
       },
-      fzf_opts = {
+      fzf_opts   = {
         ['--cycle'] = true,
         ['--no-multi'] = false,
         ['--multi'] = true,
       },
-      lsp      = {
+      lsp        = {
         jump1 = true,
         jump1_action = actions.file_edit,
       },
-      keymap   = {
+      previewers = {
+        bat = {
+          cmd  = "bat",
+          args = "--color=always --theme=Nord --style=numbers,changes",
+        },
+      },
+      keymap     = {
         builtin = {
           ["<C-/>"]    = "toggle-help",
           ["<F2>"]     = "toggle-fullscreen",
@@ -53,22 +61,23 @@ return {
           ["<S-left>"] = "preview-page-reset",
         },
         fzf = {
-          ["ctrl-z"]   = "abort",
-          ["ctrl-f"]   = "half-page-down",
-          ["ctrl-b"]   = "half-page-up",
+          ["ctrl-z"] = "abort",
+          ["ctrl-f"] = "half-page-down",
+          ["ctrl-b"] = "half-page-up",
           -- ["ctrl-a"] = "beginning-of-line",
           -- ["ctrl-e"] = "end-of-line",
-          ["ctrl-a"]   = "toggle-all",
-          ["ctrl-e"]   = "toggle",
+          ["ctrl-a"] = "toggle-all",
+          ["ctrl-e"] = "toggle",
           -- Only valid with fzf previewers (bat/cat/git/etc)
-          ["f3"]       = "toggle-preview-wrap",
-          ["f4"]       = "toggle-preview",
-          ["ctrl-d"]   = "preview-page-down",
-          ["ctrl-u"]   = "preview-page-up",
-          ["ctrl-q"]   = "select-all+accept",
+          ["f3"]     = "toggle-preview-wrap",
+          ["f4"]     = "toggle-preview",
+          ["ctrl-d"] = "preview-page-down",
+          ["ctrl-u"] = "preview-page-up",
+          ["ctrl-q"] = "select-all+accept",
         },
       },
-      files    = {
+      files      = {
+        default   = 'cat',
         find_opts = [[-type f -not -path '*/\.git/*' -printf '%P\n']],
         rg_opts   = [[--color=never --files --follow -g "!.git"]],
         fd_opts   = [[--color=never --type f --follow --exclude .git]],
@@ -88,7 +97,7 @@ return {
           --   ["ctrl-y"]    = function(selected) print(selected[1]) end,
         }
       },
-      grep     = {
+      grep       = {
         fzf_bin = 'fzf',
         actions = {
           -- actions inherit from 'actions.files' and merge
@@ -104,7 +113,7 @@ return {
           -- ["ctrl-r"]   = { actions.toggle_ignore }
         },
       },
-      buffers  = {
+      buffers    = {
         keymap = {
           builtin = {
             ["<C-d>"] = false
