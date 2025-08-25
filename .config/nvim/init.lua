@@ -7,8 +7,8 @@ vim.api.nvim_set_hl(0, 'WinSeparator', { fg = '#434343', bg = bg })
 -- standard
 require "core.options"
 require "core.keymaps"
-require "core.keymaps_fzflua"
--- require "core.keymaps_telescope"
+require "core.keymaps_telescope"
+-- require "core.keymaps_fzflua"
 
 -- load plugins with lazy
 require "core.lazy"

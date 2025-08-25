@@ -1,9 +1,9 @@
 return {
   "ahmedkhalf/project.nvim",
   branch = "main",
-  -- lazy = true,
-  keys = { "<leader>fp" },
-  -- cmd = { "Telescope project" },
+  lazy = true,
+  cmd = { "Telescope project" },
+  -- keys = { "<leader>fp" },
   event = { "BufReadPre", "BufNewFile" },
   config = function()
     require("project_nvim").setup({
@@ -48,36 +48,36 @@ return {
       datapath = vim.fn.stdpath("data"),
     })
 
-    -- list projects in fzflua
-    vim.keymap.set("n", "<leader>fp", function()
-      local contents = require("project_nvim").get_recent_projects()
-      local reverse = {}
-      for i = #contents, 1, -1 do
-        reverse[#reverse + 1] = contents[i]
-      end
-      require("fzf-lua").fzf_exec(reverse, {
-        prompt = 'Switch Projects> ',
-        winopts = {
-          width  = 0.5,
-          height = 0.6,
-        },
-        sort_lastused = true,
-        actions = {
-          ["default"] = function(e)
-            vim.cmd.cd(e[1])
-            vim.cmd("FzfLua files cwd=" .. e[1])
-          end,
-          ["ctrl-d"] = function(x)
-            local choice = vim.fn.confirm("Delete '" .. #x .. "' projects? ", "&Yes\n&No", 2)
-            if choice == 1 then
-              local history = require("project_nvim.utils.history")
-              for _, v in ipairs(x) do
-                history.delete_project({ value = v })
-              end
-            end
-          end,
-        },
-      })
-    end, { silent = true, desc = "Switch project" })
+    -- -- list projects in fzflua
+    -- vim.keymap.set("n", "<leader>fp", function()
+    --   local contents = require("project_nvim").get_recent_projects()
+    --   local reverse = {}
+    --   for i = #contents, 1, -1 do
+    --     reverse[#reverse + 1] = contents[i]
+    --   end
+    --   require("fzf-lua").fzf_exec(reverse, {
+    --     prompt = 'Switch Projects> ',
+    --     winopts = {
+    --       width  = 0.5,
+    --       height = 0.6,
+    --     },
+    --     sort_lastused = true,
+    --     actions = {
+    --       ["default"] = function(e)
+    --         vim.cmd.cd(e[1])
+    --         vim.cmd("FzfLua files hidden=false cwd=" .. e[1])
+    --       end,
+    --       ["ctrl-d"] = function(x)
+    --         local choice = vim.fn.confirm("Delete '" .. #x .. "' projects? ", "&Yes\n&No", 2)
+    --         if choice == 1 then
+    --           local history = require("project_nvim.utils.history")
+    --           for _, v in ipairs(x) do
+    --             history.delete_project({ value = v })
+    --           end
+    --         end
+    --       end,
+    --     },
+    --   })
+    -- end, { silent = true, desc = "Switch project" })
   end,
 }

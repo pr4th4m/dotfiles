@@ -1,0 +1,147 @@
+return {
+  "ibhagwan/fzf-lua",
+  branch = "main",
+  -- enabled = false,
+  lazy = true,
+  cmd = { "FzfLua" },
+  dependencies = {
+    "nvim-lua/plenary.nvim",
+  },
+  config = function()
+    local actions = require("fzf-lua.actions")
+    require("fzf-lua").setup({
+      "max-perf",            -- Good choice for performance
+      defaults = {
+        git_icons   = false, -- Good - disabled for performance
+        file_icons  = false, -- Good - disabled for performance
+        color_icons = false, -- Good - disabled for performance
+        -- previewer   = false, -- CHANGED: Disable by default for speed
+      },
+      winopts = {
+        width   = 0.8,
+        height  = 0.7,
+        preview = {
+          hidden       = "nohidden",    -- CHANGED: Start with preview hidden
+          vertical     = "down:45%",
+          horizontal   = "right:50%", -- CHANGED: Reduced from 60% to 50%
+          layout       = "flex",
+          flip_columns = 120,
+          delay        = 100, -- CHANGED: Increased from 10ms to 100ms
+          winopts      = { number = false },
+        },
+      },
+      fzf_opts = {
+        ['--cycle'] = true,
+        ['--no-multi'] = false,
+        ['--multi'] = true,
+        ['--bind'] = 'ctrl-a:select-all,ctrl-d:deselect-all',
+      },
+      lsp = {
+        jump_to_single_result = true, -- CHANGED: Jump immediately if only one result
+        jump_to_single_result_action = actions.file_edit,
+      },
+      previewers = {
+        cat = {
+          cmd = "cat",
+        },
+        bat = {
+          cmd  = "bat",
+          args = "--color=always --theme=base16 --style=plain", -- CHANGED: Simpler style
+        },
+      },
+      keymap = {
+        builtin = {
+          ["<C-/>"] = "toggle-help",
+          ["<F2>"]  = "toggle-fullscreen",
+          ["<F3>"]  = "toggle-preview-wrap",
+          ["<F4>"]  = "toggle-preview",
+          ["<C-d>"] = "preview-page-down",
+          ["<C-u>"] = "preview-page-up",
+        },
+        fzf = {
+          ["ctrl-z"] = "abort",
+          ["ctrl-f"] = "half-page-down",
+          ["ctrl-b"] = "half-page-up",
+          ["ctrl-a"] = "toggle-all",
+          ["ctrl-e"] = "toggle",
+          ["f4"]     = "toggle-preview",
+          ["ctrl-d"] = "preview-page-down",
+          ["ctrl-u"] = "preview-page-up",
+          ["ctrl-q"] = "select-all+accept",
+        },
+      },
+      files = {
+        -- CHANGED: Use fd for better performance if available
+        cmd        = vim.fn.executable('fd') == 1 and 'fd' or 'find',
+        find_opts  =
+        [[-type f -not -path '*/\.git/*' -not -path '*/node_modules/*' -not -path '*/.next/*' -printf '%P\n']],
+        fd_opts    =
+        [[--color=never --type f --follow --exclude .git --exclude node_modules --exclude .next --strip-cwd-prefix]],
+        rg_opts    = [[--color=never --files --follow -g "!.git" -g "!node_modules" -g "!.next"]],
+        git_icons  = false,
+        file_icons = false,
+        -- previewer  = false, -- CHANGED: Disable by default
+        actions    = {
+          ["enter"]  = actions.file_edit_or_qf,
+          ["ctrl-x"] = actions.file_split,
+          ["ctrl-v"] = actions.file_vsplit,
+          ["ctrl-t"] = actions.file_tabedit,
+          ["alt-q"]  = actions.file_sel_to_qf,
+          ["ctrl-i"] = { actions.toggle_ignore },
+          ["ctrl-g"] = { actions.toggle_hidden },
+        }
+      },
+      grep = {
+        fzf_bin = 'fzf',
+        -- CHANGED: Use ripgrep for better performance
+        cmd = vim.fn.executable('rg') == 1 and 'rg' or 'grep',
+        rg_opts =
+        [[--column --line-number --no-heading --color=always --smart-case --max-columns=4096 -g "!.git" -g "!node_modules"]],
+        git_icons = false,
+        file_icons = false,
+        -- previewer = false, -- CHANGED: Disable by default
+        actions = {
+          ["ctrl-o"] = { actions.grep_lgrep },
+          ["ctrl-g"] = { actions.toggle_hidden },
+          ["ctrl-i"] = { actions.toggle_ignore },
+        },
+      },
+      buffers = {
+        git_icons = false,
+        file_icons = false,
+        previewer = false, -- CHANGED: Disable by default
+        keymap = {
+          builtin = {
+            ["<C-d>"] = false
+          }
+        },
+        actions = {
+          ["ctrl-d"] = { actions.buf_del, actions.resume },
+          ["ctrl-x"] = actions.file_split,
+          ["ctrl-v"] = actions.file_vsplit,
+          ["ctrl-t"] = actions.file_tabedit,
+          ["alt-q"]  = actions.file_sel_to_qf,
+        },
+      },
+      oldfiles = {
+        git_icons = false,
+        file_icons = false,
+        -- previewer = false,              -- CHANGED: Disable by default
+        include_current_session = true, -- CHANGED: Only recent files for speed
+        fzf_opts = {
+          ['--cycle'] = true,
+          ["--tiebreak"] = "score",
+        },
+      },
+      -- ADDED: Optimize git files for better performance
+      git = {
+        files = {
+          git_icons = false,
+          file_icons = false,
+          -- previewer = false,
+          cmd = "git ls-files --exclude-standard",
+        },
+      },
+    })
+  end
+}

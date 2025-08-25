@@ -95,12 +95,12 @@ return {
 
           return statusline.combine_groups({
             { hl = mode_hl,                        strings = { mode } },
-            { hl = 'MiniStatuslineLspDiagnostics', strings = { diagnostics, lsp } },
+            { hl = 'MiniStatuslineLspDiagnostics', strings = { search } },
             '%<', -- Mark general truncate point
             -- { hl = 'MiniStatuslineFilename', strings = { filename } },
             '%=', -- End left alignment
-            { hl = 'MiniStatuslineFileinfo', strings = { root_project(), git_branch() } },
-            { hl = mode_hl,                  strings = { search, location } },
+            { hl = 'MiniStatuslineFileinfo', strings = { diagnostics, lsp, root_project(), git_branch() } },
+            { hl = mode_hl,                  strings = { location } },
           })
         end
       },

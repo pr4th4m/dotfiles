@@ -21,7 +21,7 @@ plugins:
       - $FILTER
       # - -n
       - $NAMESPACE
-      - --context
+      # - --context
       - $CONTEXT
   shell-in-new-tab:
     shortCut: Shift-G

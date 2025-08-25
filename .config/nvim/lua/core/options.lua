@@ -68,8 +68,8 @@ local options = {
     winborder = 'rounded',
 
     -- Show whitespace characters
-    list = true,
-    listchars = { tab = '» ', trail = '·', nbsp = '␣' }
+    -- list = true,
+    -- listchars = { tab = '» ', trail = '·', nbsp = '␣' }
 }
 
 -- set winbar colour

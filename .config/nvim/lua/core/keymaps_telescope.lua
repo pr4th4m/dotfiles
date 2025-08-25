@@ -6,6 +6,11 @@ local term_opts = { silent = true }
 -- Shorten function name
 local keymap = vim.keymap.set
 
+-- -- FFF
+-- keymap("n", "<leader>ff", "<cmd>lua require('fff').find_files_in_dir(vim.fn.getcwd())<CR>", { desc = "find [F]iles" })
+-- keymap("n", "<leader>fc", "<cmd>lua require('fff').find_files_in_dir(vim.fn.expand('%:p:h'))<CR>",
+-- 	{ desc = "find files in [C]urrent dir" })
+
 -- Telescope
 -- file navigation
 keymap("n", "<leader>ff", "<cmd>Telescope find_files<CR>", { desc = "find [F]iles" })
@@ -21,7 +26,7 @@ keymap("n", "<leader>a",
 	{ desc = "find buffers in current project or pwd" })
 keymap("n", "<leader>fo", "<cmd>lua require('telescope.builtin').oldfiles({file_ignore_patterns={'%.dbout$'}})<CR>",
 	{ desc = "[O]ld files" })
-keymap("n", "<leader>fo", "<cmd>Telescope oldfiles<CR>", { desc = "[O]ld files" })
+-- keymap("n", "<leader>fo", "<cmd>Telescope oldfiles<CR>", { desc = "[O]ld files" })
 
 -- keymap("n", "<leader>fw", "<cmd>Telescope grep_string<CR>", { desc = "grep [W]ord" })
 -- keymap("n", "<leader>fw",

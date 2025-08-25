@@ -8,7 +8,7 @@ fi
 
 FILTER="$1"
 NAMESPACE="$2"
-# CONTEXT="$3"
+KCONTEXT="$3"
 
 # Prompt for the --since value
 echo -n "since [48h]: "
@@ -21,6 +21,9 @@ read -r GREP
 echo -n "context [5]: "
 read -r CONTEXT
 CONTEXT="${CONTEXT:-5}"
+
+echo -n "follow [true]: "
+read -r FOLLOW
 
 # # Prompt for --include value (optional)
 # echo -n "include: "
@@ -36,7 +39,12 @@ CMD="stern"
 
 # Add --since if provided
 if [[ -n "$SINCE" ]]; then
-  CMD+=" --since \"$SINCE\""
+  CMD+=" --since $SINCE"
+fi
+
+# Tail or not
+if [[ -n "$FOLLOW" ]]; then
+  CMD+=" --no-follow"
 fi
 
 # # Add --include if provided
@@ -50,13 +58,14 @@ fi
 # fi
 
 # Add filter, namespace, and context
-# CMD+=" \"$FILTER\" -n \"$NAMESPACE\" --context \"$CONTEXT\""
-CMD+=" \"$FILTER\" -n \"$NAMESPACE\""
+CMD+=" $FILTER -n $NAMESPACE --context $KCONTEXT"
+# CMD+=" \"$FILTER\" -n \"$NAMESPACE\""
 
 # Add --since if provided
 if [[ -n "$GREP" ]]; then
-  CMD+=" | rg -C \"$CONTEXT\" --context-separator "==========" -i \"$GREP\""
+  CMD+=" | /usr/bin/strings | rg -C $CONTEXT --context-separator "----------" -i \"$GREP\""
 fi
 
 # Execute the constructed command
+echo $CMD
 eval $CMD
