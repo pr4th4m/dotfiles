@@ -58,9 +58,10 @@ return {
       --   border = "rounded",
       -- })
 
-      --   -- don't update diagnostics in insert mode
-      --   vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics,
-      --     { update_in_insert = false })
+      -- don't update diagnostics in insert mode
+      vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+        vim.lsp.diagnostic.on_publish_diagnostics, { update_in_insert = false }
+      )
     end
 
     -- local function lsp_keymaps(bufnr)

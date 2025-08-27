@@ -13,6 +13,7 @@ bundle/
 !.config/kitty/
 !.config/lf/
 !.config/nvim/
+!.config/nvim-new/
 !.config/sheldon/
 !.config/fish/
 !.config/k9s/plugins.yaml

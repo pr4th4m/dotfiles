@@ -124,3 +124,18 @@ vim.api.nvim_create_autocmd({ "TermOpen", "BufEnter" }, {
 --     vim.highlight.on_yank()
 --   end,
 -- })
+
+-- performance settings
+-- Reduce lag
+vim.opt.updatetime = 250
+vim.opt.timeoutlen = 300
+vim.opt.ttimeoutlen = 10
+
+-- Faster redraw
+vim.opt.lazyredraw = true
+vim.opt.ttyfast = true
+
+-- Disable extras
+vim.opt.swapfile = false
+vim.opt.backup = false
+vim.opt.writebackup = false

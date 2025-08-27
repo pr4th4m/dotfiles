@@ -26,4 +26,9 @@ require("lazy").setup({ { import = "plugins" } }, {
   rocks = {
     hererocks = true,
   },
+  performance = {
+    rtp = {
+      disabled_plugins = { "gzip", "netrwPlugin", "tarPlugin", "tohtml", "zipPlugin" },
+    },
+  },
 })
