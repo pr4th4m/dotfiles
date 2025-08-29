@@ -69,7 +69,7 @@ local function show_bookmarks_in_telescope()
   local bookmarks = load_bookmarks()
   require('telescope.pickers').new({}, {
     prompt_title = "Bookmarks",
-    layout_config = { width = 0.6, height = 0.7 },
+    layout_config = { width = 0.5, height = 0.4 },
     finder = require('telescope.finders').new_table {
       results = bookmarks,
     },

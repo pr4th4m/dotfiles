@@ -7,24 +7,26 @@ local term_opts = { silent = true }
 local keymap = vim.keymap.set
 
 -- -- FFF
--- keymap("n", "<leader>ff", "<cmd>lua require('fff').find_files_in_dir(vim.fn.getcwd())<CR>", { desc = "find [F]iles" })
--- keymap("n", "<leader>fc", "<cmd>lua require('fff').find_files_in_dir(vim.fn.expand('%:p:h'))<CR>",
--- 	{ desc = "find files in [C]urrent dir" })
+keymap("n", "<leader>ff", "<cmd>lua require('fff').find_files_in_dir(vim.fn.getcwd())<CR>", { desc = "find [F]iles" })
+keymap("n", "<leader>fc", "<cmd>lua require('fff').find_files_in_dir(vim.fn.expand('%:p:h'))<CR>",
+	{ desc = "find files in [C]urrent dir" })
 
 -- Telescope
 -- file navigation
-keymap("n", "<leader>ff", "<cmd>Telescope find_files<CR>", { desc = "find [F]iles" })
-keymap("n", "<leader>fc", "<cmd>lua require('telescope.builtin').find_files( { cwd = vim.fn.expand('%:p:h') })<CR>",
-	{ desc = "find files in [C]urrent dir" })
+-- keymap("n", "<leader>ff", "<cmd>Telescope find_files<CR>", { desc = "find [F]iles" })
+-- keymap("n", "<leader>fc", "<cmd>lua require('telescope.builtin').find_files( { cwd = vim.fn.expand('%:p:h') })<CR>",
+-- 	{ desc = "find files in [C]urrent dir" })
+
 keymap("n", "<leader>fh", "<cmd>lua require('telescope.builtin').find_files( { hidden = true, no_ignore = true })<CR>",
 	{ desc = "find files in [H]idden and Ignored dir" })
 keymap("n", "<leader><space>",
-	"<cmd>lua require('telescope.builtin').buffers({sort_lastused = true, ignore_current_buffer = true})<CR>",
+	"<cmd>lua require('telescope.builtin').buffers({sort_lastused=true, ignore_current_buffer=true, layout_config={width=0.5, height=0.4}})<CR>",
 	{ desc = "find all buffers" })
 keymap("n", "<leader>a",
 	"<cmd>lua require('telescope.builtin').buffers({sort_lastused = true, ignore_current_buffer = true, cwd = vim.fn.getcwd()})<CR>",
 	{ desc = "find buffers in current project or pwd" })
-keymap("n", "<leader>fo", "<cmd>lua require('telescope.builtin').oldfiles({file_ignore_patterns={'%.dbout$'}})<CR>",
+keymap("n", "<leader>fo",
+	"<cmd>lua require('telescope.builtin').oldfiles({cwd=vim.fn.expand('~/workspace/'),file_ignore_patterns={'%.dbout$'}})<CR>",
 	{ desc = "[O]ld files" })
 -- keymap("n", "<leader>fo", "<cmd>Telescope oldfiles<CR>", { desc = "[O]ld files" })
 
@@ -42,7 +44,9 @@ keymap("n", "<leader>fg", "<cmd>lua require('telescope').extensions.live_grep_ar
 keymap("n", "<leader>fm", "<cmd>Telescope marks<CR>", { desc = "[M]arks" })
 -- keymap("n", "<leader>fc", "<cmd>Telescope commands<CR>", opts)
 keymap("n", "<leader>ft", "<cmd>Telescope builtin<CR>", { desc = "built[I]n" })
-keymap("n", "<leader>fp", "<cmd>Telescope projects<CR>", { desc = "[P]rojects" })
+keymap("n", "<leader>fp",
+	"<cmd>lua require('telescope').extensions.projects.projects({layout_config={width=0.5, height=0.4}})<CR>",
+	{ desc = "[P]rojects" })
 keymap("n", "<leader>f=", "<cmd>Telescope spell_suggest<CR>", { desc = "[S]pelling" })
 keymap("n", "<leader>fb", "<cmd>Telescope current_buffer_fuzzy_find<CR>", { desc = "find in current buffer" })
 -- keymap("n", "<leader>tt", "<cmd>Telescope telescope-tabs list_tabs<cr>", { desc = "list all tabs" })

@@ -1,7 +1,8 @@
 return {
   'dmtrKovalenko/fff.nvim',
   build = 'cargo build --release',
-  lazy = false,
+  lazy = true,
+  event = { "BufReadPre", "BufNewFile" },
   -- keys = { "<leader>ff" },
   config = function()
     require('fff').setup({
@@ -9,8 +10,8 @@ return {
       prompt = 'F> ',
       max_threads = 6,
       layout = {
-        height = 0.8,
-        width = 0.8,
+        height = 0.7,
+        width = 0.7,
         prompt_position = 'top',
         preview_size = 0.5,
       },

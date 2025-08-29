@@ -88,6 +88,14 @@ return {
             return branch
           end
 
+          local section_macro = function()
+            local macro = vim.fn.reg_recording()
+            if macro ~= '' then
+              return '@' .. macro
+            end
+            return ''
+          end
+
           -- local filename      = statusline.section_filename({ trunc_width = 140 })
           -- local fileinfo      = statusline.section_fileinfo({ trunc_width = 120 })
           local location      = statusline.section_location({ trunc_width = 75 })
@@ -95,7 +103,7 @@ return {
 
           return statusline.combine_groups({
             { hl = mode_hl,                        strings = { mode } },
-            { hl = 'MiniStatuslineLspDiagnostics', strings = { search } },
+            { hl = 'MiniStatuslineLspDiagnostics', strings = { section_macro(), search } },
             '%<', -- Mark general truncate point
             -- { hl = 'MiniStatuslineFilename', strings = { filename } },
             '%=', -- End left alignment
