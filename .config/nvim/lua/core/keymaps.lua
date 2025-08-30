@@ -330,3 +330,11 @@ keymap("n", "<leader>s", function()
 	local filename = "~/Desktop/notes/scratch/" .. datetime .. ".md"
 	vim.cmd("tabnew " .. filename)
 end, { desc = "[S]cratch Notes" })
+
+-- reload neovim config + lazy plugins
+vim.keymap.set("n", "<leader>,", function()
+  -- reload init.lua (or main config)
+  dofile(vim.fn.stdpath("config") .. "/init.lua")
+
+  vim.notify("Neovim reloaded!", vim.log.levels.INFO)
+end, { desc = "Neovim reloaded!" })

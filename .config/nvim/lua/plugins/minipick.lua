@@ -1,0 +1,46 @@
+return {
+  'nvim-mini/mini.pick',
+  version = false,
+  event = { "UIEnter" },
+  config = function()
+    require('mini.pick').setup({
+      delay = {
+        -- Delay between forcing asynchronous behavior
+        async = 1,
+
+        -- Delay between computation start and visual feedback about it
+        busy = 1,
+      },
+      -- General options
+      options = {
+        -- Whether to show content from bottom to top
+        content_from_bottom = false,
+
+        -- Whether to cache matches (more speed and memory on repeated prompts)
+        use_cache = true,
+      },
+
+      -- Window related options
+      window = {
+        -- Float window config (table or callable returning it)
+        -- config = nil,
+        config = function()
+          return {
+            anchor = "NW",
+            border = "rounded",
+            row = math.floor(0.1 * vim.o.lines),
+            col = math.floor(0.15 * vim.o.columns),
+            height = math.floor(0.6 * vim.o.lines),
+            width = math.floor(0.7 * vim.o.columns),
+          }
+        end,
+
+        -- String to use as caret in prompt
+        prompt_caret = '▏',
+
+        -- String to use as prefix in prompt
+        prompt_prefix = '> ',
+      },
+    })
+  end
+}
