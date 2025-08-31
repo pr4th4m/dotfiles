@@ -35,9 +35,22 @@ return {
 
     telescope.setup {
       defaults = {
+        vimgrep_arguments = {
+          "rg",
+          "--color=never",
+          "--no-heading",
+          "--with-filename",
+          "--line-number",
+          "--column",
+          "--smart-case",
+          "--trim",
+          "--max-count=1000",  -- Limit matches per file
+          "--max-filesize=1M", -- Skip large files
+        },
         -- path_display = { "smart" },
         path_display = { "truncate" },
-        file_ignore_patterns = { "node_modules", ".git/" },
+        -- file_ignore_patterns = { "node_modules", ".git/" },
+        file_ignore_patterns = { "%.git/", "node_modules/", "%.lock" },
         sorting_strategy = "ascending",
         dynamic_preview_title = true,
         layout_config = {
@@ -45,7 +58,14 @@ return {
           height = 0.7,
           prompt_position = "top",
           preview_width = 0.5,
+          preview_cutoff = 120,
         },
+        preview = {
+          filesize_limit = 0.1, -- MB
+          timeout = 250,        -- ms
+        },
+        -- Limit results for faster response
+        results_limit = 100,
 
         mappings = {
           i = {
@@ -115,8 +135,18 @@ return {
         },
       },
       pickers = {
+        find_files = {
+          hidden = false,
+          respect_gitignore = true,
+          -- Use fd for faster file finding
+          find_command = { "fd", "--type", "f", "--strip-cwd-prefix" },
+        },
         colorscheme = {
           enable_preview = true
+        },
+        live_grep = {
+          additional_args = { "--max-count=50" },
+          glob_pattern = "!{*.lock,package-lock.json}",
         },
         buffers = {
           sort_mru = true,
@@ -133,10 +163,10 @@ return {
 
       extensions = {
         fzf = {
-          fuzzy = true,                    -- false will only do exact matching
-          override_generic_sorter = false, -- override the generic sorter
-          override_file_sorter = true,     -- override the file sorter
-          case_mode = "smart_case",        -- or "ignore_case" or "respect_case" -- the default case_mode is "smart_case"
+          fuzzy = true,                   -- false will only do exact matching
+          override_generic_sorter = true, -- override the generic sorter
+          override_file_sorter = true,    -- override the file sorter
+          case_mode = "smart_case",       -- or "ignore_case" or "respect_case" -- the default case_mode is "smart_case"
         },
         live_grep_args = {
           -- auto_quoting = true, -- enable/disable auto-quoting
