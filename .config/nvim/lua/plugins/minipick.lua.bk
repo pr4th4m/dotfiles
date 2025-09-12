@@ -6,10 +6,10 @@ return {
     require('mini.pick').setup({
       delay = {
         -- Delay between forcing asynchronous behavior
-        async = 1,
+        async = 10,
 
         -- Delay between computation start and visual feedback about it
-        busy = 1,
+        busy = 50,
       },
       -- General options
       options = {
@@ -28,10 +28,10 @@ return {
           return {
             anchor = "NW",
             border = "rounded",
-            row = math.floor(0.1 * vim.o.lines),
+            row = math.floor(0.15 * vim.o.lines),
             col = math.floor(0.15 * vim.o.columns),
             height = math.floor(0.6 * vim.o.lines),
-            width = math.floor(0.7 * vim.o.columns),
+            width = math.floor(0.6 * vim.o.columns),
           }
         end,
 

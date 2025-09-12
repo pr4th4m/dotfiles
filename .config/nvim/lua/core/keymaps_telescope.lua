@@ -13,8 +13,8 @@ keymap("n", "<leader>fc", "<cmd>lua require('fff').find_files_in_dir(vim.fn.expa
 
 -- Telescope
 -- file navigation
--- keymap("n", "<leader>ff", "<cmd>Telescope find_files<CR>", { desc = "find [F]iles" })
--- keymap("n", "<leader>fc", "<cmd>lua require('telescope.builtin').find_files( { cwd = vim.fn.expand('%:p:h') })<CR>",
+-- keymap("n", "<leader>ff", "<cmd>Telescope fd<CR>", { desc = "find [F]iles" })
+-- keymap("n", "<leader>fc", "<cmd>lua require('telescope.builtin').fd( { cwd = vim.fn.expand('%:p:h') })<CR>",
 -- 	{ desc = "find files in [C]urrent dir" })
 
 keymap("n", "<leader>fh", "<cmd>lua require('telescope.builtin').find_files( { hidden = true, no_ignore = true })<CR>",
@@ -81,8 +81,8 @@ keymap("n", "<leader>hh", ":OpenBookmark<CR>", { desc = "Open bookmark with tele
 
 -- notes
 keymap("n", "<leader>n",
-	"<cmd>lua require('telescope.builtin').find_files({cwd='~/Desktop/notes', cmd = 'fd --color=never --type f --follow --exclude .git --strip-cwd-prefix -X ls -t', layout_config={width=0.6,height=0.7}})<CR>",
+	"<cmd>lua require('telescope.builtin').find_files({cwd='~/Desktop/notes', cmd = 'fd --color=never --type f --follow --exclude .git --strip-cwd-prefix -X ls -t'})<CR>",
 	{ desc = "[N]otes list" })
 keymap("n", "<leader>N",
-	":Telescope find_files cwd=~/workspace/notes layout_config={width=0.6,height=0.7}<CR>",
+	":Telescope find_files cwd=~/workspace/notes<CR>",
 	{ desc = "Github [N]otes" })

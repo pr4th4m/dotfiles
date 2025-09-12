@@ -30,7 +30,7 @@ keymap("n", "<C-h>", "<C-w>h", opts)
 keymap("n", "<C-j>", "<C-w>j", opts)
 keymap("n", "<C-k>", "<C-w>k", opts)
 keymap("n", "<C-l>", "<C-w>l", opts)
-keymap("n", "<C-n>", "<C-w>p", opts)
+-- keymap("n", "<C-n>", "<C-w>p", opts)
 keymap("n", "<leader>v", "<C-w>v", opts)
 keymap("n", "<leader>x", "<C-w>s", opts)
 keymap("n", "<leader>k", "<C-w><C-q>", opts)
@@ -115,21 +115,23 @@ keymap("i", "<c-l>", "<c-o>zt", opts)
 keymap("n", "g<space>", "i<space><esc>", opts)
 
 -- Tab
--- keymap("n", "<leader>j", ":tab split<CR>", opts)
-keymap("n", "f1", "1gt", opts)
-keymap("n", "f2", "2gt", opts)
-keymap("n", "f3", "3gt", opts)
-keymap("n", "f4", "4gt", opts)
-keymap("n", "f5", "5gt", opts)
-keymap("n", "f6", "6gt", opts)
-keymap("n", "f7", "7gt", opts)
-keymap("n", "f8", "8gt", opts)
-keymap("n", "f9", "9gt", opts)
-keymap("n", "fj", ":tab split<CR>", opts)
+keymap("n", "<leader>1", "1gt", opts)
+keymap("n", "<leader>2", "2gt", opts)
+keymap("n", "<leader>3", "3gt", opts)
+keymap("n", "<leader>4", "4gt", opts)
+keymap("n", "<leader>5", "5gt", opts)
+keymap("n", "<leader>6", "6gt", opts)
+keymap("n", "<leader>7", "7gt", opts)
+keymap("n", "<leader>8", "8gt", opts)
+keymap("n", "<leader>9", "9gt", opts)
+-- keymap("n", "fj", ":tab split<CR>", opts)
+keymap("n", "<leader>j", ":tab split<CR>", opts)
 keymap("n", "fh", "<cmd>tabprevious<cr>", { desc = "Previous Tab" })
 keymap("n", "fl", "<cmd>tabnext<cr>", { desc = "Next Tab" })
 keymap("n", "fe", "<cmd>tabedit %<cr>", { desc = "Open new tab" })
 keymap("n", "<c-n>", "g<tab>", { desc = "Last active tab" })
+-- keymap("n", "<leader><space>", "g<tab>", { desc = "Last active tab" })
+
 -- keymap("n", "<S-t>", "<cmd>vs#<cr>", { desc = "Open recently closed tab" })
 -- keymap("n", "<S-L>", "<cmd>tabnext<cr>", { desc = "Next Tab" })
 -- keymap("n", "<S-H>", "<cmd>tabprevious<cr>", { desc = "Previous Tab" })
@@ -218,14 +220,14 @@ keymap("n", "<leader>ly", function()
 end, { desc = "Copy diagnostic [E]rror" })
 
 -- Debugger
-keymap("n", "<leader>bb", "<cmd>DapToggleBreakpoint<cr>", { desc = "Toggle [B]reakpoint" })
-keymap("n", "<leader>bc", "<cmd>DapContinue<cr>", { desc = "[C]ontinue" })
-keymap("n", "<leader>bk", "<cmd>DapTerminate<cr>", { desc = "terminate / [K]ill" })
-keymap("n", "<leader>bs", "<cmd>DapStepOver<cr>", { desc = "[S]tep over" })
-keymap("n", "<leader>bi", "<cmd>DapStepInto<cr>", { desc = "Step [I]nto" })
-keymap("n", "<leader>bo", "<cmd>DapStepOut<cr>", { desc = "Step [O]ut" })
-keymap("n", "<leader>bt", "<cmd>lua require('dap-go').debug_test()<cr>", { desc = "[T]est" })
-keymap("n", "<leader>bl", "<cmd>lua require('dap-go').debug_last_test()<cr>", { desc = "[L]ast test" })
+-- keymap("n", "<leader>bb", "<cmd>DapToggleBreakpoint<cr>", { desc = "Toggle [B]reakpoint" })
+-- keymap("n", "<leader>bc", "<cmd>DapContinue<cr>", { desc = "[C]ontinue" })
+-- keymap("n", "<leader>bk", "<cmd>DapTerminate<cr>", { desc = "terminate / [K]ill" })
+-- keymap("n", "<leader>bs", "<cmd>DapStepOver<cr>", { desc = "[S]tep over" })
+-- keymap("n", "<leader>bi", "<cmd>DapStepInto<cr>", { desc = "Step [I]nto" })
+-- keymap("n", "<leader>bo", "<cmd>DapStepOut<cr>", { desc = "Step [O]ut" })
+-- keymap("n", "<leader>bt", "<cmd>lua require('dap-go').debug_test()<cr>", { desc = "[T]est" })
+-- keymap("n", "<leader>bl", "<cmd>lua require('dap-go').debug_last_test()<cr>", { desc = "[L]ast test" })
 
 -- Git
 keymap("n", "<leader>gg", ":Git<CR><C-w>7-", { desc = "[G]it status" })
@@ -248,7 +250,7 @@ keymap("n", "<leader>tt", ":NvimTreeToggle<CR>", { desc = "Toggle Nvim Tr[E]e" }
 keymap("n", "-", ":Oil<cr>", { desc = "Open Oil" })
 keymap("n", "_", ":vsp | Oil<cr>", { desc = "Open Oil" })
 keymap("n", "<leader>~", ":vsp | Oil ~/<cr>", { desc = "Open Oil in home directory" })
-keymap("n", "<leader>fz", ":ZoxideList<cr>", { desc = "Open with zoxide dir" })
+keymap("n", "<leader>fz", ":ZoxideList<cr>", { desc = "Open with zoxide in telescope and oil" })
 keymap('n', '<leader>e', ':Neotree toggle<CR>', { desc = 'Toggle Neo-tree Explorer' })
 
 
@@ -294,10 +296,10 @@ keymap("n", "<leader>yr",
 keymap("n", "<leader>yf", "<cmd>lua vim.fn.setreg('*', vim.fn.expand('%:t'))<cr>", opts)
 
 -- Run specified commands
-keymap("n", "<leader>ca", ":AutoRun<CR>", { desc = "[A]uto command" })
-keymap("n", "<leader>cc", ":RunConfig<CR>", { desc = "[C]onfig command" })
-keymap("n", "<leader>cm", ":MdEval<CR>", { desc = "Run markdown codeblock" })
-keymap("n", "<c-b>", ":Run<CR>", { desc = "[R]un any command" })
+-- keymap("n", "<leader>ca", ":AutoRun<CR>", { desc = "[A]uto command" })
+-- keymap("n", "<leader>cc", ":RunConfig<CR>", { desc = "[C]onfig command" })
+-- keymap("n", "<leader>cm", ":MdEval<CR>", { desc = "Run markdown codeblock" })
+-- keymap("n", "<c-b>", ":Run<CR>", { desc = "[R]un any command" })
 
 -- toggle checked / create checkbox if it doesn't exist
 keymap('n', '<leader>mc', "<cmd>lua require('markdown-togglecheck').toggle()<cr>", { desc = 'Toggle Checkmark' });
@@ -317,9 +319,9 @@ keymap('n', '<leader>oo', ':vsp | term<CR><cmd>lua vim.fn.getcwd()<CR>', { norem
 keymap("n", "<leader>ov", ":vsp term://", { desc = "Open vertical split terminal" })
 keymap("n", "<leader>ox", ":sp term://", { desc = "Open horizontal split terminal" })
 keymap("n", "<leader>od", ":DBUIToggle<cr>", { desc = "Open database connections" })
-keymap("n", "<leader>/", ":<cmd>noh<cr><cr>", { desc = "Clear search selection" })
+keymap("n", "<leader>/", "<cmd>noh<cr><cr>", { desc = "Clear search selection" })
 -- keymap("n", "<leader>fv", ":Twilight<CR>", { desc = "twilight [V]iew" })
-keymap("n", "<leader>cd", ":DiffWindow<CR>", { desc = "Diff multiple windows" })
+keymap("n", "<leader>gdw", ":DiffWindow<CR>", { desc = "Diff multiple windows" })
 
 -- notes
 keymap("n", "<leader>q",
@@ -331,10 +333,5 @@ keymap("n", "<leader>s", function()
 	vim.cmd("tabnew " .. filename)
 end, { desc = "[S]cratch Notes" })
 
--- reload neovim config + lazy plugins
-vim.keymap.set("n", "<leader>,", function()
-  -- reload init.lua (or main config)
-  dofile(vim.fn.stdpath("config") .. "/init.lua")
-
-  vim.notify("Neovim reloaded!", vim.log.levels.INFO)
-end, { desc = "Neovim reloaded!" })
+-- reload neovim config
+keymap("n", "<leader>rc", "<cmd>lua dofile(vim.fn.stdpath('config') .. '/init.lua')<cr>", { desc = "Neovim reloaded!" })

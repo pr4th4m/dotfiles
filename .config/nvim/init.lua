@@ -18,11 +18,12 @@ vim.opt.tabline = "%!v:lua.require('core.utils.tabline').setup()"
 
 -- lazy load utils
 vim.api.nvim_create_autocmd("CmdUndefined", {
-    pattern = { "OpenBookmark", "ZoxideList" },
+    pattern = { "OpenBookmark", "ZoxideList", "Count" },
     once = true,
     callback = function()
         require "core.utils.bookmark"
         require "core.utils.zoxide"
+        require "core.utils.search_count"
     end,
 })
 vim.api.nvim_create_autocmd("CmdUndefined", {

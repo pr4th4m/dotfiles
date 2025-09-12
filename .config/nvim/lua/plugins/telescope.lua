@@ -53,13 +53,27 @@ return {
         file_ignore_patterns = { "%.git/", "node_modules/", "%.lock" },
         sorting_strategy = "ascending",
         dynamic_preview_title = true,
+        -- layout_config = {
+        --   -- width = 0.7,
+        --   height = 0.7,
+        --   prompt_position = "top",
+        --   -- preview_width = 0.5,
+        --   preview_cutoff = 120,
+        -- },
+
+        theme = "ivy",
+        layout_strategy = "horizontal",
+        border = true,
+        borderchars = { "─", "│", "─", "│", "┌", "┐", "┘", "└" },
+        vim.api.nvim_set_hl(0, "TelescopeBorder", { fg = "#434343" }),
         layout_config = {
-          width = 0.7,
-          height = 0.7,
+          height = 0.5,
+          width = 0.6,
           prompt_position = "top",
           preview_width = 0.5,
-          preview_cutoff = 120,
+          preview_cutoff = 50,
         },
+
         preview = {
           filesize_limit = 0.1, -- MB
           timeout = 250,        -- ms

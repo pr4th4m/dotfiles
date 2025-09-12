@@ -10,47 +10,47 @@ return {
 
     M.capabilities = vim.lsp.protocol.make_client_capabilities()
 
-    vim.diagnostic.config {
-      update_in_insert = false,
-      underline = true,
-      severity_sort = true,
-
-      float = {
-        focusable = true,
-        style = "minimal",
-        border = "rounded",
-        source = "if_many",
-        header = "",
-        prefix = "",
-      },
-
-      signs = {
-        text = {
-          [vim.diagnostic.severity.ERROR] = '●',
-          [vim.diagnostic.severity.WARN] = 'W',
-          [vim.diagnostic.severity.INFO] = 'I',
-          [vim.diagnostic.severity.HINT] = 'H',
-        },
-      } or {},
-      virtual_text = false,
-      -- virtual_text = {
-      --   current_line = true,
-      --   source = 'if_many',
-      --   spacing = 2,
-      --   format = function(diagnostic)
-      --     local diagnostic_message = {
-      --       [vim.diagnostic.severity.ERROR] = diagnostic.message,
-      --       [vim.diagnostic.severity.WARN] = diagnostic.message,
-      --       [vim.diagnostic.severity.INFO] = diagnostic.message,
-      --       [vim.diagnostic.severity.HINT] = diagnostic.message,
-      --     }
-      --     return diagnostic_message[diagnostic.severity]
-      --   end,
-      -- },
-    }
+    -- vim.diagnostic.config {
+    --   update_in_insert = false,
+    --   underline = true,
+    --   severity_sort = true,
+    --
+    --   float = {
+    --     focusable = true,
+    --     style = "minimal",
+    --     border = "rounded",
+    --     source = "if_many",
+    --     header = "",
+    --     prefix = "",
+    --   },
+    --
+    --   signs = {
+    --     text = {
+    --       [vim.diagnostic.severity.ERROR] = '●',
+    --       [vim.diagnostic.severity.WARN] = 'W',
+    --       [vim.diagnostic.severity.INFO] = 'I',
+    --       [vim.diagnostic.severity.HINT] = 'H',
+    --     },
+    --   } or {},
+    --   virtual_text = false,
+    --   -- virtual_text = {
+    --   --   current_line = true,
+    --   --   source = 'if_many',
+    --   --   spacing = 2,
+    --   --   format = function(diagnostic)
+    --   --     local diagnostic_message = {
+    --   --       [vim.diagnostic.severity.ERROR] = diagnostic.message,
+    --   --       [vim.diagnostic.severity.WARN] = diagnostic.message,
+    --   --       [vim.diagnostic.severity.INFO] = diagnostic.message,
+    --   --       [vim.diagnostic.severity.HINT] = diagnostic.message,
+    --   --     }
+    --   --     return diagnostic_message[diagnostic.severity]
+    --   --   end,
+    --   -- },
+    -- }
 
     -- enable debug level
-    vim.lsp.log.set_level("info")
+    vim.lsp.log.set_level("error")
 
     local servers = {
       "bashls",
