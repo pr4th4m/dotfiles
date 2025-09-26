@@ -18,6 +18,10 @@ return {
           { "mtime", "desc" }
         },
       },
+      lsp_file_methods = {
+        -- Enable or disable LSP file operations
+        enabled = false,
+      },
       keymaps = {
         ["`"] = "actions.tcd",
         ["~"] = "<cmd>edit $HOME<CR>",

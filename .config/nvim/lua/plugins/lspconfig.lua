@@ -52,14 +52,20 @@ return {
     -- enable debug level
     vim.lsp.log.set_level("error")
 
+    -- global defaults
+    vim.lsp.config("*", {
+      on_attach = M.on_attach,
+      capabilities = require('blink.cmp').get_lsp_capabilities(M.capabilities),
+    })
+
     local servers = {
       "bashls",
       "dockerls",
-      -- "gopls",
+      "gopls",
       "jsonls",
       "yamlls",
       "lua_ls",
-      -- "pyright",
+      "pyright",
       "ruff",
       "marksman",
       "ts_ls",
@@ -67,72 +73,77 @@ return {
       "eslint",
     }
 
-    local lspconfig = require("lspconfig")
-    local opts = {}
     for _, server in pairs(servers) do
-      opts = {
-        on_attach = M.on_attach,
-        capabilities = require('blink.cmp').get_lsp_capabilities(M.capabilities)
-      }
-      server = vim.split(server, "@")[1]
-      lspconfig[server].setup(opts)
+      local name = vim.split(server, "@")[1]
+      vim.lsp.config(name, {})
     end
 
-    lspconfig.gopls.setup({
-      on_attach = M.on_attach,
-      capabilities = require('blink.cmp').get_lsp_capabilities(M.capabilities),
-      root_dir = require('lspconfig.util').root_pattern("go.mod", ".git"),
-      settings = {
-        gopls = {
-          directoryFilters = { "-vendor", "-.git", "-node_modules", "-.vscode" },
-          analyses = { unusedparams = false },
-          completeUnimported = true,
-          staticcheck = false,
-          usePlaceholders = true,
-          matcher = "Fuzzy",
-        }
-      },
-    })
+    -- vim.lsp.config("gopls", {
+    --   root_dir = function(_, callback)
+    --     local root_dir = require('lspconfig.util').root_pattern("go.mod", ".git")
+    --     if root_dir then
+    --       callback(root_dir)
+    --     end
+    --   end,
+    --   settings = {
+    --     gopls = {
+    --       directoryFilters = { "-vendor", "-.git", "-node_modules", "-.vscode" },
+    --       analyses = { unusedparams = false },
+    --       completeUnimported = true,
+    --       staticcheck = false,
+    --       usePlaceholders = true,
+    --       matcher = "Fuzzy",
+    --     }
+    --   },
+    -- })
 
-    -- remove all this when not working with python
-    local root_project = function()
-      local ok, project = pcall(require, "project_nvim.project")
-      if not ok then
-        return ""
-      end
-      local root, method = project.get_project_root()
-      local dirs = {}
-      if root and root ~= "" then
-        for d in root:gmatch('[^/%s]+') do
-          table.insert(dirs, d)
-        end
-      end
-      return dirs[#dirs] or ""
-    end
+    -- -- remove all this when not working with python
+    -- local root_project = function()
+    --   local ok, project = pcall(require, "project_nvim.project")
+    --   if not ok then
+    --     return ""
+    --   end
+    --   local root, method = project.get_project_root()
+    --   local dirs = {}
+    --   if root and root ~= "" then
+    --     for d in root:gmatch('[^/%s]+') do
+    --       table.insert(dirs, d)
+    --     end
+    --   end
+    --   return dirs[#dirs] or ""
+    -- end
+    --
+    -- local util = require 'lspconfig.util'
+    -- vim.lsp.config("pyright", {
+    --   before_init = function(_, config)
+    --     local venv_path = config.root_dir .. "/" .. root_project() .. "/venv/bin/python"
+    --     if vim.fn.executable(venv_path) == 1 then
+    --       config.settings.python.pythonPath = venv_path
+    --     else
+    --       local parent_venv = util.find_git_ancestor(config.root_dir) .. "/venv/bin/python"
+    --       if vim.fn.executable(parent_venv) == 1 then
+    --         config.settings.python.pythonPath = parent_venv
+    --       end
+    --     end
+    --   end,
+    --   -- root_dir = function(fname)
+    --   --   return util.find_git_ancestor(fname)
+    --   -- end,
+    --   -- root_dir = function(_, callback)
+    --   --   -- local root_dir = util.find_git_ancestor(fname)
+    --   --   local root_dir = require('lspconfig.util').root_pattern(".git")
+    --   --   if root_dir then
+    --   --     callback(root_dir)
+    --   --   end
+    --   -- end,
+    --   -- root_dir = function(fname)
+    --   --   return util.root_pattern("requirements.txt", ".git", util.find_git_ancestor(fname))(fname)
+    --   -- end,
+    -- })
 
-    local util = require 'lspconfig.util'
-    lspconfig.pyright.setup({
-      on_attach = M.on_attach,
-      capabilities = require('blink.cmp').get_lsp_capabilities(M.capabilities),
-      before_init = function(_, config)
-        local venv_path = config.root_dir .. "/" .. root_project() .. "/venv/bin/python"
-        if vim.fn.executable(venv_path) == 1 then
-          config.settings.python.pythonPath = venv_path
-        else
-          local parent_venv = util.find_git_ancestor(config.root_dir) .. "/venv/bin/python"
-          if vim.fn.executable(parent_venv) == 1 then
-            config.settings.python.pythonPath = parent_venv
-          end
-        end
-      end,
-      root_dir = function(fname)
-        return util.find_git_ancestor(fname)
-      end,
-      -- root_dir = function(fname)
-      --   return util.root_pattern("requirements.txt", ".git", util.find_git_ancestor(fname))(fname)
-      -- end,
-    })
-
+    -- enable all servers
+    -- vim.lsp.enable(vim.list_extend(vim.deepcopy(servers), { "gopls", "pyright" }))
+    vim.lsp.enable(servers)
     return M
   end,
 }

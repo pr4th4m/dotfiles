@@ -263,8 +263,9 @@ keymap('n', '<leader>e', ':Neotree toggle<CR>', { desc = 'Toggle Neo-tree Explor
 -- keymap("i", "<C-b>", ":ToggleTerm direction=float name=float<CR>", { desc = "[F]loat term" })
 
 -- Http rest client
-keymap("n", "<leader>rr", "<cmd>Rest run<CR>", { desc = "[R]equest" })
-keymap("n", "<leader>ro", "<cmd>Rest open<CR>", { desc = "[O]pen request window" })
+keymap("n", "<leader>rr", "<cmd>lua require('kulala').run()<cr>", { desc = "[R]equest" })
+keymap("n", "<leader>ro", "<cmd>lua require('kulala').open()<cr>", { desc = "[O]pen request window" })
+keymap("n", "<leader>rf", "<cmd>lua require('kulala').search()<cr>", { desc = "[F]ind request" })
 
 -- -- zk cli
 -- keymap("n", "<leader>zn", "<Cmd>ZkNew { dir = vim.fn.expand('%:p:h'), title = vim.fn.input('Title: ') }<CR>", opts)

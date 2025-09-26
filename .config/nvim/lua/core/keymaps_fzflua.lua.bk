@@ -9,7 +9,7 @@ local keymap = vim.keymap.set
 -- FzfLua
 -- file navigation
 keymap("n", "<leader>ff",
-	"<cmd>lua require('fzf-lua').files( {hidden = false, no_ignore = true })<CR>",
+	"<cmd>lua require('fzf-lua').files({hidden = false, no_ignore = false })<CR>",
 	{ desc = "find [F]iles" })
 keymap("n", "<leader>fc",
 	"<cmd>lua require('fzf-lua').files({cwd = vim.fn.expand('%:p:h')})<CR>",
@@ -50,8 +50,11 @@ keymap("n", "<leader>la", "<cmd>FzfLua lsp_code_actions<cr>", { desc = "code [A]
 
 keymap("n", "<leader>ls", "<cmd>FzfLua lsp_document_symbols<CR>", { desc = "document [S]ymbols" })
 keymap("n", "<leader>lw", "<cmd>FzfLua lsp_workspace_symbols<CR>", { desc = "[W]orkspace symbols" })
-keymap("n", "<leader>lg", "<cmd>lua require('fzf-lua').lsp_live_workspace_symbols({fzf_bin='fzf', cwd=vim.fn.getcwd()})<CR>", { desc = "[W]orkspace symbols" })
-keymap("n", "<leader>ld", "<cmd>lua require('fzf-lua').lsp_workspace_diagnostics({fzf_bin='fzf', cwd=vim.fn.getcwd()})<CR>",
+keymap("n", "<leader>lg",
+	"<cmd>lua require('fzf-lua').lsp_live_workspace_symbols({fzf_bin='fzf', cwd=vim.fn.getcwd()})<CR>",
+	{ desc = "[W]orkspace symbols" })
+keymap("n", "<leader>ld",
+	"<cmd>lua require('fzf-lua').lsp_workspace_diagnostics({fzf_bin='fzf', cwd=vim.fn.getcwd()})<CR>",
 	{ desc = "workspace [D]iagnostics" })
 keymap("n", "<leader>lb", "<cmd>lua require('fzf-lua').lsp_document_diagnostics({fzf_bin='fzf'})<CR>",
 	{ desc = "document [D]iagnostics" })

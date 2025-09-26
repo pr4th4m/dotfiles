@@ -26,6 +26,8 @@ return {
     -- },
     completion = {
       menu = {
+        border = "rounded",
+        winhighlight = "Normal:Normal,FloatBorder:FloatBorder,CursorLine:BlinkCmpMenuSelection,Search:None,BlinkCmpKind:None",
         draw = {
           columns = { { 'label', 'label_description', gap = 1 }, { 'kind' } },
           -- components = {
@@ -78,6 +80,7 @@ return {
   },
   opts_extend = { "sources.default" },
   -- config = function()
+  -- vim.api.nvim_set_hl(0, "BlinkCmpMenuBorder", { fg = "#434343" })
   --   vim.lsp.config('*', {
   --     capabilities = require('blink.cmp').get_lsp_capabilities(),
   --     root_markers = { '.git' },

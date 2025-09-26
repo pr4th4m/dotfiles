@@ -1,7 +1,5 @@
-local opts = { noremap = true, silent = true }
--- TODO: figure out how to unpack opts into another table
-
-local term_opts = { silent = true }
+-- local opts = { noremap = true, silent = true }
+-- local term_opts = { silent = true }
 
 -- Shorten function name
 local keymap = vim.keymap.set
@@ -26,7 +24,7 @@ keymap("n", "<leader>a",
 	"<cmd>lua require('telescope.builtin').buffers({sort_lastused = true, ignore_current_buffer = true, cwd = vim.fn.getcwd()})<CR>",
 	{ desc = "find buffers in current project or pwd" })
 keymap("n", "<leader>fo",
-	"<cmd>lua require('telescope.builtin').oldfiles({cwd=vim.fn.expand('~/workspace/'),file_ignore_patterns={'%.dbout$'}})<CR>",
+	"<cmd>lua require('telescope.builtin').oldfiles({cwd=vim.fn.expand('~/'),file_ignore_patterns={'%.dbout$'}})<CR>",
 	{ desc = "[O]ld files" })
 -- keymap("n", "<leader>fo", "<cmd>Telescope oldfiles<CR>", { desc = "[O]ld files" })
 
