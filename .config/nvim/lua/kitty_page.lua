@@ -1,5 +1,6 @@
 return function(INPUT_LINE_NUMBER, CURSOR_LINE, CURSOR_COLUMN)
   -- print('kitty sent:', INPUT_LINE_NUMBER, CURSOR_LINE, CURSOR_COLUMN)
+  vim.cmd('colorscheme vim')
   vim.opt.encoding='utf-8'
   -- vim.opt.clipboard = 'unnamed'
   vim.opt.clipboard = 'unnamedplus'

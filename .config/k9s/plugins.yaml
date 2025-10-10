@@ -24,7 +24,7 @@ plugins:
       # - --context
       - $CONTEXT
   shell-in-new-tab:
-    shortCut: Shift-G
+    shortCut: Shift-K
     confirm: false
     description: shell in kitty
     scopes:

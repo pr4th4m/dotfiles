@@ -1,0 +1,38 @@
+[
+    {
+        "id": "qa-mongodb",
+        "name": "qa-mongodb",
+        "url": "mongodb://root:ErxHwF2lSLFpa13I@80.225.212.94:27017/?directConnection=true",
+        "type": "mongodb"
+    },
+    {
+        "id": "qa-clickhouse",
+        "name": "qa-clickhouse",
+        "url": "clickhouse://default:default@140.238.225.14:9000/xdr",
+        "type": "clickhouse"
+    },
+    {
+        "id": "qa-redis",
+        "name": "qa-redis",
+        "type": "redis",
+        "url": "redis://80.225.231.211:6379"
+    },
+    {
+        "id": "preprod-mongodb",
+        "name": "preprod-mongodb",
+        "url": "mongodb://root:ErxHwF2lSLFpa13I@140.245.19.32:27017/?directConnection=true",
+        "type": "mongodb"
+    },
+    {
+        "id": "preprod-clickhouse",
+        "name": "preprod-clickhouse",
+        "url": "clickhouse://default:default@80.225.223.76:9000/xdr",
+        "type": "clickhouse"
+    },
+    {
+        "id": "preprod-redis",
+        "name": "preprod-redis",
+        "type": "redis",
+        "url": "redis://129.154.240.82:6379"
+    }
+]

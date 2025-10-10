@@ -1,0 +1,20 @@
+[
+    {
+        "id": "local-redis",
+        "name": "local-redis",
+        "type": "redis",
+        "url": "redis://localhost:6379"
+    },
+    {
+        "id": "local-mongodb",
+        "url": "mongodb://root:ErxHwF2lSLFpa13I@localhost:27017/?directConnection=true",
+        "name": "local-mongodb",
+        "type": "mongodb"
+    },
+    {
+        "id": "local-ch",
+        "url": "clickhouse://default:default@localhost:9000/xdr",
+        "name": "local-ch",
+        "type": "clickhouse"
+    }
+]
