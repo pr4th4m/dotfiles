@@ -65,7 +65,7 @@ return {
       "jsonls",
       "yamlls",
       "lua_ls",
-      "pyright",
+      -- "pyright",
       "ruff",
       "marksman",
       "ts_ls",
@@ -97,53 +97,67 @@ return {
     --   },
     -- })
 
-    -- -- remove all this when not working with python
-    -- local root_project = function()
-    --   local ok, project = pcall(require, "project_nvim.project")
-    --   if not ok then
-    --     return ""
-    --   end
-    --   local root, method = project.get_project_root()
-    --   local dirs = {}
-    --   if root and root ~= "" then
-    --     for d in root:gmatch('[^/%s]+') do
-    --       table.insert(dirs, d)
-    --     end
-    --   end
-    --   return dirs[#dirs] or ""
-    -- end
-    --
+    -- remove all this when not working with python
+    local root_project = function()
+      local ok, project = pcall(require, "project_nvim.project")
+      if not ok then
+        return ""
+      end
+      local root, method = project.get_project_root()
+      local dirs = {}
+      if root and root ~= "" then
+        for d in root:gmatch('[^/%s]+') do
+          table.insert(dirs, d)
+        end
+      end
+      return dirs[#dirs] or ""
+    end
+
     -- local util = require 'lspconfig.util'
-    -- vim.lsp.config("pyright", {
-    --   before_init = function(_, config)
-    --     local venv_path = config.root_dir .. "/" .. root_project() .. "/venv/bin/python"
-    --     if vim.fn.executable(venv_path) == 1 then
-    --       config.settings.python.pythonPath = venv_path
-    --     else
-    --       local parent_venv = util.find_git_ancestor(config.root_dir) .. "/venv/bin/python"
-    --       if vim.fn.executable(parent_venv) == 1 then
-    --         config.settings.python.pythonPath = parent_venv
-    --       end
-    --     end
-    --   end,
-    --   -- root_dir = function(fname)
-    --   --   return util.find_git_ancestor(fname)
-    --   -- end,
-    --   -- root_dir = function(_, callback)
-    --   --   -- local root_dir = util.find_git_ancestor(fname)
-    --   --   local root_dir = require('lspconfig.util').root_pattern(".git")
-    --   --   if root_dir then
-    --   --     callback(root_dir)
-    --   --   end
-    --   -- end,
-    --   -- root_dir = function(fname)
-    --   --   return util.root_pattern("requirements.txt", ".git", util.find_git_ancestor(fname))(fname)
-    --   -- end,
-    -- })
+    vim.lsp.config("pyright", {
+      before_init = function(_, config)
+        local venv_path = config.root_dir .. "/" .. root_project() .. "/venv/bin/python"
+        -- local venv_path = config.root_dir .. "/venv/bin/python"
+        vim.notify(venv_path)
+        config.settings.python.pythonPath = venv_path
+        -- if vim.fn.executable(venv_path) == 1 then
+        --   config.settings.python.pythonPath = venv_path
+        -- else
+        --   local parent_venv = util.find_git_ancestor(config.root_dir) .. "/venv/bin/python"
+        --   if vim.fn.executable(parent_venv) == 1 then
+        --     config.settings.python.pythonPath = parent_venv
+        --   end
+        -- end
+      end,
+      root_markers = { ".git" },
+      -- root_patterns = { ".git" },
+      -- root_dir = function(fname)
+      --   return vim.fs.root(fname, { ".git" }) or vim.uv.cwd()
+      -- end
+      -- root_dir = function(fname)
+      --   vim.notify("Finding root for: " .. util.find_git_ancestor(fname))
+      --   return util.find_git_ancestor(fname)
+      --   -- return vim.fs.find({ ".git" }, { upward = true, path = vim.fs.dirname(fname) })[1]
+      --   --     or vim.uv.cwd()
+      -- end
+      -- root_dir = function(fname)
+      --   return util.find_git_ancestor(fname)
+      -- end,
+      -- root_dir = function(_, callback)
+      --   -- local root_dir = util.find_git_ancestor(fname)
+      --   local root_dir = require('lspconfig.util').root_pattern(".git")
+      --   if root_dir then
+      --     callback(root_dir)
+      --   end
+      -- end,
+      -- root_dir = function(fname)
+      --   return util.root_pattern("requirements.txt", ".git", util.find_git_ancestor(fname))(fname)
+      -- end,
+    })
 
     -- enable all servers
-    -- vim.lsp.enable(vim.list_extend(vim.deepcopy(servers), { "gopls", "pyright" }))
-    vim.lsp.enable(servers)
+    vim.lsp.enable(vim.list_extend(vim.deepcopy(servers), { "pyright" }))
+    -- vim.lsp.enable(servers)
     return M
   end,
 }
