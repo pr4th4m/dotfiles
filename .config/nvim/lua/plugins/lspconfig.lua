@@ -117,8 +117,6 @@ return {
     vim.lsp.config("pyright", {
       before_init = function(_, config)
         local venv_path = config.root_dir .. "/" .. root_project() .. "/venv/bin/python"
-        -- local venv_path = config.root_dir .. "/venv/bin/python"
-        vim.notify(venv_path)
         config.settings.python.pythonPath = venv_path
         -- if vim.fn.executable(venv_path) == 1 then
         --   config.settings.python.pythonPath = venv_path

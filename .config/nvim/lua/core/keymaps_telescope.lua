@@ -78,8 +78,8 @@ keymap("n", "<leader>gc", "<cmd>Telescope git_commits<CR>", { desc = "[C]ommit" 
 keymap("n", "<leader>hh", ":OpenBookmark<CR>", { desc = "Open bookmark with telescope" })
 
 -- notes
-keymap("n", "<leader>n",
-	"<cmd>lua require('telescope.builtin').find_files({cwd='~/Desktop/notes', cmd = 'fd --color=never --type f --follow --exclude .git --strip-cwd-prefix -X ls -t'})<CR>",
+keymap("n", "<leader>nn",
+	"<cmd>lua require('telescope.builtin').find_files({cwd='~/Desktop/docs/notes', cmd = 'fd --color=never --type f --follow --exclude .git --strip-cwd-prefix -X ls -t'})<CR>",
 	{ desc = "[N]otes list" })
 keymap("n", "<leader>N",
 	":Telescope find_files cwd=~/workspace/notes<CR>",
