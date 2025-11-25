@@ -1,0 +1,80 @@
+-- local opts = { noremap = true, silent = true }
+-- local term_opts = { silent = true }
+
+-- Shorten function name
+local keymap = vim.keymap.set
+
+-- -- FFF
+-- keymap("n", "<leader>ff", "<cmd>lua require('fff').find_files_in_dir(vim.fn.getcwd())<CR>", { desc = "find [F]iles" })
+-- keymap("n", "<leader>fc", "<cmd>lua require('fff').find_files_in_dir(vim.fn.expand('%:p:h'))<CR>",
+-- 	{ desc = "find files in [C]urrent dir" })
+
+-- Telescope
+-- file navigation
+keymap("n", "<leader>ff", function() Snacks.picker.files() end, { desc = "find [F]iles" })
+keymap("n", "<leader>fc", function() Snacks.picker.files({ cwd = vim.fn.expand('%:p:h') }) end,
+	{ desc = "find files in [C]urrent dir" })
+
+keymap("n", "<leader>fh", function() Snacks.picker.files({ hidden = true, no_ignore = true }) end,
+	{ desc = "find files in [H]idden and Ignored dir" })
+keymap("n", "<leader><space>",
+	function() Snacks.picker.buffers({sort_lastused=true, ignore_current_buffer=true, layout_config={width=0.5, height=0.4}})end,
+	{ desc = "find all buffers" })
+keymap("n", "<leader>a",
+	function() Snacks.picker.buffers({sort_lastused=true, ignore_current_buffer=true, layout_config={width=0.5, height=0.4}, cwd = vim.fn.getcwd()}) end,
+	{ desc = "find buffers in current project or pwd" })
+keymap("n", "<leader>fo", function() Snacks.picker.recent() end, { desc = "[O]ld files" })
+-- keymap("n", "<leader>fo", "<cmd>Telescope oldfiles<CR>", { desc = "[O]ld files" })
+
+-- keymap("n", "<leader>fw", "<cmd>Telescope grep_string<CR>", { desc = "grep [W]ord" })
+-- keymap("n", "<leader>fw",
+-- 	"<cmd>lua require('telescope.builtin').grep_string({layout_strategy='vertical', layout_config={prompt_position='bottom'}})<CR>",
+-- 	{ desc = "grep [W]ord" })
+keymap("n", "<leader>fg", function() Snacks.picker.grep() end, { desc = "[G]rep" })
+keymap("n", "<leader>fw", function() Snacks.picker.grep_word() end, { desc = "grep [W]ord" })
+-- keymap("n", "<leader>fg",
+-- 	"<cmd>lua require('telescope').extensions.egrepify.egrepify({layout_strategy='vertical', layout_config={prompt_position='bottom'}})<CR>",
+-- 	{ desc = "[G]rep" })
+-- keymap("n", "<leader>fg", "<cmd>lua require('telescope').extensions.egrepify.egrepify()<CR>", { desc = "[G]rep" })
+
+keymap("n", "<leader>fm", function() Snacks.picker.marks() end, { desc = "[M]arks" })
+-- keymap("n", "<leader>fc", "<cmd>Telescope commands<CR>", opts)
+keymap("n", "<leader>ft", "<cmd>Telescope builtin<CR>", { desc = "built[I]n" })
+keymap("n", "<leader>fp", function() Snacks.picker.projects() end, { desc = "[P]rojects" })
+keymap("n", "<leader>f=", function() Snacks.picker.spelling() end, { desc = "[S]pelling" })
+keymap("n", "<leader>fb", function() Snacks.picker.grep_buffers() end, { desc = "find in current buffer" })
+-- keymap("n", "<leader>tt", "<cmd>Telescope telescope-tabs list_tabs<cr>", { desc = "list all tabs" })
+
+-- Lsp
+keymap("n", "<leader>d", function() Snacks.picker.lsp_definitions() end, { desc = "[D]efinitions" })
+keymap("n", "gd", function() Snacks.picker.lsp_definitions() end, { desc = "[D]efinitions" })
+keymap("n", "gi", function() Snacks.picker.lsp_implementations() end, { desc = "[I]mplementations" })
+keymap("n", "gr", function() Snacks.picker.lsp_references() end, { desc = "[R]eferences" })
+keymap("n", "gt", function() Snacks.picker.lsp_type_definitions() end, { desc = "[T]ype definition" })
+keymap("n", "<leader>D", ":vsp | lua Snacks.picker.lsp_definitions() <cr>", { desc = "[D]efinitions in split" })
+keymap("n", "gD", ":vsp | lua Snacks.picker.lsp_definitions() <cr>", { desc = "[D]efinitions in split" })
+keymap("n", "gI", ":vsp | lua Snacks.picker.lsp_implementations() <cr>", { desc = "[I]mplementations in split" })
+keymap("n", "gR", ":vsp | lua Snacks.picker.lsp_references() <cr>", { desc = "[R]eferences in split" })
+keymap("n", "gT", ":vsp | lua Snacks.picker.lsp_type_definitions() <cr>", { desc = "[T]ype definition in split" })
+keymap("n", "<leader>la", "<cmd>lua vim.lsp.buf.code_action()<cr>", { desc = "code [A]ction" })
+
+keymap("n", "<leader>ls", function() Snacks.picker.lsp_symbols() end, { desc = "document [S]ymbols" })
+keymap("n", "<leader>lw", function() Snacks.picker.lsp_workspace_symbols() end, { desc = "[W]orkspace symbols" })
+keymap("n", "<leader>ld", function() Snacks.picker.diagnostics() end, { desc = "workspace [D]iagnostics" })
+keymap("n", "<leader>lb", function() Snacks.picker.diagnostics_buffer() end, { desc = "buffer [D]iagnostics" })
+
+-- Git
+keymap("n", "<leader>gb", function() Snacks.picker.git_branch() end, { desc = "[B]ranch" })
+keymap("n", "<leader>gt", function() Snacks.picker.git_stash() end, { desc = "s[T]ash" })
+keymap("n", "<leader>gc", "<cmd>Telescope git_commits<CR>", { desc = "[C]ommit" })
+
+-- Bookmark file
+keymap("n", "<leader>hh", ":OpenBookmark<CR>", { desc = "Open bookmark with telescope" })
+
+-- notes
+keymap("n", "<leader>n",
+	function() Snacks.picker.files({cwd='~/Desktop/notes', cmd = 'fd --color=never --type f --follow --exclude .git --strip-cwd-prefix -X ls -t'}) end,
+	{ desc = "[N]otes list" })
+keymap("n", "<leader>N",
+	function() Snacks.picker.files({cwd="~/workspace/notes"}) end,
+	{ desc = "Github [N]otes" })
