@@ -25,6 +25,9 @@ vim.g.maplocalleader = " "
 keymap('n', 'go', 'o<Esc>0"_D')
 keymap('n', 'gO', 'O<Esc>0"_D')
 
+-- better copy paste in visual mode
+keymap('x', 'p', 'pgvy')
+
 -- Better window navigation
 keymap("n", "<C-h>", "<C-w>h", opts)
 keymap("n", "<C-j>", "<C-w>j", opts)
@@ -325,12 +328,15 @@ keymap("n", "<leader>/", "<cmd>noh<cr><cr>", { desc = "Clear search selection" }
 keymap("n", "<leader>gdw", ":DiffWindow<CR>", { desc = "Diff multiple windows" })
 
 -- notes
-keymap("n", "<leader>q",
-	":tabnew ~/Desktop/notes/quicknote/quicknote.md<CR>",
+keymap("n", "<leader>na",
+	"<cmd>lua require('telescope.builtin').find_files({cwd='~/Desktop/docs', cmd = 'fd --color=never --type f --follow --exclude .git --strip-cwd-prefix -X ls -t'})<CR>",
+	{ desc = "[A]ll notes" })
+keymap("n", "<leader>nq",
+	":tabnew ~/Desktop/docs/quicknote/quicknote.md<CR>",
 	{ desc = "Quick Notes" })
-keymap("n", "<leader>s", function()
+keymap("n", "<leader>ns", function()
 	local datetime = os.date("%Y-%m-%d_%H-%M-%S")
-	local filename = "~/Desktop/notes/scratch/" .. datetime .. ".md"
+	local filename = "~/Desktop/docs/scratch/" .. datetime .. ".md"
 	vim.cmd("tabnew " .. filename)
 end, { desc = "[S]cratch Notes" })
 
