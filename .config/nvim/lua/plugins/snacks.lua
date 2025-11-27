@@ -11,12 +11,23 @@ return {
     explorer = { enabled = true },
     indent = { enabled = false },
     input = { enabled = false },
-    picker = { enabled = true },
     notifier = { enabled = false },
     quickfile = { enabled = false },
     scope = { enabled = false },
     scroll = { enabled = false },
     statuscolumn = { enabled = false },
     words = { enabled = false },
+    picker = {
+      enabled = true,
+      layout = {
+        layout = {
+          width = 0.6,
+          height = 0.6,
+          wo = {
+            winhighlight = "NormalFloat:SnacksPickerNormal"
+          },
+        },
+      },
+    },
   },
 }
