@@ -16,6 +16,7 @@ bundle/
 !.config/nvim-new/
 !.config/nvim-testplugin/
 !.config/sheldon/
+!.config/atuin/
 !.config/fish/
 !.config/k9s/plugins.yaml
 !.config/k9s/k9s-stern.sh
