@@ -79,6 +79,22 @@ return {
             return dirs[#dirs] or ""
           end
 
+          -- local root_project  = function()
+          --   local ok, snacks = pcall(require, "snacks")
+          --   if not ok then
+          --     return ""
+          --   end
+          --
+          --   local root = snacks.git.get_root()
+          --
+          --   if not root or root == "" then
+          --     return ""
+          --   end
+          --
+          --   -- Extract just the last directory name
+          --   return root:match("([^/]+)$") or ""
+          -- end
+
           local git_branch    = function()
             local branch = ""
             local ok, result = pcall(vim.fn.FugitiveHead)

@@ -54,36 +54,64 @@ vim.api.nvim_create_user_command("Bookmark", function()
   bookmark_current_file()
 end, {})
 
--- Telescope integration
-local actions = require('telescope.actions')
-local action_state = require('telescope.actions.state')
+-- -- -- Telescope integration
+-- local actions = require('telescope.actions')
+-- local action_state = require('telescope.actions.state')
+--
+-- local function open_bookmark(prompt_bufnr)
+--   local selection = action_state.get_selected_entry()
+--   actions.close(prompt_bufnr)
+--   vim.cmd('edit ' .. selection.value)
+-- end
 
-local function open_bookmark(prompt_bufnr)
-  local selection = action_state.get_selected_entry()
-  actions.close(prompt_bufnr)
-  vim.cmd('edit ' .. selection.value)
-end
+-- -- utils/bookmarks.lua integration for telescope
+-- local function show_bookmarks_in_telescope()
+--   local bookmarks = load_bookmarks()
+--   require('telescope.pickers').new({}, {
+--     prompt_title = "Bookmarks",
+--     layout_config = { width = 0.5, height = 0.4 },
+--     finder = require('telescope.finders').new_table {
+--       results = bookmarks,
+--     },
+--     sorter = require('telescope.config').values.generic_sorter({}),
+--     attach_mappings = function(_, map)
+--       map('i', '<CR>', open_bookmark)
+--       map('i', '<C-d>', function(prompt_bufnr)
+--         local selection = action_state.get_selected_entry()
+--         remove_bookmark(selection.value)
+--         actions.close(prompt_bufnr)
+--       end)
+--       return true
+--     end,
+--   }):find()
+-- end
 
--- utils/bookmarks.lua integration for telescope
-local function show_bookmarks_in_telescope()
+local function show_bookmarks_in_snacks()
   local bookmarks = load_bookmarks()
-  require('telescope.pickers').new({}, {
-    prompt_title = "Bookmarks",
-    layout_config = { width = 0.5, height = 0.4 },
-    finder = require('telescope.finders').new_table {
-      results = bookmarks,
-    },
-    sorter = require('telescope.config').values.generic_sorter({}),
-    attach_mappings = function(_, map)
-      map('i', '<CR>', open_bookmark)
-      map('i', '<C-d>', function(prompt_bufnr)
-        local selection = action_state.get_selected_entry()
-        remove_bookmark(selection.value)
-        actions.close(prompt_bufnr)
-      end)
-      return true
+
+  local items = vim.tbl_map(function(bookmark)
+    return { text = bookmark, file = bookmark }
+  end, bookmarks)
+
+  Snacks.picker.pick({
+    items = items,
+    prompt = "B> ",
+    layout = "select",
+    on_select = function(item)
+      vim.cmd('edit ' .. item.file)
     end,
-  }):find()
+    win = {
+      keys = {
+        ["<C-d>"] = function(picker)
+          local item = picker:current()
+          if item then
+            remove_bookmark(item.file)
+            picker:close()
+          end
+        end,
+      },
+    },
+  })
 end
 
 -- -- Function to show bookmarks with fzf-lua
@@ -114,5 +142,6 @@ end
 local bookmarks = load_bookmarks()
 vim.api.nvim_create_user_command("OpenBookmark", function()
   -- show_bookmarks_in_fzf(bookmarks)
-  show_bookmarks_in_telescope()
+  -- show_bookmarks_in_telescope()
+  show_bookmarks_in_snacks()
 end, {})

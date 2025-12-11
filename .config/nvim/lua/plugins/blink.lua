@@ -2,7 +2,8 @@ return {
   'saghen/blink.cmp',
   -- version = '*',
   version = '1.*',
-  event = "InsertEnter",
+  -- event = "InsertEnter",
+  event = { "BufReadPre", "BufNewFile" },
   opts = {
     -- cmdline = {
     --   sources = function()

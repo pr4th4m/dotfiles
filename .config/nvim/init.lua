@@ -7,7 +7,8 @@ vim.api.nvim_set_hl(0, 'WinSeparator', { fg = '#434343', bg = bg })
 -- standard
 require "core.options"
 require "core.keymaps"
-require "core.keymaps_telescope"
+-- require "core.keymaps_telescope"
+require "core.keymaps_snacks"
 -- require "core.keymaps_fzflua"
 
 -- load plugins with lazy
@@ -18,11 +19,11 @@ vim.opt.tabline = "%!v:lua.require('core.utils.tabline').setup()"
 
 -- lazy load utils
 vim.api.nvim_create_autocmd("CmdUndefined", {
-    pattern = { "OpenBookmark", "ZoxideList", "Count" },
+    pattern = { "OpenBookmark", "Count" },
     once = true,
     callback = function()
         require "core.utils.bookmark"
-        require "core.utils.zoxide"
+        -- require "core.utils.zoxide"
         require "core.utils.search_count"
     end,
 })

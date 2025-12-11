@@ -84,3 +84,9 @@ keymap("n", "<leader>nn",
 keymap("n", "<leader>N",
 	":Telescope find_files cwd=~/workspace/notes<CR>",
 	{ desc = "Github [N]otes" })
+keymap("n", "<leader>na",
+	"<cmd>lua require('telescope.builtin').find_files({cwd='~/Desktop/docs', cmd = 'fd --color=never --type f --follow --exclude .git --strip-cwd-prefix -X ls -t'})<CR>",
+	{ desc = "[A]ll notes" })
+keymap("n", "<leader>nq",
+	":tabnew ~/Desktop/docs/quicknote/quicknote.md<CR>",
+	{ desc = "Quick Notes" })

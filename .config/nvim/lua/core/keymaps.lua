@@ -249,12 +249,10 @@ keymap("n", "<leader>ghh", "<cmd>DiffviewFileHistory %<cr>", { desc = "diff file
 -- keymap("n", "<leader>gdf", "<cmd>Git difftool main<CR>", { desc = "diff [F]iles" })
 
 -- File explorer
-keymap("n", "<leader>tt", ":NvimTreeToggle<CR>", { desc = "Toggle Nvim Tr[E]e" })
+-- keymap("n", "<leader>tt", ":NvimTreeToggle<CR>", { desc = "Toggle Nvim Tr[E]e" })
 keymap("n", "-", ":Oil<cr>", { desc = "Open Oil" })
 keymap("n", "_", ":vsp | Oil<cr>", { desc = "Open Oil" })
 keymap("n", "<leader>~", ":vsp | Oil ~/<cr>", { desc = "Open Oil in home directory" })
-keymap("n", "<leader>fz", ":ZoxideList<cr>", { desc = "Open with zoxide in telescope and oil" })
-keymap('n', '<leader>e', ':Neotree toggle<CR>', { desc = 'Toggle Neo-tree Explorer' })
 
 
 -- -- Toggle term mapping
@@ -269,6 +267,8 @@ keymap('n', '<leader>e', ':Neotree toggle<CR>', { desc = 'Toggle Neo-tree Explor
 keymap("n", "<leader>rr", "<cmd>lua require('kulala').run()<cr>", { desc = "[R]equest" })
 keymap("n", "<leader>ro", "<cmd>lua require('kulala').open()<cr>", { desc = "[O]pen request window" })
 keymap("n", "<leader>rf", "<cmd>lua require('kulala').search()<cr>", { desc = "[F]ind request" })
+keymap("n", "<leader>rc", "<cmd>lua require('kulala').copy()<cr>", { desc = "Convert to curl" })
+keymap("n", "<leader>rj", ":JqPlayground", { desc = "[J]q editor" })
 
 -- -- zk cli
 -- keymap("n", "<leader>zn", "<Cmd>ZkNew { dir = vim.fn.expand('%:p:h'), title = vim.fn.input('Title: ') }<CR>", opts)
@@ -327,18 +327,14 @@ keymap("n", "<leader>/", "<cmd>noh<cr><cr>", { desc = "Clear search selection" }
 -- keymap("n", "<leader>fv", ":Twilight<CR>", { desc = "twilight [V]iew" })
 keymap("n", "<leader>gdw", ":DiffWindow<CR>", { desc = "Diff multiple windows" })
 
--- notes
-keymap("n", "<leader>na",
-	"<cmd>lua require('telescope.builtin').find_files({cwd='~/Desktop/docs', cmd = 'fd --color=never --type f --follow --exclude .git --strip-cwd-prefix -X ls -t'})<CR>",
-	{ desc = "[A]ll notes" })
-keymap("n", "<leader>nq",
-	":tabnew ~/Desktop/docs/quicknote/quicknote.md<CR>",
-	{ desc = "Quick Notes" })
+-- scratch
 keymap("n", "<leader>ns", function()
 	local datetime = os.date("%Y-%m-%d_%H-%M-%S")
 	local filename = "~/Desktop/docs/scratch/" .. datetime .. ".md"
 	vim.cmd("tabnew " .. filename)
 end, { desc = "[S]cratch Notes" })
-
+keymap("n", "<leader>nq",
+	":tabnew ~/Desktop/docs/quicknote/quicknote.md<CR>",
+	{ desc = "Quick Notes" })
 -- reload neovim config
-keymap("n", "<leader>rc", "<cmd>lua dofile(vim.fn.stdpath('config') .. '/init.lua')<cr>", { desc = "Neovim reloaded!" })
+-- keymap("n", "<leader>rc", "<cmd>lua dofile(vim.fn.stdpath('config') .. '/init.lua')<cr>", { desc = "Neovim reloaded!" })
