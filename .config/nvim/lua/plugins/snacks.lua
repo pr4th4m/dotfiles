@@ -15,18 +15,18 @@ return {
       scroll = { enabled = false },
       statuscolumn = { enabled = false },
       words = { enabled = false },
-      explorer = {
-        enabled = true,
-        layout = {
-          preset = "sidebar",
-          layout = {
-            backdrop = false,
-            width = 0.1,
-          },
-        },
-      },
+      explorer = { enabled = true },
       picker = {
         sources = {
+
+          explorer = {
+            layout = {
+              layout = {
+                width = 0.2
+              }
+            }
+          },
+
           projects = {
             max_depth = 4,
             dev = { "~/workspace" },

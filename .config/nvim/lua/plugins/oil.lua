@@ -55,6 +55,40 @@ return {
           callback = function()
             vim.cmd("<C-c>-")
           end
+        },
+        -- ["gf"] = {
+        --   callback = function()
+        --     local oil = require("oil")
+        --     local dir = oil.get_current_dir()
+        --     if dir then
+        --       vim.fn.system("open -R " .. vim.fn.shellescape(dir))
+        --     end
+        --   end,
+        --   desc = "Open current directory in Finder",
+        -- },
+        ["gf"] = {
+          callback = function()
+            local oil = require("oil")
+            local entry = oil.get_cursor_entry()
+            local dir = oil.get_current_dir()
+            if entry and dir then
+              local filepath = dir .. entry.name
+              vim.fn.system("open -R " .. vim.fn.shellescape(filepath))
+            end
+          end,
+          desc = "Reveal file in Finder",
+        },
+        ["gv"] = {
+          callback = function()
+            local oil = require("oil")
+            local entry = oil.get_cursor_entry()
+            local dir = oil.get_current_dir()
+            if entry and dir then
+              local filepath = dir .. entry.name
+              vim.fn.system("open " .. vim.fn.shellescape(filepath))
+            end
+          end,
+          desc = "Open file in editor",
         }
       },
     })

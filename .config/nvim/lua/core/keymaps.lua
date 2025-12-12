@@ -246,6 +246,10 @@ keymap("n", "<leader>gdd", "<cmd>Gvdiffsplit<CR>", { desc = "[D]iff" })
 keymap("n", "<leader>gdh", "<cmd>Gvdiffsplit HEAD~1<CR>", { desc = "diff [H]ead" })
 keymap("n", "<leader>gha", "<cmd>DiffviewFileHistory<cr>", { desc = "diff [A]ll" })
 keymap("n", "<leader>ghh", "<cmd>DiffviewFileHistory %<cr>", { desc = "diff file [H]istory" })
+keymap("n", "<leader>gf", function()
+  local filepath = vim.fn.expand("%:p")
+  vim.fn.system("open -R " .. vim.fn.shellescape(filepath))
+end, { desc = "Reveal file in Finder" })
 -- keymap("n", "<leader>gdf", "<cmd>Git difftool main<CR>", { desc = "diff [F]iles" })
 
 -- File explorer
