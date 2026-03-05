@@ -12,8 +12,8 @@ return {
       prompt = 'F> ',
       max_threads = 6,
       layout = {
-        height = 0.7,
-        width = 0.7,
+        height = 0.6,
+        width = 0.6,
         prompt_position = 'top',
         preview_size = 0.5,
       },
@@ -28,6 +28,9 @@ return {
         preview_scroll_up = '<C-u>',
         preview_scroll_down = '<C-d>',
         toggle_debug = '<F2>',
+      },
+      hl = {
+        matched = 'SnacksPickerMatch',
       },
     })
   end

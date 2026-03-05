@@ -13,7 +13,7 @@
 [mergetool]
     prompt = true
 [mergetool "fugitive"]
-    cmd = nvim -f -c "Gdiffsplit!" "$MERGED"
+    cmd = nvim -f -c "Gvdiffsplit!" "$MERGED"
     ; cmd = nvim -f -c \"Gvdiffsplit!\" \"$MERGED\"
     ; cmd = nvim -f -c 'Gvdiffsplit :3|Gvdiffsplit :2'
     ; cmd = nvim -f -c \"aboveleft Ghdiffsplit :1 | Gvdiffsplit! | wincmd j\"
