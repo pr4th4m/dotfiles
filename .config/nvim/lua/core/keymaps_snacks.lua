@@ -21,8 +21,9 @@ keymap("n", "<leader><space>",
 	function() Snacks.picker.buffers({ sort_lastused = true, current = false, layout = 'select' }) end,
 	{ desc = "find all buffers" })
 keymap("n", "<leader>a",
-	function() Snacks.picker.buffers({ sort_lastused = true, current = false, layout = 'select', cwd = vim.fn.getcwd() }) end,
+	function() Snacks.picker.buffers({ sort_lastused = true, current = false, layout = 'select', filter = { cwd = true } } ) end,
 	{ desc = "find buffers in current project or pwd" })
+
 keymap("n", "<leader>fo", function() Snacks.picker.recent() end, { desc = "[O]ld files" })
 
 -- Search

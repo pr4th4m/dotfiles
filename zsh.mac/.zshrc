@@ -1,3 +1,6 @@
+# openssl rand -base64 12
+alias qh='echo "" | pbcopy'
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -41,8 +44,9 @@ alias rg='rg --hyperlink-format=kitty'
 # alias ll='gls -lh --color --group-directories-first --hyperlink=auto'
 alias ls='ls -Gt'
 alias ll='ls -lthG'
+alias cat='gcat'
 # alias cat='bat -pp --theme base16'
-alias cs='cht.sh'
+# alias cs='cht.sh'
 alias ks='kitty @ send-text -m ' 
 
 # make vim as default editor
@@ -72,19 +76,24 @@ export FZF_ALT_C_OPTS="--height 90% --preview 'tree -C {} | head -500'"
 # Home brew installation path
 export PATH="/opt/homebrew/bin:$PATH"
 export PATH="/usr/local/bin:$PATH"
+# gnu core utils
+# export PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH"
 
 # https://hasseg.org/trash/
 export PATH="/opt/homebrew/opt/trash/bin:$PATH"
 
-export PATH="/usr/local/opt/curl/bin:$PATH"
-export PATH="/usr/local/opt/openssl@1.1/bin:$PATH"
+export PATH="/opt/homebrew/opt/curl/bin:$PATH"
+export PATH="/opt/homebrew/opt/openssl@1.1/bin:$PATH"
 
 # Rust package manager
 # export PATH="$HOME/.cargo/bin:$PATH"
+# export PATH="/usr/local/opt/rustup/bin:$PATH"
+alias gcc="/opt/homebrew/bin/gcc-15"
+alias g++="/opt/homebrew/bin/g++-15"
 
 # Set python path for user workspace
 # NOTE: pip install <package> --user
-export PATH="$HOME/Library/Python/3.12/bin:$PATH"
+# export PATH="$HOME/Library/Python/3.12/bin:$PATH"
 
 # set virtualenvwrapper path
 # python3 -m venv .virtualenvs
@@ -97,6 +106,8 @@ export PATH="$HOME/Library/Python/3.12/bin:$PATH"
 export GOPATH=$HOME/go
 export GOBIN=$GOPATH/bin
 export PATH=$PATH:$GOPATH/bin
+# for private go repositories
+export GOPRIVATE=bitbucket.quickheal.com
 
 # export PATH="/usr/local/opt/mysql-client/bin:$PATH"
 
@@ -118,10 +129,29 @@ export HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_NOT_FOUND='bg=#dc322f,fg=#a5b0c5,bold'
 
 # Load completion
 fpath=(~/.zsh/completion $fpath)
-autoload -Uz compinit && compinit -i
+# autoload -Uz compinit && compinit -i
+# cache completion once a day
+autoload -Uz compinit
+if [ "$(date +'%j')" != "$(stat -f '%Sm' -t '%j' ~/.zcompdump 2>/dev/null)" ]; then
+    compinit
+else
+    compinit -C
+fi
+
+# edit command line
+autoload -Uz edit-command-line
+zle -N edit-command-line
+bindkey '^X^I' edit-command-line
+
+# Autosuggest settings
+ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE="20"
+ZSH_AUTOSUGGEST_USE_ASYNC=1
 
 # Load sheldon
 eval "$(sheldon source)"
+eval "$(atuin init zsh)"
+
+# Load atuin
 eval "$(atuin init zsh)"
 
 # Postgres cli
@@ -132,14 +162,13 @@ eval "$(atuin init zsh)"
 # export PATH="/usr/local/sbin:$PATH"
 
 # required by nvim image https://github.com/3rd/image.nvim
-export DYLD_LIBRARY_PATH="$(brew --prefix)/lib:$DYLD_LIBRARY_PATH"
+# export DYLD_LIBRARY_PATH="$(brew --prefix)/lib:$DYLD_LIBRARY_PATH"
 
 # k9s config directory
 export K9S_CONFIG_DIR=$HOME/.config/k9s
 
-# bw session key
-export BW_SESSION="+nieQbVzdqxUqLN+ee0TSb5g5fCEBAjVItedCj+1gDzSzrszM1lpEpVa7IrCLONJ6JLh2CILZV9ss1/TrrAyng=="
-
+# kafka cli path
+export PATH=/opt/kafka/bin:$PATH
 
 ## Useful zsh functions
 # keepassxc fzf integration
@@ -164,12 +193,17 @@ bindkey '^G' keepass_fzf
 # zoxide
 eval "$(zoxide init --cmd cd zsh)"
 zoxide_fzf() {
-  # selected=$(zoxide query -l | fzf --prompt="Zoxide> " --preview="ls -la {}" --bind "ctrl-d:execute(zoxide remove {})+abort")
-  selected=$(zoxide query -l | fzf --prompt="Zoxide> " --height "40%" --preview="ls -la {}")
-  if [ -n "$selected" ]; then
-    cd "$selected" || return
-    # echo "Changed directory to: $selected"
-  fi
+ local selected
+ selected=$(zoxide query -l | fzf --prompt="Zoxide> " --height "40%" --preview="ls -la {}") || {
+   zle reset-prompt
+   return 1
+ }
+ 
+ if [ -n "$selected" ]; then
+   cd "$selected" || return
+ fi
+ 
+ zle reset-prompt
 }
 zle -N zoxide_fzf
 bindkey '^Y' zoxide_fzf
@@ -191,3 +225,19 @@ clear_screen_and_scrollback() {
 }
 zle -N clear_screen_and_scrollback
 bindkey '^]' clear_screen_and_scrollback
+
+k8s_clusters() {
+  local selected
+  selected=$(ls ~/scripts/*.sh 2>/dev/null | xargs -n1 basename | fzf --prompt="Clusters> " --height "40%") || {
+    zle reset-prompt
+    return 1
+  }
+  
+  if [ -n "$selected" ]; then
+    ~/scripts/$selected
+  fi
+  
+  zle reset-prompt
+}
+zle -N k8s_clusters
+bindkey '^B' k8s_clusters

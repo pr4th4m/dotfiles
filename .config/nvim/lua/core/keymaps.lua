@@ -329,7 +329,7 @@ keymap("n", "<leader>ox", ":sp term://", { desc = "Open horizontal split termina
 keymap("n", "<leader>od", ":Dbee toggle<cr>", { desc = "Open database connections" })
 keymap("n", "<leader>/", "<cmd>noh<cr><cr>", { desc = "Clear search selection" })
 -- keymap("n", "<leader>fv", ":Twilight<CR>", { desc = "twilight [V]iew" })
-keymap("n", "<leader>gdw", ":DiffWindow<CR>", { desc = "Diff multiple windows" })
+keymap("n", "<leader>c", ":DiffWindow<CR>", { desc = "Diff multiple windows" })
 
 -- scratch
 keymap("n", "<leader>ns", function()

@@ -7,7 +7,8 @@
     },
     {
         "id": "local-mongodb",
-        "url": "mongodb://root:ErxHwF2lSLFpa13I@localhost:27017/?directConnection=true",
+        "url": "mongodb://root:Hz3KvXp6BmAoY45S@localhost:27017/?directConnection=true&maxPoolSize=1&batchSize=1000",
+        "page_size": 20,
         "name": "local-mongodb",
         "type": "mongodb"
     },
