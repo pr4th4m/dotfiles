@@ -71,6 +71,7 @@ export FZF_ALT_C_OPTS="--height 90% --preview 'tree -C {} | head -500'"
 
 # Home brew installation path
 export PATH="/opt/homebrew/bin:$PATH"
+export PATH="/usr/local/bin:$PATH"
 
 # https://hasseg.org/trash/
 export PATH="/opt/homebrew/opt/trash/bin:$PATH"
@@ -97,12 +98,13 @@ export GOPATH=$HOME/go
 export GOBIN=$GOPATH/bin
 export PATH=$PATH:$GOPATH/bin
 
-export PATH="/usr/local/opt/mysql-client/bin:$PATH"
+# export PATH="/usr/local/opt/mysql-client/bin:$PATH"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 # eval "$(starship init zsh)"
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+source <(fzf --zsh)
 
 # history-substring bind k and j for VI mode
 bindkey -M vicmd 'k' history-substring-search-up
@@ -120,9 +122,10 @@ autoload -Uz compinit && compinit -i
 
 # Load sheldon
 eval "$(sheldon source)"
+eval "$(atuin init zsh)"
 
 # Postgres cli
-export PATH=/usr/local/opt/libpq/bin:$PATH
+# export PATH=/usr/local/opt/libpq/bin:$PATH
 
 # # garden cli
 # export PATH=$PATH:$HOME/.garden/bin
