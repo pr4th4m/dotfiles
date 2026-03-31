@@ -297,11 +297,11 @@ keymap("n", "<leader>rj", ":badd ~/Desktop/docs/notes/query.jq | JqPlayground<cr
 -- keymap("n", "<leader>sx", function() require("persistence").stop() end, { desc = "stop Persistence" })
 --
 -- yank absolute and relative path
-keymap("n", "<leader>yp", "<cmd>lua vim.fn.setreg('*', vim.fn.expand('%:p'))<cr>", opts)
+keymap("n", "<leader>ya", "<cmd>lua vim.fn.setreg('*', vim.fn.expand('%:p'))<cr>", { desc = "Yank absolute file path" })
 keymap("n", "<leader>yr",
-	"<cmd>lua vim.fn.setreg('*', string.gsub(vim.fn.expand('%:p'), vim.fn.getcwd() .. '/', ''))<cr>",
-	opts)
-keymap("n", "<leader>yf", "<cmd>lua vim.fn.setreg('*', vim.fn.expand('%:t'))<cr>", opts)
+  "<cmd>lua vim.fn.setreg('*', vim.fn.fnamemodify(vim.fn.expand('%'), ':.'))<cr>",
+  { desc = "Yank relative file path" })
+keymap("n", "<leader>yf", "<cmd>lua vim.fn.setreg('*', vim.fn.expand('%:t'))<cr>", { desc = "Yank file name" })
 
 -- Run specified commands
 -- keymap("n", "<leader>ca", ":AutoRun<CR>", { desc = "[A]uto command" })

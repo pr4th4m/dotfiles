@@ -190,23 +190,6 @@ keepass_fzf() {
 zle -N keepass_fzf
 bindkey '^G' keepass_fzf
 
-# zoxide
-eval "$(zoxide init --cmd cd zsh)"
-zoxide_fzf() {
- local selected
- selected=$(zoxide query -l | fzf --prompt="Zoxide> " --height "40%" --preview="ls -la {}") || {
-   zle reset-prompt
-   return 1
- }
- 
- if [ -n "$selected" ]; then
-   cd "$selected" || return
- fi
- 
- zle reset-prompt
-}
-zle -N zoxide_fzf
-bindkey '^Y' zoxide_fzf
 
 # clear screen and keep scroll buffer
 # https://sw.kovidgoyal.net/kitty/conf/#shortcut-kitty.Reset-the-terminal
@@ -241,3 +224,14 @@ k8s_clusters() {
 }
 zle -N k8s_clusters
 bindkey '^B' k8s_clusters
+
+# zoxide
+eval "$(zoxide init --cmd cd zsh)"
+zoxide_fzf() {
+  local dir
+  dir=$(zoxide query -i) || return
+  cd "$dir"
+  zle reset-prompt
+}
+zle -N zoxide_fzf
+bindkey '^Y' zoxide_fzf

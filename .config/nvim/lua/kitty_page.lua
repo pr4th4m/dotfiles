@@ -5,8 +5,8 @@ return function(INPUT_LINE_NUMBER, CURSOR_LINE, CURSOR_COLUMN)
   -- vim.opt.clipboard = 'unnamed'
   vim.opt.clipboard = 'unnamedplus'
   vim.opt.compatible = false
-  vim.opt.number = true
-  vim.opt.relativenumber = true
+  vim.opt.number = false
+  vim.opt.relativenumber = false
   vim.opt.termguicolors = true
   vim.opt.showmode = false
   vim.opt.ruler = false

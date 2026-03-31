@@ -40,6 +40,27 @@ return {
             enabled = false,
           },
         },
+        -- layout = "custom",
+        -- layouts = {
+        --   custom = {
+        --     layout = {
+        --       box = "vertical",
+        --       backdrop = false,
+        --       row = -1,
+        --       width = 0.6,
+        --       height = 0.5,
+        --       border = "single",
+        --       title = " {title} {live} {flags}",
+        --       title_pos = "left",
+        --       { win = "input", height = 1, border = "bottom" },
+        --       {
+        --         box = "horizontal",
+        --         { win = "list",    border = "none" },
+        --         { win = "preview", title = "{preview}", width = 0.5, border = "left" },
+        --       },
+        --     },
+        --   },
+        -- },
         layout = {
           -- preset = "ivy",
           layout = {
