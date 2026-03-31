@@ -76,7 +76,6 @@ export FZF_ALT_C_OPTS="--height 90% --preview 'tree -C {} | head -500'"
 # Home brew installation path
 export PATH="/opt/homebrew/bin:$PATH"
 export PATH="/usr/local/bin:$PATH"
-
 # gnu core utils
 # export PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH"
 
@@ -150,6 +149,7 @@ ZSH_AUTOSUGGEST_USE_ASYNC=1
 
 # Load sheldon
 eval "$(sheldon source)"
+eval "$(atuin init zsh)"
 
 # Load atuin
 eval "$(atuin init zsh)"
