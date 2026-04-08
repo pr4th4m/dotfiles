@@ -32,7 +32,7 @@ return {
           -- scope_incremental = "gnc",
           init_selection = "ss",
           node_incremental = "ss",
-          node_decremental = "sd",
+         node_decremental = "sd",
           scope_incremental = "sc",
         },
       },

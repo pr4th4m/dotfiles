@@ -163,6 +163,23 @@ keymap("n", "gmd", "`D", opts)
 keymap("n", "gms", "`S", opts)
 keymap("n", "gma", "`A", opts)
 
+-- incremental selection treesitter/lsp
+keymap({ "n", "x", "o" }, "ss", function()
+	if vim.treesitter.get_parser(nil, nil, { error = false }) then
+		require("vim.treesitter._select").select_parent(vim.v.count1)
+	else
+		vim.lsp.buf.selection_range(vim.v.count1)
+	end
+end, { desc = "Select parent treesitter node or outer incremental lsp selections" })
+
+keymap({ "n", "x", "o" }, "sd", function()
+	if vim.treesitter.get_parser(nil, nil, { error = false }) then
+		require("vim.treesitter._select").select_child(vim.v.count1)
+	else
+		vim.lsp.buf.selection_range(-vim.v.count1)
+	end
+end, { desc = "Select child treesitter node or inner incremental lsp selections" })
+
 -- search and replace
 keymap("n", "S", function()
 	local cmd = ":%s/<C-r><C-w>/<C-r><C-w>/gI<Left><Left><Left>"
@@ -342,3 +359,10 @@ keymap("n", "<leader>nq",
 	{ desc = "Quick Notes" })
 -- reload neovim config
 -- keymap("n", "<leader>rc", "<cmd>lua dofile(vim.fn.stdpath('config') .. '/init.lua')<cr>", { desc = "Neovim reloaded!" })
+
+-- format sql file with sqruff
+keymap("n", "<leader>sf", function()
+  vim.cmd("write")
+  vim.fn.system({ "sleek", vim.fn.expand("%") })
+  vim.cmd("edit!")
+end)

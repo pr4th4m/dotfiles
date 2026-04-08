@@ -43,3 +43,10 @@ vim.api.nvim_create_autocmd({ "BufReadPre", "BufNewFile" }, {
         -- require "core.utils.auto_run"
     end,
 })
+
+
+-- install undotree
+vim.cmd("packadd nvim.undotree")
+vim.keymap.set("n", "<leader>u", require("undotree").open)
+
+-- require('vim._core.ui2').enable({msg={target='cmd'}})

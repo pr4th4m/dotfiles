@@ -1,4 +1,4 @@
-return ({
+return {
   {
     "mistweaverco/kulala.nvim",
     lazy = true,
@@ -43,4 +43,4 @@ return ({
       -- kulala_keymaps_prefix = "",
     },
   },
-})
+}

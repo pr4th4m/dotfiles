@@ -224,12 +224,13 @@ return {
           analysis = {
             autoSearchPaths = true,
             useLibraryCodeForTypes = true,
-      --       diagnosticMode = "workspace",
-      --       typeCheckingMode = "basic",
+            --       diagnosticMode = "workspace",
+            --       typeCheckingMode = "basic",
           },
         },
       },
     })
+
 
     -- enable all servers
     vim.lsp.enable(vim.list_extend(vim.deepcopy(servers), { "pyright" }))
