@@ -19,6 +19,23 @@ return {
       picker = {
         sources = {
 
+          zoxide = {
+            actions = {
+              open_with_oil = function(picker, item)
+                picker:close()
+                local dir = item.path or item.text
+                vim.cmd("vsplit | lua require('oil').open('" .. dir .. "')")
+              end,
+            },
+            win = {
+              input = {
+                keys = {
+                  ["<C-->"] = { "open_with_oil", mode = { "n", "i" } },
+                },
+              },
+            },
+          },
+
           explorer = {
             layout = {
               layout = {
@@ -31,6 +48,21 @@ return {
             max_depth = 4,
             dev = { "~/workspace" },
             patterns = { "go.mod", "requirements.txt", ".git", "package.json", "pom.xml" },
+
+            actions = {
+              open_with_oil_vsplit = function(picker, item)
+                picker:close()
+                local dir = item.path or item.text
+                vim.cmd("vsplit | lua require('oil').open('" .. dir .. "')")
+              end,
+            },
+            win = {
+              input = {
+                keys = {
+                  ["<C-->"] = { "open_with_oil_vsplit", mode = { "n", "i" } },
+                },
+              },
+            },
           },
         },
 
