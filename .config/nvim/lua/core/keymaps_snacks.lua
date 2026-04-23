@@ -34,7 +34,8 @@ keymap("n", "<leader>fm", function() Snacks.picker.marks() end, { desc = "[M]ark
 keymap("n", "<leader>ft", function() Snacks.picker.pickers() end, { desc = "built[I]n" })
 keymap("n", "<leader>fp", function() Snacks.picker.projects({ layout = 'select' }) end, { desc = "[P]rojects" })
 keymap("n", "<leader>f=", function() Snacks.picker.spelling({ layout = 'select' }) end, { desc = "[S]pelling" })
-keymap("n", "<leader>fb", function() Snacks.picker.grep_buffers() end, { desc = "find in current buffer" })
+-- keymap("n", "<leader>fb", function() Snacks.picker.grep_buffers() end, { desc = "find in current buffer" })
+keymap("n", "<leader>fb", function() Snacks.picker.lines() end, { desc = "Grep current buffer" })
 
 -- Lsp
 keymap("n", "<leader>d", function() Snacks.picker.lsp_definitions() end, { desc = "[D]efinitions" })
