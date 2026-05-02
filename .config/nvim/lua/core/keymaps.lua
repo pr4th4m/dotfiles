@@ -289,7 +289,7 @@ keymap("n", "<leader>rr", "<cmd>lua require('kulala').run()<cr>", { desc = "[R]e
 keymap("n", "<leader>ro", "<cmd>lua require('kulala').open()<cr>", { desc = "[O]pen request window" })
 keymap("n", "<leader>rf", "<cmd>lua require('kulala').search()<cr>", { desc = "[F]ind request" })
 keymap("n", "<leader>rc", "<cmd>lua require('kulala').copy()<cr>", { desc = "Convert to curl" })
-keymap("n", "<leader>rj", ":badd ~/Desktop/docs/notes/query.jq | JqPlayground<cr>", { desc = "[J]q editor" })
+-- keymap("n", "<leader>rj", ":badd ~/Documents/docs/gist/query.jq | JqPlayground<cr>", { desc = "[J]q editor" })
 
 -- -- zk cli
 -- keymap("n", "<leader>zn", "<Cmd>ZkNew { dir = vim.fn.expand('%:p:h'), title = vim.fn.input('Title: ') }<CR>", opts)
@@ -349,13 +349,13 @@ keymap("n", "<leader>/", "<cmd>noh<cr><cr>", { desc = "Clear search selection" }
 keymap("n", "<leader>c", ":DiffWindow<CR>", { desc = "Diff multiple windows" })
 
 -- scratch
-keymap("n", "<leader>ns", function()
+keymap("n", "<leader>ss", function()
 	local datetime = os.date("%Y-%m-%d_%H-%M-%S")
-	local filename = "~/Desktop/docs/scratch/" .. datetime .. ".md"
+	local filename = "~/Documents/mynotes/scratch/" .. datetime .. ".md"
 	vim.cmd("tabnew " .. filename)
 end, { desc = "[S]cratch Notes" })
-keymap("n", "<leader>nq",
-	":tabnew ~/Desktop/docs/quicknote/quicknote.md<CR>",
+keymap("n", "<leader>sq",
+	":tabnew ~/Documents/mynotes/gist/quicknote.md<CR>",
 	{ desc = "Quick Notes" })
 -- reload neovim config
 -- keymap("n", "<leader>rc", "<cmd>lua dofile(vim.fn.stdpath('config') .. '/init.lua')<cr>", { desc = "Neovim reloaded!" })

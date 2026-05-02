@@ -21,7 +21,7 @@ keymap("n", "<leader><space>",
 	function() Snacks.picker.buffers({ sort_lastused = true, current = false, layout = 'select' }) end,
 	{ desc = "find all buffers" })
 keymap("n", "<leader>a",
-	function() Snacks.picker.buffers({ sort_lastused = true, current = false, layout = 'select', filter = { cwd = true } } ) end,
+	function() Snacks.picker.buffers({ sort_lastused = true, current = false, layout = 'select', filter = { cwd = true } }) end,
 	{ desc = "find buffers in current project or pwd" })
 
 keymap("n", "<leader>fo", function() Snacks.picker.recent() end, { desc = "[O]ld files" })
@@ -29,6 +29,9 @@ keymap("n", "<leader>fo", function() Snacks.picker.recent() end, { desc = "[O]ld
 -- Search
 keymap("n", "<leader>fg", function() Snacks.picker.grep() end, { desc = "[G]rep" })
 keymap("n", "<leader>fw", function() Snacks.picker.grep_word() end, { desc = "grep [W]ord" })
+keymap("n", "<leader>fG", function() require('fff').live_grep() end, { desc = "[G]rep" })
+keymap("n", "<leader>fW", function() require('fff').live_grep({ query = vim.fn.expand("<cword>") }) end,
+	{ desc = "grep [W]ord" })
 
 keymap("n", "<leader>fm", function() Snacks.picker.marks() end, { desc = "[M]arks" })
 keymap("n", "<leader>ft", function() Snacks.picker.pickers() end, { desc = "built[I]n" })
@@ -59,15 +62,29 @@ keymap("n", "<leader>lb", function() Snacks.picker.diagnostics_buffer() end, { d
 keymap("n", "<leader>gb", function() Snacks.picker.git_branches() end, { desc = "[B]ranch" })
 keymap("n", "<leader>gt", function() Snacks.picker.git_stash() end, { desc = "s[T]ash" })
 
--- notes
-keymap("n", "<leader>nn",
-	function() Snacks.picker.files({ cwd = '~/Desktop/docs/notes' }) end,
-	{ desc = "[N]otes list" })
+-- scratch notes
 keymap("n", "<leader>N",
 	function() Snacks.picker.files({ cwd = "~/workspace/notes" }) end,
 	{ desc = "Github [N]otes" })
-keymap("n", "<leader>na",
-	function() Snacks.picker.files({ cwd = "~/Desktop/docs" }) end,
+
+-- keymap("n", "<leader>sn",
+-- 	function() Snacks.picker.files({ cwd = '~/Documents/mynotes/notes' }) end,
+-- 	{ desc = "Quick [N]otes" })
+keymap("n", "<leader>sn",
+	-- function() Snacks.picker.files({ cwd = '~/Documents/mynotes/notes' }) end,
+	"<cmd>lua require('fff').find_files_in_dir('~/Documents/mynotes/gist/')<cr>",
+	{ desc = "Quick [N]otes" })
+
+-- keymap("n", "<leader>sl",
+-- 	function() Snacks.picker.files({ cwd = '~/Documents/mynotes/scratch/' }) end,
+-- 	{ desc = "Scratch [N]otes" })
+keymap("n", "<leader>sl",
+	-- function() Snacks.picker.files({ cwd = '~/Documents/mynotes/scratch/' }) end,
+	"<cmd>lua require('fff').find_files_in_dir('~/Documents/mynotes/scratch/')<cr>",
+	{ desc = "Scratch [N]otes" })
+
+keymap("n", "<leader>sa",
+	"<cmd>lua require('fff').find_files_in_dir('~/Documents/mynotes/')<cr>",
 	{ desc = "[A]ll notes" })
 
 -- Others
