@@ -1,5 +1,6 @@
 return {
   'dmtrKovalenko/fff.nvim',
+  branch = "main",
   build = function()
     require("fff.download").download_or_build_binary()
   end,
