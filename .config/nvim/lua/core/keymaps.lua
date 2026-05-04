@@ -251,8 +251,6 @@ end, { desc = "Copy diagnostic [E]rror" })
 
 -- Git
 keymap("n", "<leader>gg", ":Git<CR><C-w>7-", { desc = "[G]it status" })
-keymap("n", "<leader>gs", "<cmd>DiffviewOpen<cr>", { desc = "[S]tatus Open" })
-keymap("n", "<leader>ge", "<cmd>DiffviewClose<cr>", { desc = "status [C]lose" })
 keymap("n", "<leader>gp", ":exe 'Git push origin ' . FugitiveHead()<cr>", { desc = "[P]ush" })
 keymap("n", "<leader>gl", ":exe 'Git pull origin ' . FugitiveHead()<cr>", { desc = "pul[L]" })
 keymap("n", "<leader>gB", "<cmd>Git blame<CR>", { desc = "[B]lame" })
@@ -261,11 +259,16 @@ keymap("n", "<leader>gx", "<cmd>silent GBrowse<CR>", { desc = "Open file in brow
 keymap("v", "<leader>gx", ":<C-u>silent '<,'>GBrowse<CR>", { desc = "Open visual selection in browser" })
 keymap("n", "<leader>gdd", "<cmd>Gvdiffsplit<CR>", { desc = "[D]iff" })
 keymap("n", "<leader>gdh", "<cmd>Gvdiffsplit HEAD~1<CR>", { desc = "diff [H]ead" })
-keymap("n", "<leader>gha", "<cmd>DiffviewFileHistory<cr>", { desc = "diff [A]ll" })
-keymap("n", "<leader>ghh", "<cmd>DiffviewFileHistory %<cr>", { desc = "diff file [H]istory" })
+
+-- Diffview
+keymap("n", "<leader>gs", "<cmd>DiffviewToggle<cr>", { desc = "toggle diffview" })
+keymap("n", "<leader>gvv", "<cmd>DiffviewOpen<cr>", { desc = "[S]tatus Open" })
+keymap("n", "<leader>gvo", "<cmd>DiffviewClose<cr>", { desc = "status [C]lose" })
+keymap("n", "<leader>gvh", "<cmd>DiffviewFileHistory<cr>", { desc = "diff [A]ll" })
+keymap("n", "<leader>gvc", "<cmd>DiffviewFileHistory %<cr>", { desc = "diff file [H]istory" })
 keymap("n", "<leader>gf", function()
-  local filepath = vim.fn.expand("%:p")
-  vim.fn.system("open -R " .. vim.fn.shellescape(filepath))
+	local filepath = vim.fn.expand("%:p")
+	vim.fn.system("open -R " .. vim.fn.shellescape(filepath))
 end, { desc = "Reveal file in Finder" })
 -- keymap("n", "<leader>gdf", "<cmd>Git difftool main<CR>", { desc = "diff [F]iles" })
 
@@ -316,8 +319,8 @@ keymap("n", "<leader>rc", "<cmd>lua require('kulala').copy()<cr>", { desc = "Con
 -- yank absolute and relative path
 keymap("n", "<leader>ya", "<cmd>lua vim.fn.setreg('*', vim.fn.expand('%:p'))<cr>", { desc = "Yank absolute file path" })
 keymap("n", "<leader>yr",
-  "<cmd>lua vim.fn.setreg('*', vim.fn.fnamemodify(vim.fn.expand('%'), ':.'))<cr>",
-  { desc = "Yank relative file path" })
+	"<cmd>lua vim.fn.setreg('*', vim.fn.fnamemodify(vim.fn.expand('%'), ':.'))<cr>",
+	{ desc = "Yank relative file path" })
 keymap("n", "<leader>yf", "<cmd>lua vim.fn.setreg('*', vim.fn.expand('%:t'))<cr>", { desc = "Yank file name" })
 
 -- Run specified commands
@@ -362,7 +365,7 @@ keymap("n", "<leader>sq",
 
 -- format sql file with sqruff
 keymap("n", "<leader>sf", function()
-  vim.cmd("write")
-  vim.fn.system({ "sleek", vim.fn.expand("%") })
-  vim.cmd("edit!")
+	vim.cmd("write")
+	vim.fn.system({ "sleek", vim.fn.expand("%") })
+	vim.cmd("edit!")
 end)

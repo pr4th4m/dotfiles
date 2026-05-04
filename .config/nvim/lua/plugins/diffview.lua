@@ -1,18 +1,17 @@
 return {
-  enabled = false,
   "sindrets/diffview.nvim",
   branch = "main",
-  cmd = { "DiffviewOpen", "DiffviewFileHistory" },
+  cmd = { "DiffviewToggle", "DiffviewOpen", "DiffviewFileHistory" },
   config = function()
     local actions = require("diffview.actions")
     require("diffview").setup({
       use_icons = false,
       file_panel = {
-        listing_style = "list",
+        listing_style = "tree",
         win_config = {
           position = "left",
           -- height = 12,
-          width = 20,
+          width = 30,
         },
         win_opts = {
           scrollbind = true,
@@ -57,5 +56,18 @@ return {
         }
       }
     })
+
+    vim.api.nvim_create_user_command("DiffviewToggle", function()
+      local lib = require("diffview.lib")
+      local view = lib.get_current_view()
+      if view then
+        -- Current tabpage is a Diffview; close it
+        vim.cmd.DiffviewClose()
+      else
+        -- No open Diffview exists: open a new one
+        vim.cmd.DiffviewOpen()
+      end
+    end, {})
+
   end
 }
