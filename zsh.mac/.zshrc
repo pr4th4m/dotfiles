@@ -1,6 +1,3 @@
-# openssl rand -base64 12
-alias qh='echo "" | pbcopy'
-
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -76,6 +73,7 @@ export FZF_ALT_C_OPTS="--height 90% --preview 'tree -C {} | head -500'"
 # Home brew installation path
 export PATH="/opt/homebrew/bin:$PATH"
 export PATH="/usr/local/bin:$PATH"
+
 # gnu core utils
 # export PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH"
 
@@ -84,6 +82,7 @@ export PATH="/opt/homebrew/opt/trash/bin:$PATH"
 
 export PATH="/opt/homebrew/opt/curl/bin:$PATH"
 export PATH="/opt/homebrew/opt/openssl@1.1/bin:$PATH"
+export PATH="/opt/homebrew/opt/sqlite/bin:$PATH"
 
 # Rust package manager
 # export PATH="$HOME/.cargo/bin:$PATH"
@@ -149,7 +148,6 @@ ZSH_AUTOSUGGEST_USE_ASYNC=1
 
 # Load sheldon
 eval "$(sheldon source)"
-eval "$(atuin init zsh)"
 
 # Load atuin
 eval "$(atuin init zsh)"

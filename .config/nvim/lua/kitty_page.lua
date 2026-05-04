@@ -15,6 +15,8 @@ return function(INPUT_LINE_NUMBER, CURSOR_LINE, CURSOR_COLUMN)
   vim.opt.showcmd = false
   vim.opt.ignorecase = true
   vim.opt.smartcase = true
+  vim.opt.wrap = false
+  vim.opt.textwidth = 0
   vim.opt.scrollback = INPUT_LINE_NUMBER + CURSOR_LINE
   local term_buf = vim.api.nvim_create_buf(true, false);
   local term_io = vim.api.nvim_open_term(term_buf, {})

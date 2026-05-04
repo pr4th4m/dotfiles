@@ -1,7 +1,7 @@
 return {
   "nvim-treesitter/nvim-treesitter",
   branch = "main",
-  -- event = { "BufReadPre", "BufNewFile" },
+  event = { "BufReadPre", "BufNewFile" },
   build = ":TSUpdate",
   config = function()
     local parsers = { "bash", "c", "cmake", "comment", "cpp",
