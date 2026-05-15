@@ -4,6 +4,7 @@ return {
   lazy = true,
   cmd = { "Oil" },
   event = { "BufReadPre", "BufNewFile" },
+  dependencies = { { "nvim-mini/mini.icons", opts = {} } },
   config = function()
     require("oil").setup({
       delete_to_trash = true,

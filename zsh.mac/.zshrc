@@ -168,25 +168,25 @@ export K9S_CONFIG_DIR=$HOME/.config/k9s
 # kafka cli path
 export PATH=/opt/kafka/bin:$PATH
 
-## Useful zsh functions
-# keepassxc fzf integration
-keepass_fzf() {
-  local db_path=/Users/prathameshnevagi/Library/CloudStorage/OneDrive-QuickHealTechnologiesLtd/SecretStore/QHSecretStore.kdbx
-  local keyfile_path=/Users/prathameshnevagi/Library/CloudStorage/OneDrive-QuickHealTechnologiesLtd/SecretStore/qhkeyfile.keyx
-
-  local entry
-  entry=$( keepassxc-cli ls $db_path -f -R --no-password -k $keyfile_path | fzf --prompt="KeepassXC> " --height "40%" )
-
-  if [ -n "$entry" ]; then
-    # Copy the selected entry's password to the clipboard
-    keepassxc-cli clip "$db_path" "$entry" 0 -q --no-password --key-file "$keyfile_path"
-  fi
-
-  # Inform the user
-  # echo "Password for '$entry' copied to clipboard."
-}
-zle -N keepass_fzf
-bindkey '^G' keepass_fzf
+# ## Useful zsh functions
+# # keepassxc fzf integration
+# keepass_fzf() {
+#   local db_path=/Users/prathameshnevagi/Library/CloudStorage/OneDrive-QuickHealTechnologiesLtd/SecretStore/QHSecretStore.kdbx
+#   local keyfile_path=/Users/prathameshnevagi/Library/CloudStorage/OneDrive-QuickHealTechnologiesLtd/SecretStore/qhkeyfile.keyx
+#
+#   local entry
+#   entry=$( keepassxc-cli ls $db_path -f -R --no-password -k $keyfile_path | fzf --prompt="KeepassXC> " --height "40%" )
+#
+#   if [ -n "$entry" ]; then
+#     # Copy the selected entry's password to the clipboard
+#     keepassxc-cli clip "$db_path" "$entry" 0 -q --no-password --key-file "$keyfile_path"
+#   fi
+#
+#   # Inform the user
+#   # echo "Password for '$entry' copied to clipboard."
+# }
+# zle -N keepass_fzf
+# bindkey '^G' keepass_fzf
 
 
 # clear screen and keep scroll buffer
@@ -232,4 +232,4 @@ zoxide_fzf() {
   zle reset-prompt
 }
 zle -N zoxide_fzf
-bindkey '^Y' zoxide_fzf
+bindkey '^G' zoxide_fzf

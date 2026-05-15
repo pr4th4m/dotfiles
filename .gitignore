@@ -11,6 +11,7 @@ bundle/
 !.config/alacritty/
 !.config/helix/
 !.config/kitty/
+!.config/skhd/
 !.config/lf/
 !.config/nvim/
 !.config/nvim-new/

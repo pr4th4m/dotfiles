@@ -37,6 +37,11 @@ return {
           },
 
           explorer = {
+            icons = {
+              files = {
+                enabled = true,
+              },
+            },
             layout = {
               layout = {
                 width = 0.2
