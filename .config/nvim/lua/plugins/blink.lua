@@ -28,7 +28,8 @@ return {
     completion = {
       menu = {
         border = "rounded",
-        winhighlight = "Normal:Normal,FloatBorder:FloatBorder,CursorLine:BlinkCmpMenuSelection,Search:None,BlinkCmpKind:None",
+        -- winhighlight = "Normal:Normal,FloatBorder:FloatBorder,CursorLine:BlinkCmpMenuSelection,Search:None,BlinkCmpKind:None",
+        winhighlight = 'Normal:BlinkCmpMenu,FloatBorder:BlinkCmpMenuBorder,CursorLine:BlinkCmpMenuSelection,Search:None',
         draw = {
           columns = { { 'label', 'label_description', gap = 1 }, { 'kind' } },
           -- components = {
@@ -56,7 +57,8 @@ return {
       documentation = {
         window = {
           border = "rounded",
-          winhighlight = "Normal:Normal,FloatBorder:FloatBorder,CursorLine:BlinkCmpDocCursorLine,Search:None",
+          -- winhighlight = "Normal:Normal,FloatBorder:FloatBorder,CursorLine:BlinkCmpDocCursorLine,Search:None",
+          winhighlight = 'Normal:BlinkCmpDoc,FloatBorder:BlinkCmpDocBorder',
         },
       },
     },
@@ -87,5 +89,10 @@ return {
   --     root_markers = { '.git' },
   --   })
   --   vim.lsp.enable('go')
+
   -- end
+
+  -- for blink cmp for onedark theme
+  -- vim.api.nvim_set_hl(0, 'BlinkCmpMenu', { bg = '#1e2127' }) -- match your bg
+  -- vim.api.nvim_set_hl(0, 'BlinkCmpMenuBorder', { bg = '#1e2127', fg = '#abb2bf' })
 }

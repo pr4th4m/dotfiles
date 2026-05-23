@@ -109,7 +109,7 @@ return {
       },
     })
 
-    vim.api.nvim_set_hl(0, "SnacksPicker", { link = "Normal" })
+    -- vim.api.nvim_set_hl(0, "SnacksPicker", { link = "Normal" })
     -- vim.api.nvim_set_hl(0, "SnacksPicker", { bg = '#101010', fg = '#434343' })
     -- vim.api.nvim_set_hl(0, "SnacksWinSeparator", { bg = '#101010', fg = '#434343' })
   end,

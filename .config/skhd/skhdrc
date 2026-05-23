@@ -1,7 +1,8 @@
 # ─── App Launchers ───────────────────────────────────────────
 
-alt - k : open -a "kitty"
-alt - b : open -a "Brave Browser"
-alt - t : open -a "Microsoft Teams"
-alt - o : open -a "Microsoft Outlook"
-alt - e : open -a "Finder"
+f1 : open -a "kitty"
+f2 : open -a "Brave Browser"
+f3 : open -a "Finder"
+f4 : open -a "Microsoft Teams"
+f5 : open -a "Microsoft Outlook"
+f6 : open -a "Elasticvue"

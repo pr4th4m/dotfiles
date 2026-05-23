@@ -72,7 +72,7 @@ local options = {
 }
 
 -- PERFORMANCE: Set winbar color more efficiently
-vim.api.nvim_set_hl(0, 'WinBar', { fg = '#797979' }) -- Removed undefined 'bg' variable
+-- vim.api.nvim_set_hl(0, 'WinBar', { fg = '#797979' }) -- Removed undefined 'bg' variable
 
 -- Efficient option setting
 vim.opt.shortmess:append("c")

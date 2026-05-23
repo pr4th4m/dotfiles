@@ -1,8 +1,8 @@
--- set colour scheme
-vim.cmd.colorscheme('habamax')
--- remove ~ from empty lines for habamax theme
-vim.opt.fillchars = 'eob: '
-vim.api.nvim_set_hl(0, 'WinSeparator', { fg = '#434343', bg = bg })
+-- -- set colour scheme
+-- vim.cmd.colorscheme('habamax')
+-- -- remove ~ from empty lines for habamax theme
+-- vim.opt.fillchars = 'eob: '
+-- vim.api.nvim_set_hl(0, 'WinSeparator', { fg = '#434343', bg = bg })
 
 -- standard
 require "core.options"
@@ -51,10 +51,10 @@ vim.keymap.set("n", "<leader>u", require("undotree").open)
 
 -- require('vim._core.ui2').enable({msg={target='cmd'}})
 
--- neovide settings
-if vim.g.neovide then
-    vim.g.neovide_cursor_vfx_mode = ""
-    vim.g.neovide_refresh_rate = 90
-    vim.g.neovide_input_macos_option_key_is_meta = 'only_left'
-    vim.g.neovide_cursor_animation_length = 0
-end
+-- -- neovide settings
+-- if vim.g.neovide then
+--     vim.g.neovide_cursor_vfx_mode = ""
+--     vim.g.neovide_refresh_rate = 90
+--     vim.g.neovide_input_macos_option_key_is_meta = 'only_left'
+--     vim.g.neovide_cursor_animation_length = 0
+-- end

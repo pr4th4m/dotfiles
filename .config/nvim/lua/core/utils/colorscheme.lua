@@ -30,8 +30,9 @@ local function select_colour(order, reset_index, condition_index)
 
       -- if colour_scheme == 'habamax' then
         -- vim.opt.fillchars = 'eob: '
-        vim.api.nvim_set_hl(0, 'WinSeparator', { fg = '#434343', bg = bg })
-        vim.api.nvim_set_hl(0, 'WinBar', { fg = '#797979', bg = bg })
+
+        -- vim.api.nvim_set_hl(0, 'WinSeparator', { fg = '#434343', bg = bg })
+        -- vim.api.nvim_set_hl(0, 'WinBar', { fg = '#797979', bg = bg })
 
       --   colour_scheme = {
       --     normal = {

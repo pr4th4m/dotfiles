@@ -40,15 +40,15 @@ return {
     end
 
     -- Call the function to set up the theme
-    setup_mini_statusline_theme()
-    set_default_tabline_colors()
+    -- setup_mini_statusline_theme()
+    -- set_default_tabline_colors()
 
     -- Make sure the theme is applied whenever the colorscheme changes
     vim.api.nvim_create_autocmd('ColorScheme', {
       pattern = '*',
       callback = function()
-        setup_mini_statusline_theme()
-        set_default_tabline_colors()
+        -- setup_mini_statusline_theme()
+        -- set_default_tabline_colors()
       end
     })
 
