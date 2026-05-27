@@ -11,9 +11,13 @@ local keymap = vim.keymap.set
 
 -- Snacks
 -- file navigation
+keymap("n", "<leader>ff", function()
+	local root, _ = require("project_nvim.project").get_project_root()
+	Snacks.picker.smart({ cwd = root })
+end, { desc = "find files smartly" })
 -- keymap("n", "<leader>ff", function() Snacks.picker.files() end, { desc = "find [F]iles" })
-keymap("n", "<leader>ff", function() Snacks.picker.smart({ cwd = Snacks.git.get_root() }) end,
-	{ desc = "find files smartly" })
+-- keymap("n", "<leader>ff", function() Snacks.picker.smart({ cwd = Snacks.git.get_root() }) end,
+-- 	{ desc = "find files smartly" })
 keymap("n", "<leader>fc", function() Snacks.picker.files({ cwd = vim.fn.expand('%:p:h') }) end,
 	{ desc = "find files in [C]urrent dir" })
 keymap("n", "<leader>fh", function() Snacks.picker.files({ hidden = true, no_ignore = true }) end,
