@@ -1,17 +1,17 @@
 return {
-  "sindrets/diffview.nvim",
+  "dlyongemallo/diffview.nvim",
   branch = "main",
   cmd = { "DiffviewToggle", "DiffviewOpen", "DiffviewFileHistory" },
   config = function()
     local actions = require("diffview.actions")
     require("diffview").setup({
-      use_icons = false,
+      use_icons = true,
       file_panel = {
-        listing_style = "tree",
+        listing_style = "list",
         win_config = {
           position = "left",
           -- height = 12,
-          width = 30,
+          width = 35,
         },
         win_opts = {
           scrollbind = true,

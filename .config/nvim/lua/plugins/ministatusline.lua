@@ -69,7 +69,7 @@ return {
             if not ok then
               return ""
             end
-            local root, method = project.get_project_root()
+            local root, _ = project.get_project_root()
             local dirs = {}
             if root and root ~= "" then
               for d in root:gmatch('[^/%s]+') do
