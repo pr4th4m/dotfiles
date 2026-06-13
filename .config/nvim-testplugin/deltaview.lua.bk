@@ -1,0 +1,16 @@
+return {
+  'kokusenz/deltaview.nvim',
+  -- version = '*',
+  -- event = "InsertEnter",
+  event = { "BufReadPre", "BufNewFile" },
+  config = function()
+    require('deltaview').setup({
+      -- configuration here
+      -- example:
+      keyconfig = {
+        dv_toggle_keybind = "<leader>dd"
+      },
+      use_nerdfonts = false
+    })
+  end
+}

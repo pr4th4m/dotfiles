@@ -254,23 +254,31 @@ keymap("n", "<leader>gg", ":Git<CR><C-w>7-", { desc = "[G]it status" })
 keymap("n", "<leader>gp", ":exe 'Git push origin ' . FugitiveHead()<cr>", { desc = "[P]ush" })
 keymap("n", "<leader>gl", ":exe 'Git pull origin ' . FugitiveHead()<cr>", { desc = "pul[L]" })
 keymap("n", "<leader>gB", "<cmd>Git blame<CR>", { desc = "[B]lame" })
-keymap("n", "<leader>go", "<cmd>Git log<CR>", { desc = "l[O]g" })
+-- keymap("n", "<leader>go", "<cmd>Git log<CR>", { desc = "l[O]g" })
 keymap("n", "<leader>gx", "<cmd>silent GBrowse<CR>", { desc = "Open file in browser" })
 keymap("v", "<leader>gx", ":<C-u>silent '<,'>GBrowse<CR>", { desc = "Open visual selection in browser" })
-keymap("n", "<leader>gdd", "<cmd>Gvdiffsplit<CR>", { desc = "[D]iff" })
-keymap("n", "<leader>gdh", "<cmd>Gvdiffsplit HEAD~1<CR>", { desc = "diff [H]ead" })
+-- keymap("n", "<leader>gdd", "<cmd>Gvdiffsplit<CR>", { desc = "[D]iff" })
+-- keymap("n", "<leader>gdh", "<cmd>Gvdiffsplit HEAD~1<CR>", { desc = "diff [H]ead" })
 
--- Diffview
-keymap("n", "<leader>gs", "<cmd>DiffviewToggle<cr>", { desc = "toggle diffview" })
-keymap("n", "<leader>gvv", "<cmd>DiffviewOpen<cr>", { desc = "[S]tatus Open" })
-keymap("n", "<leader>gvo", "<cmd>DiffviewClose<cr>", { desc = "status [C]lose" })
-keymap("n", "<leader>gvh", "<cmd>DiffviewFileHistory<cr>", { desc = "diff [A]ll" })
-keymap("n", "<leader>gvc", "<cmd>DiffviewFileHistory %<cr>", { desc = "diff file [H]istory" })
+-- Codediff
+keymap("n", "<leader>gs", "<cmd>CodeDiff<cr>", { desc = "toggle diffview" })
+keymap("n", "<leader>gd", "<cmd>CodeDiff file HEAD<cr>", { desc = "diff head" })
+keymap("n", "<leader>go", "<cmd>CodeDiff history<CR>", { desc = "l[O]g" })
+keymap("n", "<leader>gc", "<cmd>CodeDiff history %<cr>", { desc = "diff file [H]istory" })
+
 keymap("n", "<leader>gf", function()
 	local filepath = vim.fn.expand("%:p")
 	vim.fn.system("open -R " .. vim.fn.shellescape(filepath))
 end, { desc = "Reveal file in Finder" })
 -- keymap("n", "<leader>gdf", "<cmd>Git difftool main<CR>", { desc = "diff [F]iles" })
+
+-- Diffview
+-- keymap("n", "<leader>gs", "<cmd>DiffviewToggle<cr>", { desc = "toggle diffview" })
+-- keymap("n", "<leader>gvv", "<cmd>DiffviewOpen<cr>", { desc = "[S]tatus Open" })
+-- keymap("n", "<leader>gvo", "<cmd>DiffviewClose<cr>", { desc = "status [C]lose" })
+-- keymap("n", "<leader>gvh", "<cmd>DiffviewFileHistory<cr>", { desc = "diff [A]ll" })
+-- keymap("n", "<leader>gvc", "<cmd>DiffviewFileHistory %<cr>", { desc = "diff file [H]istory" })
+
 
 -- File explorer
 -- keymap("n", "<leader>tt", ":NvimTreeToggle<CR>", { desc = "Toggle Nvim Tr[E]e" })
@@ -349,13 +357,40 @@ keymap("n", "<leader>ox", ":sp term://", { desc = "Open horizontal split termina
 keymap("n", "<leader>od", ":Dbee toggle<cr>", { desc = "Open database connections" })
 keymap("n", "<leader>/", "<cmd>noh<cr><cr>", { desc = "Clear search selection" })
 -- keymap("n", "<leader>fv", ":Twilight<CR>", { desc = "twilight [V]iew" })
-keymap("n", "<leader>c", ":DiffWindow<CR>", { desc = "Diff multiple windows" })
+-- keymap("n", "<leader>c", ":DiffWindow<CR>", { desc = "Diff multiple windows" })
+
+-- diff with codediff
+keymap("n", "<leader>cd", function()
+    local wins = vim.api.nvim_tabpage_list_wins(0)
+    if #wins < 2 then
+        vim.notify("Need at least 2 visible splits to diff", vim.log.levels.WARN)
+        return
+    end
+
+    -- Get filenames from the first two windows
+    local file_a = vim.api.nvim_buf_get_name(vim.api.nvim_win_get_buf(wins[1]))
+    local file_b = vim.api.nvim_buf_get_name(vim.api.nvim_win_get_buf(wins[2]))
+
+    -- Shorten paths relative to current working directory
+    file_a = vim.fn.fnamemodify(file_a, ":.")
+    file_b = vim.fn.fnamemodify(file_b, ":.")
+
+    -- Populate command line without executing
+    local cmd = string.format(":CodeDiff file %s %s", file_a, file_b)
+    -- vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(cmd, true, false, true), 'n', false)
+	vim.cmd(cmd)
+end, { desc = "Diff multiple windows" })
 
 -- scratch
 keymap("n", "<leader>ss", function()
 	local datetime = os.date("%Y-%m-%d_%H-%M-%S")
 	local filename = "~/Documents/mynotes/scratch/" .. datetime .. ".md"
-	vim.cmd("tabnew " .. filename)
+	-- vim.cmd("tabnew " .. filename)
+	vim.ui.input({ prompt = 'file: ', default = 'tabnew ' .. filename }, function(input)
+		if input then
+			vim.cmd(input)
+		end
+	end)
 end, { desc = "[S]cratch Notes" })
 keymap("n", "<leader>sq",
 	":tabnew ~/Documents/mynotes/gist/quicknote.md<CR>",

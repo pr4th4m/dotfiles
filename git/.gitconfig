@@ -1,33 +1,51 @@
 [core]
     editor = nvim
 
+; [diff]
+;     tool = nvimdiff
+; [difftool]
+;     prompt = false
+; [difftool "nvimdiff"]
+;     cmd = "nvim -d \"$LOCAL\" \"$REMOTE\""
+
 [diff]
-    tool = nvimdiff
+    tool = codediff
 [difftool]
-    prompt = false
+    prompt = true
 [difftool "nvimdiff"]
-    cmd = "nvim -d \"$LOCAL\" \"$REMOTE\""
+    cmd = 'nvim "$LOCAL" "$REMOTE" +"CodeDiff file $LOCAL $REMOTE"'
 
 [merge]
-    tool = fugitive
+    tool = codediff
 [mergetool]
     prompt = true
 [mergetool "fugitive"]
-    cmd = nvim -f -c "Gvdiffsplit!" "$MERGED"
+    cmd = 'nvim "$MERGED" -c "CodeDiff merge \"$MERGED\""'
     ; cmd = nvim -f -c \"Gvdiffsplit!\" \"$MERGED\"
     ; cmd = nvim -f -c 'Gvdiffsplit :3|Gvdiffsplit :2'
     ; cmd = nvim -f -c \"aboveleft Ghdiffsplit :1 | Gvdiffsplit! | wincmd j\"
     ; cmd = nvim -f -c 'abo Ghd :2 | abo Gvd! :3 | wincmd j'
 
-[core]
-    pager = delta
+; [merge]
+;     tool = fugitive
+; [mergetool]
+;     prompt = false
+; [mergetool "fugitive"]
+;     cmd = nvim -f -c "Gvdiffsplit!" "$MERGED"
+;     ; cmd = nvim -f -c \"Gvdiffsplit!\" \"$MERGED\"
+;     ; cmd = nvim -f -c 'Gvdiffsplit :3|Gvdiffsplit :2'
+;     ; cmd = nvim -f -c \"aboveleft Ghdiffsplit :1 | Gvdiffsplit! | wincmd j\"
+;     ; cmd = nvim -f -c 'abo Ghd :2 | abo Gvd! :3 | wincmd j'
 
-[interactive]
-    diffFilter = delta --color-only
-
-[delta]
-    navigate = true  # use n and N to move between diff sections
-    dark = true      # or light = true, or omit for auto-detection
-
-[merge]
-    conflictStyle = zdiff3
+; [core]
+;     pager = delta
+;
+; [interactive]
+;     diffFilter = delta --color-only
+;
+; [delta]
+;     navigate = true  # use n and N to move between diff sections
+;     dark = true      # or light = true, or omit for auto-detection
+;
+; [merge]
+;     conflictStyle = zdiff3
