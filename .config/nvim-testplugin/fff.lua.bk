@@ -14,7 +14,7 @@ return {
       max_threads = 6,
       layout = {
         height = 0.6,
-        width = 0.6,
+        width = 0.8,
         prompt_position = 'top',
         preview_size = 0.5,
       },
@@ -31,7 +31,9 @@ return {
         toggle_debug = '<F2>',
       },
       hl = {
-        matched = 'SnacksPickerMatch',
+        grep_match        = 'SnacksPickerMatch',
+        matched           = 'SnacksPickerMatch',
+        winhl             = 'NormalFloat:SnacksPicker,FloatBorder:SnacksPickerBorder,FloatTitle:SnacksPickerTitle',
       },
     })
   end

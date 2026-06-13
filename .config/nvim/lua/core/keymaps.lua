@@ -163,6 +163,14 @@ keymap("n", "gmd", "`D", opts)
 keymap("n", "gms", "`S", opts)
 keymap("n", "gma", "`A", opts)
 
+-- open file vertically in quickfix list
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'qf',
+  callback = function()
+    vim.keymap.set('n', '<S-CR>', '<C-w><CR><C-w>L', { buffer = true, noremap = true })
+  end
+})
+
 -- incremental selection treesitter/lsp
 keymap({ "n", "x", "o" }, "ss", function()
 	if vim.treesitter.get_parser(nil, nil, { error = false }) then
@@ -254,7 +262,8 @@ keymap("n", "<leader>gg", ":Git<CR><C-w>7-", { desc = "[G]it status" })
 keymap("n", "<leader>gp", ":exe 'Git push origin ' . FugitiveHead()<cr>", { desc = "[P]ush" })
 keymap("n", "<leader>gl", ":exe 'Git pull origin ' . FugitiveHead()<cr>", { desc = "pul[L]" })
 keymap("n", "<leader>gB", "<cmd>Git blame<CR>", { desc = "[B]lame" })
--- keymap("n", "<leader>go", "<cmd>Git log<CR>", { desc = "l[O]g" })
+-- keymap("n", "<leader>goo", "<cmd>Git log --stat<CR>", { desc = "l[O]g" })
+-- keymap("n", "<leader>goc", "<cmd>Git log --stat -- %<CR>", { desc = "l[O]g current file" })
 keymap("n", "<leader>gx", "<cmd>silent GBrowse<CR>", { desc = "Open file in browser" })
 keymap("v", "<leader>gx", ":<C-u>silent '<,'>GBrowse<CR>", { desc = "Open visual selection in browser" })
 -- keymap("n", "<leader>gdd", "<cmd>Gvdiffsplit<CR>", { desc = "[D]iff" })

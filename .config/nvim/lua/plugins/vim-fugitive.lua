@@ -16,7 +16,7 @@ return {
     vim.api.nvim_set_hl(0, "DiffText", { bg = "#3a4a4a", fg = "NONE" })
 
     -- for blink cmp for onedark theme
-    vim.api.nvim_set_hl(0, 'BlinkCmpMenu', { bg = '#1e2127' }) -- match your bg
-    vim.api.nvim_set_hl(0, 'BlinkCmpMenuBorder', { bg = '#1e2127', fg = '#abb2bf' })
+    -- vim.api.nvim_set_hl(0, 'BlinkCmpMenu', { bg = '#1e2127' }) -- match your bg
+    -- vim.api.nvim_set_hl(0, 'BlinkCmpMenuBorder', { bg = '#1e2127', fg = '#abb2bf' })
   end
 }
