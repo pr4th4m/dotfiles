@@ -1,0 +1,7 @@
+return {
+  'kokusenz/deltaview.nvim',
+  event = { "BufReadPre", "BufNewFile" },
+  dependencies = {
+    "kokusenz/delta.lua",
+  },
+}

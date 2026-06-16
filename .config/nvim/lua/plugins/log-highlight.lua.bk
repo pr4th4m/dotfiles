@@ -1,0 +1,23 @@
+return {
+  'fei6409/log-highlight.nvim',
+  branch = "main",
+  lazy = true,
+  ft = { "log" },
+  config = function()
+    require('log-highlight').setup {
+      keyword = {
+        error = 'ERROR_MSG',
+        warning = { 'WARN_X', 'WARN_Y' },
+        info = { 'INFORMATION', 'msg' },
+        debug = { 'msg' },
+        pass = {},
+      },
+    }
+
+    vim.api.nvim_set_hl(0, 'LogLvError', { fg = '#BF616A' })
+    vim.api.nvim_set_hl(0, 'LogLvWarning', { fg = '#D08770' })
+    vim.api.nvim_set_hl(0, 'LogLvInfo', { fg = '#4C566A' })
+    vim.api.nvim_set_hl(0, 'LogLvDebug', { fg = '#4C566A' })
+    vim.api.nvim_set_hl(0, 'LogLvPass', { fg = '#A3BE8C' })
+  end,
+}

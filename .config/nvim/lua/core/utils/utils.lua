@@ -9,6 +9,43 @@ vim.api.nvim_create_user_command("DeleteAllBuffers", function()
   end
 end, {})
 
+-- highlight for log files
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile", "BufWritePost" }, {
+  pattern = "*.log",
+  callback = function()
+    local buf = vim.api.nvim_get_current_buf()
+    local ns = vim.api.nvim_create_namespace("log_hl")
+
+    vim.api.nvim_set_hl(0, 'LogError', { fg = '#BF616A' })
+    vim.api.nvim_set_hl(0, 'LogWarning', { fg = '#D08770' })
+    vim.api.nvim_set_hl(0, 'LogInfo', { fg = '#5E81AC' })
+    vim.api.nvim_set_hl(0, 'LogDebug', { fg = '#4C566A' })
+
+    -- vim.api.nvim_set_hl(0, 'LogError', { fg = '#BE5046' }) -- muted red
+    -- vim.api.nvim_set_hl(0, 'LogWarning', { fg = '#D19A66' }) -- muted orange
+    -- vim.api.nvim_set_hl(0, 'LogInfo', { fg = '#61AFEF' }) -- muted blue
+    -- vim.api.nvim_set_hl(0, 'LogDebug', { fg = '#5C6370' }) -- comment gray
+
+    local patterns = {
+      { pattern = "ERROR", hl = "LogError" },
+      { pattern = "WARN",  hl = "LogWarning" },
+      { pattern = "INFO",  hl = "LogInfo" },
+      { pattern = "DEBUG", hl = "LogDebug" },
+    }
+
+    local lines = vim.api.nvim_buf_get_lines(buf, 0, -1, false)
+    for i, line in ipairs(lines) do
+      for _, p in ipairs(patterns) do
+        -- if line:find(p.pattern) then
+        if line:lower():find(p.pattern:lower()) then
+          vim.api.nvim_buf_add_highlight(buf, ns, p.hl, i - 1, 0, -1)
+          break
+        end
+      end
+    end
+  end,
+})
+
 
 -- -- sort marked checkboxes
 -- vim.api.nvim_create_autocmd("FileType", {

@@ -102,8 +102,8 @@ return {
           -- preset = "ivy",
           layout = {
             backdrop = false,
-            width = 0.6,
-            height = 0.6,
+            -- width = 0.6,
+            -- height = 0.6,
           },
         },
       },

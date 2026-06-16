@@ -165,10 +165,10 @@ keymap("n", "gma", "`A", opts)
 
 -- open file vertically in quickfix list
 vim.api.nvim_create_autocmd('FileType', {
-  pattern = 'qf',
-  callback = function()
-    vim.keymap.set('n', '<S-CR>', '<C-w><CR><C-w>L', { buffer = true, noremap = true })
-  end
+	pattern = 'qf',
+	callback = function()
+		vim.keymap.set('n', '<S-CR>', '<C-w><CR><C-w>L', { buffer = true, noremap = true })
+	end
 })
 
 -- incremental selection treesitter/lsp
@@ -370,23 +370,23 @@ keymap("n", "<leader>/", "<cmd>noh<cr><cr>", { desc = "Clear search selection" }
 
 -- diff with codediff
 keymap("n", "<leader>cd", function()
-    local wins = vim.api.nvim_tabpage_list_wins(0)
-    if #wins < 2 then
-        vim.notify("Need at least 2 visible splits to diff", vim.log.levels.WARN)
-        return
-    end
+	local wins = vim.api.nvim_tabpage_list_wins(0)
+	if #wins < 2 then
+		vim.notify("Need at least 2 visible splits to diff", vim.log.levels.WARN)
+		return
+	end
 
-    -- Get filenames from the first two windows
-    local file_a = vim.api.nvim_buf_get_name(vim.api.nvim_win_get_buf(wins[1]))
-    local file_b = vim.api.nvim_buf_get_name(vim.api.nvim_win_get_buf(wins[2]))
+	-- Get filenames from the first two windows
+	local file_a = vim.api.nvim_buf_get_name(vim.api.nvim_win_get_buf(wins[1]))
+	local file_b = vim.api.nvim_buf_get_name(vim.api.nvim_win_get_buf(wins[2]))
 
-    -- Shorten paths relative to current working directory
-    file_a = vim.fn.fnamemodify(file_a, ":.")
-    file_b = vim.fn.fnamemodify(file_b, ":.")
+	-- Shorten paths relative to current working directory
+	file_a = vim.fn.fnamemodify(file_a, ":.")
+	file_b = vim.fn.fnamemodify(file_b, ":.")
 
-    -- Populate command line without executing
-    local cmd = string.format(":CodeDiff file %s %s", file_a, file_b)
-    -- vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(cmd, true, false, true), 'n', false)
+	-- Populate command line without executing
+	local cmd = string.format(":CodeDiff file %s %s", file_a, file_b)
+	-- vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(cmd, true, false, true), 'n', false)
 	vim.cmd(cmd)
 end, { desc = "Diff multiple windows" })
 
