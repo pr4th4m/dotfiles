@@ -12,19 +12,15 @@
     tool = codediff
 [difftool]
     prompt = true
-[difftool "nvimdiff"]
+[difftool "codediff"]
     cmd = 'nvim "$LOCAL" "$REMOTE" +"CodeDiff file $LOCAL $REMOTE"'
 
 [merge]
     tool = codediff
 [mergetool]
     prompt = true
-[mergetool "fugitive"]
+[mergetool "codediff"]
     cmd = 'nvim "$MERGED" -c "CodeDiff merge \"$MERGED\""'
-    ; cmd = nvim -f -c \"Gvdiffsplit!\" \"$MERGED\"
-    ; cmd = nvim -f -c 'Gvdiffsplit :3|Gvdiffsplit :2'
-    ; cmd = nvim -f -c \"aboveleft Ghdiffsplit :1 | Gvdiffsplit! | wincmd j\"
-    ; cmd = nvim -f -c 'abo Ghd :2 | abo Gvd! :3 | wincmd j'
 
 ; [merge]
 ;     tool = fugitive

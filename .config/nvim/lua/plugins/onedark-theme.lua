@@ -9,6 +9,11 @@ return {
       toggle_style_key = "<leader>to",
       toggle_style_list = { 'dark', 'darker', 'warm', 'warmer' },
       -- toggle_style_list = { 'dark', 'warm' },
+
+      highlights = {
+        Search = { fg = '#232326', bg = '#68a5b2' },
+        Visual = { fg = '#68a5b2', bg = '#37383d' }
+      }
     }
     -- Enable theme
     require('onedark').load()

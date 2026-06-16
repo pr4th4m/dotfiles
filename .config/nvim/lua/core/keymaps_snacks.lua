@@ -11,13 +11,12 @@ local keymap = vim.keymap.set
 
 -- Snacks
 -- file navigation
-keymap("n", "<leader>ff", function()
-	local root, _ = require("project_nvim.project").get_project_root()
-	Snacks.picker.smart({ cwd = root })
-end, { desc = "find files smartly" })
--- keymap("n", "<leader>ff", function() Snacks.picker.files() end, { desc = "find [F]iles" })
--- keymap("n", "<leader>ff", function() Snacks.picker.smart({ cwd = Snacks.git.get_root() }) end,
--- 	{ desc = "find files smartly" })
+-- keymap("n", "<leader>ff", function()
+-- 	local root, _ = require("project_nvim.project").get_project_root()
+-- 	Snacks.picker.smart({ cwd = root })
+-- end, { desc = "find files smartly" })
+
+keymap("n", "<leader>ff", function() Snacks.picker.files() end, { desc = "find [F]iles" })
 keymap("n", "<leader>fc", function() Snacks.picker.files({ cwd = vim.fn.expand('%:p:h') }) end,
 	{ desc = "find files in [C]urrent dir" })
 keymap("n", "<leader>fh", function() Snacks.picker.files({ hidden = true, no_ignore = true }) end,
@@ -35,8 +34,9 @@ keymap("n", "<leader>fo", function() Snacks.picker.recent() end, { desc = "[O]ld
 -- Search
 keymap("n", "<leader>fg", function() Snacks.picker.grep() end, { desc = "[G]rep" })
 keymap("n", "<leader>fw", function() Snacks.picker.grep_word() end, { desc = "grep [W]ord" })
--- keymap("n", "<leader>fG", function() require('fff').live_grep() end, { desc = "[G]rep" })
--- keymap("n", "<leader>fW", function() require('fff').live_grep({ query = vim.fn.expand("<cword>") }) end,
+
+-- keymap("n", "<leader>fg", function() require('fff').live_grep() end, { desc = "[G]rep" })
+-- keymap("n", "<leader>fw", function() require('fff').live_grep({ query = vim.fn.expand("<cword>") }) end,
 -- 	{ desc = "grep [W]ord" })
 
 keymap("n", "<leader>fm", function() Snacks.picker.marks() end, { desc = "[M]arks" })
@@ -44,7 +44,9 @@ keymap("n", "<leader>ft", function() Snacks.picker.pickers() end, { desc = "buil
 keymap("n", "<leader>fp", function() Snacks.picker.projects({ layout = 'select' }) end, { desc = "[P]rojects" })
 keymap("n", "<leader>f=", function() Snacks.picker.spelling({ layout = 'select' }) end, { desc = "[S]pelling" })
 -- keymap("n", "<leader>fb", function() Snacks.picker.grep_buffers() end, { desc = "find in current buffer" })
-keymap("n", "<leader>fb", function() Snacks.picker.lines() end, { desc = "Grep current buffer" })
+keymap("n", "<leader>fb",
+	function() Snacks.picker.lines({ layout = { preset = "default", layout = { backdrop = false, width = 0.6, height = 0.6 }, preview = true } }) end,
+	{ desc = "Grep current buffer" })
 
 -- Lsp
 keymap("n", "<leader>d", function() Snacks.picker.lsp_definitions() end, { desc = "[D]efinitions" })
