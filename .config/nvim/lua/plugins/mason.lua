@@ -8,7 +8,7 @@ return {
         local servers = {
             "bashls",
             "dockerls",
-            "gopls",
+            -- "gopls",
             "jsonls",
             "yamlls",
             "lua_ls",

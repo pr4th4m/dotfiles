@@ -654,7 +654,8 @@ class SearchKitten:
         self._handle(key)
 
     def _confirm(self) -> None:
-        self.running = False
+        pass
+        # self.running = False
 
 
 # ===== KEY READER =====

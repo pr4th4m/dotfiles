@@ -105,20 +105,21 @@ vim.opt.updatecount = 100 -- Write to swap file every 100 characters
 vim.opt.redrawtime = 1000 -- Time limit for syntax highlighting
 
 -- PERFORMANCE: Optimize for large files
-vim.api.nvim_create_autocmd("BufReadPre", {
-    pattern = "*",
-    callback = function()
-        local file_size = vim.fn.getfsize(vim.fn.expand("%"))
-        if file_size > 1024 * 1024 then -- 1MB
-            vim.opt_local.syntax = "off"
-            vim.opt_local.spell = false
-            vim.opt_local.foldmethod = "manual"
-            vim.opt_local.undofile = false
-            vim.opt_local.swapfile = false
-        end
-    end,
-    desc = "Optimize for large files"
-})
+-- vim.api.nvim_create_autocmd("BufReadPre", {
+--     pattern = "*",
+--     callback = function()
+--         local file_size = vim.fn.getfsize(vim.fn.expand("%"))
+--         if file_size > 1024 * 1024 then -- 1MB
+--             vim.opt_local.syntax = "off"
+--             vim.opt_local.spell = false
+--             vim.opt_local.foldmethod = "manual"
+--             vim.opt_local.undofile = false
+--             vim.opt_local.swapfile = false
+--         end
+--     end,
+--     desc = "Optimize for large files"
+-- })
+
 -- -- Put anything you want to happen only in Neovide here
 -- if vim.g.neovide then
 --     vim.o.guifont = "JetBrains Mono NL Thin:h17"

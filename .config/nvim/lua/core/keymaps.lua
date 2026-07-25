@@ -129,11 +129,15 @@ keymap("n", "<leader>8", "8gt", opts)
 keymap("n", "<leader>9", "9gt", opts)
 -- keymap("n", "fj", ":tab split<CR>", opts)
 keymap("n", "<leader>j", ":tab split<CR>", opts)
-keymap("n", "fh", "<cmd>tabprevious<cr>", { desc = "Previous Tab" })
-keymap("n", "fl", "<cmd>tabnext<cr>", { desc = "Next Tab" })
+keymap("n", "<S-h>", "<cmd>tabprevious<cr>", { desc = "Previous Tab" })
+keymap("n", "<S-l>", "<cmd>tabnext<cr>", { desc = "Next Tab" })
 keymap("n", "fe", "<cmd>tabedit %<cr>", { desc = "Open new tab" })
 keymap("n", "<c-n>", "g<tab>", { desc = "Last active tab" })
 -- keymap("n", "<leader><space>", "g<tab>", { desc = "Last active tab" })
+
+-- move tabs left and right
+keymap("n", "fh", "<Cmd>-tabmove<CR>", { desc = "Move tab left" })
+keymap("n", "fl", "<Cmd>+tabmove<CR>", { desc = "Move tab right" })
 
 -- keymap("n", "<S-t>", "<cmd>vs#<cr>", { desc = "Open recently closed tab" })
 -- keymap("n", "<S-L>", "<cmd>tabnext<cr>", { desc = "Next Tab" })
@@ -226,6 +230,11 @@ keymap("t", "<C-k>", "<C-\\><C-N><C-w>k", term_opts)
 -- lsp
 keymap("n", "<leader>fd", "<cmd>DeleteAllBuffers<cr>", { desc = "delete all buffers" })
 -- keymap("n", "<leader>lo", "<cmd>Outline<CR>", { desc = "[O]utline symbols" })
+-- count matches
+keymap("n", "<S-w>", function()
+  local word = vim.fn.expand("<cword>")
+  vim.api.nvim_feedkeys(":Count " .. word, "n", false)
+end, { desc = "Count matches of word under cursor" })
 
 keymap("n", "<leader>le", "<cmd>lua vim.diagnostic.open_float()<CR>", { desc = "diagnostics [E]rror" })
 keymap("n", "]d", "<cmd>lua vim.diagnostic.goto_next({buffer=0})<cr>", { desc = "next diagnostics" })
@@ -273,7 +282,7 @@ keymap("v", "<leader>gx", ":<C-u>silent '<,'>GBrowse<CR>", { desc = "Open visual
 keymap("n", "<leader>gs", "<cmd>CodeDiff<cr>", { desc = "toggle diffview" })
 keymap("n", "<leader>gd", "<cmd>CodeDiff file HEAD<cr>", { desc = "diff head" })
 keymap("n", "<leader>go", "<cmd>CodeDiff history<CR>", { desc = "l[O]g" })
-keymap("n", "<leader>gc", "<cmd>CodeDiff history %<cr>", { desc = "diff file [H]istory" })
+keymap("n", "<leader>gh", "<cmd>CodeDiff history %<cr>", { desc = "diff file [H]istory" })
 
 keymap("n", "<leader>gf", function()
 	local filepath = vim.fn.expand("%:p")

@@ -5,7 +5,7 @@ return {
   lazy = false,
   config = function()
     require("snacks").setup({
-      bigfile = { enabled = false },
+      bigfile = { enabled = true, notify = false, size = 1.5 * 1024 * 1024 },
       dashboard = { enabled = false },
       indent = { enabled = false },
       input = { enabled = false },

@@ -1,6 +1,7 @@
 return {
   {
     "mistweaverco/kulala.nvim",
+    branch = "main",
     lazy = true,
     -- keys = {
     --   { "<leader>Rs", desc = "Send request" },
@@ -17,7 +18,7 @@ return {
         ["Next response"] = { "<S-]>", function() require("kulala.ui").show_next() end, },
         ["Previous response"] = { "<S-[>", function() require("kulala.ui").show_previous() end, },
 
-        -- ["Show headers"] = { "<space>rh", function() require("kulala.ui").show_headers() end, },
+        ["Show headers"] = { "<space>rh", function() require("kulala.ui").show_headers() end, },
         -- ["Show body"] = { "<space>rb", function() require("kulala.ui").show_body() end, },
         -- ["Show headers and body"] = { "<space>ra", function() require("kulala.ui").show_headers_body() end, },
         ["Show verbose"] = { "<space>rv", function() require("kulala.ui").show_verbose() end, },

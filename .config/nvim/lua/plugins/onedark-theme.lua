@@ -5,12 +5,21 @@ return {
   event = { "UIEnter" },
   config = function()
     require('onedark').setup {
-      style = 'warmer',
+      style = 'darker',
       toggle_style_key = "<leader>to",
-      toggle_style_list = { 'dark', 'darker', 'warm', 'warmer' },
-      -- toggle_style_list = { 'dark', 'warm' },
+      -- toggle_style_list = { 'dark', 'darker', 'warm', 'warmer' },
+      toggle_style_list = { 'darker', 'warmer' },
+
+      code_style = {
+        comments = 'italic',
+        keywords = 'none',
+        functions = 'none',
+        strings = 'none',
+        variables = 'none'
+      },
 
       highlights = {
+        -- ['@type'] = { fmt = 'italic' },
         Search = { fg = '#232326', bg = '#68a5b2' },
         Visual = { fg = '#68a5b2', bg = '#37383d' }
       }
