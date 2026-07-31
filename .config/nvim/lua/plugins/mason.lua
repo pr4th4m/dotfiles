@@ -12,7 +12,7 @@ return {
             "jsonls",
             "yamlls",
             "lua_ls",
-            "pyright",
+            "ty",
             "ruff",
             "marksman",
             "ts_ls",
