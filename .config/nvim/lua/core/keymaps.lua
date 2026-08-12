@@ -400,7 +400,7 @@ keymap("n", "<leader>cd", function()
 end, { desc = "Diff multiple windows" })
 
 -- scratch
-keymap("n", "<leader>ss", function()
+keymap("n", "<leader>cc", function()
 	local datetime = os.date("%Y-%m-%d_%H-%M-%S")
 	local filename = "~/Documents/mynotes/scratch/" .. datetime .. ".md"
 	-- vim.cmd("tabnew " .. filename)

@@ -78,7 +78,7 @@ keymap("n", "<leader>N",
 -- keymap("n", "<leader>sn",
 -- 	function() Snacks.picker.files({ cwd = '~/Documents/mynotes/notes' }) end,
 -- 	{ desc = "Quick [N]otes" })
-keymap("n", "<leader>cc",
+keymap("n", "<leader>ss",
 	function() Snacks.picker.files({ cwd = '~/Documents/mynotes/gist' }) end,
 	-- "<cmd>lua require('fff').find_files_in_dir('~/Documents/mynotes/gist/')<cr>",
 	{ desc = "Quick [N]otes" })
