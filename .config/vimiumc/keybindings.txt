@@ -1,0 +1,8 @@
+map <c-n> visitPreviousTab
+map <c-j> nextTab
+map <c-k> previousTab
+map <c-u> scrollPageUp
+map <c-d> scrollPageDown
+unmap o
+map o Vomnibar.activateTabs
+map t createTab
