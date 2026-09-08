@@ -41,7 +41,23 @@ keymap("n", "<leader>fw", function() Snacks.picker.grep_word() end, { desc = "gr
 
 keymap("n", "<leader>fm", function() Snacks.picker.marks() end, { desc = "[M]arks" })
 keymap("n", "<leader>ft", function() Snacks.picker.pickers() end, { desc = "built[I]n" })
-keymap("n", "<leader>fp", function() Snacks.picker.projects({ layout = 'select' }) end, { desc = "[P]rojects" })
+-- keymap("n", "<leader>fp", function() Snacks.picker.projects({ layout = 'select' }) end, { desc = "[P]rojects" })
+vim.keymap.set("n", "<leader>fp", function()
+	Snacks.picker.projects({
+		layout = "select",
+		confirm = {
+			"load_session",
+			function(_, item)
+				if item and item.file then
+					local project_name = vim.fn.fnamemodify(item.file, ":t")
+					vim.system({ "kitten", "@", "set-tab-title", string.format("n:%s", project_name) })
+					-- vim.system({ "kitten", "@", "set-tab-title", project_name })
+				end
+			end,
+		},
+	})
+end, { desc = "[P]rojects" })
+
 keymap("n", "<leader>f=", function() Snacks.picker.spelling({ layout = 'select' }) end, { desc = "[S]pelling" })
 -- keymap("n", "<leader>fb", function() Snacks.picker.grep_buffers() end, { desc = "find in current buffer" })
 keymap("n", "<leader>fb",
