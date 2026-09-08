@@ -133,6 +133,7 @@ keymap("n", "fh", "<cmd>tabprevious<cr>", { desc = "Previous Tab" })
 keymap("n", "fl", "<cmd>tabnext<cr>", { desc = "Next Tab" })
 keymap("n", "fe", "<cmd>tabedit %<cr>", { desc = "Open new tab" })
 keymap("n", "<c-n>", "g<tab>", { desc = "Last active tab" })
+-- keymap("n", "<tab>", "g<tab>", { desc = "Last active tab" })
 -- keymap("n", "<leader><space>", "g<tab>", { desc = "Last active tab" })
 
 -- move tabs left and right

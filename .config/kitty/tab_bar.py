@@ -10,7 +10,7 @@ from collections.abc import Callable, Sequence
 from dataclasses import dataclass
 from typing import Any
 
-from kitty.fast_data_types import Screen, get_boss, wcswidth
+from kitty.fast_data_types import Screen, get_boss, wcswidth, add_timer
 from kitty.tab_bar import (
     CellRange,
     DrawData,
@@ -246,7 +246,7 @@ def _custom_update_vertical(self: TabBar, data: Sequence[TabBarData]) -> bool:
         s.cursor.fg = color
         s.cursor.bold = True
         s.cursor.italic = False
-        s.draw(_fit_text(f"◆ {section.label}", cols))
+        s.draw(_fit_text(f" {section.label}", cols))
         curr_row += 1
 
         for idx, tab in tab_list:
@@ -292,6 +292,32 @@ def _custom_update_vertical(self: TabBar, data: Sequence[TabBarData]) -> bool:
 
 TabBar.update_vertical = _custom_update_vertical
 
+_REFRESH_INTERVAL = 0.1  # seconds; lower = snappier, marginally more CPU
+_timer_started = False
+
+def _redraw_all_tab_bars(timer_id: int = 0) -> None:
+    boss = get_boss()
+    if boss is None:
+        return
+    for tm in boss.all_tab_managers:
+        try:
+            tm.mark_tab_bar_dirty()
+        except Exception:
+            pass  # fails soft if this method changes name in a future kitty
+
+
+def _ensure_periodic_refresh() -> None:
+    global _timer_started
+    if _timer_started:
+        return
+    _timer_started = True
+    try:
+        add_timer(_redraw_all_tab_bars, _REFRESH_INTERVAL, True)
+    except Exception:
+        pass
+
+
+_ensure_periodic_refresh()
 
 def draw_tab(
     draw_data: DrawData,
