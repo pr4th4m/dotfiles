@@ -1,13 +1,13 @@
 #!/bin/zsh
 
-CREDS_FILE="$HOME/.creds.txt"
+CREDS_FILE="$HOME/.creds.txt.age"
+IDENTITY="$HOME/.age/key.txt"
 
-selected=$(awk -F: '{print $1}' "$CREDS_FILE" | fzf --prompt="Credentials> ")
+creds=$(age -d -i "$IDENTITY" "$CREDS_FILE")
+selected=$(echo "$creds" | cut -d: -f1 | fzf --prompt="Credentials> ")
 
-if [ -n "$selected" ]; then
-  password=$(awk -v user="$selected" 'BEGIN{FS=":"} $1 == user {
-    sub(/^[^:]*:/, ""); print
-  }' "$CREDS_FILE")
+if [[ -n "$selected" ]]; then
+  password=$(echo "$creds" | awk -F: -v user="$selected" '$1 == user { $1=""; sub(/^:/,""); print }')
   echo -n "$password" | pbcopy
   kitty @ close-window
 fi
