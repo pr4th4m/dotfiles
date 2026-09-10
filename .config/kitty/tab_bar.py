@@ -44,11 +44,11 @@ def _has_any(haystacks: list[str], needles: tuple[str, ...]) -> bool:
 
 SECTIONS: tuple[Section, ...] = (
     Section("agent", "AGENTS", 0xaedde7,
-            lambda tab, h: _has_any(h, ("claude", "aider", "codex", "cursor-agent", "copilot", "agy"))),
+            lambda tab, h: _has_any(h, ("copilot", "agy"))),
     Section("k8s", "K8S", 0xdbb791,
-            lambda tab, h: _has_any(h, ("ping", "kubectl", "k9s", "helm", "kubens", "kubectx"))),
+            lambda tab, h: _has_any(h, ("kubectl", "k9s"))),
     Section("ssh", "SSH", 0xdf9cc3,
-            lambda tab, h: _has_any(h, ("ssh ", "ssh://", "mosh"))),
+            lambda tab, h: _has_any(h, ("ssh ", "ssh://"))),
     # Add more here, e.g.:
     # Section("docker", "DOCKER", 0x50fa7b,
     #         lambda tab, h: _has_any(h, ("docker", "docker-compose", "lazydocker"))),

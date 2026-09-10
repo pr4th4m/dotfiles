@@ -1,14 +1,15 @@
 #!/bin/zsh
 
-selected=$(ls -Gu ~/scripts/*.sh 2>/dev/null | xargs -n1 basename | awk '{
-    if ($0 ~ /^oci/) print "\033[31m" $0 "\033[0m"
-    else if ($0 ~ /^ope/) print "\033[34m" $0 "\033[0m"
-    else print $0
+selected=$(fd -e sh -d 1 . ~/scripts 2>/dev/null | awk -F'/' '{
+    f=$NF
+    if (f ~ /^oci/) print "\033[31m" f "\033[0m"
+    else if (f ~ /^ope/) print "\033[34m" f "\033[0m"
+    else print f
 }' | fzf --cycle --ansi --prompt="Clusters> ")
 
-# strip color codes from selected before using
-selected=$(echo "$selected" | sed 's/\033\[[0-9;]*m//g')
+# strip ansi codes — pure zsh, no external process
+selected=${selected//$'\e'\[*([0-9;])m/}
 
-if [ -n "$selected" ]; then
+if [[ -n "$selected" ]]; then
   kitty @ launch --type=tab zsh -i -c "~/scripts/$selected"
 fi
