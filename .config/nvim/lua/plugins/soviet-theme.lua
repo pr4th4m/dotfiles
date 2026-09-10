@@ -10,8 +10,13 @@ return {
         sidebars = "dark", -- "dark", "normal", or "transparent"
         floats = "normal", -- "dark", "normal", or "transparent"
       },
+      on_highlights = function(hl, c)
+        hl.SnacksPickerDir = { fg = "#7a7a7a" }
+      end,
     })
     vim.cmd.colorscheme("soviet-dark")
     -- vim.cmd.colorscheme("soviet-light")
+
+    -- vim.api.nvim_set_hl(0, "SnacksPickerDir", { fg = "#7a7a7a" })
   end,
 }
