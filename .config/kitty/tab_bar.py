@@ -10,7 +10,7 @@ from collections.abc import Callable, Sequence
 from dataclasses import dataclass
 from typing import Any
 
-from kitty.fast_data_types import Screen, get_boss, wcswidth, add_timer
+from kitty.fast_data_types import Screen, add_timer, get_boss, wcswidth
 from kitty.tab_bar import (
     CellRange,
     DrawData,
@@ -35,7 +35,7 @@ class Section:
     key: str
     label: str
     color: int  # 0xRRGGBB
-    matcher: Matcher = lambda tab, haystacks: False  # noqa: E731
+    matcher: Matcher = lambda tab, haystacks: False
 
 
 def _has_any(haystacks: list[str], needles: tuple[str, ...]) -> bool:
@@ -46,7 +46,7 @@ SECTIONS: tuple[Section, ...] = (
     Section("agent", "AGENTS", 0xaedde7,
             lambda tab, h: _has_any(h, ("copilot", "agy"))),
     Section("k8s", "K8S", 0xdbb791,
-            lambda tab, h: _has_any(h, ("kubectl", "k9s"))),
+            lambda tab, h: _has_any(h, ("k9s", "kubectl"))),
     Section("ssh", "SSH", 0xdf9cc3,
             lambda tab, h: _has_any(h, ("ssh ", "ssh://"))),
     # Add more here, e.g.:
@@ -151,6 +151,7 @@ def _target_id_order(groups: dict[str, list[tuple[int, TabBarData]]]) -> list[in
 def _apply_order(tm: Any, desired_ids: Sequence[int]) -> None:
     original_active = tm.active_tab
     id_to_tab = {t.id: t for t in tm.tabs}
+    max_steps = len(tm.tabs)
     for target_idx, tab_id in enumerate(desired_ids):
         tab = id_to_tab.get(tab_id)
         if tab is None:
@@ -159,9 +160,18 @@ def _apply_order(tm: Any, desired_ids: Sequence[int]) -> None:
         if current_idx == target_idx:
             continue
         tm.set_active_tab(tab)
-        delta = target_idx - current_idx
-        step = 1 if delta > 0 else -1
-        for _ in range(abs(delta)):
+        # Recompute the live index before every single-step move instead of
+        # blindly repeating a step count computed once. kitty's move_tab()
+        # wraps around at the ends of the tab list, so any drift between our
+        # assumed position and the real one (e.g. a tab reclassifying into a
+        # new section right as a new window/tab is created) could otherwise
+        # send a tab hurtling around to the far end of a completely different
+        # section instead of settling into the correct one right next to it.
+        for _ in range(max_steps):
+            current_idx = tm.tabs.index(tab)
+            if current_idx == target_idx:
+                break
+            step = 1 if target_idx > current_idx else -1
             tm.move_tab(step)
     if original_active is not None and original_active in tm.tabs:
         tm.set_active_tab(original_active)
@@ -266,9 +276,10 @@ def _custom_update_vertical(self: TabBar, data: Sequence[TabBarData]) -> bool:
             s.cursor.bold = tab.is_active or urgent
             s.cursor.italic = False
 
-            marker = "●" if tab.is_active else "○"
+            # marker = "●" if tab.is_active else "○"
             bell = "🔔 " if urgent else ""
-            s.draw(_fit_text(f"  {marker} {bell}{idx}: {tab.title}", cols))
+            # s.draw(_fit_text(f"  {marker} {bell}{idx}: {tab.title}", cols))
+            s.draw(_fit_text(f"  {bell}{idx}: {tab.title}", cols))
 
             cr.append(
                 TabExtent(
