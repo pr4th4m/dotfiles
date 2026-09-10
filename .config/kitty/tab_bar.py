@@ -54,7 +54,7 @@ SECTIONS: tuple[Section, ...] = (
     #         lambda tab, h: _has_any(h, ("docker", "docker-compose", "lazydocker"))),
 )
 
-DEFAULT_SECTION = Section("regular", "TABS", 0x888d9b)
+DEFAULT_SECTION = Section("regular", "TABS", 0xcfcfc7)
 URGENT_COLOR = 0xff5555  # overrides section colour when needs_attention
 
 DIVIDER_FG = 0x44475a
