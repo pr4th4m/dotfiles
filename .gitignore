@@ -19,3 +19,6 @@ bundle/
 !.config/sheldon/
 !.config/atuin/
 !.config/fish/
+!.config/openlogi/
+.config/openlogi/*
+!.config/openlogi/config.toml
