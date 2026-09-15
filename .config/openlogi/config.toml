@@ -65,17 +65,11 @@ haptic_panel = false
 ThumbwheelScrollUp = "VolumeUp"
 ThumbwheelScrollDown = "VolumeDown"
 MiddleClick= "ShowActionsRing"
-# DpiToggle = "ReloadPage"
-DpiToggle = { CustomShortcut = "Ctrl+N" }
-# Forward= "BrowserForward"
-Forward= "ReloadPage"
+DpiToggle = "ReloadPage"
+GestureButton= "CloseTab"
 
-[devices."serial:2544zae9fe88".bindings.GestureButton]
-Up = "MissionControl"
-Down = "ShowDesktop"
-Left = "PrevTab"
-Right = "NextTab"
-Click = "CloseTab"
+[devices."serial:2544zae9fe88".bindings.Forward]
+CustomShortcut = "Ctrl+N"
 
 [devices."serial:2544zae9fe88".disabled_gestures.Forward]
 Up = "MissionControl"
@@ -83,6 +77,13 @@ Down = "ShowDesktop"
 Left = "PrevTab"
 Right = "NextTab"
 Click = "BrowserForward"
+
+[devices."serial:2544zae9fe88".disabled_gestures.GestureButton]
+Up = "MissionControl"
+Down = "ShowDesktop"
+Left = "PrevTab"
+Right = "NextTab"
+Click = "CloseTab"
 
 [devices."serial:2544zae9fe88".disabled_gestures.MiddleClick]
 Up = "MissionControl"
