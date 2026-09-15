@@ -6,6 +6,7 @@ goto_tab N follow the grouping.
 
 To add a new section: add ONE Section(...) entry to SECTIONS below.
 """
+import os
 from collections.abc import Callable, Sequence
 from dataclasses import dataclass
 from typing import Any
@@ -54,7 +55,7 @@ SECTIONS: tuple[Section, ...] = (
     #         lambda tab, h: _has_any(h, ("docker", "docker-compose", "lazydocker"))),
 )
 
-DEFAULT_SECTION = Section("regular", "TABS", 0xcfcfc7)
+DEFAULT_SECTION = Section("regular", "TABS", 0x979eab)
 URGENT_COLOR = 0xff5555  # overrides section colour when needs_attention
 
 DIVIDER_FG = 0x44475a
@@ -106,10 +107,29 @@ def _foreground_cmdlines(tab: TabBarData, boss: Any) -> list[str]:
         return []
 
 
+_renamed_agent_tabs: set[int] = set()
+
+
+def _rename_agent_tab_once(tab: TabBarData, boss: Any) -> None:
+    if boss is None or tab.tab_id in _renamed_agent_tabs:
+        return
+    _renamed_agent_tabs.add(tab.tab_id)
+    try:
+        real_tab = boss.tab_for_id(tab.tab_id)
+        window = real_tab.active_window if real_tab else None
+        cwd = window.get_cwd_of_child() if window else None
+        if cwd:
+            real_tab.set_title(os.path.basename(cwd.rstrip("/")))
+    except Exception:
+        pass
+
+
 def _classify(tab: TabBarData, boss: Any) -> Section:
     haystacks = _foreground_cmdlines(tab, boss) + [tab.title]
     for section in SECTIONS:
         if section.matcher(tab, haystacks):
+            if section.key == "agent":
+                _rename_agent_tab_once(tab, boss)
             return section
     return DEFAULT_SECTION
 
