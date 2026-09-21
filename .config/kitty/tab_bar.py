@@ -11,7 +11,7 @@ from collections.abc import Callable, Sequence
 from dataclasses import dataclass
 from typing import Any
 
-from kitty.fast_data_types import Screen, add_timer, get_boss, wcswidth
+from kitty.fast_data_types import Screen, add_timer, get_boss, get_options, wcswidth
 from kitty.tab_bar import (
     CellRange,
     DrawData,
@@ -134,6 +134,49 @@ def _classify(tab: TabBarData, boss: Any) -> Section:
     return DEFAULT_SECTION
 
 
+def _normalized_align(align: str) -> str:
+    if align in ("left", "start"):
+        return "start"
+    if align in ("right", "end"):
+        return "end"
+    return "center"
+
+
+def _content_rows(groups: dict[str, list[tuple[int, TabBarData]]], lines: int) -> int:
+    """Mirror the row-consumption rules of the drawing loop, without drawing,
+    so we know how tall the rendered content block is (for alignment)."""
+    curr_row = 0
+    first_section = True
+    for key in _display_order():
+        tab_list = groups.get(key)
+        if not tab_list or curr_row >= lines:
+            continue
+        if not first_section and curr_row < lines:
+            curr_row += 1
+        first_section = False
+        if curr_row >= lines:
+            break
+        curr_row += 1  # section label
+        for _ in tab_list:
+            if curr_row >= lines:
+                break
+            curr_row += 1
+    return curr_row
+
+
+def _vertical_offset(groups: dict[str, list[tuple[int, TabBarData]]], lines: int) -> int:
+    try:
+        align = _normalized_align(getattr(get_options(), "tab_bar_align", "start"))
+    except Exception:
+        align = "start"
+    if align == "start":
+        return 0
+    total = _content_rows(groups, lines)
+    if align == "center":
+        return max(0, (lines - total) // 2)
+    return max(0, lines - total)  # end
+
+
 def _group_tabs(
     data: Sequence[TabBarData], boss: Any
 ) -> dict[str, list[tuple[int, TabBarData]]]:
@@ -247,7 +290,7 @@ def _custom_update_vertical(self: TabBar, data: Sequence[TabBarData]) -> bool:
     _reorder_if_needed(self, boss, groups)
 
     default_bg = as_rgb(color_as_int(self.draw_data.default_bg))
-    curr_row = 0
+    curr_row = _vertical_offset(groups, lines)
     first_section = True
 
     for key in _display_order():
