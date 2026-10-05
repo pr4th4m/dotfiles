@@ -18,6 +18,7 @@ return {
             "ts_ls",
             "lemminx",
             "eslint",
+            "rust_analyzer",
         }
 
         local settings = {

@@ -87,7 +87,7 @@ export PATH="/opt/homebrew/opt/sqlite/bin:$PATH"
 
 # Rust package manager
 # export PATH="$HOME/.cargo/bin:$PATH"
-# export PATH="/usr/local/opt/rustup/bin:$PATH"
+export PATH=/opt/homebrew/opt/rustup/bin:$PATH
 alias gcc="/opt/homebrew/bin/gcc-15"
 alias g++="/opt/homebrew/bin/g++-15"
 

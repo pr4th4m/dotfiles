@@ -32,6 +32,7 @@ return {
       "ts_ls",
       "lemminx",
       "eslint",
+      "rust_analyzer",
     }
 
     for _, server in pairs(servers) do
