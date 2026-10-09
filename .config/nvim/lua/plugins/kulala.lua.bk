@@ -1,6 +1,6 @@
 return {
   {
-    "mistweaverco/kulala.nvim",
+    "dont-be-evil-company/kulala.nvim",
     branch = "main",
     lazy = true,
     -- keys = {
@@ -12,6 +12,9 @@ return {
     opts = {
       additional_curl_options = { "-k" },
       global_keymaps = false,
+      kulala_core = {
+        path = "/Users/prathameshnevagi/.local/share/nvim/kulala.nvim/bin/kulala-core",
+      },
       kulala_keymaps = {
         ["Next tab"] = { "]", function() require("kulala.ui").show_next_tab() end, mode = { "n" }, },
         ["Previous tab"] = { "[", function() require("kulala.ui").show_previous_tab() end, mode = { "n" }, },

@@ -121,7 +121,7 @@ return {
             { hl = mode_hl,                        strings = { mode } },
             { hl = 'MiniStatuslineLspDiagnostics', strings = { section_macro(), search } },
             '%<', -- Mark general truncate point
-            -- { hl = 'MiniStatuslineFilename', strings = { filename } },
+            { hl = 'MiniStatuslineFilename', strings = {} },
             '%=', -- End left alignment
             { hl = 'MiniStatuslineFileinfo', strings = { diagnostics, lsp, root_project(), git_branch() } },
             { hl = mode_hl,                  strings = { location } },
@@ -131,6 +131,6 @@ return {
     })
 
     -- set showtabline to 1 when only one tab
-    vim.o.showtabline = 1
+    -- vim.o.showtabline = 1
   end
 }

@@ -1,7 +1,17 @@
 return {
   "rest-nvim/rest.nvim",
+  -- version = "v3.13.0",
   branch = "main",
   ft = "http",
+  dependencies = {
+    {
+      "nvim-treesitter/nvim-treesitter",
+      opts = function(_, opts)
+        opts.ensure_installed = opts.ensure_installed or {}
+        table.insert(opts.ensure_installed, "http")
+      end,
+    },
+  },
   config = function()
     vim.g.rest_nvim = {
       request = {

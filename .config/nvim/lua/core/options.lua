@@ -12,7 +12,7 @@ local options = {
     mouse = "",                              -- disable mouse (was "a" by default in 0.12)
     pumheight = 10,                          -- pop up menu height
     showmode = false,                        -- we don't need to see things like -- INSERT -- anymore
-    showtabline = 1,                         -- only show tabs when at least 2 tabs are open
+    showtabline = 2,                         -- only show tabs when at least 2 tabs are open
     smartcase = true,                        -- NOW DEFAULT in 0.12
     smartindent = true,                      -- NOW DEFAULT in 0.12
     splitbelow = true,                       -- NOW DEFAULT in 0.12
@@ -38,7 +38,8 @@ local options = {
     splitkeep = "cursor",                    -- FIXED: was missing quotes
     guicursor = "",                          -- block cursor in insert mode
     laststatus = 3,                          -- global status line
-    winbar = "%=%m %f",
+    -- winbar = "%=%m %f",                   -- file name on right
+    winbar = "%m %f",                     -- file name on left
     whichwrap = "bs<>[]hl",                  -- which "horizontal" keys are allowed to travel to prev/next line
 
     -- PERFORMANCE OPTIMIZATIONS

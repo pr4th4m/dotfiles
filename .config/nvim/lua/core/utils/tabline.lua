@@ -2,39 +2,28 @@ local M = {}
 
 function M.setup()
   local result = ""
-  local tabs = vim.api.nvim_list_tabpages()
   local current_tab = vim.api.nvim_get_current_tabpage()
 
-  for i, tab in ipairs(tabs) do
-    -- Select highlight group
-    if tab == current_tab then
-      result = result .. "%#TabLineSel#"
+  for i, tab in ipairs(vim.api.nvim_list_tabpages()) do
+    local is_active = tab == current_tab
+    result = result .. (is_active and "%#TabLineSel#" or "%#TabLine#")
+
+    result = result .. "%" .. i .. "T " .. i .. " "
+
+    local win = vim.api.nvim_tabpage_get_win(tab)
+    local buf = vim.api.nvim_win_get_buf(win)
+    local modified = vim.bo[buf].modified and "[+] " or ""
+
+    if is_active then
+      result = result .. modified
     else
-      result = result .. "%#TabLine#"
-    end
-
-    -- Add tab number
-    result = result .. " " .. i .. " "
-
-    -- Get the first window in the tab
-    local wins = vim.api.nvim_tabpage_list_wins(tab)
-    if #wins > 0 then
-      local win = wins[1]
-      local buf = vim.api.nvim_win_get_buf(win)
-      local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(buf), ":t")
-
-      -- If no filename, show [No Name]
-      if filename == "" then
-        filename = "[No Name]"
-      end
-
-      result = result .. filename .. " "
+      local path = vim.api.nvim_buf_get_name(buf)
+      local name = path == "" and "[No Name]" or vim.fn.fnamemodify(path, ":t")
+      result = result .. name .. " " .. modified
     end
   end
 
-  -- Fill the rest of the line
   result = result .. "%#TabLineFill#%T"
-
   return result
 end
 
