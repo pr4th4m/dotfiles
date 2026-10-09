@@ -20,11 +20,11 @@ return {
     -- vim.api.nvim_set_hl(0, "SnacksPickerDir", { fg = "#7a7a7a" })
 
     -- winbar and tabline
-    vim.api.nvim_set_hl(0, "WinBar", { fg = "#aca199", bg = "#373333", bold = true })
-    vim.api.nvim_set_hl(0, "WinBarNC", { fg = "#8a857e", bg = "#373333" })
+    vim.api.nvim_set_hl(0, "WinBar", { fg = "#aca199", bg = "#292727", bold = true })
+    vim.api.nvim_set_hl(0, "WinBarNC", { fg = "#8a857e", bg = "#292727" })
 
     vim.api.nvim_set_hl(0, "TabLineSel", { fg = "#a0978f", bg = "#373333", bold = true })
-    vim.api.nvim_set_hl(0, "TabLine", { fg = "#7a716a", bg = "#373333" })
-    vim.api.nvim_set_hl(0, "TabLineFill", { bg = "#373333" })
+    vim.api.nvim_set_hl(0, "TabLine", { fg = "#7a716a", bg = "#292727" })
+    vim.api.nvim_set_hl(0, "TabLineFill", { bg = "#292727" })
   end,
 }
