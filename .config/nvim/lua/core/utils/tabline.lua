@@ -14,13 +14,10 @@ function M.setup()
     local buf = vim.api.nvim_win_get_buf(win)
     local modified = vim.bo[buf].modified and "[+] " or ""
 
-    if is_active then
-      result = result .. modified
-    else
-      local path = vim.api.nvim_buf_get_name(buf)
-      local name = path == "" and "[No Name]" or vim.fn.fnamemodify(path, ":t")
-      result = result .. name .. " " .. modified
-    end
+    local path = vim.api.nvim_buf_get_name(buf)
+    local name = path == "" and "[No Name]" or vim.fn.fnamemodify(path, ":t")
+
+    result = result .. name .. " " .. modified
   end
 
   result = result .. "%#TabLineFill#%T"
