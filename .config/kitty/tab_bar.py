@@ -51,18 +51,18 @@ def _has_any(haystacks: list[str], needles: tuple[str, ...]) -> bool:
 
 
 SECTIONS: tuple[Section, ...] = (
-    Section("agent", "Agents", 0xaedde7,
+    Section("agent", "A", 0xaedde7,
             lambda tab, h: _has_any(h, ("copilot", "agy"))),
-    Section("k8s", "K8s", 0xdbb791,
+    Section("k8s", "K", 0xdbb791,
             lambda tab, h: _has_any(h, ("k9s", "kubectl"))),
-    Section("ssh", "SSH", 0xdf9cc3,
+    Section("ssh", "S", 0xdf9cc3,
             lambda tab, h: _has_any(h, ("ping ", "ssh://"))),
     # Add more here, e.g.:
     # Section("docker", "Docker", 0x50fa7b,
     #         lambda tab, h: _has_any(h, ("docker", "docker-compose", "lazydocker"))),
 )
 
-DEFAULT_SECTION = Section("regular", "Tabs", 0x979eab)
+DEFAULT_SECTION = Section("regular", "T", 0x979eab)
 URGENT_COLOR = 0xff5555  # overrides section colour when needs_attention
 
 DIVIDER_FG = 0x6272a4
