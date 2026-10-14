@@ -366,7 +366,7 @@ def draw_tab(
             # in a softened version of the section colour.
             cur.bg = sec_bg
             cur.fg = as_rgb(_blend(section.color, sec_bg_i, 0.45))
-            screen.draw(f" {TAB_SEPARATOR} ")
+            screen.draw(f"{TAB_SEPARATOR}")
 
     if new_section:
         # Leading pad + section label, both on the section background.
@@ -377,7 +377,7 @@ def draw_tab(
 
     # The tab itself
     bell = "🔔 " if urgent else ""
-    prefix = f"{bell}{index}: "
+    prefix = f"{bell}{index}:"
     room = max_title_length - wcswidth(prefix)
     # Never run past the right edge of the bar (keep 1 cell for trailing pad)
     reserve = 1 if is_last else 0
