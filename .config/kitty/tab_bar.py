@@ -208,25 +208,31 @@ def _target_id_order(groups: dict[str, list[tuple[int, TabBarData]]]) -> list[in
 
 def _apply_order(tm: Any, desired_ids: Sequence[int]) -> None:
     original_active = tm.active_tab
-    id_to_tab = {t.id: t for t in tm.tabs}
-    max_steps = len(tm.tabs)
-    for target_idx, tab_id in enumerate(desired_ids):
-        tab = id_to_tab.get(tab_id)
-        if tab is None:
-            continue
-        if tm.tabs.index(tab) == target_idx:
-            continue
-        tm.set_active_tab(tab)
-        # Recompute the live index before every single step: move_tab()
-        # wraps around at the ends, so drift could otherwise send a tab to
-        # the far end of the list.
-        for _ in range(max_steps):
-            current_idx = tm.tabs.index(tab)
-            if current_idx == target_idx:
-                break
-            tm.move_tab(1 if target_idx > current_idx else -1)
-    if original_active is not None and original_active in tm.tabs:
-        tm.set_active_tab(original_active)
+    # Reordering goes through set_active_tab()/move_tab(), which push entries
+    # onto the history used by `goto_tab -1`. Save it and restore it after.
+    history = getattr(tm, "active_tab_history", None)
+    saved_history = list(history) if history is not None else None
+    try:
+        id_to_tab = {t.id: t for t in tm.tabs}
+        max_steps = len(tm.tabs)
+        for target_idx, tab_id in enumerate(desired_ids):
+            tab = id_to_tab.get(tab_id)
+            if tab is None:
+                continue
+            if tm.tabs.index(tab) == target_idx:
+                continue
+            tm.set_active_tab(tab)
+            for _ in range(max_steps):
+                current_idx = tm.tabs.index(tab)
+                if current_idx == target_idx:
+                    break
+                tm.move_tab(1 if target_idx > current_idx else -1)
+        if original_active is not None and original_active in tm.tabs:
+            tm.set_active_tab(original_active)
+    finally:
+        if history is not None and saved_history is not None:
+            history.clear()
+            history.extend(saved_history)
 
 
 def _reorder_if_needed(
