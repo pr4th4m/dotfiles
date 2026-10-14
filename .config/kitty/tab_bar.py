@@ -24,7 +24,7 @@ from dataclasses import dataclass
 import os
 from typing import Any
 
-from kitty.fast_data_types import Screen, add_timer, get_boss, wcswidth
+from kitty.fast_data_types import Screen, add_timer, get_boss, wcswidth, get_options
 from kitty.tab_bar import (
     DrawData,
     ExtraData,
@@ -376,6 +376,12 @@ def draw_tab(
     # Never run past the right edge of the bar (keep 1 cell for trailing pad)
     reserve = 1 if is_last else 0
     room = min(room, screen.columns - screen.cursor.x - wcswidth(prefix) - reserve)
+
+    # Honour kitty.conf `tab_title_max_length` (applies to the title text only)
+    limit = _configured_title_limit()
+    if limit > 0:
+        room = min(room, limit)
+
     title = _truncate(tab.title, max(1, room))
 
     if tab.is_active:
@@ -400,6 +406,13 @@ def draw_tab(
     cur.bold = False
     cur.bg = bar_bg
     return screen.cursor.x
+
+def _configured_title_limit() -> int:
+    """Value of kitty.conf `tab_title_max_length` (0 = unlimited)."""
+    try:
+        return int(getattr(get_options(), "tab_title_max_length", 0) or 0)
+    except Exception:
+        return 0
 
 
 def main(args: list[str]) -> None:
