@@ -366,7 +366,7 @@ def draw_tab(
             # in a softened version of the section colour.
             cur.bg = sec_bg
             cur.fg = as_rgb(_blend(section.color, sec_bg_i, 0.45))
-            screen.draw(f"{TAB_SEPARATOR}")
+            screen.draw(f" {TAB_SEPARATOR} ")
 
     if new_section:
         # Leading pad + section label, both on the section background.
