@@ -4,6 +4,12 @@ return {
   version = '1.*',
   -- event = "InsertEnter",
   event = { "BufReadPre", "BufNewFile" },
+  dependencies = {
+    {
+      "mikavilpas/blink-ripgrep.nvim",
+      version = "*", -- use the latest stable version
+    }
+  },
   opts = {
     -- cmdline = {
     --   sources = function()
@@ -64,10 +70,18 @@ return {
     },
     sources = {
       -- default = { 'codeium', 'lsp', 'buffer', 'path', 'lazydev' },
-      default = { 'buffer', 'lsp', 'path' },
+      default = { 'buffer', 'lsp', 'path', "ripgrep" },
       providers = {
         lsp = {
           fallbacks = {},
+        },
+        ripgrep = {
+          module = "blink-ripgrep",
+          name = "Ripgrep",
+          -- see the full configuration below for all available options
+          ---@module "blink-ripgrep"
+          ---@type blink-ripgrep.Options
+          opts = {},
         },
         -- codeium = {
         --   name = "codeium",
