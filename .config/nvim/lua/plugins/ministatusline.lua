@@ -112,7 +112,7 @@ return {
             return ''
           end
 
-          -- local filename      = statusline.section_filename({ trunc_width = 140 })
+          local filename      = statusline.section_filename({ trunc_width = 140 })
           -- local fileinfo      = statusline.section_fileinfo({ trunc_width = 120 })
           local location      = statusline.section_location({ trunc_width = 75 })
           local search        = statusline.section_searchcount({ trunc_width = 75 })
@@ -121,7 +121,7 @@ return {
             { hl = mode_hl,                        strings = { mode } },
             { hl = 'MiniStatuslineLspDiagnostics', strings = { section_macro(), search } },
             '%<', -- Mark general truncate point
-            { hl = 'MiniStatuslineFilename', strings = {} },
+            { hl = 'MiniStatuslineFilename', strings = { filename } },
             '%=', -- End left alignment
             { hl = 'MiniStatuslineFileinfo', strings = { diagnostics, lsp, root_project(), git_branch() } },
             { hl = mode_hl,                  strings = { location } },

@@ -35,6 +35,13 @@ vim.api.nvim_create_autocmd("CmdUndefined", {
         require "core.utils.colorscheme"
     end,
 })
+vim.api.nvim_create_autocmd("CmdUndefined", {
+    pattern = { "SshPicker" },
+    once = true,
+    callback = function()
+        require "core.utils.ssh_picker"
+    end,
+})
 vim.api.nvim_create_autocmd({ "BufReadPre", "BufNewFile" }, {
     once = true,
     callback = function()

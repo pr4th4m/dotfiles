@@ -234,7 +234,7 @@ keymap("n", "<leader>fd", "<cmd>DeleteAllBuffers<cr>", { desc = "delete all buff
 -- count matches
 keymap("n", "<S-w>", function()
   local word = vim.fn.expand("<cword>")
-  vim.api.nvim_feedkeys(":Count " .. word, "n", false)
+  vim.cmd("Count " .. word)
 end, { desc = "Count matches of word under cursor" })
 
 keymap("n", "<leader>le", "<cmd>lua vim.diagnostic.open_float()<CR>", { desc = "diagnostics [E]rror" })
