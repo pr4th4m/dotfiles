@@ -231,11 +231,15 @@ keymap("t", "<C-k>", "<C-\\><C-N><C-w>k", term_opts)
 -- lsp
 keymap("n", "<leader>fd", "<cmd>DeleteAllBuffers<cr>", { desc = "delete all buffers" })
 -- keymap("n", "<leader>lo", "<cmd>Outline<CR>", { desc = "[O]utline symbols" })
+
 -- count matches
 keymap("n", "<S-w>", function()
-  local word = vim.fn.expand("<cword>")
-  vim.cmd("Count " .. word)
+	local word = vim.fn.expand("<cword>")
+	vim.cmd("Count " .. word)
 end, { desc = "Count matches of word under cursor" })
+
+-- ssh picker
+keymap('n', '<leader>os', '<cmd>SshPicker<cr>', { desc = 'SSH: pick server (oil)' })
 
 keymap("n", "<leader>le", "<cmd>lua vim.diagnostic.open_float()<CR>", { desc = "diagnostics [E]rror" })
 keymap("n", "]d", "<cmd>lua vim.diagnostic.goto_next({buffer=0})<cr>", { desc = "next diagnostics" })

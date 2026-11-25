@@ -16,8 +16,8 @@ local config = {
               '--add-modules=ALL-SYSTEM',
               '--add-opens', 'java.base/java.util=ALL-UNNAMED',
               '--add-opens', 'java.base/java.lang=ALL-UNNAMED',
-              '-jar', '/usr/local/Cellar/jdtls/1.48.0/libexec/plugins/org.eclipse.equinox.launcher_1.7.0.v20250519-0528.jar',
-              '-configuration', '/usr/local/Cellar/jdtls/1.48.0/libexec/config_mac',
+              '-jar', '/opt/homebrew/Cellar/jdtls/1.63.0/libexec/plugins/org.eclipse.equinox.launcher_1.8.0.v20260804-1928.jar',
+              '-configuration', '/opt/homebrew/Cellar/jdtls/1.63.0/libexec/config_mac',
               '-data', vim.fn.expand('~/.cache/jdtls-workspace') .. workspace_dir
         },
 

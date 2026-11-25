@@ -19,6 +19,7 @@ To add a new section: add ONE Section(...) entry to SECTIONS below.
 The background is derived automatically from the section colour; pass
 bg=0xRRGGBB to Section(...) to override it.
 """
+
 from collections.abc import Callable, Sequence
 from dataclasses import dataclass
 import os
@@ -48,6 +49,7 @@ class Section:
     color: int  # 0xRRGGBB, used for text / active tab highlight
     matcher: Matcher = lambda tab, haystacks: False
     bg: int | None = None  # optional explicit background; auto-derived if None
+    active: int | None = None  # selected-tab background; falls back to color
 
 
 def _has_any(haystacks: list[str], needles: tuple[str, ...]) -> bool:
@@ -55,12 +57,19 @@ def _has_any(haystacks: list[str], needles: tuple[str, ...]) -> bool:
 
 
 SECTIONS: tuple[Section, ...] = (
-    Section("agent", "A", 0xaedde7,
-            lambda tab, h: _has_any(h, ("copilot", "agy"))),
-    Section("k8s", "K", 0xc78591,
-            lambda tab, h: _has_any(h, ("k9s", "kubectl"))),
-    Section("ssh", "S", 0xc89a62,
-            lambda tab, h: _has_any(h, ("ssh ", "ssh://"))),
+    Section(
+        "agent",
+        "A",
+        0xEBD3BF,
+        lambda tab, h: _has_any(h, ("copilot",)),
+        active=0xA96842,
+    ),
+    Section(
+        "k8s", "K", 0xC6DCEB, lambda tab, h: _has_any(h, ("k9s",)), active=0x356B96
+    ),
+    Section(
+        "ssh", "S", 0xC9DFCE, lambda tab, h: _has_any(h, ("ssh ",)), active=0x477B56
+    ),
     # Add more here, e.g.:
     # Section("docker", "Docker", 0x50fa7b,
     #         lambda tab, h: _has_any(h, ("docker", "docker-compose", "lazydocker"))),
@@ -68,11 +77,11 @@ SECTIONS: tuple[Section, ...] = (
     # Section("db", "D", 0xf1fa8c, lambda tab, h: _has_any(h, ("psql",)), bg=0x3a3a1e),
 )
 
-DEFAULT_SECTION = Section("regular", "T", 0x979eab)
-URGENT_COLOR = 0xff5555  # overrides section colour when needs_attention
+DEFAULT_SECTION = Section("regular", "T", 0x979EAB)
+URGENT_COLOR = 0xFF5555  # overrides section colour when needs_attention
 
-DIVIDER_FG = 0x6272a4
-TAB_SEPARATOR = "|"      # between tabs of the same section
+DIVIDER_FG = 0x6272A4
+TAB_SEPARATOR = "|"  # between tabs of the same section
 SECTION_SEPARATOR = "║"  # between sections
 
 # How strongly the section colour is mixed into the bar background to form the
@@ -97,6 +106,7 @@ def _display_order() -> list[str]:
 # Colour helpers
 # --------------------------------------------------------------------------
 
+
 def _blend(fg: int, bg: int, alpha: float) -> int:
     """Mix fg over bg: alpha=0 -> bg, alpha=1 -> fg. Both are 0xRRGGBB ints."""
     out = 0
@@ -105,6 +115,14 @@ def _blend(fg: int, bg: int, alpha: float) -> int:
         b = (bg >> shift) & 0xFF
         out |= int(round(b + (f - b) * alpha)) << shift
     return out
+
+
+WARM_TINT = 0xFFE4C4  # mixed into section colours for selected section tabs
+WARM_TINT_MIX = 0.10
+
+
+def _warm_light(color: int) -> int:
+    return _blend(WARM_TINT, color, WARM_TINT_MIX)
 
 
 def _section_bg(section: Section, bar_bg: int) -> int:
@@ -116,6 +134,7 @@ def _section_bg(section: Section, bar_bg: int) -> int:
 # --------------------------------------------------------------------------
 # Classification helpers
 # --------------------------------------------------------------------------
+
 
 def _truncate(text: str, max_width: int) -> str:
     """Truncate to max_width cells, ending with an ellipsis if cut."""
@@ -303,6 +322,7 @@ def _right_align_sections(bar: TabBar, data: Sequence[TabBarData]) -> None:
 
 
 if _orig_update is not None:
+
     def _update_with_reorder(self: TabBar, data: Sequence[TabBarData]) -> Any:
         try:
             boss = get_boss()
@@ -404,7 +424,11 @@ def draw_tab(
             # Close the previous section's block with a padding cell ...
             cur.bg = as_rgb(_section_bg(prev, bar_bg_i))
             screen.draw(" ")
-            if not extra_data.for_layout and prev.key == DEFAULT_SECTION.key and _first_section_cell_x is None:
+            if (
+                not extra_data.for_layout
+                and prev.key == DEFAULT_SECTION.key
+                and _first_section_cell_x is None
+            ):
                 _first_section_cell_x = screen.cursor.x
                 _first_section_tab_idx = index - 1
             # ... then the divider on the plain bar background.
@@ -417,7 +441,11 @@ def draw_tab(
             cur.bg = sec_bg
             cur.fg = as_rgb(_blend(section.color, sec_bg_i, 0.45))
             screen.draw(f" {TAB_SEPARATOR} ")
-    elif not extra_data.for_layout and section.key != DEFAULT_SECTION.key and _first_section_cell_x is None:
+    elif (
+        not extra_data.for_layout
+        and section.key != DEFAULT_SECTION.key
+        and _first_section_cell_x is None
+    ):
         _first_section_cell_x = screen.cursor.x
         _first_section_tab_idx = 0
 
@@ -445,7 +473,12 @@ def draw_tab(
 
     if tab.is_active:
         if ACTIVE_TAB_USES_SECTION_COLOR:
-            cur.bg = color if not urgent else as_rgb(URGENT_COLOR)
+            if urgent:
+                cur.bg = as_rgb(URGENT_COLOR)
+            else:
+                cur.bg = as_rgb(
+                    section.active if section.active is not None else section.color
+                )
             cur.fg = bar_bg  # dark text on the bright section colour
         else:
             cur.bg = as_rgb(draw_data.tab_bg(tab))
@@ -465,6 +498,7 @@ def draw_tab(
     cur.bold = False
     cur.bg = bar_bg
     return screen.cursor.x
+
 
 def _configured_title_limit() -> int:
     """Value of kitty.conf `tab_title_max_length` (0 = unlimited)."""

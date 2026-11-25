@@ -6,4 +6,5 @@ return {
   config = function()
     require('markdown-table-mode').setup()
   end
+  -- run with Mtm command
 }

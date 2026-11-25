@@ -11,7 +11,22 @@ return {
         floats = "normal", -- "dark", "normal", or "transparent"
       },
       on_highlights = function(hl, c)
-        hl.SnacksPickerDir = { fg = "#7a7a7a" }
+        hl.SnacksPickerDir                   = { fg = "#7a7a7a" }
+
+        -- inline `code`
+        hl["@markup.raw.markdown_inline"]    = { fg = "#7fa8ad", bg = "#2f3236" }
+
+        -- fenced ``` blocks
+        hl["@markup.raw.block.markdown"]     = { fg = "#7fa8ad" }
+        hl["@markup.raw"]                    = { fg = "#7fa8ad" }
+
+        -- the ``` fences and language label (```lua)
+        hl["@markup.raw.delimiter.markdown"] = { fg = "#4a4545" }
+        hl["@label.markdown"]                = { fg = "#6e6a68" }
+
+        -- if you use render-markdown.nvim
+        hl.RenderMarkdownCode                = { bg = "#2f3236" }
+        hl.RenderMarkdownCodeInline          = { fg = "#7fa8ad", bg = "#2f3236" }
       end,
     })
     vim.cmd.colorscheme("soviet-dark")

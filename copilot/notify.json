@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "hooks": {
+    "notification": [
+      {
+        "matcher": "permission_prompt|elicitation_dialog",
+        "type": "command",
+        "bash": "printf '\\a'"
+      }
+    ]
+  }
+}
