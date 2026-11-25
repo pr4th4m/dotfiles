@@ -257,24 +257,66 @@ def _reorder_if_needed(
         _reorder_lock = False
 
 
-# Hook TabBar.update so reordering happens before every (re)draw. Drawing
-# itself is done per-tab by draw_tab() below, in kitty's physical order,
-# which the reordering above keeps grouped by section.
+# Hook TabBar.update so reordering happens before every (re)draw, and
+# sections are right-aligned after drawing.
 _orig_update = getattr(TabBar, "update", None)
+_first_section_cell_x: int | None = None
+_first_section_tab_idx: int | None = None
+
+
+def _right_align_sections(bar: TabBar, data: Sequence[TabBarData]) -> None:
+    global _first_section_cell_x, _first_section_tab_idx
+    split_x = _first_section_cell_x
+    first_tab_idx = _first_section_tab_idx
+    _first_section_cell_x = None
+    _first_section_tab_idx = None
+
+    if split_x is None or first_tab_idx is None:
+        return
+
+    screen = getattr(bar, "screen", None)
+    if screen is None:
+        return
+
+    end_x = screen.cursor.x
+    shift = screen.columns - end_x
+    if shift <= 0:
+        return
+
+    screen.cursor.x = split_x
+    screen.insert_characters(shift)
+    screen.cursor.x = screen.columns
+    screen.erase_in_line(0, False)
+
+    tab_extents = getattr(bar, "tab_extents", None)
+    if tab_extents:
+        shifted_extents = []
+        for i, te in enumerate(tab_extents):
+            if i >= first_tab_idx:
+                try:
+                    shifted_extents.append(te.shifted(x=shift))
+                except Exception:
+                    shifted_extents.append(te)
+            else:
+                shifted_extents.append(te)
+        bar.tab_extents = tuple(shifted_extents)
 
 
 if _orig_update is not None:
     def _update_with_reorder(self: TabBar, data: Sequence[TabBarData]) -> Any:
-        global _right_align_widths
         try:
             boss = get_boss()
             if boss is not None and data:
-                groups = _group_tabs(data, boss)
-                _reorder_if_needed(self, boss, groups)
-                _right_align_widths = _estimate_group_width(groups, boss)
+                _reorder_if_needed(self, boss, _group_tabs(data, boss))
         except Exception:
             pass
-        return _orig_update(self, data)
+        ret = _orig_update(self, data)
+        try:
+            if not getattr(self, "is_vertical", False):
+                _right_align_sections(self, data)
+        except Exception:
+            pass
+        return ret
 
     TabBar.update = _update_with_reorder  # type: ignore[method-assign]
 
@@ -335,11 +377,13 @@ def draw_tab(
     is_last: bool,
     extra_data: ExtraData,
 ) -> int:
-    global _prev_section
+    global _prev_section, _first_section_cell_x, _first_section_tab_idx
 
     section = _classify(tab, get_boss())
     if index == 1:
         _prev_section = None
+        _first_section_cell_x = None
+        _first_section_tab_idx = None
     prev = _prev_section
     new_section = prev is None or prev.key != section.key
     _prev_section = section
@@ -355,19 +399,14 @@ def draw_tab(
     cur.italic = False
     cur.bold = False
 
-    # Insert blank bar-background cells between regular tabs and section tabs
-    # so the grouped sections occupy the right side of the tab bar.
-    if new_section and prev is not None and prev.key == DEFAULT_SECTION.key and section.key != DEFAULT_SECTION.key:
-        cur.bg = bar_bg
-        regular_width, section_width = _right_align_widths
-        gap = max(0, screen.columns - regular_width - section_width)
-        screen.draw(" " * gap)
-
     if index > 1:
         if new_section and prev is not None:
             # Close the previous section's block with a padding cell ...
             cur.bg = as_rgb(_section_bg(prev, bar_bg_i))
             screen.draw(" ")
+            if not extra_data.for_layout and prev.key == DEFAULT_SECTION.key and _first_section_cell_x is None:
+                _first_section_cell_x = screen.cursor.x
+                _first_section_tab_idx = index - 1
             # ... then the divider on the plain bar background.
             cur.bg = bar_bg
             cur.fg = as_rgb(DIVIDER_FG)
@@ -378,6 +417,9 @@ def draw_tab(
             cur.bg = sec_bg
             cur.fg = as_rgb(_blend(section.color, sec_bg_i, 0.45))
             screen.draw(f" {TAB_SEPARATOR} ")
+    elif not extra_data.for_layout and section.key != DEFAULT_SECTION.key and _first_section_cell_x is None:
+        _first_section_cell_x = screen.cursor.x
+        _first_section_tab_idx = 0
 
     if new_section:
         # Leading pad + section label, both on the section background.
@@ -442,4 +484,3 @@ def main(args: list[str]) -> None:
             section = _classify(data, boss)
             status = "*" if data.is_active else " "
             print(f"[{section.label}] {status} {data.tab_id}: {data.title}")
-
