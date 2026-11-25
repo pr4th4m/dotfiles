@@ -265,10 +265,13 @@ _orig_update = getattr(TabBar, "update", None)
 
 if _orig_update is not None:
     def _update_with_reorder(self: TabBar, data: Sequence[TabBarData]) -> Any:
+        global _right_align_widths
         try:
             boss = get_boss()
             if boss is not None and data:
-                _reorder_if_needed(self, boss, _group_tabs(data, boss))
+                groups = _group_tabs(data, boss)
+                _reorder_if_needed(self, boss, groups)
+                _right_align_widths = _estimate_group_width(groups, boss)
         except Exception:
             pass
         return _orig_update(self, data)
@@ -352,6 +355,14 @@ def draw_tab(
     cur.italic = False
     cur.bold = False
 
+    # Insert blank bar-background cells between regular tabs and section tabs
+    # so the grouped sections occupy the right side of the tab bar.
+    if new_section and prev is not None and prev.key == DEFAULT_SECTION.key and section.key != DEFAULT_SECTION.key:
+        cur.bg = bar_bg
+        regular_width, section_width = _right_align_widths
+        gap = max(0, screen.columns - regular_width - section_width)
+        screen.draw(" " * gap)
+
     if index > 1:
         if new_section and prev is not None:
             # Close the previous section's block with a padding cell ...
@@ -431,3 +442,4 @@ def main(args: list[str]) -> None:
             section = _classify(data, boss)
             status = "*" if data.is_active else " "
             print(f"[{section.label}] {status} {data.tab_id}: {data.title}")
+
