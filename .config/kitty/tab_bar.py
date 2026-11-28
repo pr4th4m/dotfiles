@@ -278,7 +278,7 @@ def draw_tab(
 
     section = _classify(tab)
     urgent = tab.needs_attention
-    prefix = f"{index}: "
+    prefix = f"{index} "
     room = min(max_title_length, screen.columns - screen.cursor.x - 2) - len(prefix)
     limit = int(getattr(get_options(), "tab_title_max_length", 0) or 0)
     if limit > 0:
