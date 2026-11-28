@@ -1,7 +1,7 @@
 local M = {}
 
 -- Config
-local MAX_PARENT_DIRS = 2 -- how many parent directories to show
+local MAX_PARENT_DIRS = 0 -- how many parent directories to show
 local DIR_CHARS = 4       -- how many leading chars of each dir to keep
 
 local function format_path(path)

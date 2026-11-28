@@ -1,0 +1,11 @@
+
+new_tab
+layout splits
+enabled_layouts splits,stack
+set_layout_state {"pairs": {"one": 3}, "opts": {"split_axis": "horizontal", "equalize_on_window_close": "n", "proportional": "n"}, "class": "Splits", "all_windows": {"active_group_idx": 0, "active_group_history": [], "window_groups": [{"id": 3, "window_ids": [6]}]}}
+cd /Users/prathameshnevagi
+
+launch 'kitty-unserialize-data={"id": 6}'
+focus
+
+focus_tab 0

@@ -3,5 +3,5 @@
 selected=$(zoxide query -i)
 
 if [ -n "$selected" ]; then
-  kitty @ launch --type=tab --cwd "$selected"
+  kitty @ launch --type=tab --add-to-session=. --cwd "$selected"
 fi

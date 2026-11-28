@@ -27,5 +27,5 @@ selected=$(fd -e sh -d 1 . ~/scripts 2>/dev/null | awk -F'/' '{
 selected=${selected//$'\e'\[*([0-9;])m/}
 
 if [[ -n "$selected" ]]; then
-  kitty @ launch --type=tab zsh -i -c "~/scripts/$selected"
+  kitty @ launch --type=tab --add-to-session=. zsh -i -c "~/scripts/$selected"
 fi

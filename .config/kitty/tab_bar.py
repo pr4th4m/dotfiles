@@ -1,149 +1,108 @@
 #!/usr/bin/env python3
-"""Custom kitty horizontal tab bar (tab_bar_edge top/bottom, tab_bar_style custom).
-
-Groups tabs into sections (regular, agent, k8s, ssh, ...), colours each
-section, gives each section its own background "pill", and keeps kitty's
-real tab order in sync with the section order so ctrl+shift+left/right and
-goto_tab N follow the grouping.
-
-Layout (each section sits on its own tinted background):
-  [ T: 1: nvim | 2: cat ]  ║  [ A: 3: copilot | 4: agy ]  ║  [ S: 5: ssh m1 ]
+"""Custom kitty tab bar: colours each tab by section, shows the session name.
 
 kitty.conf:
-  tab_bar_edge   top
   tab_bar_style  custom
-  tab_bar_align  center      # or left / right
-  tab_bar_min_tabs 1
+  tab_bar_filter session:~ or session:^$
 
-To add a new section: add ONE Section(...) entry to SECTIONS below.
-The background is derived automatically from the section colour; pass
-bg=0xRRGGBB to Section(...) to override it.
+To add a section: add ONE Section(...) entry to SECTIONS below.
 """
 
-from collections.abc import Callable, Sequence
+from collections.abc import Callable
 from dataclasses import dataclass
+from functools import lru_cache
 import os
 from typing import Any
 
-from kitty.fast_data_types import Screen, add_timer, get_boss, wcswidth, get_options
-from kitty.tab_bar import (
-    DrawData,
-    ExtraData,
-    TabBar,
-    TabBarData,
-    as_rgb,
-    color_as_int,
-)
+from kitty.fast_data_types import Screen, add_timer, get_boss, get_options, wcswidth
+from kitty.tab_bar import DrawData, ExtraData, TabBarData, as_rgb, color_as_int
 
-# --------------------------------------------------------------------------
-# Section registry — the only place you need to touch to add a category.
-# --------------------------------------------------------------------------
-
-Matcher = Callable[[TabBarData, list[str]], bool]
+Matcher = Callable[[list[str]], bool]
 
 
 @dataclass(frozen=True)
 class Section:
     key: str
-    label: str
-    color: int  # 0xRRGGBB, used for text / active tab highlight
-    matcher: Matcher = lambda tab, haystacks: False
-    bg: int | None = None  # optional explicit background; auto-derived if None
-    active: int | None = None  # selected-tab background; falls back to color
+    bg: int  # background of inactive tabs (muted)
+    active: int  # background of the active tab
+    matcher: Matcher = lambda haystacks: False
 
 
-def _has_any(haystacks: list[str], needles: tuple[str, ...]) -> bool:
-    return any(n in h for h in haystacks for n in needles)
+def _has_any(*needles: str) -> Matcher:
+    return lambda haystacks: any(n in h for h in haystacks for n in needles)
 
 
 SECTIONS: tuple[Section, ...] = (
-    Section(
-        "agent",
-        "A",
-        0xEBD3BF,
-        lambda tab, h: _has_any(h, ("copilot",)),
-        active=0xA96842,
-    ),
-    Section(
-        "k8s", "K", 0xC6DCEB, lambda tab, h: _has_any(h, ("k9s",)), active=0x356B96
-    ),
-    Section(
-        "ssh", "S", 0xC9DFCE, lambda tab, h: _has_any(h, ("ssh ",)), active=0x477B56
-    ),
-    # Add more here, e.g.:
-    # Section("docker", "Docker", 0x50fa7b,
-    #         lambda tab, h: _has_any(h, ("docker", "docker-compose", "lazydocker"))),
-    # Or with a hand-picked background:
-    # Section("db", "D", 0xf1fa8c, lambda tab, h: _has_any(h, ("psql",)), bg=0x3a3a1e),
+    Section("agent", 0x5E4434, 0xA06A47, _has_any("copilot")),
+    Section("k8s", 0x30495F, 0x4676A0, _has_any("k9s")),
+    Section("ssh", 0x334F3D, 0x52845E, _has_any("ssh ")),
 )
+DEFAULT_SECTION = Section("regular", 0x414753, 0x656D7D)
+URGENT_BG = 0x7A2E2E
+FG = 0xC8CCD4  # inactive tab text
+ACTIVE_FG = 0xF2EFE8  # active tab text (off-white)
+SEPARATOR_FG = 0x6272A4
+TAB_SEPARATOR = " "
 
-DEFAULT_SECTION = Section("regular", "T", 0x979EAB)
-URGENT_COLOR = 0xFF5555  # overrides section colour when needs_attention
+SHOW_SESSION_NAME = True
+SESSION_COLOR = 0xD7BAFF
+SESSION_BG = 0x6E4FA3
 
-DIVIDER_FG = 0x6272A4
-TAB_SEPARATOR = "|"  # between tabs of the same section
-SECTION_SEPARATOR = "║"  # between sections
-
-# How strongly the section colour is mixed into the bar background to form the
-# section's own background. 0.0 = no tint, 1.0 = solid section colour.
-SECTION_BG_MIX = 0.18
-# Active tab: True -> solid section colour bg with dark text (clear highlight),
-# False -> use kitty's own active tab colours (active_tab_background etc.).
-ACTIVE_TAB_USES_SECTION_COLOR = True
-
-DISPLAY_ORDER: tuple[str, ...] = ("regular",) + tuple(s.key for s in SECTIONS)
-
-
-def _display_order() -> list[str]:
-    order = list(DISPLAY_ORDER)
-    for s in SECTIONS:
-        if s.key not in order:
-            order.append(s.key)
-    return order
+REFRESH_INTERVAL = 1.0  # seconds; redraw so foreground process changes show up
 
 
 # --------------------------------------------------------------------------
-# Colour helpers
+# Classification
 # --------------------------------------------------------------------------
 
+try:
+    from kitty.child import cmdline_of_pid, process_group_map
+except Exception:  # pragma: no cover
+    cmdline_of_pid = process_group_map = None
 
-def _blend(fg: int, bg: int, alpha: float) -> int:
-    """Mix fg over bg: alpha=0 -> bg, alpha=1 -> fg. Both are 0xRRGGBB ints."""
-    out = 0
-    for shift in (16, 8, 0):
-        f = (fg >> shift) & 0xFF
-        b = (bg >> shift) & 0xFF
-        out |= int(round(b + (f - b) * alpha)) << shift
+# Process group map is read once per tab bar redraw (see draw_tab), not per tab.
+_pgroups: dict[int, list[int]] = {}
+
+
+def _foreground_cmdlines(window: Any) -> list[str]:
+    # Every process in the foreground group (a wrapper script may lead the
+    # group, e.g. `k9s` started from a shell function or script). Skips the
+    # per-process cwd lookup that makes child.foreground_processes slow.
+    try:
+        pgrp = os.tcgetpgrp(window.child.child_fd)
+        if pgrp <= 0 or cmdline_of_pid is None:
+            return []
+    except Exception:
+        return []
+    out = []
+    for pid in _pgroups.get(pgrp) or (pgrp,):
+        try:
+            out.append(" ".join(cmdline_of_pid(pid)))
+        except Exception:
+            pass
     return out
 
 
-WARM_TINT = 0xFFE4C4  # mixed into section colours for selected section tabs
-WARM_TINT_MIX = 0.10
+def _classify(tab: TabBarData) -> Section:
+    haystacks = [tab.title]
+    boss = get_boss()
+    if boss is not None:
+        t = boss.tab_for_id(tab.tab_id)
+        if t is not None and t.active_window is not None:
+            haystacks += _foreground_cmdlines(t.active_window)
+    for section in SECTIONS:
+        if section.matcher(haystacks):
+            return section
+    return DEFAULT_SECTION
 
 
-def _warm_light(color: int) -> int:
-    return _blend(WARM_TINT, color, WARM_TINT_MIX)
-
-
-def _section_bg(section: Section, bar_bg: int) -> int:
-    if section.bg is not None:
-        return section.bg
-    return _blend(section.color, bar_bg, SECTION_BG_MIX)
-
-
-# --------------------------------------------------------------------------
-# Classification helpers
-# --------------------------------------------------------------------------
-
-
+@lru_cache(maxsize=512)
 def _truncate(text: str, max_width: int) -> str:
-    """Truncate to max_width cells, ending with an ellipsis if cut."""
     if max_width <= 0:
         return ""
     if wcswidth(text) <= max_width:
         return text
-    out: list[str] = []
-    width = 0
+    out, width = [], 0
     for ch in text:
         w = max(0, wcswidth(ch))
         if width + w > max_width - 1:
@@ -153,238 +112,135 @@ def _truncate(text: str, max_width: int) -> str:
     return "".join(out) + "…"
 
 
-def _foreground_cmdlines(tab: TabBarData, boss: Any) -> list[str]:
-    if boss is None:
-        return []
-    try:
-        real_tab = boss.tab_for_id(tab.tab_id)
-        window = real_tab.active_window if real_tab else None
-        procs = window.child.foreground_processes if window else []
-        return [" ".join(p.get("cmdline") or []) for p in procs]
-    except Exception:
-        return []
-
-
-_renamed_agent_tabs: set[int] = set()
-
-
-def _rename_agent_tab_once(tab: TabBarData, boss: Any) -> None:
-    if boss is None or tab.tab_id in _renamed_agent_tabs:
-        return
-    _renamed_agent_tabs.add(tab.tab_id)
-    try:
-        real_tab = boss.tab_for_id(tab.tab_id)
-        window = real_tab.active_window if real_tab else None
-        cwd = window.get_cwd_of_child() if window else None
-        if cwd:
-            real_tab.set_title(os.path.basename(cwd.rstrip("/")))
-    except Exception:
-        pass
-
-
-def _classify(tab: TabBarData, boss: Any) -> Section:
-    haystacks = _foreground_cmdlines(tab, boss) + [tab.title]
-    for section in SECTIONS:
-        if section.matcher(tab, haystacks):
-            if section.key == "agent":
-                _rename_agent_tab_once(tab, boss)
-            return section
-    return DEFAULT_SECTION
-
-
-def _group_tabs(
-    data: Sequence[TabBarData], boss: Any
-) -> dict[str, list[tuple[int, TabBarData]]]:
-    groups: dict[str, list[tuple[int, TabBarData]]] = {}
-    for i, tab in enumerate(data):
-        groups.setdefault(_classify(tab, boss).key, []).append((i + 1, tab))
-    return groups
-
-
 # --------------------------------------------------------------------------
-# Dynamic physical reordering — best-effort, never breaks rendering.
-# Uses only the same active-tab-based "move by one" primitive kitty's own
-# move_tab_forward / move_tab_backward keybindings use.
+# Sessions
 # --------------------------------------------------------------------------
 
-_reorder_lock = False
 
-
-def _tab_manager_for_bar(bar: TabBar, boss: Any) -> Any:
-    for tm in getattr(boss, "all_tab_managers", ()):
-        if getattr(tm, "tab_bar", None) is bar:
-            return tm
-    return None
-
-
-def _target_id_order(groups: dict[str, list[tuple[int, TabBarData]]]) -> list[int]:
-    order: list[int] = []
-    for key in _display_order():
-        for _, tab in groups.get(key, []):
-            order.append(tab.tab_id)
-    return order
-
-
-def _apply_order(tm: Any, desired_ids: Sequence[int]) -> None:
-    original_active = tm.active_tab
-    # Reordering goes through set_active_tab()/move_tab(), which push entries
-    # onto the history used by `goto_tab -1`. Save it and restore it after.
-    history = getattr(tm, "active_tab_history", None)
-    saved_history = list(history) if history is not None else None
+def _current_session_name(tab: TabBarData) -> str:
+    """Active session, or (like tab_bar_filter) the most recent one."""
     try:
-        id_to_tab = {t.id: t for t in tm.tabs}
-        max_steps = len(tm.tabs)
-        for target_idx, tab_id in enumerate(desired_ids):
-            tab = id_to_tab.get(tab_id)
-            if tab is None:
-                continue
-            if tm.tabs.index(tab) == target_idx:
-                continue
-            tm.set_active_tab(tab)
-            for _ in range(max_steps):
-                current_idx = tm.tabs.index(tab)
-                if current_idx == target_idx:
-                    break
-                tm.move_tab(1 if target_idx > current_idx else -1)
-        if original_active is not None and original_active in tm.tabs:
-            tm.set_active_tab(original_active)
-    finally:
-        if history is not None and saved_history is not None:
-            history.clear()
-            history.extend(saved_history)
+        from kitty.session import append_to_session_history, most_recent_session
 
-
-def _reorder_if_needed(
-    bar: TabBar, boss: Any, groups: dict[str, list[tuple[int, TabBarData]]]
-) -> None:
-    global _reorder_lock
-    if _reorder_lock or boss is None:
-        return
-    try:
-        tm = _tab_manager_for_bar(bar, boss)
-        if tm is None:
-            return
-        current_ids = tuple(t.id for t in tm.tabs)
-        desired_ids = tuple(_target_id_order(groups))
-        if not desired_ids or current_ids == desired_ids:
-            return
-        _reorder_lock = True
-        _apply_order(tm, desired_ids)
+        boss = get_boss()
+        name = getattr(boss, "active_session", "") if boss is not None else ""
+        # Keep kitty's session history in sync with the focused window, so
+        # `session:~` does not mix tabs of two sessions after jumping between
+        # them by other means than goto_session (tab pickers, goto_tab, ...).
+        if name and name != most_recent_session():
+            append_to_session_history(name)
+        return name or most_recent_session()
     except Exception:
-        pass  # API mismatch on this kitty version: skip reordering silently
-    finally:
-        _reorder_lock = False
+        return getattr(tab, "active_session_name", "") or getattr(
+            tab, "session_name", ""
+        )
 
 
-# Hook TabBar.update so reordering happens before every (re)draw, and
-# sections are right-aligned after drawing.
-_orig_update = getattr(TabBar, "update", None)
-_first_section_cell_x: int | None = None
-_first_section_tab_idx: int | None = None
+# kitty's `goto_tab -1` walks a global history ignoring tab_bar_filter, so it
+# can jump into another session. Restrict it to the tabs shown in the bar.
+try:
+    from kitty.tabs import TabManager as _TabManager
+
+    _orig_goto_tab = _TabManager.goto_tab
+
+    def _goto_tab_in_session(self: Any, tab_num: int) -> None:
+        if tab_num >= 0 or not get_options().tab_bar_filter:
+            return _orig_goto_tab(self, tab_num)
+        visible = {t.id for t in self.tabs_to_be_shown_in_tab_bar}
+        at = self.active_tab
+        candidates: list[int] = []
+        for tid in reversed(self.active_tab_history):
+            if (
+                tid in visible
+                and tid not in candidates
+                and (at is None or tid != at.id)
+            ):
+                candidates.append(tid)
+        if candidates:
+            tab = self.tab_for_id(candidates[min(-tab_num, len(candidates)) - 1])
+            if tab is not None:
+                self.set_active_tab(tab)
+
+    _TabManager.goto_tab = _goto_tab_in_session  # type: ignore[method-assign]
+
+except Exception:
+    pass
 
 
-def _right_align_sections(bar: TabBar, data: Sequence[TabBarData]) -> None:
-    global _first_section_cell_x, _first_section_tab_idx
-    split_x = _first_section_cell_x
-    first_tab_idx = _first_section_tab_idx
-    _first_section_cell_x = None
-    _first_section_tab_idx = None
+# Tabs created without a session (new_tab, `launch --type=tab`, scripts)
+# match `session:^$` and would show up in every session. Adopt them into the
+# session that is active (or most recent) when they are created.
+def _session_for_new_tab() -> str:
+    try:
+        from kitty.session import most_recent_session
 
-    if split_x is None or first_tab_idx is None:
-        return
-
-    screen = getattr(bar, "screen", None)
-    if screen is None:
-        return
-
-    end_x = screen.cursor.x
-    shift = screen.columns - end_x
-    if shift <= 0:
-        return
-
-    screen.cursor.x = split_x
-    screen.insert_characters(shift)
-    screen.cursor.x = screen.columns
-    screen.erase_in_line(0, False)
-
-    tab_extents = getattr(bar, "tab_extents", None)
-    if tab_extents:
-        shifted_extents = []
-        for i, te in enumerate(tab_extents):
-            if i >= first_tab_idx:
-                try:
-                    shifted_extents.append(te.shifted(x=shift))
-                except Exception:
-                    shifted_extents.append(te)
-            else:
-                shifted_extents.append(te)
-        bar.tab_extents = tuple(shifted_extents)
+        boss = get_boss()
+        return (
+            getattr(boss, "active_session", "") if boss else ""
+        ) or most_recent_session()
+    except Exception:
+        return ""
 
 
-if _orig_update is not None:
+try:
+    import kitty.launch as _launch
 
-    def _update_with_reorder(self: TabBar, data: Sequence[TabBarData]) -> Any:
+    _orig_tab_for_window = _launch.tab_for_window
+
+    def _tab_for_window(
+        boss: Any, opts: Any, target_tab: Any, next_to: Any, add_to_session: str
+    ) -> Any:
+        if not add_to_session and getattr(opts, "type", "") in ("tab", "os-window"):
+            add_to_session = _session_for_new_tab()
+        return _orig_tab_for_window(boss, opts, target_tab, next_to, add_to_session)
+
+    _launch.tab_for_window = _tab_for_window
+except Exception:
+    pass
+
+try:
+    _orig_new_tab = _TabManager.new_tab
+
+    def _new_tab_in_session(self: Any, *args: Any, **kwargs: Any) -> Any:
+        session = _session_for_new_tab()
+        tab = _orig_new_tab(self, *args, **kwargs)
         try:
-            boss = get_boss()
-            if boss is not None and data:
-                _reorder_if_needed(self, boss, _group_tabs(data, boss))
+            if session and tab is not None and not tab.created_in_session_name:
+                tab.created_in_session_name = session
+                for w in tab:
+                    w.created_in_session_name = w.created_in_session_name or session
         except Exception:
             pass
-        ret = _orig_update(self, data)
-        try:
-            if not getattr(self, "is_vertical", False):
-                _right_align_sections(self, data)
-        except Exception:
-            pass
-        return ret
+        return tab
 
-    TabBar.update = _update_with_reorder  # type: ignore[method-assign]
+    _TabManager.new_tab = _new_tab_in_session  # type: ignore[method-assign]
+except Exception:
+    pass
 
 
 # --------------------------------------------------------------------------
 # Periodic refresh (foreground process changes don't trigger a redraw)
 # --------------------------------------------------------------------------
 
-_REFRESH_INTERVAL = 0.1  # seconds; lower = snappier, marginally more CPU
-_timer_started = False
-
 
 def _redraw_all_tab_bars(timer_id: int = 0) -> None:
     boss = get_boss()
-    if boss is None:
-        return
-    for tm in boss.all_tab_managers:
-        try:
+    if boss is not None:
+        for tm in boss.all_tab_managers:
             tm.mark_tab_bar_dirty()
-        except Exception:
-            pass
 
 
-def _ensure_periodic_refresh() -> None:
-    global _timer_started
-    if _timer_started:
-        return
+if not globals().get("_timer_started"):
     _timer_started = True
     try:
-        add_timer(_redraw_all_tab_bars, _REFRESH_INTERVAL, True)
+        add_timer(_redraw_all_tab_bars, REFRESH_INTERVAL, True)
     except Exception:
         pass
 
 
-_ensure_periodic_refresh()
-
-
 # --------------------------------------------------------------------------
-# Horizontal renderer: kitty calls this once per tab, left to right.
-# Alignment (tab_bar_align left/center/right) is handled by kitty itself.
-#
-# Each section is painted as one continuous block on its own background:
-#   <pad><label><tab><sep><tab>...<pad>
-# Between two sections the bar's default background shows through, with the
-# SECTION_SEPARATOR drawn in the middle.
+# Renderer
 # --------------------------------------------------------------------------
-
-_prev_section: Section | None = None
 
 
 def draw_tab(
@@ -397,124 +253,45 @@ def draw_tab(
     is_last: bool,
     extra_data: ExtraData,
 ) -> int:
-    global _prev_section, _first_section_cell_x, _first_section_tab_idx
-
-    section = _classify(tab, get_boss())
-    if index == 1:
-        _prev_section = None
-        _first_section_cell_x = None
-        _first_section_tab_idx = None
-    prev = _prev_section
-    new_section = prev is None or prev.key != section.key
-    _prev_section = section
-
-    bar_bg_i = color_as_int(draw_data.default_bg)
-    bar_bg = as_rgb(bar_bg_i)
-    color = as_rgb(section.color)
-    sec_bg_i = _section_bg(section, bar_bg_i)
-    sec_bg = as_rgb(sec_bg_i)
-    urgent = tab.needs_attention
-
+    global _pgroups
+    bar_bg = as_rgb(color_as_int(draw_data.default_bg))
     cur = screen.cursor
     cur.italic = False
-    cur.bold = False
+
+    if index == 1 and process_group_map is not None:
+        try:
+            _pgroups = process_group_map()
+        except Exception:
+            _pgroups = {}
+
+    if index == 1 and SHOW_SESSION_NAME:
+        name = _current_session_name(tab)
+        if name:
+            cur.bg, cur.fg, cur.bold = as_rgb(SESSION_BG), as_rgb(SESSION_COLOR), True
+            screen.draw(f" {_truncate(name, 20)} ")
+            cur.bg, cur.bold = bar_bg, False
+            screen.draw(" ")
 
     if index > 1:
-        if new_section and prev is not None:
-            # Close the previous section's block with a padding cell ...
-            cur.bg = as_rgb(_section_bg(prev, bar_bg_i))
-            screen.draw(" ")
-            if (
-                not extra_data.for_layout
-                and prev.key == DEFAULT_SECTION.key
-                and _first_section_cell_x is None
-            ):
-                _first_section_cell_x = screen.cursor.x
-                _first_section_tab_idx = index - 1
-            # ... then the divider on the plain bar background.
-            cur.bg = bar_bg
-            cur.fg = as_rgb(DIVIDER_FG)
-            screen.draw(f" {SECTION_SEPARATOR} ")
-        else:
-            # Same-section separator, drawn on the section's own background,
-            # in a softened version of the section colour.
-            cur.bg = sec_bg
-            cur.fg = as_rgb(_blend(section.color, sec_bg_i, 0.45))
-            screen.draw(f" {TAB_SEPARATOR} ")
-    elif (
-        not extra_data.for_layout
-        and section.key != DEFAULT_SECTION.key
-        and _first_section_cell_x is None
-    ):
-        _first_section_cell_x = screen.cursor.x
-        _first_section_tab_idx = 0
+        cur.bg, cur.fg, cur.bold = bar_bg, as_rgb(SEPARATOR_FG), False
+        screen.draw(TAB_SEPARATOR)
 
-    if new_section:
-        # Leading pad + section label, both on the section background.
-        cur.bg = sec_bg
-        cur.fg = color
-        cur.bold = True
-        screen.draw(f" {section.label}: ")
-
-    # The tab itself
-    bell = "🔔 " if urgent else ""
-    prefix = f"{bell}{index}:"
-    room = max_title_length - wcswidth(prefix)
-    # Never run past the right edge of the bar (keep 1 cell for trailing pad)
-    reserve = 1 if is_last else 0
-    room = min(room, screen.columns - screen.cursor.x - wcswidth(prefix) - reserve)
-
-    # Honour kitty.conf `tab_title_max_length` (applies to the title text only)
-    limit = _configured_title_limit()
+    section = _classify(tab)
+    urgent = tab.needs_attention
+    prefix = f"{index}: "
+    room = min(max_title_length, screen.columns - screen.cursor.x - 2) - len(prefix)
+    limit = int(getattr(get_options(), "tab_title_max_length", 0) or 0)
     if limit > 0:
         room = min(room, limit)
-
     title = _truncate(tab.title, max(1, room))
 
-    if tab.is_active:
-        if ACTIVE_TAB_USES_SECTION_COLOR:
-            if urgent:
-                cur.bg = as_rgb(URGENT_COLOR)
-            else:
-                cur.bg = as_rgb(
-                    section.active if section.active is not None else section.color
-                )
-            cur.fg = bar_bg  # dark text on the bright section colour
-        else:
-            cur.bg = as_rgb(draw_data.tab_bg(tab))
-            cur.fg = as_rgb(URGENT_COLOR) if urgent else as_rgb(draw_data.tab_fg(tab))
+    if urgent:
+        cur.bg = as_rgb(URGENT_BG)
     else:
-        cur.bg = sec_bg
-        cur.fg = as_rgb(URGENT_COLOR) if urgent else color
+        cur.bg = as_rgb(section.active if tab.is_active else section.bg)
+    cur.fg = as_rgb(ACTIVE_FG if tab.is_active else FG)
     cur.bold = tab.is_active or urgent
-    screen.draw(f"{prefix}{title}")
+    screen.draw(f" {prefix}{title} ")
 
-    # Trailing pad closes the last section's block
-    if is_last:
-        cur.bold = False
-        cur.bg = sec_bg
-        screen.draw(" ")
-
-    cur.bold = False
-    cur.bg = bar_bg
+    cur.bg, cur.bold = bar_bg, False
     return screen.cursor.x
-
-
-def _configured_title_limit() -> int:
-    """Value of kitty.conf `tab_title_max_length` (0 = unlimited)."""
-    try:
-        return int(getattr(get_options(), "tab_title_max_length", 0) or 0)
-    except Exception:
-        return 0
-
-
-def main(args: list[str]) -> None:
-    boss = get_boss()
-    if not boss:
-        return
-    for tm in boss.all_tab_managers:
-        for tab in tm.tabs:
-            data = tab.data_for_tab_bar(tab is tm.active_tab)
-            section = _classify(data, boss)
-            status = "*" if data.is_active else " "
-            print(f"[{section.label}] {status} {data.tab_id}: {data.title}")

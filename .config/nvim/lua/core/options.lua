@@ -38,9 +38,10 @@ local options = {
     splitkeep = "cursor",                    -- FIXED: was missing quotes
     guicursor = "",                          -- block cursor in insert mode
     laststatus = 3,                          -- global status line
-    -- winbar = "%=%m %f",                   -- file name on right
-    winbar = "%m %f",                     -- file name on left
-    whichwrap = "bs<>[]hl",                  -- which "horizontal" keys are allowed to travel to prev/next line
+    winbar = "%=%m %t",                      -- file name on right
+    -- winbar = "%=%m %f",                      -- file name on right
+    -- winbar = "%m %f",                     -- file name on left
+    whichwrap = "bs<>[]hl", -- which "horizontal" keys are allowed to travel to prev/next line
 
     -- PERFORMANCE OPTIMIZATIONS
     -- Redraw settings

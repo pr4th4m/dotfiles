@@ -141,7 +141,8 @@ fi
 # edit command line
 autoload -Uz edit-command-line
 zle -N edit-command-line
-bindkey '^X^I' edit-command-line
+bindkey '^x^g' edit-command-line
+# bindkey -M vicmd 'v' edit-command-line
 
 # Autosuggest settings
 ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE="20"
@@ -152,6 +153,10 @@ eval "$(sheldon source)"
 
 # Load atuin
 eval "$(atuin init zsh)"
+
+# activate mise virtual environment
+# curl https://mise.run | sh
+# eval "$(~/.local/bin/mise activate zsh)"
 
 # Postgres cli
 # export PATH=/usr/local/opt/libpq/bin:$PATH
@@ -242,3 +247,6 @@ zoxide_fzf() {
 }
 zle -N zoxide_fzf
 bindkey '^G' zoxide_fzf
+
+# Mole shell completion
+# if output="$(mole completion zsh 2>/dev/null)"; then eval "$output"; fi
